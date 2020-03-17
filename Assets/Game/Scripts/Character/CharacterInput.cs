@@ -11,6 +11,7 @@ public class CharacterInput : MonoBehaviour
 
     public static CharacterInput instance;
 
+    public bool JoystickConected = false;
 
     [Header("Movement")]
     public UnityEvFloat LeftHorizontal;
@@ -18,23 +19,44 @@ public class CharacterInput : MonoBehaviour
 
     public UnityEvFloat RightHorizontal;
     public UnityEvFloat RightVertical;
-                
+
 
     private void Awake()
     {
-        instance = this;        
+        instance = this;
     }
 
     private void Update()
     {
         MoveLeftHorizontal(Input.GetAxis("Horizontal"));
-
         MoveLeftVertical(Input.GetAxis("Vertical"));
 
-        //ahora lo comento xq me tira error xq no lo creamos en el input... cuando lo vayamos a usar lo descomento y lo agregamos al Input de editor de unity
-       // MoveRightHorizontal(Input.GetAxis("RightHorizontal"));
-       // MoveRightVertical(Input.GetAxis("RightVertical"));
-    }    
+        if (JoystickConected)
+            JoystickInputs();
+        else
+            MouseInputs();
+    }
+
+    public void MouseInputs()
+    {
+        //Posicion del player en pantalla
+        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+
+        //Posicion del mouse en pantalla
+        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+        Vector2 mousePos = (mouseOnScreen - positionOnScreen).normalized;
+
+        MoveRightHorizontal(mousePos.x);
+        MoveRightVertical(mousePos.y);
+    }
+
+
+    public void JoystickInputs()
+    {
+        MoveRightHorizontal(Input.GetAxis("RightHorizontal"));
+        MoveRightVertical(Input.GetAxis("RightVertical"));
+    }
 
     void MoveLeftHorizontal(float val)
     {
