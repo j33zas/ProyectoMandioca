@@ -1,0 +1,5 @@
+[ Main ]
+esta carpeta la cree especialmente para que los encargados de tocar las escenas trabajen aca... de manera informada y controlada... esto es para que no venga cualquiera y toque un valorcito cualquiera... luego pushea, hay conflictos y rompe todo. tal vez le jode el trabajo a alguien que estuvo horas en esa escena
+
+[ Testing ]
+Acá si, si quieren clonen las escenas, rompan lo que quieran (ojo nomas con los prefabs)
