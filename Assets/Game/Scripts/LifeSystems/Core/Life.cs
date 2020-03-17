@@ -31,7 +31,10 @@ public class Life
         {
             if (value > 0)
             {
-                if (value > maxHealth) { health = maxHealth; uilife.OnLifeChange(value, maxHealth); }
+                if (value > maxHealth) { 
+                    health = maxHealth;
+                    uilife.OnLifeChange(maxHealth, maxHealth);
+                }
                 else
                 {
                     if (value < health)

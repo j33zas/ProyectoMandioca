@@ -31,9 +31,9 @@ public class CharacterInput : MonoBehaviour
 
         MoveLeftVertical(Input.GetAxis("Vertical"));
 
-        MoveRightHorizontal(Input.GetAxis("RightHorizontal"));
-
-        MoveRightVertical(Input.GetAxis("RightVertical"));
+        //ahora lo comento xq me tira error xq no lo creamos en el input... cuando lo vayamos a usar lo descomento y lo agregamos al Input de editor de unity
+       // MoveRightHorizontal(Input.GetAxis("RightHorizontal"));
+       // MoveRightVertical(Input.GetAxis("RightVertical"));
     }    
 
     void MoveLeftHorizontal(float val)
