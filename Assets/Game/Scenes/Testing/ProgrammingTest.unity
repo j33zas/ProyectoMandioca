@@ -1175,6 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760f7863e6a7e3c43a531747c0621e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JoystickConected: 0
   LeftHorizontal:
     m_PersistentCalls:
       m_Calls:
@@ -1363,7 +1364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988206558}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 9, z: -7}
+  m_LocalPosition: {x: 0, y: 8.1, z: -5.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1381,6 +1382,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab33905b8829c114b89403d846cc1cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 1954684488}
+  smooth: 2
+  offset: {x: 0, y: 8.1, z: -5.24}
+  lookAt: 0
+  shakeAmmount: 0.09
+  shakeDuration: 0.1
 --- !u!1 &2103249330
 GameObject:
   m_ObjectHideFlags: 0
