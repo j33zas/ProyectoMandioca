@@ -27,9 +27,9 @@ public class CharacterInput : MonoBehaviour
 
     private void Update()
     {
-        MoveLeftHorizontal(Input.GetAxis("LeftHorizontal"));
+        MoveLeftHorizontal(Input.GetAxis("Horizontal"));
 
-        MoveLeftVertical(Input.GetAxis("LeftVertical"));
+        MoveLeftVertical(Input.GetAxis("Vertical"));
 
         MoveRightHorizontal(Input.GetAxis("RightHorizontal"));
 
