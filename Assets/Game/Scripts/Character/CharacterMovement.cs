@@ -13,11 +13,23 @@ public class CharacterMovement
     float rotX;
     float rotY;
 
-    public CharacterMovement(Rigidbody rb, Transform rot, float s)
+    bool inDash;
+
+    float timerDash;
+    float maxTimerDash;
+    float dashSpeed;
+    float dashCd;
+    float cdTimer;
+    bool dashCdOk;
+
+    public CharacterMovement(Rigidbody rb, Transform rot, float s, float dTiming, float dSpeed, float dCd)
     {
         _rb = rb;
         speed = s;
         rotTransform = rot;
+        maxTimerDash = dTiming;
+        dashSpeed = dSpeed;
+        dashCd = dCd;
     }
 
     //Joystick Izquierdo, Movimiento
@@ -36,23 +48,6 @@ public class CharacterMovement
         Move(velX, axis * speed);
     }
 
-    void Move(float axisX, float axisY)
-    {
-        float velY = _rb.velocity.y;
-
-        _rb.velocity = new Vector3(axisX, velY, axisY);
-
-
-        if(rotX>=0.3 || rotX<=-0.3 || rotY>=0.3 || rotY <= -0.3)
-        {
-            Rotation(rotY, rotX);
-        }
-        else
-        {
-            Rotation(axisY, axisX);
-        }
-    }
-
     //Joystick Derecho, Rotacion
     public void RightHorizontal(float axis)
     {
@@ -66,6 +61,34 @@ public class CharacterMovement
         Rotation(axis, rotTransform.forward.x);
     }
 
+    public void OnUpdate()
+    {
+        if (inDash)
+        {
+            timerDash += Time.deltaTime;
+
+            _rb.velocity = rotTransform.forward * dashSpeed;
+
+            if (timerDash >= maxTimerDash)
+            {
+                inDash = false;
+                _rb.velocity = Vector3.zero;
+                timerDash = 0;
+            }
+        }
+
+        if (dashCdOk)
+        {
+            cdTimer += Time.deltaTime;
+
+            if (cdTimer >= dashCd)
+            {
+                dashCdOk = false;
+                cdTimer = 0;
+            }
+        }
+    }
+
     void Rotation(float axisX, float axisY)
     {
         Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
@@ -76,5 +99,37 @@ public class CharacterMovement
             dir = new Vector3(axisY, 0, axisX);
 
         rotTransform.forward += dir;
+    }
+
+    void Move(float axisX, float axisY)
+    {
+
+        float velY = _rb.velocity.y;
+
+        _rb.velocity = new Vector3(axisX, velY, axisY);
+
+
+        if (rotX >= 0.3 || rotX <= -0.3 || rotY >= 0.3 || rotY <= -0.3)
+        {
+            Rotation(rotY, rotX);
+        }
+        else
+        {
+            Rotation(axisY, axisX);
+        }
+    }
+
+    public void Roll()
+    {
+        if (dashCdOk)
+            return;
+
+        inDash = true;
+        dashCdOk = true;
+    }
+
+    public bool IsDash()
+    {
+        return inDash;
     }
 }

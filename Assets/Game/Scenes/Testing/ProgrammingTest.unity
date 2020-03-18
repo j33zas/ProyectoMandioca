@@ -1163,6 +1163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  dashTiming: 0.2
+  dashSpeed: 25
+  dashCD: 1.5
   rot: {fileID: 2122227816}
 --- !u!114 &1954684487
 MonoBehaviour:
