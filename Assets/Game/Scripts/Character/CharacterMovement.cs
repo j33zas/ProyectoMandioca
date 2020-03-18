@@ -68,6 +68,13 @@ public class CharacterMovement
 
     void Rotation(float axisX, float axisY)
     {
-        rotTransform.forward += new Vector3(axisY, 0, axisX);
+        Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
+
+        if (dir == Vector3.zero)
+            rotTransform.forward = new Vector3(axisY, 0, axisX);
+        else
+            dir = new Vector3(axisY, 0, axisX);
+
+        rotTransform.forward += dir;
     }
 }
