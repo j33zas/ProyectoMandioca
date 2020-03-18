@@ -5,6 +5,7 @@ using UnityEngine;
 public class CustomCamera : MonoBehaviour
 {
     public Transform target;
+    private Vector3 velocity = Vector3.zero;
     public float smooth = 1f;
     public Vector3 offset;
     public bool lookAt;
@@ -19,28 +20,33 @@ public class CustomCamera : MonoBehaviour
     }
     private void LateUpdate()
     {
-        Vector3 desiredposition = target.position + offset;
-
-        Vector3 smoothedposition = Vector3.Lerp(transform.position, desiredposition, smooth * Time.deltaTime);
-        transform.position = smoothedposition;
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             activeShake = true;
             shakeDurationCurrent = shakeDuration;
-            
+
         }
         if (activeShake)
         {
             Shake();
         }
+        
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 desiredposition = target.position + offset;
+
+        Vector3 smoothedposition = Vector3.Lerp(transform.position, desiredposition, smooth * Time.deltaTime);
+        transform.position = smoothedposition;
+       
+        
         if (lookAt)
         {
             transform.LookAt(target);
         }
-       
     }
-
-
     private void Shake()
     {
         if (shakeDurationCurrent > 0)
@@ -54,5 +60,10 @@ public class CustomCamera : MonoBehaviour
             activeShake = false;
         }
 
+    }
+    void SmoothDump()
+    {
+        transform.position = Vector3.SmoothDamp(transform.position,target.position,ref velocity,smooth);
+                                                      
     }
 }
