@@ -15,8 +15,6 @@ public class CharacterHead : MonoBehaviour
     [SerializeField]
     float speed;
     [SerializeField]
-    float rSpeed;
-    [SerializeField]
     Transform rot;
     //el head va a recibir los inputs
     //primero pasa por aca y no directamente al movement porque tal vez necesitemos extraer la llamada

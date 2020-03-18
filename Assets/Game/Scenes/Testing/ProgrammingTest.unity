@@ -1162,8 +1162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb235e0dfc3007b44a57920b9a8ef9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  rSpeed: 5
+  speed: 6
   rot: {fileID: 2122227816}
 --- !u!114 &1954684487
 MonoBehaviour:
@@ -1177,7 +1176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760f7863e6a7e3c43a531747c0621e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JoystickConected: 0
+  JoystickConected: 1
   LeftHorizontal:
     m_PersistentCalls:
       m_Calls:
