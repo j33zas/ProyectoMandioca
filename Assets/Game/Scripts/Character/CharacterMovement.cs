@@ -22,7 +22,7 @@ public class CharacterMovement
     {
         float velZ = _rb.velocity.z;
 
-        Move(axis, velZ);
+        Move(axis * speed, velZ);
 
     }
 
@@ -30,16 +30,22 @@ public class CharacterMovement
     {
         float velX = _rb.velocity.x;
 
-        Move(velX, axis);
+        Move(velX, axis * speed);
     }
 
     void Move(float axisX, float axisY)
     {
         float velY = _rb.velocity.y;
 
-        _rb.velocity = new Vector3(axisX * speed, velY, axisY * speed);
+        _rb.velocity = new Vector3(axisX, velY, axisY);
 
-        //rotTransform.forward += new Vector3(axisX, 0, axisY);
+        Vector3 dir = new Vector3(axisX, 0, axisY);
+        rotTransform.forward += dir.normalized;
+
+        if (rotTransform.forward.x == 0)
+        {
+            rotTransform.forward = new Vector3(rotTransform.transform.forward.x, rotTransform.transform.forward.x, -1);
+        }
     }
 
     //Joystick Derecho, Rotacion
@@ -56,5 +62,10 @@ public class CharacterMovement
     void Rotation(float axisX, float axisY)
     {
         rotTransform.forward += new Vector3(axisY, 0, axisX);
+
+        if (rotTransform.forward.z == 0)
+        {
+            rotTransform.forward += new Vector3(rotTransform.transform.forward.x, rotTransform.transform.forward.x, -1);
+        }
     }
 }
