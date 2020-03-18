@@ -39,23 +39,22 @@ public class CharacterMovement
 
         _rb.velocity = new Vector3(axisX * speed, velY, axisY * speed);
 
-        rotTransform.forward += new Vector3(axisX, 0, axisY);
+        //rotTransform.forward += new Vector3(axisX, 0, axisY);
     }
 
     //Joystick Derecho, Rotacion
     public void RightHorizontal(float axis)
     {
-        Rotation(rotTransform.forward.x, axis);
+        Rotation(rotTransform.forward.z, axis);
     }
 
     public void RightVerical(float axis)
     {
-        Rotation(axis, rotTransform.forward.z);
+        Rotation(axis, rotTransform.forward.x);
     }
 
     void Rotation(float axisX, float axisY)
     {
-        //rotTransform.forward += new Vector3(axisX, 0, axisY);
-        //Debug.Log(axisX + "             " + axisY);
+        rotTransform.forward += new Vector3(axisY, 0, axisX);
     }
 }
