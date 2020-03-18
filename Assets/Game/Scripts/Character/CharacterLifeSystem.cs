@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System;
-using Event = Life.EV_LIFE;
+using Event = StatBase.EV_LIFE;
 
 public class CharacterLifeSystem : MonoBehaviour
 {
-    Life life;
-    public FrontendLifeBase uilife;
+    StatBase life;
+    public FrontendStatBase uilife;
 
     public void Config(int life_count_Max, Action OnLoseLife, Action OnGainLife, Action OnDeath, int initial_life = -1)
     {
         if (uilife == null) return;
-        life = new Life(life_count_Max, uilife, initial_life);
+        life = new StatBase(life_count_Max, uilife, initial_life);
         life.AddEventListener_Death(OnDeath);
         life.AddEventListener_GainLife(OnGainLife);
         life.AddEventListener_LoseLife(OnLoseLife);
