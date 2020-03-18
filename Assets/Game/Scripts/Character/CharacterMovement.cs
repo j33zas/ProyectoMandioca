@@ -7,34 +7,55 @@ public class CharacterMovement
 {
 
     Rigidbody _rb;
+    Transform rotTransform;
     float speed;
 
-    public CharacterMovement(Rigidbody rb, float s)
+    public CharacterMovement(Rigidbody rb, Transform rot, float s)
     {
         _rb = rb;
         speed = s;
+        rotTransform = rot;
     }
 
     //Joystick Izquierdo, Movimiento
     public void LeftHorizontal(float axis)
     {
-        float velY = _rb.velocity.y;
         float velZ = _rb.velocity.z;
 
-        _rb.velocity = new Vector3(axis * speed, velY, velZ);
+        Move(axis, velZ);
 
-        Debug.Log(axis);
     }
 
     public void LeftVerical(float axis)
     {
-        float velY = _rb.velocity.y;
         float velX = _rb.velocity.x;
 
-        _rb.velocity = new Vector3(velX, velY, axis * speed);
+        Move(velX, axis);
+    }
+
+    void Move(float axisX, float axisY)
+    {
+        float velY = _rb.velocity.y;
+
+        _rb.velocity = new Vector3(axisX * speed, velY, axisY * speed);
+
+        rotTransform.forward += new Vector3(axisX, 0, axisY);
     }
 
     //Joystick Derecho, Rotacion
-    public void RightHorizontal(float axis) { }
-    public void RightVerical(float axis) { }
+    public void RightHorizontal(float axis)
+    {
+        Rotation(rotTransform.forward.x, axis);
+    }
+
+    public void RightVerical(float axis)
+    {
+        Rotation(axis, rotTransform.forward.z);
+    }
+
+    void Rotation(float axisX, float axisY)
+    {
+        //rotTransform.forward += new Vector3(axisX, 0, axisY);
+        //Debug.Log(axisX + "             " + axisY);
+    }
 }
