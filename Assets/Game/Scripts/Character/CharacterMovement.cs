@@ -9,9 +9,13 @@ public class CharacterMovement
     Rigidbody _rb;
     Transform rotTransform;
     float speed;
+    Func<bool> dashForm;
 
     float rotX;
     float rotY;
+    float movX;
+    float movY;
+    Vector3 dashDir;
 
     bool inDash;
 
@@ -22,7 +26,7 @@ public class CharacterMovement
     float cdTimer;
     bool dashCdOk;
 
-    public CharacterMovement(Rigidbody rb, Transform rot, float s, float dTiming, float dSpeed, float dCd)
+    public CharacterMovement(Rigidbody rb, Transform rot, float s, float dTiming, float dSpeed, float dCd, Func<bool> dForm)
     {
         _rb = rb;
         speed = s;
@@ -30,6 +34,7 @@ public class CharacterMovement
         maxTimerDash = dTiming;
         dashSpeed = dSpeed;
         dashCd = dCd;
+        dashForm += dForm;
     }
 
     //Joystick Izquierdo, Movimiento
@@ -39,6 +44,7 @@ public class CharacterMovement
 
         Move(axis * speed, velZ);
 
+        movX = axis;
     }
 
     public void LeftVerical(float axis)
@@ -46,6 +52,8 @@ public class CharacterMovement
         float velX = _rb.velocity.x;
 
         Move(velX, axis * speed);
+
+        movY = axis;
     }
 
     //Joystick Derecho, Rotacion
@@ -67,13 +75,21 @@ public class CharacterMovement
         {
             timerDash += Time.deltaTime;
 
-            _rb.velocity = rotTransform.forward * dashSpeed;
+            if(dashDir != Vector3.zero && !dashForm())
+            {
+                _rb.velocity = dashDir * dashSpeed;
+            }
+            else
+            {
+                _rb.velocity = rotTransform.forward * dashSpeed;
+            }
 
             if (timerDash >= maxTimerDash)
             {
                 inDash = false;
                 _rb.velocity = Vector3.zero;
                 timerDash = 0;
+                dashDir = Vector3.zero;
             }
         }
 
@@ -126,6 +142,7 @@ public class CharacterMovement
 
         inDash = true;
         dashCdOk = true;
+        dashDir = new Vector3(movX, 0, movY);
     }
 
     public bool IsDash()

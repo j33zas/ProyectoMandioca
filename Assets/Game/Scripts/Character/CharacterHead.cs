@@ -13,6 +13,8 @@ public class CharacterHead : MonoBehaviour
     Action Dash;
     Action ChildrensUpdates;
 
+    [SerializeField]
+    bool directionalDash;
 
     [SerializeField]
     float speed;
@@ -33,7 +35,7 @@ public class CharacterHead : MonoBehaviour
 
     private void Awake()
     {
-        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, speed, dashTiming,dashSpeed, dashCD);
+        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, speed, dashTiming,dashSpeed, dashCD, IsDirectionalDash);
 
         MovementHorizontal += move.LeftHorizontal;
         MovementVertical += move.LeftVerical;
@@ -42,6 +44,11 @@ public class CharacterHead : MonoBehaviour
         Dash += move.Roll;
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
+    }
+
+    bool IsDirectionalDash()
+    {
+        return directionalDash;
     }
 
     private void Update()
