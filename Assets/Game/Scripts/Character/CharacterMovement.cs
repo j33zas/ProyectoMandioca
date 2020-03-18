@@ -10,6 +10,9 @@ public class CharacterMovement
     Transform rotTransform;
     float speed;
 
+    float rotX;
+    float rotY;
+
     public CharacterMovement(Rigidbody rb, Transform rot, float s)
     {
         _rb = rb;
@@ -39,33 +42,32 @@ public class CharacterMovement
 
         _rb.velocity = new Vector3(axisX, velY, axisY);
 
-        Vector3 dir = new Vector3(axisX, 0, axisY);
-        rotTransform.forward += dir.normalized;
 
-        if (rotTransform.forward.x == 0)
+        if(rotX>=0.3 || rotX<=-0.3 || rotY>=0.3 || rotY <= -0.3)
         {
-            rotTransform.forward = new Vector3(rotTransform.transform.forward.x, rotTransform.transform.forward.x, -1);
+            Rotation(rotY, rotX);
+        }
+        else
+        {
+            Rotation(axisY, axisX);
         }
     }
 
     //Joystick Derecho, Rotacion
     public void RightHorizontal(float axis)
     {
+        rotX = axis;
         Rotation(rotTransform.forward.z, axis);
     }
 
     public void RightVerical(float axis)
     {
+        rotY = axis;
         Rotation(axis, rotTransform.forward.x);
     }
 
     void Rotation(float axisX, float axisY)
     {
         rotTransform.forward += new Vector3(axisY, 0, axisX);
-
-        if (rotTransform.forward.z == 0)
-        {
-            rotTransform.forward += new Vector3(rotTransform.transform.forward.x, rotTransform.transform.forward.x, -1);
-        }
     }
 }
