@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LifeBar : FrontendLifeBase
+public class LifeBar : FrontendStatBase
 {
     public Text val;
     public GenericBar genbar;

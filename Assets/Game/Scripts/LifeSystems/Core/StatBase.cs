@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Life
+public class StatBase
 {
-    FrontendLifeBase uilife;
+    FrontendStatBase uilife;
 
     //variables
     public enum EV_LIFE { LOSE_LIFE, GAIN_LIFE, ON_START, ON_DEATH }
@@ -31,7 +31,8 @@ public class Life
         {
             if (value > 0)
             {
-                if (value > maxHealth) { 
+                if (value > maxHealth) 
+                {
                     health = maxHealth;
                     uilife.OnLifeChange(maxHealth, maxHealth);
                 }
@@ -60,7 +61,7 @@ public class Life
 
     //Constructor
 
-    public Life(int maxHealth, FrontendLifeBase uilife, int initial_Life = -1)
+    public StatBase(int maxHealth, FrontendStatBase uilife, int initial_Life = -1)
     {
         this.maxHealth = maxHealth;
         health = initial_Life == -1 ? this.maxHealth : initial_Life;
