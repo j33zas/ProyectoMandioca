@@ -508,10 +508,10 @@ RectTransform:
   m_Father: {fileID: 1673563631}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.040000003, y: 0.731}
+  m_AnchorMin: {x: 0.040000003, y: 0.5821199}
   m_AnchorMax: {x: 0.5, y: 0.89367175}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -9.540009}
+  m_SizeDelta: {x: 0, y: 19.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &787907415
 MonoBehaviour:
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.053194284, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -544,7 +544,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "life system\nZ - Curar\nX - da\xF1ar\nC - curar todo\nV - agregar salud"
+  m_Text: "TESTING\n\nlife system\nZ - Curar\nX - da\xF1ar\nC - curar todo\nV - agregar
+    salud\n\nSpace - Shake camera\n\nB Button Xbox - Dash C.D. 1seg\nL Stick Xbox
+    - Move\nR Stick Xbox - Look"
 --- !u!222 &787907416
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1165,7 +1167,7 @@ MonoBehaviour:
   speed: 6
   dashTiming: 0.2
   dashSpeed: 25
-  dashCD: 1.5
+  dashCD: 1
   rot: {fileID: 2122227816}
 --- !u!114 &1954684487
 MonoBehaviour:
