@@ -10,6 +10,7 @@ public class LifeBase : StatBase
     public LifeBase(int maxHealth, FrontendStatBase _uilife, int initial_Life = -1) : base(maxHealth, initial_Life)
     {
         uilife = _uilife;
+        uilife.OnValueChange(maxHealth, maxHealth);
     }
 
     public event Action loselife;
@@ -47,6 +48,6 @@ public class LifeBase : StatBase
 
     public override void OnValueChange(int value, int max)
     {
-        uilife.OnValueChange(value, max);
+        if(uilife != null) uilife.OnValueChange(value, max);
     }
 }
