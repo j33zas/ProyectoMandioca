@@ -3,93 +3,95 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class StatBase
+public abstract class StatBase
 {
-    FrontendStatBase uilife;
+    int val;
+    int maxVal;
+    /////////////////////////////
+    ///
+    public int MaxVal => maxVal;
 
-    //variables
-    public enum EV_LIFE { LOSE_LIFE, GAIN_LIFE, ON_START, ON_DEATH }
-
-    public event Action loselife;
-    public event Action gainlife;
-    //public event Action start;
-    public event Action death;
-
-    int health;
-    int maxHealth;
-
-
-    public int MaxHealth
+    public int Val
     {
-        get { return maxHealth; }
-    }
-
-    public int Health
-    {
-        get { return health; }
+        get { return val; }
         set
         {
             if (value > 0)
             {
-                if (value > maxHealth) 
+                if (value >= maxVal) 
                 {
-                    health = maxHealth;
-                    uilife.OnLifeChange(maxHealth, maxHealth);
+                    if (val >= maxVal)
+                    {
+                        CanNotAddMore();
+                    }
+
+                    val = maxVal;
                 }
                 else
                 {
-                    if (value < health)
+                    if (value < val)
                     {
-                        gainlife();
+                        OnRemove();
                     }
-                    else if (value > health)
+                    else if (value > val)
                     {
-                        loselife();
+                        OnAdd();
                     }
-                    uilife.OnLifeChange(value, maxHealth);
-                    health = value;
+                    
+                    val = value;
                 }
             }
             else
             {
-                death();
-                health = 0;
-                uilife.OnLifeChange(0, maxHealth);
+                if (val <= 0)
+                {
+                    CanNotRemoveMore();
+                }
+                else
+                {
+                    OnLoseAll();
+                    
+                }
+
+                val = 0;
             }
+
+            OnValueChange(val, maxVal);
         }
     }
 
+    public abstract void CanNotAddMore();
+    public abstract void OnAdd();
+    public abstract void OnRemove();
+    public abstract void OnLoseAll();
+    public abstract void CanNotRemoveMore();
+    public abstract void OnValueChange(int value, int max);
+
+    /////////////////////////////
+
     //Constructor
-
-    public StatBase(int maxHealth, FrontendStatBase uilife, int initial_Life = -1)
+    public StatBase(int maxHealth, int initial_Life = -1)
     {
-        this.maxHealth = maxHealth;
-        health = initial_Life == -1 ? this.maxHealth : initial_Life;
-        this.uilife = uilife;
-        uilife.OnLifeChange(health, maxHealth);
+        this.maxVal = maxHealth;
+        val = initial_Life == -1 ? this.maxVal : initial_Life;
+        OnValueChange(val, maxHealth);
     }
 
-    public void ResetLife()
+    /////////////////////////////
+    public void ResetValueToMax()
     {
-        Health = maxHealth;
+        Val = maxVal;
     }
 
-    public void IncreaseLife(int val)
+    public void IncreaseValue(int val)
     {
-        maxHealth += val;
-        Health = maxHealth;
+        maxVal += val;
+        Val = maxVal;
     }
 
-    public void SetLife(int val)
+    public void SetValue(int val)
     {
-        maxHealth = val;
-        Health = maxHealth;
+        maxVal = val;
+        Val = maxVal;
     }
-
-    public void AddEventListener_LoseLife(Action listener) { loselife += listener; }
-    public void AddEventListener_GainLife(Action listener) { gainlife += listener; }
-    public void AddEventListener_Death(Action listener) { death += listener; }
-
-
-
 }

@@ -8,7 +8,7 @@ public class LifeBar : FrontendStatBase
     public Text val;
     public GenericBar genbar;
 
-    public override void OnLifeChange(int value, int max = 100, bool anim = false)
+    public override void OnValueChange(int value, int max = 100, bool anim = false)
     {
         genbar.Configure(0, max, 0.01f);
         genbar.SetValue(value);

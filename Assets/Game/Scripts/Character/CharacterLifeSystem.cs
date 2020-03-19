@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 using System;
-using Event = StatBase.EV_LIFE;
 
 public class CharacterLifeSystem : MonoBehaviour
 {
-    StatBase life;
+    LifeBase life;
     public FrontendStatBase uilife;
 
     public void Config(int life_count_Max, Action OnLoseLife, Action OnGainLife, Action OnDeath, int initial_life = -1)
     {
         if (uilife == null) return;
-        life = new StatBase(life_count_Max, uilife, initial_life);
+        life = new LifeBase(life_count_Max, uilife, initial_life);
         life.AddEventListener_Death(OnDeath);
         life.AddEventListener_GainLife(OnGainLife);
         life.AddEventListener_LoseLife(OnLoseLife);
@@ -22,7 +21,7 @@ public class CharacterLifeSystem : MonoBehaviour
         {
             if (life != null)
             {
-                return life.Health;
+                return life.Val;
             }
             else
             {
@@ -31,16 +30,16 @@ public class CharacterLifeSystem : MonoBehaviour
         }
     }
 
-    public void SetCurrentLifeNoMax(int currentlife) => life.Health = currentlife;
-    public int GetMax() => life.MaxHealth;
-    public void Hit() => life.Health--;
-    public void Hit(int val) => life.Health -= val;
-    public void AddHealth() => life.Health++;
-    public void AddHealth(int val) => life.Health += val;
-    public bool CanHealth() => life.Health < life.MaxHealth;
-    public void IncreaseLife() => life.IncreaseLife(1);
-    public void IncreaseLife(int val) => life.IncreaseLife(val);
-    public void SetLife(int newMax) => life.SetLife(newMax);
-    public void ResetLife() => life.ResetLife();
-    public override string ToString() => life.Health.ToString();
+    public void SetCurrentLifeNoMax(int currentlife) => life.Val = currentlife;
+    public int GetMax() => life.MaxVal;
+    public void Hit() => life.Val--;
+    public void Hit(int val) => life.Val -= val;
+    public void AddHealth() => life.Val++;
+    public void AddHealth(int val) => life.Val += val;
+    public bool CanHealth() => life.Val < life.MaxVal;
+    public void IncreaseLife() => life.IncreaseValue(1);
+    public void IncreaseLife(int val) => life.IncreaseValue(val);
+    public void SetLife(int newMax) => life.SetValue(newMax);
+    public void ResetLife() => life.ResetValueToMax();
+    public override string ToString() => life.Val.ToString();
 }
