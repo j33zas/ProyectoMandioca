@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class CharacterInput : MonoBehaviour
 {
     public enum InputType { Joystick, Mouse, Other }
     public InputType input_type;
+
+    public Text txt;
 
     [Header("Movement")]
     public UnityEvFloat LeftHorizontal;
@@ -37,6 +40,14 @@ public class CharacterInput : MonoBehaviour
     {
         RightHorizontal.Invoke(Input.GetAxis("RightHorizontal"));
         RightVertical.Invoke(Input.GetAxis("RightVertical"));
+    }
+
+
+    public void ChangeRotationInput()
+    {
+        if (input_type == InputType.Mouse) input_type = InputType.Joystick;
+        else if(input_type == InputType.Joystick) input_type = InputType.Mouse;
+        txt.text = "inputType = " + input_type;
     }
 
     [System.Serializable]

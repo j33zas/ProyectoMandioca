@@ -28,14 +28,15 @@ public class CharacterHead : MonoBehaviour
 
     [SerializeField]
     Transform rot;
-    [SerializeField]
-    Text txt;
-    
 
     Func<bool> InDash;
     //el head va a recibir los inputs
     //primero pasa por aca y no directamente al movement porque tal vez necesitemos extraer la llamada
     //para visualizarlo con algun feedback visual
+
+    [SerializeField]
+    Text txt;
+
 
     private void Awake()
     {
@@ -60,10 +61,13 @@ public class CharacterHead : MonoBehaviour
         directionalDash = !directionalDash;
         txt.text = "Directional Dash = " + directionalDash.ToString();
     }
-    
+
     private void Update()
     {
         ChildrensUpdates();
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+            RollDash();
     }
 
     //Joystick Izquierdo, Movimiento
