@@ -14,6 +14,10 @@ public class CharacterHead : MonoBehaviour
     Action Dash;
     Action ChildrensUpdates;
 
+    #region SCRIPT TEMPORAL, BORRAR
+    Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
+    #endregion
+
     [SerializeField]
     bool directionalDash;
 
@@ -49,6 +53,10 @@ public class CharacterHead : MonoBehaviour
         Dash += move.Roll;
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
+
+        #region SCRIPT TEMPORAL, BORRAR
+        changeCDDash += move.ChangeDashCD;
+        #endregion
     }
 
     bool IsDirectionalDash()
@@ -61,6 +69,8 @@ public class CharacterHead : MonoBehaviour
         directionalDash = !directionalDash;
         txt.text = "Directional Dash = " + directionalDash.ToString();
     }
+    // esto es para testing //LUEGO QUE CUMPLA SU FUNCION... BORRAR
+    
 
     private void Update()
     {

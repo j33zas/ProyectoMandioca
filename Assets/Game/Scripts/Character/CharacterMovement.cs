@@ -149,4 +149,11 @@ public class CharacterMovement
     {
         return inDash;
     }
+
+    #region SCRIPT TEMPORAL, BORRAR
+    public void ChangeDashCD(float _cd)
+    {
+        dashCd = _cd;
+    }
+    #endregion
 }
