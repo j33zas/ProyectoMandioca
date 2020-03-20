@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 
 public class CharacterHead : MonoBehaviour
@@ -27,6 +28,9 @@ public class CharacterHead : MonoBehaviour
 
     [SerializeField]
     Transform rot;
+    [SerializeField]
+    Text txt;
+    
 
     Func<bool> InDash;
     //el head va a recibir los inputs
@@ -51,12 +55,15 @@ public class CharacterHead : MonoBehaviour
         return directionalDash;
     }
 
+    public void ChangeDashForm()
+    {
+        directionalDash = !directionalDash;
+        txt.text = "Directional Dash = " + directionalDash.ToString();
+    }
+    
     private void Update()
     {
         ChildrensUpdates();
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
-            RollDash();
     }
 
     //Joystick Izquierdo, Movimiento
