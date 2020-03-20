@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760f7863e6a7e3c43a531747c0621e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JoystickConected: 1
+  input_type: 0
   LeftHorizontal:
     m_PersistentCalls:
       m_Calls:
@@ -1439,6 +1439,20 @@ MonoBehaviour:
       - m_Target: {fileID: 1954684486}
         m_MethodName: RightVerical
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Dash:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1954684486}
+        m_MethodName: RollDash
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
