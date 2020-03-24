@@ -10,7 +10,7 @@ public class LifeBar : FrontendStatBase
 
     public override void OnValueChange(int value, int max = 100, bool anim = false)
     {
-        genbar.Configure(0, max, 0.01f);
+        genbar.Configure(max, 0.01f);
         genbar.SetValue(value);
     }
 }

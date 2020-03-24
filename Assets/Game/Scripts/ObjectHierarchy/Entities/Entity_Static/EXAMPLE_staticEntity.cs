@@ -10,4 +10,5 @@ public class EXAMPLE_staticEntity : StaticEntity
     protected override void OnResume() { }
     protected override void OnFixedUpdate() { }
     protected override void OnUpdate() { }
+    public override void TakeDamage(int dmg) { }
 }

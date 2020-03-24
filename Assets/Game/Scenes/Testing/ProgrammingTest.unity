@@ -1529,7 +1529,7 @@ GameObject:
   - component: {fileID: 1411511419}
   - component: {fileID: 1411511418}
   m_Layer: 5
-  m_Name: Image no tocar escala ni nada
+  m_Name: ToScale do not touch (o corto mano)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1542,11 +1542,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411511416}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1582635415}
+  m_Father: {fileID: 2103249331}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1568,20 +1568,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 1, b: 0.013665199, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2.94
 --- !u!222 &1411511419
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1719,42 +1719,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494865298}
   m_CullTransparentMesh: 0
---- !u!1 &1582635414
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1582635415}
-  m_Layer: 5
-  m_Name: pivot point to scale
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1582635415
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582635414}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1411511417}
-  m_Father: {fileID: 2103249331}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1673563630
 GameObject:
   m_ObjectHideFlags: 0
@@ -2414,7 +2378,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1582635415}
+  - {fileID: 1411511417}
   - {fileID: 1699574847}
   m_Father: {fileID: 1673563631}
   m_RootOrder: 0
@@ -2483,14 +2447,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2103249330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13447ec2c15683443b9ff0cce28b8358, type: 3}
+  m_Script: {fileID: 11500000, guid: 55063f85262558344b61d26bf37b5c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivotPointToScale: {fileID: 1582635415}
-  spcake: {fileID: 0}
-  _axis: 0
   porcentaje: {fileID: 1699574848}
   realvalue: 1
+  pivotPointToScale: {fileID: 1411511417}
+  _axis: 0
 --- !u!1 &2122227815
 GameObject:
   m_ObjectHideFlags: 0
