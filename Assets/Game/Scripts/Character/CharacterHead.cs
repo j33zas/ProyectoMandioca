@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 
 
-public class CharacterHead : MonoBehaviour
+public class CharacterHead : CharacterControllable
 {
     Action<float> MovementHorizontal;
     Action<float> MovementVertical;
@@ -13,6 +13,10 @@ public class CharacterHead : MonoBehaviour
     Action<float> RotateVertical;
     Action Dash;
     Action ChildrensUpdates;
+
+    Action OnBlock;
+    Action UpBlock;
+    Action Parry;
 
     #region SCRIPT TEMPORAL, BORRAR
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
@@ -54,6 +58,13 @@ public class CharacterHead : MonoBehaviour
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
 
+        var charblock = new CharacterBlock();
+        OnBlock += charblock.OnBlockDown;
+        UpBlock += charblock.OnBlockUp;
+        Parry += charblock.Parry;
+
+
+
         #region SCRIPT TEMPORAL, BORRAR
         changeCDDash += move.ChangeDashCD;
         #endregion
@@ -79,6 +90,22 @@ public class CharacterHead : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Joystick1Button1))
             RollDash();
     }
+
+    public void EVENT_OnBlocking()
+    {
+        OnBlock();
+    }
+    public void EVENT_UpBlocking()
+    {
+        UpBlock();
+    }
+    public void EVENT_Parry()
+    {
+        Parry();
+    }
+
+    public void EVENT_OnAttackBegin() { }
+    public void EVENT_OnAttackEnd() { }
 
     //Joystick Izquierdo, Movimiento
     public void LeftHorizontal(float axis)
@@ -111,4 +138,12 @@ public class CharacterHead : MonoBehaviour
             Dash();
 
     }
+
+    protected override void OnUpdateEntity() { }
+    public override void TakeDamage(int dmg) { }
+    protected override void OnTurnOn() { }
+    protected override void OnTurnOff() { }
+    protected override void OnFixedUpdate() { }
+    protected override void OnPause() { }
+    protected override void OnResume() { }
 }

@@ -8,6 +8,11 @@ public abstract class WalkingEntity : EntityBase
     /// aca se puede implementar un A* desactivado
     /// </summary>
 
+    private void Awake()
+    {
+        
+    }
+
     private bool executeAStar;
     protected override void OnUpdate() { if (executeAStar) {/*Execute AStar*/}  OnUpdateEntity(); }
     protected void Callback_IHaveArrived() { /*llegue a mi posicion, por callback*/ executeAStar = false; }

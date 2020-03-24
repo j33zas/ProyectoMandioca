@@ -18,13 +18,24 @@ public class CharacterInput : MonoBehaviour
     public UnityEvFloat RightVertical;
     public UnityEvent Dash;
 
+    public UnityEvent OnBlock;
+    public UnityEvent UpBlock;
+    public UnityEvent Parry;
+
+
+
     private void Update()
     {
         LeftHorizontal.Invoke(Input.GetAxis("Horizontal"));
         LeftVertical.Invoke(Input.GetAxis("Vertical"));
         if (input_type == InputType.Joystick) JoystickInputs();
-        else if(input_type == InputType.Mouse) MouseInputs();
+        else if (input_type == InputType.Mouse) MouseInputs();
         if (Input.GetButtonDown("Dash")) Dash.Invoke();
+
+        if (Input.GetButtonDown("Block")) OnBlock.Invoke();
+        if (Input.GetButtonUp("Block")) UpBlock.Invoke();
+        if (Input.GetButtonDown("Parry")) Parry.Invoke();
+
     }
 
     public void MouseInputs()
@@ -46,12 +57,12 @@ public class CharacterInput : MonoBehaviour
     public void ChangeRotationInput()
     {
         if (input_type == InputType.Mouse) input_type = InputType.Joystick;
-        else if(input_type == InputType.Joystick) input_type = InputType.Mouse;
+        else if (input_type == InputType.Joystick) input_type = InputType.Mouse;
         txt.text = "inputType = " + input_type;
     }
 
     [System.Serializable]
     public class UnityEvFloat : UnityEvent<float> { }
 }
-   
+
 
