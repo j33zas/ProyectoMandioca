@@ -24,19 +24,49 @@ public class CharacterMovement
     float dashSpeed;
     float dashCd;
     float cdTimer;
+    float dashDecreaseSpeed;
+    float dashMaxSpeed;
     bool dashCdOk;
 
-    public CharacterMovement(Rigidbody rb, Transform rot, float s, float dTiming, float dSpeed, float dCd, Func<bool> dForm)
+    //Animator anim;
+
+    public CharacterMovement(Rigidbody rb, Transform rot, Func<bool> dForm/*, Animator a*/)
     {
         _rb = rb;
-        speed = s;
         rotTransform = rot;
-        maxTimerDash = dTiming;
-        dashSpeed = dSpeed;
-        dashCd = dCd;
         dashForm += dForm;
+        //anim = a;
     }
 
+    #region BUILDER
+    public CharacterMovement SetSpeed(float n)
+    {
+        speed = n;
+        return this;
+    }
+    public CharacterMovement SetTimerDash(float n)
+    {
+        maxTimerDash = n;
+        return this;
+    }
+    public CharacterMovement SetDashSpeed(float n)
+    {
+        dashMaxSpeed = n;
+        return this;
+    }
+    public CharacterMovement SetDashCD(float n)
+    {
+        dashCd = n;
+        return this;
+    }
+    public CharacterMovement SetRollDeceleration(float n)
+    {
+        dashDecreaseSpeed = n;
+        return this;
+    }
+    #endregion
+
+    #region MOVEMENT
     //Joystick Izquierdo, Movimiento
     public void LeftHorizontal(float axis)
     {
@@ -56,6 +86,26 @@ public class CharacterMovement
         movY = axis;
     }
 
+    void Move(float axisX, float axisY)
+    {
+
+        float velY = _rb.velocity.y;
+
+        _rb.velocity = new Vector3(axisX, velY, axisY);
+
+
+        if (rotX >= 0.3 || rotX <= -0.3 || rotY >= 0.3 || rotY <= -0.3)
+        {
+            Rotation(rotY, rotX);
+        }
+        else
+        {
+            Rotation(axisY, axisX);
+        }
+    }
+    #endregion
+
+    #region ROTATION
     //Joystick Derecho, Rotacion
     public void RightHorizontal(float axis)
     {
@@ -68,12 +118,32 @@ public class CharacterMovement
         rotY = axis;
         Rotation(axis, rotTransform.forward.x);
     }
+    void Rotation(float axisX, float axisY)
+    {
+        Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
 
+        if (dir == Vector3.zero)
+            rotTransform.forward = new Vector3(axisY, 0, axisX);
+        else
+            dir = new Vector3(axisY, 0, axisX);
+
+        rotTransform.forward += dir;
+    }
+
+    #endregion
+
+    #region ROLL
     public void OnUpdate()
     {
         if (inDash)
         {
             timerDash += Time.deltaTime;
+
+            if (timerDash / maxTimerDash >= 0.7f && dashSpeed!=dashDecreaseSpeed)
+            {
+                _rb.velocity = Vector3.zero;
+                dashSpeed = dashDecreaseSpeed;
+            }
 
             if(dashDir != Vector3.zero && !dashForm())
             {
@@ -105,36 +175,6 @@ public class CharacterMovement
         }
     }
 
-    void Rotation(float axisX, float axisY)
-    {
-        Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
-
-        if (dir == Vector3.zero)
-            rotTransform.forward = new Vector3(axisY, 0, axisX);
-        else
-            dir = new Vector3(axisY, 0, axisX);
-
-        rotTransform.forward += dir;
-    }
-
-    void Move(float axisX, float axisY)
-    {
-
-        float velY = _rb.velocity.y;
-
-        _rb.velocity = new Vector3(axisX, velY, axisY);
-
-
-        if (rotX >= 0.3 || rotX <= -0.3 || rotY >= 0.3 || rotY <= -0.3)
-        {
-            Rotation(rotY, rotX);
-        }
-        else
-        {
-            Rotation(axisY, axisX);
-        }
-    }
-
     public void Roll()
     {
         if (dashCdOk)
@@ -143,6 +183,9 @@ public class CharacterMovement
         inDash = true;
         dashCdOk = true;
         dashDir = new Vector3(movX, 0, movY);
+        dashSpeed = dashMaxSpeed;
+
+        //anim.SetTrigger("char_begin_roll");
     }
 
     public bool IsDash()
@@ -155,5 +198,7 @@ public class CharacterMovement
     {
         dashCd = _cd;
     }
+    #endregion
+
     #endregion
 }

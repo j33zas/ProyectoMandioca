@@ -2141,8 +2141,9 @@ MonoBehaviour:
   side_Type: 0
   directionalDash: 0
   speed: 6
-  dashTiming: 0.2
-  dashSpeed: 25
+  dashTiming: 0.5
+  dashSpeed: 10
+  dashDeceleration: 4
   dashCD: 1
   _timerOfParry: 2
   rot: {fileID: 2122227816}

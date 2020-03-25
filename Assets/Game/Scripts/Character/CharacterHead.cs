@@ -33,6 +33,8 @@ public class CharacterHead : CharacterControllable
     [SerializeField]
     float dashSpeed;
     [SerializeField]
+    float dashDeceleration;
+    [SerializeField]
     float dashCD;
     [SerializeField]
     float _timerOfParry;
@@ -50,7 +52,11 @@ public class CharacterHead : CharacterControllable
 
     private void Awake()
     {
-        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, speed, dashTiming,dashSpeed, dashCD, IsDirectionalDash);
+//        Animator anim = GetComponent<Animator>();
+
+        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash/*,anim*/).
+            SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
+            SetDashCD(dashCD).SetRollDeceleration(dashDeceleration);
 
         MovementHorizontal += move.LeftHorizontal;
         MovementVertical += move.LeftVerical;
@@ -145,6 +151,9 @@ public class CharacterHead : CharacterControllable
     protected override void OnUpdateEntity() { }
     public override void TakeDamage(int dmg)
     {
+        if (InDash())
+            return;
+
         if (charBlock.onParry)
         {
             Debug.Log("Parry logrado");
