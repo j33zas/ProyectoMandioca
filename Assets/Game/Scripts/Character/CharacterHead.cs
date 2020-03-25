@@ -18,6 +18,7 @@ public class CharacterHead : CharacterControllable
     Action UpBlock;
     Action Parry;
 
+    CharacterBlock charBlock;
     #region SCRIPT TEMPORAL, BORRAR
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
@@ -33,7 +34,8 @@ public class CharacterHead : CharacterControllable
     float dashSpeed;
     [SerializeField]
     float dashCD;
-
+    [SerializeField]
+    float _timerOfParry;
     [SerializeField]
     Transform rot;
 
@@ -57,12 +59,13 @@ public class CharacterHead : CharacterControllable
         Dash += move.Roll;
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
+        
 
-        var charblock = new CharacterBlock();
-        OnBlock += charblock.OnBlockDown;
-        UpBlock += charblock.OnBlockUp;
-        Parry += charblock.Parry;
-
+        charBlock = new CharacterBlock(_timerOfParry);
+        OnBlock += charBlock.OnBlockDown;
+        UpBlock += charBlock.OnBlockUp;
+        Parry += charBlock.Parry;
+        ChildrensUpdates += charBlock.OnUpdate;
 
 
         #region SCRIPT TEMPORAL, BORRAR
@@ -140,7 +143,25 @@ public class CharacterHead : CharacterControllable
     }
 
     protected override void OnUpdateEntity() { }
-    public override void TakeDamage(int dmg) { }
+    public override void TakeDamage(int dmg)
+    {
+        if (charBlock.onParry)
+        {
+            Debug.Log("Parry logrado");
+            return;
+        }
+        else if (charBlock.onBlock)
+        {
+            Debug.Log("Blocked but you lost resistance"+dmg);
+            return;
+        }
+        else
+        {
+            Debug.Log("you get hit"+dmg);
+            return;
+        }
+
+    }
     protected override void OnTurnOn() { }
     protected override void OnTurnOff() { }
     protected override void OnFixedUpdate() { }
