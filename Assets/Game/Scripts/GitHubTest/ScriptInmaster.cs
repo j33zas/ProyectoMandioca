@@ -8,15 +8,28 @@ public class ScriptInmaster : MonoBehaviour
     void Start()
     {
         //esto fue escrito en el master
-
-
-        //MASTER: esto es algo nuevo que voy a escribir en el master
-        //MASTER: esto tambien
+        
+            //SECONDARY Esto esta escrito en el secondary
+        //esto tambien
     }
-
-    
-    void Update()
+        void Update()
     {
         //SAME: esto va a ser lo mismo en ambos
+        //CODIGO MERGEADO A MANO
     }
+
+    void NUEVO_SCRIPT()
+    {
+
+    }
+
+
+    esto es un error hecho a proposito
+        asd
+        sad
+        ads
+        asfwer
+        gdfgr
+        rtete
+        rw
 }
