@@ -8,11 +8,15 @@ public class ScriptInmaster : MonoBehaviour
     void Start()
     {
         //esto fue escrito en el master
+
+
+        //MASTER: esto es algo nuevo que voy a escribir en el master
+        //MASTER: esto tambien
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        //SAME: esto va a ser lo mismo en ambos
     }
 }
