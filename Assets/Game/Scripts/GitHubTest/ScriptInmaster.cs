@@ -7,29 +7,10 @@ public class ScriptInmaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //esto fue escrito en el master
-        
-            //SECONDARY Esto esta escrito en el secondary
-        //esto tambien
-    }
-        void Update()
-    {
-        //SAME: esto va a ser lo mismo en ambos
-        //CODIGO MERGEADO A MANO
-    }
 
-    void NUEVO_SCRIPT()
+    }
+    void Update()
     {
 
     }
-
-
-    esto es un error hecho a proposito
-        asd
-        sad
-        ads
-        asfwer
-        gdfgr
-        rtete
-        rw
 }
