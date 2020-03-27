@@ -9,6 +9,8 @@ public abstract class CombatComponent : MonoBehaviour
 
     //todos los que implementan CombatComponent tienen que configurar primero
     public void Configure(Action<EntityBase> _callback) => callback = _callback;
+    public abstract void ManualTriggerAttack();
+    public abstract void BeginAutomaticAttack();
 
     //esta funcion es para llamarla desde los Hijos mismos... estos se van a encargar de
     //la manera en que se busca el Entity

@@ -23,23 +23,19 @@ public class CharacterHead : CharacterControllable
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
 
-    [SerializeField]
-    bool directionalDash;
 
-    [SerializeField]
-    float speed;
-    [SerializeField]
-    float dashTiming;
-    [SerializeField]
-    float dashSpeed;
-    [SerializeField]
-    float dashDeceleration;
-    [SerializeField]
-    float dashCD;
-    [SerializeField]
-    float _timerOfParry;
-    [SerializeField]
-    Transform rot;
+    [Header("Character Head")]
+    [SerializeField] bool directionalDash;
+
+    [SerializeField] float speed;
+    [SerializeField] float dashTiming;
+    [SerializeField] float dashSpeed;
+    [SerializeField] float dashDeceleration;
+    [SerializeField] float dashCD;
+    [SerializeField] float _timerOfParry;
+    [SerializeField] Transform rot;
+
+    [SerializeField] LifeSystem lifesystem;
 
     Func<bool> InDash;
     //el head va a recibir los inputs
@@ -52,7 +48,7 @@ public class CharacterHead : CharacterControllable
 
     private void Awake()
     {
-//        Animator anim = GetComponent<Animator>();
+        //        Animator anim = GetComponent<Animator>();
 
         var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash/*,anim*/).
             SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
@@ -65,7 +61,7 @@ public class CharacterHead : CharacterControllable
         Dash += move.Roll;
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
-        
+
 
         charBlock = new CharacterBlock(_timerOfParry);
         OnBlock += charBlock.OnBlockDown;
@@ -90,7 +86,7 @@ public class CharacterHead : CharacterControllable
         txt.text = "Directional Dash = " + directionalDash.ToString();
     }
     // esto es para testing //LUEGO QUE CUMPLA SU FUNCION... BORRAR
-    
+
 
     private void Update()
     {
@@ -161,12 +157,12 @@ public class CharacterHead : CharacterControllable
         }
         else if (charBlock.onBlock)
         {
-            Debug.Log("Blocked but you lost resistance"+dmg);
+            Debug.Log("Blocked but you lost resistance" + dmg);
             return;
         }
         else
         {
-            Debug.Log("you get hit"+dmg);
+            lifesystem.Hit(5);
             return;
         }
 
