@@ -145,25 +145,23 @@ public class CharacterHead : CharacterControllable
     }
 
     protected override void OnUpdateEntity() { }
-    public override void TakeDamage(int dmg)
+    public override Attack_Result TakeDamage(int dmg)
     {
         if (InDash())
-            return;
+            return Attack_Result.inmune;
 
         if (charBlock.onParry)
         {
-            Debug.Log("Parry logrado");
-            return;
+            return Attack_Result.parried;
         }
         else if (charBlock.onBlock)
         {
-            Debug.Log("Blocked but you lost resistance" + dmg);
-            return;
+            return Attack_Result.blocked;
         }
         else
         {
             lifesystem.Hit(5);
-            return;
+            return Attack_Result.sucessful;
         }
 
     }

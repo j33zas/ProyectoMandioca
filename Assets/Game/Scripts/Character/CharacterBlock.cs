@@ -9,7 +9,7 @@ public class CharacterBlock
     public bool onParry;
     float _currentTime;
     float _timer;
-    bool enableToParry=true;
+    bool canupdate;
 
     public CharacterBlock(float timer)
     {
@@ -30,10 +30,10 @@ public class CharacterBlock
 
     public void Parry()
     {
-        if (enableToParry)
+        if (!canupdate)
         {
             onParry = true;
-            enableToParry = false;
+            canupdate = true;
             Debug.Log("Parry");
         }
        
@@ -41,7 +41,7 @@ public class CharacterBlock
 
     public void OnUpdate()
     {
-        if (!enableToParry)
+        if (canupdate)
         {
             _currentTime -= Time.deltaTime;
             if (_currentTime <= _timer/3)
@@ -50,7 +50,7 @@ public class CharacterBlock
                 Debug.Log("Parry false");
                 if (_currentTime <= 0)
                 {
-                    enableToParry = true;
+                    canupdate = false;
                     _currentTime = _timer;
                 }
 

@@ -21,11 +21,11 @@ public class LifeBase : StatBase
     public void AddEventListener_GainLife(Action listener) { gainlife += listener; }
     public void AddEventListener_Death(Action listener) { death += listener; }
 
-    public override void OnAdd() => Debug.Log("OnAdd");
-    public override void OnRemove() => Debug.Log("OnRemove");
-    public override void OnLoseAll() => Debug.Log("OnLoseAll");
-    public override void CanNotAddMore() => Debug.Log("CannotAddMore");
-    public override void CanNotRemoveMore() => Debug.Log("CanNotRemoveMore");
+    public override void OnAdd() { }
+    public override void OnRemove() { }
+    public override void OnLoseAll() { }
+    public override void CanNotAddMore() { }
+    public override void CanNotRemoveMore() { }
 
     public override void OnValueChange(int value, int max)
     {

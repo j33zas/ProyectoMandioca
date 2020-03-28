@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DummyCC_RaycastMetod : CombatComponent
 {
@@ -14,14 +15,15 @@ public class DummyCC_RaycastMetod : CombatComponent
     float timer;
 
     public GameObject feedbackattack;
-    PopSignalFeedback popsignal;
+    PopSignalFeedback popsignal_attack;
     bool showray;
+
+   [SerializeField] Image feedback_timer_attack;
 
     private void Awake()
     {
         automatic_attack = true;
-
-        popsignal = new PopSignalFeedback(0.1f,feedbackattack);
+        popsignal_attack = new PopSignalFeedback(0.1f,feedbackattack);
     }
     public override void ManualTriggerAttack() => automatic_attack = false;
     public override void BeginAutomaticAttack() => automatic_attack = true;
@@ -33,6 +35,19 @@ public class DummyCC_RaycastMetod : CombatComponent
             
             Gizmos.DrawRay(transform.position, (target.position - transform.position));
     }
+    public override void Play()
+    {
+        timer = 0;
+        automatic_attack = true;
+    }
+
+    public override void Stop()
+    {
+        timer = 0;
+        automatic_attack = false;
+        showray = false;
+    }
+
 
     void Update()
     {
@@ -54,7 +69,7 @@ public class DummyCC_RaycastMetod : CombatComponent
                     if (hit.collider.GetComponent<EntityBase>())
                     {
                         
-                        popsignal.Show();
+                        popsignal_attack.Show();
                         EntityBase character = hit.collider.GetComponent<EntityBase>();
                         callback.Invoke(character);
                     }
@@ -64,8 +79,13 @@ public class DummyCC_RaycastMetod : CombatComponent
                     showray = false;
                 }
             }
+            
         }
 
-        popsignal.Refresh();
+        feedback_timer_attack.fillAmount = timer;
+
+        popsignal_attack.Refresh();
     }
+
+    
 }
