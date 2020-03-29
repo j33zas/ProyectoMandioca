@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Companion : NPCBase
 {
-    public override void TakeDamage(int dmg) { }
+    public override Attack_Result TakeDamage(int dmg) { return Attack_Result.inmune; }
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }

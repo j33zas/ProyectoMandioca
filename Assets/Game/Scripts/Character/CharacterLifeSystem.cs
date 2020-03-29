@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System;
 
-public class CharacterLifeSystem : MonoBehaviour
+public class CharacterLifeSystem
 {
     LifeBase life;
-    public FrontendStatBase uilife;
+    FrontendStatBase uilife; //monovehaviour que hay que pasarle por constructor
 
-    public void Config(int life_count_Max, Action OnLoseLife, Action OnGainLife, Action OnDeath, int initial_life = -1)
+    public void Config(int life_count_Max, Action OnLoseLife, Action OnGainLife, Action OnDeath, FrontendStatBase _uilife, int initial_life = -1)
     {
-        if (uilife == null) return;
+        uilife = _uilife;
         life = new LifeBase(life_count_Max, uilife, initial_life);
         life.AddEventListener_Death(OnDeath);
         life.AddEventListener_GainLife(OnGainLife);

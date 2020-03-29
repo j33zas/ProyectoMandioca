@@ -139,13 +139,13 @@ public class CharacterMovement
         {
             timerDash += Time.deltaTime;
 
-            if (timerDash / maxTimerDash >= 0.7f && dashSpeed!=dashDecreaseSpeed)
+            if (timerDash / maxTimerDash >= 0.7f && dashSpeed != dashDecreaseSpeed)
             {
                 _rb.velocity = Vector3.zero;
                 dashSpeed = dashDecreaseSpeed;
             }
 
-            if(dashDir != Vector3.zero && !dashForm())
+            if (dashDir != Vector3.zero && !dashForm())
             {
                 _rb.velocity = dashDir * dashSpeed;
             }

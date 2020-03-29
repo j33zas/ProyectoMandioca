@@ -23,23 +23,22 @@ public class CharacterHead : CharacterControllable
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
 
-    [SerializeField]
-    bool directionalDash;
 
-    [SerializeField]
-    float speed;
-    [SerializeField]
-    float dashTiming;
-    [SerializeField]
-    float dashSpeed;
-    [SerializeField]
-    float dashDeceleration;
-    [SerializeField]
-    float dashCD;
-    [SerializeField]
-    float _timerOfParry;
-    [SerializeField]
-    Transform rot;
+    [Header("Character Head")]
+    [SerializeField] bool directionalDash;
+
+    [SerializeField] float speed;
+    [SerializeField] float dashTiming;
+    [SerializeField] float dashSpeed;
+    [SerializeField] float dashDeceleration;
+    [SerializeField] float dashCD;
+    [SerializeField] float _timerOfParry;
+    [SerializeField] Transform rot;
+
+    [SerializeField] LifeSystem lifesystem;
+
+    public GameObject feedbackParry;
+    public GameObject feedbackBlock;
 
     Func<bool> InDash;
     //el head va a recibir los inputs
@@ -52,7 +51,9 @@ public class CharacterHead : CharacterControllable
 
     private void Awake()
     {
-//        Animator anim = GetComponent<Animator>();
+        //        Animator anim = GetComponent<Animator>();
+
+        
 
         var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash/*,anim*/).
             SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
@@ -65,13 +66,15 @@ public class CharacterHead : CharacterControllable
         Dash += move.Roll;
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
-        
 
-        charBlock = new CharacterBlock(_timerOfParry);
+
+        charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
+
+
 
 
         #region SCRIPT TEMPORAL, BORRAR
@@ -89,8 +92,11 @@ public class CharacterHead : CharacterControllable
         directionalDash = !directionalDash;
         txt.text = "Directional Dash = " + directionalDash.ToString();
     }
-    // esto es para testing //LUEGO QUE CUMPLA SU FUNCION... BORRAR
-    
+
+    void OnBeginParry() => feedbackParry.SetActive(true);
+    void OnEndParry() => feedbackParry.SetActive(false);
+
+
 
     private void Update()
     {
@@ -102,10 +108,12 @@ public class CharacterHead : CharacterControllable
 
     public void EVENT_OnBlocking()
     {
+        feedbackBlock.SetActive(true);
         OnBlock();
     }
     public void EVENT_UpBlocking()
     {
+        feedbackBlock.SetActive(false);
         UpBlock();
     }
     public void EVENT_Parry()
@@ -149,25 +157,23 @@ public class CharacterHead : CharacterControllable
     }
 
     protected override void OnUpdateEntity() { }
-    public override void TakeDamage(int dmg)
+    public override Attack_Result TakeDamage(int dmg)
     {
         if (InDash())
-            return;
+            return Attack_Result.inmune;
 
         if (charBlock.onParry)
         {
-            Debug.Log("Parry logrado");
-            return;
+            return Attack_Result.parried;
         }
         else if (charBlock.onBlock)
         {
-            Debug.Log("Blocked but you lost resistance"+dmg);
-            return;
+            return Attack_Result.blocked;
         }
         else
         {
-            Debug.Log("you get hit"+dmg);
-            return;
+            lifesystem.Hit(5);
+            return Attack_Result.sucessful;
         }
 
     }

@@ -20,13 +20,6 @@ public class CustomCamera : MonoBehaviour
     }
     private void LateUpdate()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            activeShake = true;
-            shakeDurationCurrent = shakeDuration;
-
-        }
         if (activeShake)
         {
             Shake();
@@ -47,6 +40,13 @@ public class CustomCamera : MonoBehaviour
             transform.LookAt(target);
         }
     }
+
+    public void BeginShakeCamera()
+    {
+        activeShake = true;
+        shakeDurationCurrent = shakeDuration;
+    }
+
     private void Shake()
     {
         if (shakeDurationCurrent > 0)
