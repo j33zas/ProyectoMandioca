@@ -37,6 +37,9 @@ public class CharacterHead : CharacterControllable
 
     [SerializeField] LifeSystem lifesystem;
 
+    public GameObject feedbackParry;
+    public GameObject feedbackBlock;
+
     Func<bool> InDash;
     //el head va a recibir los inputs
     //primero pasa por aca y no directamente al movement porque tal vez necesitemos extraer la llamada
@@ -49,6 +52,8 @@ public class CharacterHead : CharacterControllable
     private void Awake()
     {
         //        Animator anim = GetComponent<Animator>();
+
+        
 
         var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash/*,anim*/).
             SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
@@ -63,11 +68,13 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
 
 
-        charBlock = new CharacterBlock(_timerOfParry);
+        charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
+
+
 
 
         #region SCRIPT TEMPORAL, BORRAR
@@ -85,7 +92,10 @@ public class CharacterHead : CharacterControllable
         directionalDash = !directionalDash;
         txt.text = "Directional Dash = " + directionalDash.ToString();
     }
-    // esto es para testing //LUEGO QUE CUMPLA SU FUNCION... BORRAR
+
+    void OnBeginParry() => feedbackParry.SetActive(true);
+    void OnEndParry() => feedbackParry.SetActive(false);
+
 
 
     private void Update()
@@ -98,10 +108,12 @@ public class CharacterHead : CharacterControllable
 
     public void EVENT_OnBlocking()
     {
+        feedbackBlock.SetActive(true);
         OnBlock();
     }
     public void EVENT_UpBlocking()
     {
+        feedbackBlock.SetActive(false);
         UpBlock();
     }
     public void EVENT_Parry()

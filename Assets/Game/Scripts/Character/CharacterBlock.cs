@@ -11,10 +11,15 @@ public class CharacterBlock
     float _timer;
     bool canupdate;
 
-    public CharacterBlock(float timer)
+    Action beginparry;
+    Action endparry;
+
+    public CharacterBlock(float timer, Action _BeginParry, Action _EndParry)
     {
         _timer = timer;
         _currentTime = timer;
+        beginparry = _BeginParry;
+        endparry = _EndParry;
     }
 
 
@@ -32,6 +37,7 @@ public class CharacterBlock
     {
         if (!canupdate)
         {
+            beginparry.Invoke();
             onParry = true;
             canupdate = true;
             Debug.Log("Parry");
@@ -50,6 +56,7 @@ public class CharacterBlock
                 Debug.Log("Parry false");
                 if (_currentTime <= 0)
                 {
+                    endparry.Invoke();
                     canupdate = false;
                     _currentTime = _timer;
                 }
