@@ -18,4 +18,20 @@ public class CharacterAnimator : BaseAnimator
     {
         myAnim.SetTrigger("Roll");
     }
+
+    public void Block(bool _block)
+    {
+        Debug.Log("On BLock");
+        myAnim.SetBool("BeginBlock", _block);
+    }
+
+    public void BlockSomething()
+    {
+        myAnim.SetTrigger("BlockSomething");
+    }
+
+    public void Parry()
+    {
+
+    }
 }

@@ -72,7 +72,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
 
 
-        charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry);
+        charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry, charanim);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
@@ -87,10 +87,7 @@ public class CharacterHead : CharacterControllable
         #endregion
     }
 
-    void RompeCoco()
-    {
-        lifesystem.Hit(10);
-    }
+    void RompeCoco() => lifesystem.Hit(10);
 
     bool IsDirectionalDash()
     {
@@ -126,10 +123,7 @@ public class CharacterHead : CharacterControllable
         feedbackBlock.SetActive(false);
         UpBlock();
     }
-    public void EVENT_Parry()
-    {
-        Parry();
-    }
+    public void EVENT_Parry() => Parry();
 
     public void EVENT_OnAttackBegin() { }
     public void EVENT_OnAttackEnd() { }

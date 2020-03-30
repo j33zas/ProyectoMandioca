@@ -14,23 +14,20 @@ public class CharacterBlock
     Action beginparry;
     Action endparry;
 
-    public CharacterBlock(float timer, Action _BeginParry, Action _EndParry)
+    CharacterAnimator anim;
+
+    public CharacterBlock(float timer, Action _BeginParry, Action _EndParry, CharacterAnimator _anim)
     {
         _timer = timer;
         _currentTime = timer;
         beginparry = _BeginParry;
         endparry = _EndParry;
+        anim = _anim;
     }
 
 
-    public void OnBlockDown()
-    {
-        onBlock = true;
-    }
-    public void OnBlockUp()
-    {
-        onBlock = false;
-    }
+    public void OnBlockDown() { onBlock = true; anim.Block(true); }
+    public void OnBlockUp() { onBlock = false; anim.Block(false); }
 
     public void Parry()
     {
@@ -40,7 +37,6 @@ public class CharacterBlock
             onParry = true;
             canupdate = true;
         }
-       
     }
 
     public void OnUpdate()
@@ -56,10 +52,9 @@ public class CharacterBlock
                     endparry.Invoke();
                     canupdate = false;
                     _currentTime = _timer;
+                    
                 }
-
             }
         }
-       
     }
 }
