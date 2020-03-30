@@ -23,6 +23,9 @@ public class CharacterInput : MonoBehaviour
     public UnityEvent Parry;
 
 
+    public UnityEvent OnAttack;
+    public UnityEvent OnAttackEnd;
+
 
     private void Update()
     {
@@ -35,7 +38,9 @@ public class CharacterInput : MonoBehaviour
         if (Input.GetButtonDown("Block")) OnBlock.Invoke();
         if (Input.GetButtonUp("Block")) UpBlock.Invoke();
         if (Input.GetButtonDown("Parry")) Parry.Invoke();
-
+        
+        if (Input.GetButtonDown("Attack")) OnAttack.Invoke();
+        if (Input.GetButtonUp("Attack")) OnAttackEnd.Invoke();
     }
 
     public void MouseInputs()

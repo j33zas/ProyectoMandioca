@@ -4,18 +4,45 @@ using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour
 {
+    float range;
+    public Transform forwardPos;
+
+    float heavyAttackTime = 1f;
+    float buttonTime;
+
+    private void Update()
+    {
+        buttonTime += Time.deltaTime;
+    }
+
     public void OnattackBegin()
     {
-        Debug.Log("OnAttackBegin");
+        buttonTime = 0f;
+        Attack(2, 5f);
     }
     public void OnAttackEnd()
     {
-        Debug.Log("OnAttackBegin");
+        if (buttonTime < heavyAttackTime)
+        {
+            Debug.Log("Light Attack");
+        }
+        else
+        {
+            Debug.Log("Heavy Attack");
+        }
     }
 
-    void RecibiUnEnemigo(EntityBase ebase)
+
+    void Attack(int dmg, float range)
     {
-        ebase.TakeDamage(13213);
+        RaycastHit hit;
+        if (Physics.Raycast(forwardPos.transform.position, forwardPos.transform.forward, out hit, range))
+        {
+            if (hit.collider.gameObject.GetComponent<EnemyBase>())
+                hit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(dmg);
+
+        }
+        Debug.DrawRay(forwardPos.transform.position, forwardPos.transform.forward, Color.black, range);
     }
 }
 
