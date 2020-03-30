@@ -26,7 +26,6 @@ public class CharacterBlock
     public void OnBlockDown()
     {
         onBlock = true;
-        Debug.Log("block");
     }
     public void OnBlockUp()
     {
@@ -40,7 +39,6 @@ public class CharacterBlock
             beginparry.Invoke();
             onParry = true;
             canupdate = true;
-            Debug.Log("Parry");
         }
        
     }
@@ -53,7 +51,6 @@ public class CharacterBlock
             if (_currentTime <= _timer/3)
             {
                 onParry = false;
-                Debug.Log("Parry false");
                 if (_currentTime <= 0)
                 {
                     endparry.Invoke();

@@ -23,7 +23,6 @@ public class CharacterHead : CharacterControllable
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
 
-
     [Header("Character Head")]
     [SerializeField] bool directionalDash;
 
@@ -48,14 +47,19 @@ public class CharacterHead : CharacterControllable
     [SerializeField]
     Text txt;
 
+    CharacterAnimator charanim;
+    [SerializeField] Animator anim_base;
 
+
+    [SerializeField] CharacterAnimEvent charAnimEvent;
+    
     private void Awake()
     {
         //        Animator anim = GetComponent<Animator>();
 
-        
+        charanim = new CharacterAnimator(anim_base);
 
-        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash/*,anim*/).
+        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash,charanim).
             SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
             SetDashCD(dashCD).SetRollDeceleration(dashDeceleration);
 
@@ -75,11 +79,17 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += charBlock.OnUpdate;
 
 
+        charAnimEvent.AddEvent_RompeCoco(RompeCoco);
 
 
         #region SCRIPT TEMPORAL, BORRAR
         changeCDDash += move.ChangeDashCD;
         #endregion
+    }
+
+    void RompeCoco()
+    {
+        lifesystem.Hit(10);
     }
 
     bool IsDirectionalDash()

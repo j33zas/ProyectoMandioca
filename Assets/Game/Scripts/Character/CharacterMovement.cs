@@ -28,14 +28,14 @@ public class CharacterMovement
     float dashMaxSpeed;
     bool dashCdOk;
 
-    //Animator anim;
+    CharacterAnimator anim;
 
-    public CharacterMovement(Rigidbody rb, Transform rot, Func<bool> dForm/*, Animator a*/)
+    public CharacterMovement(Rigidbody rb, Transform rot, Func<bool> dForm, CharacterAnimator a)
     {
         _rb = rb;
         rotTransform = rot;
         dashForm += dForm;
-        //anim = a;
+        anim = a;
     }
 
     #region BUILDER
@@ -102,6 +102,10 @@ public class CharacterMovement
         {
             Rotation(axisY, axisX);
         }
+
+        var prom = Mathf.Abs(axisY) + Mathf.Abs(axisX);
+        anim.Move(prom);
+
     }
     #endregion
 
@@ -185,7 +189,7 @@ public class CharacterMovement
         dashDir = new Vector3(movX, 0, movY);
         dashSpeed = dashMaxSpeed;
 
-        //anim.SetTrigger("char_begin_roll");
+        anim.Roll();
     }
 
     public bool IsDash()
