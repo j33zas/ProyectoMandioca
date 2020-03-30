@@ -29,7 +29,6 @@ public class DummyEnemy : EnemyBase
         {
             combatComponent.Stop();
             feedbackStun.Show();
-            Debug.Log("PARRIED");
         }
         else if (e.TakeDamage(damage) == Attack_Result.blocked)
         {
