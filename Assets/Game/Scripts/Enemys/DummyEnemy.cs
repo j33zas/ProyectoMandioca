@@ -11,11 +11,9 @@ public class DummyEnemy : EnemyBase
     public GameObject obj_feedbackStun;
     public GameObject obj_feedbackShield;
     public GameObject obj_feedbackattack;
-    public GameObject obj_FeedbackDodge;
     PopSignalFeedback feedbackStun;
     PopSignalFeedback feedbackHitShield;
     PopSignalFeedback feedbackAttack;
-    PopSignalFeedback feedbackDodge;
 
     [SerializeField] ParticleSystem greenblood;
    
@@ -31,9 +29,8 @@ public class DummyEnemy : EnemyBase
     {
         combatComponent.Configure(AttackEntity);
         feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
-        feedbackHitShield = new PopSignalFeedback(0.4f, obj_feedbackShield);
-        feedbackAttack = new PopSignalFeedback(0.4f, obj_feedbackattack);
-        feedbackDodge = new PopSignalFeedback(0.4f, obj_FeedbackDodge);
+        feedbackHitShield = new PopSignalFeedback(0.2f, obj_feedbackShield);
+        feedbackAttack = new PopSignalFeedback(0.2f, obj_feedbackattack);
 
         anim.Add_Callback("DealDamage", DealDamage);
 
@@ -58,13 +55,9 @@ public class DummyEnemy : EnemyBase
         {
             feedbackHitShield.Show();
         }
-        else if (e.TakeDamage(damage) == Attack_Result.inmune)
-        {
-            feedbackDodge.Show();
-        }
     }
 
-    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh(); feedbackDodge.Refresh(); }
+    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh(); }
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
