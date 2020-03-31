@@ -23,6 +23,10 @@ public class DummyEnemy : EnemyBase
 
     public AnimEvent anim;
 
+    public Follow follow;
+
+    public Rigidbody _rb;
+
     void Start()
     {
         combatComponent.Configure(AttackEntity);
@@ -32,6 +36,8 @@ public class DummyEnemy : EnemyBase
         feedbackDodge = new PopSignalFeedback(0.4f, obj_FeedbackDodge);
 
         anim.Add_Callback("DealDamage", DealDamage);
+
+        follow.Configure(_rb);
     }
 
     public void DealDamage()
