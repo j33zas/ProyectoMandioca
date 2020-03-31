@@ -11,40 +11,45 @@ public class CharacterHead : CharacterControllable
     Action<float> MovementVertical;
     Action<float> RotateHorizontal;
     Action<float> RotateVertical;
+
     Action Dash;
-    Action ChildrensUpdates;
-
-    Action OnBlock;
-    Action UpBlock;
-    Action Parry;
-
-    CharacterBlock charBlock;
+    Action ChildrensUpdates; 
+    Func<bool> InDash;
     #region SCRIPT TEMPORAL, BORRAR
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
 
-    [Header("Character Head")]
-    [SerializeField] bool directionalDash;
+    CharacterBlock charBlock;
+    Action OnBlock;
+    Action UpBlock;
+    Action Parry;
 
-    [SerializeField] float speed;
+    [Header("Dash Options")]
+    [SerializeField] bool directionalDash;
+    
     [SerializeField] float dashTiming;
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
     [SerializeField] float dashCD;
-    [SerializeField] float _timerOfParry;
+
+    [Header("Movement Options")]
+    [SerializeField] float speed;
     [SerializeField] Transform rot;
+    CharacterMovement move;
+
+    [Header("Parry & Block Options")]
+    [SerializeField] float _timerOfParry;
+    
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
 
+    [Header("Life Options")]
     [SerializeField] LifeSystem lifesystem;
 
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
 
-    Func<bool> InDash;
-    //el head va a recibir los inputs
-    //primero pasa por aca y no directamente al movement porque tal vez necesitemos extraer la llamada
-    //para visualizarlo con algun feedback visual
+    
 
     [SerializeField]
     Text txt;
@@ -52,21 +57,19 @@ public class CharacterHead : CharacterControllable
     CharacterAnimator charanim;
     [SerializeField] Animator anim_base;
 
-    CharacterMovement move;
+    
 
     [SerializeField] CharacterAnimEvent charAnimEvent;
 
-
-    
     private void Awake()
     {
-        //        Animator anim = GetComponent<Animator>();
-
         charanim = new CharacterAnimator(anim_base);
 
-        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash,charanim).
-            SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
-            SetDashCD(dashCD).SetRollDeceleration(dashDeceleration);
+        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash, charanim)
+            .SetSpeed(speed)
+            .SetTimerDash(dashTiming).SetDashSpeed(dashSpeed)
+            .SetDashCD(dashCD)
+            .SetRollDeceleration(dashDeceleration);
 
         MovementHorizontal += move.LeftHorizontal;
         MovementVertical += move.LeftVerical;
@@ -76,13 +79,11 @@ public class CharacterHead : CharacterControllable
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
 
-
         charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry, charanim);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
-
 
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
@@ -94,24 +95,7 @@ public class CharacterHead : CharacterControllable
         #endregion
     }
 
-    void RompeCoco(params object[] obj) => lifesystem.Hit(10);
-    
-
-    bool IsDirectionalDash()
-    {
-        return directionalDash;
-    }
-
-    public void ChangeDashForm()
-    {
-        directionalDash = !directionalDash;
-        txt.text = "Directional Dash = " + directionalDash.ToString();
-    }
-
-    void OnBeginParry() => feedbackParry.SetActive(true);
-    void OnEndParry() => feedbackParry.SetActive(false);
-
-
+    void RompeCoco() => lifesystem.Hit(10);
 
     private void Update()
     {
@@ -120,6 +104,8 @@ public class CharacterHead : CharacterControllable
         if (Input.GetKeyDown(KeyCode.Joystick1Button1))
             RollDash();
     }
+
+    #region Block & Parry
 
     public void EVENT_OnBlocking()
     {
@@ -136,11 +122,11 @@ public class CharacterHead : CharacterControllable
         UpBlock();
     }
 
-    public void BlockFeedback(params object[] objs) 
+    public void BlockFeedback()
     {
         feedbackBlock.SetActive(true);
     }
-    public void EVENT_Parry() 
+    public void EVENT_Parry()
     {
         if (!charBlock.onBlock && !InDash())
         {
@@ -152,11 +138,17 @@ public class CharacterHead : CharacterControllable
     {
         parryParticle.Play();
     }
+    void OnBeginParry() => feedbackParry.SetActive(true);
+    void OnEndParry() => feedbackParry.SetActive(false);
 
+    #endregion
+
+    #region Attack
     public void EVENT_OnAttackBegin() { }
     public void EVENT_OnAttackEnd() { }
+    #endregion
 
-    //Joystick Izquierdo, Movimiento
+    #region Movimiento y Rotacion
     public void LeftHorizontal(float axis)
     {
         if (!InDash())
@@ -180,7 +172,19 @@ public class CharacterHead : CharacterControllable
         if (!InDash())
             RotateVertical(axis);
     }
+    #endregion
 
+    #region Roll 
+    bool IsDirectionalDash()
+    {
+        return directionalDash;
+    }
+
+    public void ChangeDashForm()
+    {
+        directionalDash = !directionalDash;
+        txt.text = "Directional Dash = " + directionalDash.ToString();
+    }
     public void RollDash()
     {
         if (!InDash())
@@ -190,7 +194,9 @@ public class CharacterHead : CharacterControllable
         }
     }
 
-    protected override void OnUpdateEntity() { }
+    #endregion
+
+    #region Take Damage
     public override Attack_Result TakeDamage(int dmg)
     {
         if (InDash())
@@ -209,14 +215,19 @@ public class CharacterHead : CharacterControllable
         else
         {
             hitParticle.Play();
-            lifesystem.Hit(5);
+            lifesystem.Hit(dmg);
             return Attack_Result.sucessful;
         }
 
     }
+    #endregion
+
+    #region Fuera de uso
+    protected override void OnUpdateEntity() { }
     protected override void OnTurnOn() { }
     protected override void OnTurnOff() { }
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }
+    #endregion 
 }
