@@ -10,15 +10,28 @@ public class DummyEnemy : EnemyBase
 
     public GameObject obj_feedbackStun;
     public GameObject obj_feedbackShield;
+    public GameObject obj_feedbackattack;
     PopSignalFeedback feedbackStun;
     PopSignalFeedback feedbackHitShield;
+    PopSignalFeedback feedbackAttack;
+   
     public float time_stun;
+
+    public AnimEvent anim;
 
     void Start()
     {
         combatComponent.Configure(AttackEntity);
         feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
         feedbackHitShield = new PopSignalFeedback(0.2f, obj_feedbackShield);
+        feedbackAttack = new PopSignalFeedback(0.2f, obj_feedbackattack);
+
+        anim.Add_Callback("DealDamage", DealDamage);
+    }
+
+    public void DealDamage()
+    {
+        combatComponent.ManualTriggerAttack();
     }
 
     public void EndStun() => combatComponent.Play();

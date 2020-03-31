@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using DevelopTools;
 
-public class CharacterAnimEvent : MonoBehaviour
+public class AnimEvent : MonoBehaviour
 {
     EventManager myeventManager;
 

@@ -54,7 +54,7 @@ public class CharacterHead : CharacterControllable
 
     CharacterMovement move;
 
-    [SerializeField] CharacterAnimEvent charAnimEvent;
+    [SerializeField] AnimEvent charAnimEvent;
 
 
     
