@@ -31,6 +31,6 @@ public class CharacterAnimator : BaseAnimator
 
     public void Parry()
     {
-
+        myAnim.SetTrigger("Parry");
     }
 }

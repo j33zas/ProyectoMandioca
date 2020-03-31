@@ -33,6 +33,8 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dashCD;
     [SerializeField] float _timerOfParry;
     [SerializeField] Transform rot;
+    [SerializeField] ParticleSystem parryParticle;
+    [SerializeField] ParticleSystem hitParticle;
 
     [SerializeField] LifeSystem lifesystem;
 
@@ -53,6 +55,8 @@ public class CharacterHead : CharacterControllable
     CharacterMovement move;
 
     [SerializeField] CharacterAnimEvent charAnimEvent;
+
+
     
     private void Awake()
     {
@@ -140,9 +144,13 @@ public class CharacterHead : CharacterControllable
     {
         if (!charBlock.onBlock && !InDash())
         {
+            charanim.Parry();
             Parry();
         }
-             
+    }
+    public void PerfectParry()
+    {
+        parryParticle.Play();
     }
 
     public void EVENT_OnAttackBegin() { }
@@ -190,14 +198,17 @@ public class CharacterHead : CharacterControllable
 
         if (charBlock.onParry)
         {
+            PerfectParry();
             return Attack_Result.parried;
         }
         else if (charBlock.onBlock)
         {
+            charanim.BlockSomething();
             return Attack_Result.blocked;
         }
         else
         {
+            hitParticle.Play();
             lifesystem.Hit(5);
             return Attack_Result.sucessful;
         }

@@ -19,7 +19,11 @@ public class CharacterAttack : MonoBehaviour
     {
         buttonTime = 0f;
         Attack(2, 5f);
+
+        //animacion
     }
+
+    
     public void OnAttackEnd()
     {
         if (buttonTime < heavyAttackTime)
@@ -31,8 +35,7 @@ public class CharacterAttack : MonoBehaviour
             Debug.Log("Heavy Attack");
         }
     }
-
-
+    //triggereado por animacion
     void Attack(int dmg, float range)
     {
         RaycastHit hit;
