@@ -30,7 +30,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
     [SerializeField] float dashCD;
-    
+
 
     [Header("Movement Options")]
     [SerializeField] float speed;
@@ -67,9 +67,12 @@ public class CharacterHead : CharacterControllable
     Action OnAttackEnd;
     CharacterAttack charAttack;
 
+    CustomCamera customCam;
+
     private void Awake()
     {
         charanim = new CharacterAnimator(anim_base);
+        customCam = FindObjectOfType<CustomCamera>();
 
         move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash, charanim)
             .SetSpeed(speed)
@@ -108,7 +111,10 @@ public class CharacterHead : CharacterControllable
         #endregion
     }
 
-    void RompeCoco() => lifesystem.Hit(10);
+    void RompeCoco()
+    {
+        if (customCam != null) customCam.BeginShakeCamera();
+    }
 
     private void Update()
     {
@@ -121,7 +127,7 @@ public class CharacterHead : CharacterControllable
 
     #region Attack
     /////////////////////////////////////////////////////////////////
-    
+
     public void EVENT_OnAttackBegin() { OnAttackBegin(); }
     public void EVENT_OnAttackEnd() { OnAttackEnd(); }
 
@@ -138,13 +144,11 @@ public class CharacterHead : CharacterControllable
 
     void ReleaseInNormal()
     {
-        Debug.Log("NORMAL");
         dmg = dmg_normal;
         charanim.NormalAttack();
     }
     void ReleaseInHeavy()
     {
-        Debug.Log("HEAVY");
         dmg = dmg_heavy;
         charanim.HeavyAttack();
     }
@@ -260,6 +264,7 @@ public class CharacterHead : CharacterControllable
         else
         {
             hitParticle.Play();
+
             lifesystem.Hit(dmg);
             return Attack_Result.sucessful;
         }

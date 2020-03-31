@@ -3032,9 +3032,16 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "TESTING\n\nlife system\nZ - Curar\nX - da\xF1ar\nC - curar todo\nV - agregar
-    salud\n\nSpace - Shake camera\n\nB Button Xbox / shift - Dash\nL Stick Xbox /
-    WASD - Move\nR Stick Xbox / Mouse - Look"
+  m_Text: 'TESTING
+
+
+    A Button Xbox / Click 0 - Attack
+
+    B Button Xbox / shift - Dash
+
+    L Stick Xbox / WASD - Move
+
+    R Stick Xbox / Mouse - Look'
 --- !u!222 &787907416
 CanvasRenderer:
   m_ObjectHideFlags: 0
