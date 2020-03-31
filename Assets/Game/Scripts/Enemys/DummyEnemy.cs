@@ -14,6 +14,8 @@ public class DummyEnemy : EnemyBase
     PopSignalFeedback feedbackStun;
     PopSignalFeedback feedbackHitShield;
     PopSignalFeedback feedbackAttack;
+
+    [SerializeField] ParticleSystem greenblood;
    
     public float time_stun;
 
@@ -54,7 +56,11 @@ public class DummyEnemy : EnemyBase
     /////////////////////////////////////////////////////////////////
     //////  En desuso
     /////////////////////////////////////////////////////////////////
-    public override Attack_Result TakeDamage(int dmg) { return Attack_Result.inmune; }
+    public override Attack_Result TakeDamage(int dmg)
+    {
+        greenblood.Play();
+        return Attack_Result.sucessful; 
+    }
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }

@@ -11,69 +11,61 @@ public class CharacterHead : CharacterControllable
     Action<float> MovementVertical;
     Action<float> RotateHorizontal;
     Action<float> RotateVertical;
-
     Action Dash;
-    Action ChildrensUpdates; 
+    Action ChildrensUpdates;
     Func<bool> InDash;
+
     #region SCRIPT TEMPORAL, BORRAR
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
-
-[Header("Character Head")]
 
     CharacterBlock charBlock;
     Action OnBlock;
     Action UpBlock;
     Action Parry;
-    Action OnAttackBegin;
-    Action OnAttackEnd;
-    
-    CharacterAttack charAttack;
-    CharacterBlock charBlock;
-    #region SCRIPT TEMPORAL, BORRAR
-    Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
-    #endregion
 
-[Header("Dash Options")]
+    [Header("Dash Options")]
     [SerializeField] bool directionalDash;
-    
     [SerializeField] float dashTiming;
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
     [SerializeField] float dashCD;
-[SerializeField] float _timerOfParry;
-    [SerializeField] float attackRange;
-    [SerializeField] float timeToHeavyAttack;
+    
 
-[Header("Movement Options")]
+    [Header("Movement Options")]
     [SerializeField] float speed;
-
     [SerializeField] Transform rot;
     CharacterMovement move;
 
     [Header("Parry & Block Options")]
     [SerializeField] float _timerOfParry;
-    
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
 
     [Header("Life Options")]
     [SerializeField] LifeSystem lifesystem;
 
+    [Header("Feedbacks")]
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
+    [SerializeField] Text txt;
 
-    
 
-    [SerializeField]
-    Text txt;
-
-    CharacterAnimator charanim;
+    [Header("Animations")]
     [SerializeField] Animator anim_base;
-
-    
-
     [SerializeField] AnimEvent charAnimEvent;
+    CharacterAnimator charanim;
+
+    [Header("Attack Options")]
+    [SerializeField] ParticleSystem feedbackHeavy;
+    [SerializeField] float dmg_normal = 5;
+    [SerializeField] float dmg_heavy = 20;
+    [SerializeField] float attackRange;
+    [SerializeField] float timeToHeavyAttack;
+    float dmg = 5;
+    Action OnAttackBegin;
+    Action OnAttackEnd;
+    CharacterAttack charAttack;
 
     private void Awake()
     {
@@ -98,13 +90,14 @@ public class CharacterHead : CharacterControllable
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
-        
-        charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot);
+
+        charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy);
         OnAttackBegin += charAttack.OnattackBegin;
         OnAttackEnd += charAttack.OnAttackEnd;
 
 
-        charAnimEvent.Add_Callback("Attack", EVENT_Attack );
+        charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
+        charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
         charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
@@ -120,27 +113,52 @@ public class CharacterHead : CharacterControllable
     private void Update()
     {
         ChildrensUpdates();
+        charAttack.Refresh();
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button1))
             RollDash();
     }
+
+    #region Attack
+    /////////////////////////////////////////////////////////////////
     
+    public void EVENT_OnAttackBegin() { OnAttackBegin(); }
+    public void EVENT_OnAttackEnd() { OnAttackEnd(); }
 
-    public void BeginAttack()
+    //tengo la espada arriba
+    public void CheckAttackType()
     {
-        OnAttackBegin();
+        charAttack.BeginCheckAttackType();
     }
 
-    public void EVENT_Attack()
+    public void DealAttack()
     {
-        charAttack.Attack(1, 2);
+        charAttack.Attack((int)dmg, 2);
     }
+
+    void ReleaseInNormal()
+    {
+        Debug.Log("NORMAL");
+        dmg = dmg_normal;
+        charanim.NormalAttack();
+    }
+    void ReleaseInHeavy()
+    {
+        Debug.Log("HEAVY");
+        dmg = dmg_heavy;
+        charanim.HeavyAttack();
+    }
+
+    /////////////////////////////////////////////////////////////////
+    #endregion
+
+
 
     #region Block & Parry
 
     public void EVENT_OnBlocking()
     {
-        if (!charBlock.onParry && !InDash())
+        if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
         {
             move.SetSpeed(speed / 2);
             OnBlock();
@@ -159,7 +177,7 @@ public class CharacterHead : CharacterControllable
     }
     public void EVENT_Parry()
     {
-        if (!charBlock.onBlock && !InDash())
+        if (!charBlock.onBlock && !InDash() && !charAttack.inAttack)
         {
             charanim.Parry();
             Parry();
@@ -174,10 +192,6 @@ public class CharacterHead : CharacterControllable
 
     #endregion
 
-#region Attack
-     public void EVENT_OnAttackBegin() { OnAttackBegin(); }
-    public void EVENT_OnAttackEnd() { }
-    #endregion
 
     #region Movimiento y Rotacion
     public void LeftHorizontal(float axis)
