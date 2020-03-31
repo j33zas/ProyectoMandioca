@@ -21,7 +21,6 @@ public class CharacterAnimator : BaseAnimator
 
     public void Block(bool _block)
     {
-        Debug.Log("On BLock");
         myAnim.SetBool("BeginBlock", _block);
     }
 
@@ -32,6 +31,6 @@ public class CharacterAnimator : BaseAnimator
 
     public void Parry()
     {
-
+        myAnim.SetTrigger("Parry");
     }
 }

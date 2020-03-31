@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-
+using DevelopTools;
 
 public class CharacterHead : CharacterControllable
 {
@@ -33,6 +33,8 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dashCD;
     [SerializeField] float _timerOfParry;
     [SerializeField] Transform rot;
+    [SerializeField] ParticleSystem parryParticle;
+    [SerializeField] ParticleSystem hitParticle;
 
     [SerializeField] LifeSystem lifesystem;
 
@@ -50,8 +52,11 @@ public class CharacterHead : CharacterControllable
     CharacterAnimator charanim;
     [SerializeField] Animator anim_base;
 
+    CharacterMovement move;
 
     [SerializeField] CharacterAnimEvent charAnimEvent;
+
+
     
     private void Awake()
     {
@@ -59,7 +64,7 @@ public class CharacterHead : CharacterControllable
 
         charanim = new CharacterAnimator(anim_base);
 
-        var move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash,charanim).
+        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash,charanim).
             SetSpeed(speed).SetTimerDash(dashTiming).SetDashSpeed(dashSpeed).
             SetDashCD(dashCD).SetRollDeceleration(dashDeceleration);
 
@@ -79,7 +84,9 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += charBlock.OnUpdate;
 
 
-        charAnimEvent.AddEvent_RompeCoco(RompeCoco);
+        charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
+        charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
+        charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
 
 
         #region SCRIPT TEMPORAL, BORRAR
@@ -87,7 +94,8 @@ public class CharacterHead : CharacterControllable
         #endregion
     }
 
-    void RompeCoco() => lifesystem.Hit(10);
+    void RompeCoco(params object[] obj) => lifesystem.Hit(10);
+    
 
     bool IsDirectionalDash()
     {
@@ -115,15 +123,35 @@ public class CharacterHead : CharacterControllable
 
     public void EVENT_OnBlocking()
     {
-        feedbackBlock.SetActive(true);
-        OnBlock();
+        if (!charBlock.onParry && !InDash())
+        {
+            move.SetSpeed(speed / 2);
+            OnBlock();
+        }
     }
     public void EVENT_UpBlocking()
     {
         feedbackBlock.SetActive(false);
+        move.SetSpeed(speed);
         UpBlock();
     }
-    public void EVENT_Parry() => Parry();
+
+    public void BlockFeedback(params object[] objs) 
+    {
+        feedbackBlock.SetActive(true);
+    }
+    public void EVENT_Parry() 
+    {
+        if (!charBlock.onBlock && !InDash())
+        {
+            charanim.Parry();
+            Parry();
+        }
+    }
+    public void PerfectParry()
+    {
+        parryParticle.Play();
+    }
 
     public void EVENT_OnAttackBegin() { }
     public void EVENT_OnAttackEnd() { }
@@ -156,8 +184,10 @@ public class CharacterHead : CharacterControllable
     public void RollDash()
     {
         if (!InDash())
+        {
+            UpBlock();
             Dash();
-
+        }
     }
 
     protected override void OnUpdateEntity() { }
@@ -168,14 +198,17 @@ public class CharacterHead : CharacterControllable
 
         if (charBlock.onParry)
         {
+            PerfectParry();
             return Attack_Result.parried;
         }
         else if (charBlock.onBlock)
         {
+            charanim.BlockSomething();
             return Attack_Result.blocked;
         }
         else
         {
+            hitParticle.Play();
             lifesystem.Hit(5);
             return Attack_Result.sucessful;
         }

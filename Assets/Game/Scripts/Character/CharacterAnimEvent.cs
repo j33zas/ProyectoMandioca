@@ -2,13 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DevelopTools;
 
 public class CharacterAnimEvent : MonoBehaviour
 {
-    public Action rompecoco;
-    public void AddEvent_RompeCoco(Action _r) => rompecoco += _r;
-    public void EVENT_RompeCoco() => rompecoco.Invoke();
+    EventManager myeventManager;
 
+    private void Awake()
+    {
+        myeventManager = new EventManager();
+    }
 
-    
+    public void Add_Callback(string s, EventManager.EventReceiver receiver)
+    {
+        myeventManager.SubscribeToEvent(s, receiver);
+    }
+
+    public void EVENT_Callback(string s)
+    {
+        myeventManager.TriggerEvent(s);
+    }
+
 }

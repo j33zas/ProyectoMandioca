@@ -26,8 +26,13 @@ public class CharacterBlock
     }
 
 
-    public void OnBlockDown() { onBlock = true; anim.Block(true); }
+    public void OnBlockDown() { anim.Block(true); }
     public void OnBlockUp() { onBlock = false; anim.Block(false); }
+
+    public void OnBlockSucesfull(params object[] obj) 
+    {
+        onBlock = true;
+    }
 
     public void Parry()
     {
