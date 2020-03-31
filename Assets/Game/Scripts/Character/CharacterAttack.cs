@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CharacterAttack
 {
@@ -11,37 +12,110 @@ public class CharacterAttack
 
     CharacterAnimator anim;
 
-    public CharacterAttack(float _range, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward)
+    bool inCheck;
+
+    Action NormalAttack;
+    Action HeavyAttack;
+
+    bool isAttackReleased;
+
+    bool isAnimationFinished;
+    ParticleSystem feedbackHeavy;
+
+    bool oneshot;
+
+    public bool inAttack;
+
+
+    public CharacterAttack(float _range, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps)
     {
         range = _range;
         heavyAttackTime = _heavyAttackTime;
         anim = _anim;
         forwardPos = _forward;
+
+        NormalAttack = _normalAttack;
+        HeavyAttack = _heavyAttack;
+        feedbackHeavy = ps;
     }
 
-    private void Update()
+    public void Refresh()
     {
-        buttonPressedTime += Time.deltaTime;
+        if (inCheck)
+        {
+            buttonPressedTime += Time.deltaTime;
+
+            if (buttonPressedTime >= heavyAttackTime)
+            {
+                if (!oneshot)
+                {
+                    feedbackHeavy.Play();
+                    oneshot = true;
+                }
+               
+            }
+        }
     }
 
     public void OnattackBegin()
     {
+        inCheck = true;
         buttonPressedTime = 0f;
         anim.OnAttackBegin();
     }
 
-
-    public void OnAttackEnd()
+    void CHECK()
     {
+        inCheck = false;
+
         if (buttonPressedTime < heavyAttackTime)
         {
-            Debug.Log("Light Attack");
+            NormalAttack.Invoke();
         }
         else
         {
-            Debug.Log("Heavy Attack");
+            HeavyAttack.Invoke();
+        }
+        feedbackHeavy.Stop();
+       // feedbackHeavy.gameObject.SetActive(false);
+        oneshot = false;
+        buttonPressedTime = 0f;
+        isAnimationFinished = false;
+        isAttackReleased = false;
+    }
+
+    //SUELTO
+    public void OnAttackEnd()
+    {
+        if (isAnimationFinished)
+        {
+            //quiere decir que ya llegue a la animacion
+            CHECK();
+
+        }
+        else
+        {
+            //quiere decir que solte antes
+            isAttackReleased = true;
+        }
+       
+        
+    }
+    //ESTOY ARRIBA
+    public void BeginCheckAttackType()
+    {
+        if (isAttackReleased)
+        {
+            //quiere decir que ya solte
+            CHECK();
+        }
+        else
+        {
+            //quiere decir que todavia no solte
+            isAnimationFinished = true;
         }
     }
+
     //triggereado por animacion
     public void Attack(int dmg, float range)
     {
@@ -51,7 +125,6 @@ public class CharacterAttack
             if (hit.collider.gameObject.GetComponent<EnemyBase>())
             {
                 hit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(dmg);
-                Debug.Log("Hit Enemy");
             }
         }
         Debug.DrawRay(forwardPos.transform.position, forwardPos.transform.forward, Color.black, range);

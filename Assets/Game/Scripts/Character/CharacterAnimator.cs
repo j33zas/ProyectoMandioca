@@ -39,9 +39,9 @@ public class CharacterAnimator : BaseAnimator
         myAnim.SetTrigger("AttackBegin");
     }
 
-    public void Attack()
+    public void NormalAttack()
     {
-        myAnim.SetTrigger("Attack");
+        myAnim.SetTrigger("NormalAttack");
     }
 
     public void HeavyAttack()

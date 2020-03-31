@@ -335,7 +335,7 @@ ModelImporter:
       name: attack
       takeName: attack
       internalID: 0
-      firstFrame: 0
+      firstFrame: 10
       lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
@@ -356,9 +356,9 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6333333
+      - time: 0.42653447
         functionName: EVENT_Callback
-        data: Attack
+        data: DealAttack
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
@@ -400,15 +400,15 @@ ModelImporter:
       name: AttackCharge
       takeName: attack
       internalID: 0
-      firstFrame: 11.4
-      lastFrame: 11.7
+      firstFrame: 10
+      lastFrame: 10.2
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -424,13 +424,13 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     - serializedVersion: 16
       name: PrepareAttack
       takeName: attack
       internalID: 0
       firstFrame: 0
-      lastFrame: 30
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -492,7 +492,14 @@ ModelImporter:
           preInfinity: 3
           postInfinity: 3
           rotationOrder: 4
-      events: []
+      events:
+      - time: 0.8371068
+        functionName: EVENT_Callback
+        data: CheckAttackType
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
