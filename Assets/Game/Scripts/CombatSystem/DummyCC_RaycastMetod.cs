@@ -10,23 +10,17 @@ public class DummyCC_RaycastMetod : CombatComponent
     [SerializeField] LayerMask _lm;
     [SerializeField] float distance;
     public Transform target;
-
-    bool automatic_attack;
-    float timer;
-
-    public GameObject feedbackattack;
-    PopSignalFeedback popsignal_attack;
+   
     bool showray;
 
-   [SerializeField] Image feedback_timer_attack;
-
-    private void Awake()
+    public override void ManualTriggerAttack() 
     {
-        automatic_attack = true;
-        popsignal_attack = new PopSignalFeedback(0.1f,feedbackattack);
+        Calculate();
     }
-    public override void ManualTriggerAttack() => automatic_attack = false;
-    public override void BeginAutomaticAttack() => automatic_attack = true;
+    public override void BeginAutomaticAttack() 
+    { 
+
+    }
 
     private void OnDrawGizmos()
     {
@@ -37,54 +31,32 @@ public class DummyCC_RaycastMetod : CombatComponent
     }
     public override void Play()
     {
-        timer = 0;
-        automatic_attack = true;
+        
     }
 
     public override void Stop()
     {
-        timer = 0;
-        automatic_attack = false;
+        
         showray = false;
     }
 
-
-    void Update()
+    void Calculate()
     {
-        if (automatic_attack)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, (target.position - transform.position), out hit, distance, _lm))
         {
-            if (timer < 1)
-            {
-                timer = timer + 1 * Time.deltaTime;
-            }
-            else
-            {
-                timer = 0;
+            showray = true;
 
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, (target.position - transform.position), out hit, distance, _lm))
-                {
-                    showray = true;
-
-                    if (hit.collider.GetComponent<EntityBase>())
-                    {
-                        
-                        popsignal_attack.Show();
-                        EntityBase character = hit.collider.GetComponent<EntityBase>();
-                        callback.Invoke(character);
-                    }
-                }
-                else
-                {
-                    showray = false;
-                }
+            if (hit.collider.GetComponent<EntityBase>())
+            {
+                EntityBase character = hit.collider.GetComponent<EntityBase>();
+                callback.Invoke(character);
             }
-            
         }
-
-        feedback_timer_attack.fillAmount = timer;
-
-        popsignal_attack.Refresh();
+        else
+        {
+            showray = false;
+        }
     }
 
     

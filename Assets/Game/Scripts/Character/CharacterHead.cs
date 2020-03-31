@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -19,21 +19,35 @@ public class CharacterHead : CharacterControllable
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
     #endregion
 
+[Header("Character Head")]
+
     CharacterBlock charBlock;
     Action OnBlock;
     Action UpBlock;
     Action Parry;
+    Action OnAttackBegin;
+    Action OnAttackEnd;
+    
+    CharacterAttack charAttack;
+    CharacterBlock charBlock;
+    #region SCRIPT TEMPORAL, BORRAR
+    Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
+    #endregion
 
-    [Header("Dash Options")]
+[Header("Dash Options")]
     [SerializeField] bool directionalDash;
     
     [SerializeField] float dashTiming;
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
     [SerializeField] float dashCD;
+[SerializeField] float _timerOfParry;
+    [SerializeField] float attackRange;
+    [SerializeField] float timeToHeavyAttack;
 
-    [Header("Movement Options")]
+[Header("Movement Options")]
     [SerializeField] float speed;
+
     [SerializeField] Transform rot;
     CharacterMovement move;
 
@@ -59,7 +73,7 @@ public class CharacterHead : CharacterControllable
 
     
 
-    [SerializeField] CharacterAnimEvent charAnimEvent;
+    [SerializeField] AnimEvent charAnimEvent;
 
     private void Awake()
     {
@@ -84,7 +98,13 @@ public class CharacterHead : CharacterControllable
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
+        
+        charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot);
+        OnAttackBegin += charAttack.OnattackBegin;
+        OnAttackEnd += charAttack.OnAttackEnd;
 
+
+        charAnimEvent.Add_Callback("Attack", EVENT_Attack );
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
         charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
@@ -103,6 +123,17 @@ public class CharacterHead : CharacterControllable
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button1))
             RollDash();
+    }
+    
+
+    public void BeginAttack()
+    {
+        OnAttackBegin();
+    }
+
+    public void EVENT_Attack()
+    {
+        charAttack.Attack(1, 2);
     }
 
     #region Block & Parry
@@ -143,8 +174,8 @@ public class CharacterHead : CharacterControllable
 
     #endregion
 
-    #region Attack
-    public void EVENT_OnAttackBegin() { }
+#region Attack
+     public void EVENT_OnAttackBegin() { OnAttackBegin(); }
     public void EVENT_OnAttackEnd() { }
     #endregion
 

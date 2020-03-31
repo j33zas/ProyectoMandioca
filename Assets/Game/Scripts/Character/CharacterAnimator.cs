@@ -33,4 +33,19 @@ public class CharacterAnimator : BaseAnimator
     {
         myAnim.SetTrigger("Parry");
     }
+
+    public void OnAttackBegin()
+    {
+        myAnim.SetTrigger("AttackBegin");
+    }
+
+    public void Attack()
+    {
+        myAnim.SetTrigger("Attack");
+    }
+
+    public void HeavyAttack()
+    {
+        myAnim.SetTrigger("HeavyAttack");
+    }
 }
