@@ -21,7 +21,7 @@ public class DummyEnemy : EnemyBase
 
     public AnimEvent anim;
 
-    public Follow follow;
+    //public Follow follow;
 
     public Rigidbody _rb;
 
@@ -34,7 +34,7 @@ public class DummyEnemy : EnemyBase
 
         anim.Add_Callback("DealDamage", DealDamage);
 
-        follow.Configure(_rb);
+        //follow.Configure(_rb);
     }
 
     public void DealDamage()

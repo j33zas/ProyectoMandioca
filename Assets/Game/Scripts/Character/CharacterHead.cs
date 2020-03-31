@@ -268,7 +268,6 @@ public class CharacterHead : CharacterControllable
             lifesystem.Hit(dmg);
             return Attack_Result.sucessful;
         }
-
     }
     #endregion
 
