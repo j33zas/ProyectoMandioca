@@ -2,31 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAttack : MonoBehaviour
+public class CharacterAttack
 {
+    Transform forwardPos;
     float range;
-    public Transform forwardPos;
-
     float heavyAttackTime = 1f;
-    float buttonTime;
+    float buttonPressedTime;
+
+    CharacterAnimator anim;
+
+    public CharacterAttack(float _range, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward)
+    {
+        range = _range;
+        heavyAttackTime = _heavyAttackTime;
+        anim = _anim;
+        forwardPos = _forward;
+    }
 
     private void Update()
     {
-        buttonTime += Time.deltaTime;
+        buttonPressedTime += Time.deltaTime;
     }
 
     public void OnattackBegin()
     {
-        buttonTime = 0f;
-        Attack(2, 5f);
-
-        //animacion
+        buttonPressedTime = 0f;
+        anim.OnAttackBegin();
     }
 
-    
+
     public void OnAttackEnd()
     {
-        if (buttonTime < heavyAttackTime)
+        if (buttonPressedTime < heavyAttackTime)
         {
             Debug.Log("Light Attack");
         }
@@ -36,14 +43,16 @@ public class CharacterAttack : MonoBehaviour
         }
     }
     //triggereado por animacion
-    void Attack(int dmg, float range)
+    public void Attack(int dmg, float range)
     {
         RaycastHit hit;
         if (Physics.Raycast(forwardPos.transform.position, forwardPos.transform.forward, out hit, range))
         {
             if (hit.collider.gameObject.GetComponent<EnemyBase>())
+            {
                 hit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(dmg);
-
+                Debug.Log("Hit Enemy");
+            }
         }
         Debug.DrawRay(forwardPos.transform.position, forwardPos.transform.forward, Color.black, range);
     }

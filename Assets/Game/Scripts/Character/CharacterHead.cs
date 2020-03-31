@@ -17,7 +17,11 @@ public class CharacterHead : CharacterControllable
     Action OnBlock;
     Action UpBlock;
     Action Parry;
-
+    
+    Action OnAttackBegin;
+    Action OnAttackEnd;
+    
+    CharacterAttack charAttack;
     CharacterBlock charBlock;
     #region SCRIPT TEMPORAL, BORRAR
     Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
@@ -32,6 +36,8 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dashDeceleration;
     [SerializeField] float dashCD;
     [SerializeField] float _timerOfParry;
+    [SerializeField] float attackRange;
+    [SerializeField] float timeToHeavyAttack;
     [SerializeField] Transform rot;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
@@ -82,7 +88,14 @@ public class CharacterHead : CharacterControllable
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
+        
+        charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot);
+        OnAttackBegin += charAttack.OnattackBegin;
+        OnAttackEnd += charAttack.OnAttackEnd;
 
+        charAnimEvent.Add_Callback("Attack", EVENT_Attack );
+        //charAnimEvent.Add_Callback("Attack", );
+        //charAnimEvent.Add_Callback("AttackHeavy", );
 
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
@@ -120,6 +133,17 @@ public class CharacterHead : CharacterControllable
         if (Input.GetKeyDown(KeyCode.Joystick1Button1))
             RollDash();
     }
+    
+
+    public void BeginAttack()
+    {
+        OnAttackBegin();
+    }
+
+    public void EVENT_Attack()
+    {
+        charAttack.Attack(1, 2);
+    }
 
     public void EVENT_OnBlocking()
     {
@@ -153,7 +177,7 @@ public class CharacterHead : CharacterControllable
         parryParticle.Play();
     }
 
-    public void EVENT_OnAttackBegin() { }
+    public void EVENT_OnAttackBegin() { OnAttackBegin(); }
     public void EVENT_OnAttackEnd() { }
 
     //Joystick Izquierdo, Movimiento

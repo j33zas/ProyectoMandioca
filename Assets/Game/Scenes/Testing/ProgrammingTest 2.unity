@@ -5249,7 +5249,6 @@ GameObject:
   - component: {fileID: 1954684486}
   - component: {fileID: 1954684491}
   - component: {fileID: 1954684487}
-  - component: {fileID: 1954684489}
   m_Layer: 8
   m_Name: Character
   m_TagString: Untagged
@@ -5307,6 +5306,8 @@ MonoBehaviour:
   dashDeceleration: 4
   dashCD: 1
   _timerOfParry: 0.3
+  attackRange: 0
+  timeToHeavyAttack: 0
   rot: {fileID: 2122227816}
   parryParticle: {fileID: 1263334638}
   hitParticle: {fileID: 1175148836}
@@ -5445,8 +5446,8 @@ MonoBehaviour:
   OnAttack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1954684489}
-        m_MethodName: OnattackBegin
+      - m_Target: {fileID: 1954684486}
+        m_MethodName: EVENT_OnAttackBegin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5459,8 +5460,8 @@ MonoBehaviour:
   OnAttackEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1954684489}
-        m_MethodName: OnAttackEnd
+      - m_Target: {fileID: 1954684486}
+        m_MethodName: EVENT_OnAttackEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5488,19 +5489,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1954684489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1954684483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5e06b4de050a54448adcdd3ff66325a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forwardPos: {fileID: 2122227816}
 --- !u!114 &1954684491
 MonoBehaviour:
   m_ObjectHideFlags: 0
