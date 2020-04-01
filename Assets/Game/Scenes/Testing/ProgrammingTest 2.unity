@@ -422,7 +422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &274457125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,9 +526,9 @@ MonoBehaviour:
   greenblood: {fileID: 68055410}
   time_stun: 2
   anim: {fileID: 1959160892}
-  animator: {fileID: 1951866805}
-  _speedMovement: 3
-  _rotSpeed: 50
+  animator: {fileID: 0}
+  _speedMovement: 0
+  _rotSpeed: 0
   _rb: {fileID: 0}
 --- !u!1 &346807246
 GameObject:
@@ -4841,6 +4841,7 @@ MonoBehaviour:
   _timerOfParry: 0.3
   parryParticle: {fileID: 1263334638}
   hitParticle: {fileID: 1175148836}
+  blockAngle: -0.25
   lifesystem: {fileID: 1954684491}
   feedbackParry: {fileID: 1882515338}
   feedbackBlock: {fileID: 67665837}
@@ -6430,7 +6431,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.82874995, y: 0.8024007}
   m_AnchorMax: {x: 0.96625006, y: 0.96333635}
-  m_AnchoredPosition: {x: 0, y: 0.20000076}
+  m_AnchoredPosition: {x: 0, y: 0.2000122}
   m_SizeDelta: {x: 0, y: -0.30000305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1997800167

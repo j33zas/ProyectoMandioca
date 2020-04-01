@@ -56,12 +56,12 @@ public class DummyEnemy : EnemyBase
 
     public void AttackEntity(EntityBase e)
     {
-        if (e.TakeDamage(damage) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.forward) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
         }
-        else if (e.TakeDamage(damage) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.forward) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }
@@ -72,7 +72,7 @@ public class DummyEnemy : EnemyBase
     /////////////////////////////////////////////////////////////////
     //////  En desuso
     /////////////////////////////////////////////////////////////////
-    public override Attack_Result TakeDamage(int dmg)
+    public override Attack_Result TakeDamage(int dmg, Vector3 dir)
     {
         greenblood.Play();
         return Attack_Result.sucessful; 

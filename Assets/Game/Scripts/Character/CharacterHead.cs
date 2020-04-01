@@ -35,7 +35,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float _timerOfParry;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
-    [SerializeField, Range(-1, 1)] float parryAngle;
+    [SerializeField, Range(-1, 1)] float blockAngle;
 
     [Header("Life Options")]
     [SerializeField] LifeSystem lifesystem;
@@ -82,7 +82,7 @@ public class CharacterHead : CharacterControllable
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
 
-        charBlock = new CharacterBlock(_timerOfParry, parryAngle,OnEndParry, charanim);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle,OnEndParry, charanim);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
