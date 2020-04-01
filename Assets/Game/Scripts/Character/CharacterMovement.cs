@@ -147,10 +147,7 @@ public class CharacterMovement
                 dashSpeed = dashDecreaseSpeed;
             }
 
-            if (dashDir != Vector3.zero)
-            {
-                _rb.velocity = dashDir * dashSpeed;
-            }
+            _rb.velocity = dashDir * dashSpeed;
 
             if (timerDash >= maxTimerDash)
             {
