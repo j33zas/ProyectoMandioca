@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Game" t="Include">
+          <e p="Scenes" t="Include">
+            <e p="Leeme.txt" t="Include" />
+            <e p="Main (Informar)" t="Include">
+              <e p="Main (borrar cuando se agregue algo).txt" t="Include" />
+            </e>
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="Character" t="Include">
+              <e p="AnimEvent.cs" t="Include" />
+              <e p="BaseAnimator.cs" t="Include" />
+              <e p="CharacterAnimator.cs" t="Include" />
+              <e p="CharacterAttack.cs" t="Include" />
+              <e p="CharacterBlock.cs" t="Include" />
+              <e p="CharacterHead.cs" t="Include" />
+              <e p="CharacterInput.cs" t="Include" />
+              <e p="CharacterLifeSystem.cs" t="Include" />
+              <e p="CharacterMovement.cs" t="Include" />
+            </e>
+            <e p="CombatSystem" t="Include">
+              <e p="CombatComponent.cs" t="Include" />
+              <e p="DummyCC_RaycastMetod.cs" t="Include" />
+            </e>
+            <e p="CustomCamera.cs" t="Include" />
+            <e p="DevelopTools" t="Include">
+              <e p="devtool example" t="Include">
+                <e p="CreateSlider.cs" t="Include" />
+                <e p="CustomSliderComponentUI.cs" t="Include" />
+                <e p="ScriptRandom.cs" t="Include" />
+              </e>
+              <e p="EventManager.cs" t="Include" />
+              <e p="PoolObjects" t="Include">
+                <e p="IPoolObjectIndex.cs" t="Include" />
+                <e p="ItemPrefab_test.cs" t="Include" />
+                <e p="LePidoAlPool.cs" t="Include" />
+                <e p="MPool.cs" t="Include" />
+                <e p="MultipleObjectPool.cs" t="Include" />
+                <e p="SingleObjectPool.cs" t="Include" />
+              </e>
+              <e p="TimingFeedback" t="Include">
+                <e p="PopSignalFeedback.cs" t="Include" />
+              </e>
+              <e p="UI" t="Include">
+                <e p="FastToolOptions.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Enemys" t="Include">
+              <e p="DummyEnemy.cs" t="Include" />
+              <e p="Follow.cs" t="Include" />
+              <e p="Test_Attack.cs" t="Include" />
+            </e>
+            <e p="Enums.cs" t="Include" />
+            <e p="LifeSystems" t="Include">
+              <e p="Bars" t="Include">
+                <e p="GenericBar.cs" t="Include" />
+                <e p="GenericBar_Scaler.cs" t="Include" />
+                <e p="GenericBar_Sprites.cs" t="Include" />
+              </e>
+              <e p="Core" t="Include">
+                <e p="LifeBase.cs" t="Include" />
+                <e p="StatBase.cs" t="Include" />
+              </e>
+              <e p="FrontEndLifeBase" t="Include">
+                <e p="FrontendStatBase.cs" t="Include" />
+                <e p="LifeBar.cs" t="Include" />
+              </e>
+              <e p="LifeSystem.cs" t="Include" />
+            </e>
+            <e p="ObjectHierarchy" t="Include">
+              <e p="Core" t="Include">
+                <e p="PlayObject" t="Include">
+                  <e p="PlayObject.cs" t="Include" />
+                </e>
+                <e p="PlayObjectHandlers" t="Include">
+                  <e p="PlayObjectGroup.cs" t="Include" />
+                  <e p="PlayObjectManager_Dungeon.cs" t="Include" />
+                  <e p="PlayObjectManager_OpenWorld.cs" t="Include" />
+                  <e p="PlayObjectManager_TinyPlace.cs" t="Include" />
+                  <e p="PlayObjectManagerBase.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Entities" t="Include">
+                <e p="Entity_Base" t="Include">
+                  <e p="EntityBase.cs" t="Include" />
+                </e>
+                <e p="Entity_Static" t="Include">
+                  <e p="StaticEntity.cs" t="Include" />
+                </e>
+                <e p="Entity_Walker" t="Include">
+                  <e p="Character" t="Include">
+                    <e p="CharacterControllable.cs" t="Include" />
+                  </e>
+                  <e p="Core" t="Include">
+                    <e p="NPCBase.cs" t="Include" />
+                    <e p="WalkingEntity.cs" t="Include" />
+                  </e>
+                  <e p="NPCs" t="Include">
+                    <e p="Companion.cs" t="Include" />
+                    <e p="EnemyBase.cs" t="Include" />
+                    <e p="FriendlyNPC.cs" t="Include" />
+                  </e>
+                </e>
+              </e>
+              <e p="Others" t="Include">
+                <e p="Environment.cs" t="Include" />
+              </e>
+            </e>
+            <e p="States" t="Include">
+              <e p="States.cs" t="Include" />
+              <e p="StatesAttack.cs" t="Include" />
+              <e p="StatesFollow.cs" t="Include" />
+              <e p="StatesMachine.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="ProyectoMandioca.sln" t="IncludeFlat" />
+      <e p="Temp/bin" t="ExcludeRecursive" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_ProyectoMandioca.-328422872.00" t="ExcludeRecursive" />
+  </component>
+</project>
