@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DevelopTools
 {
-    public abstract class MultipleObjectPool<T> : MonoBehaviour where T : Component, IPoolObjectIndex
+    public abstract class MultipleObjectPool<T> : MonoBehaviour where T : Component
 {
      /// <summary>
      /// Singleton del pool
@@ -21,7 +21,7 @@ namespace DevelopTools
     /// El IPoolObjectIndex sirve para que el pool sepa a cual de estas colas debe regresar el objeto
     /// </summary>
     //[HideInInspector] public List<Queue<T>> tracksModules = new List<Queue<T>>();
-    private Dictionary<ObjetosDelPool, Queue<T>> registroDeObjetos = new Dictionary<ObjetosDelPool, Queue<T>>();
+    private Dictionary<Type, Queue<T>> registroDeObjetos = new Dictionary<Type, Queue<T>>();
     /// <summary>
     /// cantidad de objetos a crear en cada queue
     /// </summary>
@@ -50,19 +50,12 @@ namespace DevelopTools
     {
         for (int i = 0; i < prefabs.Count; i++)
         {
-            if(registroDeObjetos.ContainsKey(prefabs[i].TipoDePoolObject))
+            if(registroDeObjetos.ContainsKey(prefabs[i].GetType()))
                 continue;
             
             Queue<T> newQ = new Queue<T>();
-            registroDeObjetos.Add(prefabs[i].TipoDePoolObject, newQ);
+            registroDeObjetos.Add(prefabs[i].GetType(), newQ);
         }
-        
-        
-//        for (int i = 0; i < prefabs.Count; i++)
-//        {
-//            Queue<T> nuevaCola = new Queue<T>();
-//            tracksModules.Add(nuevaCola);
-//        }
     }
 
     /// <summary>
@@ -76,7 +69,7 @@ namespace DevelopTools
             for (int j = 0; j < amountOfPreCreatedObjects; j++)
             {
                 Debug.Log("entro");
-                AddObjectToQueue(prefabs[i].TipoDePoolObject);
+                AddObjectToQueue(prefabs[i].GetType());
             }
         }
        //StartCoroutine(PreWarm_CoRoutine());
@@ -89,7 +82,7 @@ namespace DevelopTools
         {
             for (int j = 0; j < amountOfPreCreatedObjects; j++)
             {
-                AddObjectToQueue(prefabs[i].TipoDePoolObject);
+                AddObjectToQueue(prefabs[i].GetType());
                 yield return 0;
             }
         }
@@ -104,7 +97,7 @@ namespace DevelopTools
     /// </summary>
     /// <param name="objectType"></param>
     /// <returns></returns>
-    public T Get(ObjetosDelPool objectType)
+    public T Get(Type objectType)
     {
         if (registroDeObjetos[objectType].Count == 0)
         {
@@ -124,7 +117,7 @@ namespace DevelopTools
     public void ReturnToPool(T objectToReturn)
     {
         objectToReturn.gameObject.SetActive(false);
-        ObjetosDelPool index = objectToReturn.GetComponent<IPoolObjectIndex>().TipoDePoolObject;
+        Type index = objectToReturn.GetType();
         
         registroDeObjetos[index].Enqueue(objectToReturn);
     }
@@ -133,11 +126,11 @@ namespace DevelopTools
     /// Agrega a la queue correspondiente un objeto y le dice a la interfaz de que queue era para luego poder guardarlo
     /// </summary>
     /// <param name="queueIndex"></param>
-    private void AddObjectToQueue(ObjetosDelPool poolType)
+    private void AddObjectToQueue(Type poolType)
     {
         for (int i = 0; i < prefabs.Count; i++)
         {
-            if (prefabs[i].TipoDePoolObject == poolType)
+            if (prefabs[i].GetType() == poolType)
             {
                 var newObject = GameObject.Instantiate(prefabs[i], transform);
                 newObject.gameObject.SetActive(false);

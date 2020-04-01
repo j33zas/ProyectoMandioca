@@ -13504,8 +13504,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 2821673642363789453, guid: 83783b9343bb846a3b9f1832568dca77, type: 3}
-  - {fileID: -9131532511333549925, guid: 31252410e89bc4e99b64cdba2d5d243f, type: 3}
+  - {fileID: 8462331628817263560, guid: 83783b9343bb846a3b9f1832568dca77, type: 3}
+  - {fileID: 3150034359436010106, guid: 31252410e89bc4e99b64cdba2d5d243f, type: 3}
   amountOfPreCreatedObjects: 3
 --- !u!198 &1175148836 stripped
 ParticleSystem:

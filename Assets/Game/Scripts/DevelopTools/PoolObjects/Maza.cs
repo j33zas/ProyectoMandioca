@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace DevelopTools
 {
-    public class ItemPrefab_test : MonoBehaviour
+    public class Maza : ItemPrefab_test
     {
-
-
+   
     }    
 
 }
-

@@ -36,9 +36,11 @@
               </e>
               <e p="EventManager.cs" t="Include" />
               <e p="PoolObjects" t="Include">
+                <e p="Espada.cs" t="Include" />
                 <e p="IPoolObjectIndex.cs" t="Include" />
                 <e p="ItemPrefab_test.cs" t="Include" />
                 <e p="LePidoAlPool.cs" t="Include" />
+                <e p="Maza.cs" t="Include" />
                 <e p="MPool.cs" t="Include" />
                 <e p="MultipleObjectPool.cs" t="Include" />
                 <e p="SingleObjectPool.cs" t="Include" />

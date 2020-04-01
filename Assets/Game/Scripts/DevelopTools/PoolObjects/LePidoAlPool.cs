@@ -18,7 +18,7 @@ namespace DevelopTools
             if (Input.GetKeyDown(KeyCode.P))
             {
                 //Pido maza
-                maza.Enqueue(MPool.Instance.Get(ObjetosDelPool.maza)); 
+                maza.Enqueue(MPool.Instance.Get(typeof(Maza))); 
             }
         
             if (Input.GetKeyDown(KeyCode.D))
@@ -34,7 +34,7 @@ namespace DevelopTools
             if (Input.GetKeyDown(KeyCode.E))
             {
                 //Pido espada
-                espada.Enqueue(MPool.Instance.Get(ObjetosDelPool.espada));
+                espada.Enqueue(MPool.Instance.Get(typeof(Espada)));
             }
         
             if (Input.GetKeyDown(KeyCode.U))

@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DevelopTools;
 using UnityEngine;
 
 namespace DevelopTools
 {
-    public class ItemPrefab_test : MonoBehaviour
+    public class Espada : ItemPrefab_test
     {
-
-
+   
     }    
 
 }

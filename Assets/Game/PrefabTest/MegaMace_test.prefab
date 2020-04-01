@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8705431794292644052}
-  - component: {fileID: 2821673642363789453}
+  - component: {fileID: 8462331628817263560}
   m_Layer: 0
   m_Name: MegaMace_test
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2821673642363789453
+--- !u!114 &8462331628817263560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2169446086052314974}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a760e1f4996a417eb9e62dc2acb4925, type: 3}
+  m_Script: {fileID: 11500000, guid: 37b7b39e46aba45a3a7c117a58dbcd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4977366524689691921
