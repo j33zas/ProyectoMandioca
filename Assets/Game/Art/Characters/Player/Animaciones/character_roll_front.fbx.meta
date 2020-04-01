@@ -275,13 +275,13 @@ ModelImporter:
     second: Pants
   - first:
       74: 7400000
-    second: RollStart
+    second: char_roll_front_start
   - first:
       74: 7400002
-    second: RollMiddle
+    second: char_roll_front_middle
   - first:
       74: 7400004
-    second: RollEnd
+    second: char_roll_front_end
   - first:
       95: 9500000
     second: //RootNode
@@ -320,7 +320,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: RollStart
+      name: char_roll_front_start
       takeName: RollStart
       internalID: 0
       firstFrame: 1
@@ -349,7 +349,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: RollMiddle
+      name: char_roll_front_middle
       takeName: RollMiddle
       internalID: 0
       firstFrame: 12.4
@@ -385,7 +385,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 10
     - serializedVersion: 16
-      name: RollEnd
+      name: char_roll_front_end
       takeName: RollEnd
       internalID: 0
       firstFrame: 30
