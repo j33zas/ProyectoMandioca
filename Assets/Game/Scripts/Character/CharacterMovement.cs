@@ -9,7 +9,6 @@ public class CharacterMovement
     Rigidbody _rb;
     Transform rotTransform;
     float speed;
-    Func<bool> dashForm;
 
     float rotX;
     float rotY;
@@ -30,11 +29,10 @@ public class CharacterMovement
 
     CharacterAnimator anim;
 
-    public CharacterMovement(Rigidbody rb, Transform rot, Func<bool> dForm, CharacterAnimator a)
+    public CharacterMovement(Rigidbody rb, Transform rot, CharacterAnimator a)
     {
         _rb = rb;
         rotTransform = rot;
-        dashForm += dForm;
         anim = a;
     }
 
@@ -149,13 +147,9 @@ public class CharacterMovement
                 dashSpeed = dashDecreaseSpeed;
             }
 
-            if (dashDir != Vector3.zero && !dashForm())
+            if (dashDir != Vector3.zero)
             {
                 _rb.velocity = dashDir * dashSpeed;
-            }
-            else
-            {
-                _rb.velocity = rotTransform.forward * dashSpeed;
             }
 
             if (timerDash >= maxTimerDash)
@@ -186,8 +180,37 @@ public class CharacterMovement
 
         inDash = true;
         dashCdOk = true;
-        dashDir = new Vector3(movX, 0, movY);
+        if (movX != 0 || movY != 0)
+            dashDir = new Vector3(movX, 0, movY);
+        else
+            dashDir = rotTransform.forward;
+
+
         dashSpeed = dashMaxSpeed;
+
+        float dotX = Vector3.Dot(rotTransform.forward, dashDir);
+        float dotY = Vector3.Dot(rotTransform.right, dashDir);
+
+        if (dotX >= 0.5f)
+        {
+            //hace el dash de frente
+        }
+        else if(dotX <= -0.5f)
+        {
+            //hace el dash para atrás
+        }
+        else
+        {
+            if(dotY >= 0.5f)
+            {
+                //hace el dash para la derecha
+            }
+            else if(dotY <= -0.5f)
+            {
+                //hace el dash para la izquierda
+            }
+        }
+
 
         anim.Roll();
     }
