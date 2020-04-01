@@ -37,7 +37,6 @@
               <e p="EventManager.cs" t="Include" />
               <e p="PoolObjects" t="Include">
                 <e p="Espada.cs" t="Include" />
-                <e p="IPoolObjectIndex.cs" t="Include" />
                 <e p="ItemPrefab_test.cs" t="Include" />
                 <e p="LePidoAlPool.cs" t="Include" />
                 <e p="Maza.cs" t="Include" />
@@ -50,6 +49,12 @@
               </e>
               <e p="UI" t="Include">
                 <e p="FastToolOptions.cs" t="Include" />
+              </e>
+              <e p="WorldCanvasImagePopUp" t="Include">
+                <e p="CanvasPopUpInWorld_Manager.cs" t="Include" />
+                <e p="Icon_DATA.cs" t="Include" />
+                <e p="TestPopUp.cs" t="Include" />
+                <e p="WorldCanvasPopUp.cs" t="Include" />
               </e>
             </e>
             <e p="Enemys" t="Include">
