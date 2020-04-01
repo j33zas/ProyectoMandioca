@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 using DevelopTools;
 
 public class CharacterHead : CharacterControllable
@@ -15,17 +14,12 @@ public class CharacterHead : CharacterControllable
     Action ChildrensUpdates;
     Func<bool> InDash;
 
-    #region SCRIPT TEMPORAL, BORRAR
-    Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
-    #endregion
-
     CharacterBlock charBlock;
     Action OnBlock;
     Action UpBlock;
     Action Parry;
 
     [Header("Dash Options")]
-    [SerializeField] bool directionalDash;
     [SerializeField] float dashTiming;
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
@@ -48,7 +42,6 @@ public class CharacterHead : CharacterControllable
     [Header("Feedbacks")]
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
-    [SerializeField] Text txt;
 
 
     [Header("Animations")]
@@ -74,7 +67,7 @@ public class CharacterHead : CharacterControllable
         charanim = new CharacterAnimator(anim_base);
         customCam = FindObjectOfType<CustomCamera>();
 
-        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash, charanim)
+        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, charanim)
             .SetSpeed(speed)
             .SetTimerDash(dashTiming).SetDashSpeed(dashSpeed)
             .SetDashCD(dashCD)
@@ -104,11 +97,6 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
         charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
-
-
-        #region SCRIPT TEMPORAL, BORRAR
-        changeCDDash += move.ChangeDashCD;
-        #endregion
     }
 
     void RompeCoco()
@@ -120,9 +108,6 @@ public class CharacterHead : CharacterControllable
     {
         ChildrensUpdates();
         charAttack.Refresh();
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
-            RollDash();
     }
 
     #region Attack
@@ -223,17 +208,8 @@ public class CharacterHead : CharacterControllable
     }
     #endregion
 
-    #region Roll 
-    bool IsDirectionalDash()
-    {
-        return directionalDash;
-    }
+    #region Roll
 
-    public void ChangeDashForm()
-    {
-        directionalDash = !directionalDash;
-        txt.text = "Directional Dash = " + directionalDash.ToString();
-    }
     public void RollDash()
     {
         if (!InDash())
