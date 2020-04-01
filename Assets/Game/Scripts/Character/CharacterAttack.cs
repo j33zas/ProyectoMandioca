@@ -124,7 +124,7 @@ public class CharacterAttack
         {
             if (hit.collider.gameObject.GetComponent<EnemyBase>())
             {
-                hit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(dmg);
+                hit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(dmg, forwardPos.transform.forward);
             }
         }
         Debug.DrawRay(forwardPos.transform.position, forwardPos.transform.forward, Color.black, range);

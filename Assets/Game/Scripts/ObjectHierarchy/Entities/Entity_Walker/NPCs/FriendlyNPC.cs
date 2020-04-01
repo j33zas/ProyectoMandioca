@@ -12,5 +12,5 @@ public class FriendlyNPC : NPCBase
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
     protected override void OnUpdateEntity() { }
-    public override Attack_Result TakeDamage(int dmg) { return Attack_Result.inmune; }
+    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir) { return Attack_Result.inmune; }
 }

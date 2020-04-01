@@ -39,12 +39,13 @@ public class Test_Attack : MonoBehaviour
     void Attack()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position,(target.position-transform.position),out hit, distance, _lm))
+        Vector3 dir = target.position - transform.position;
+        if (Physics.Raycast(transform.position, dir, out hit, distance, _lm))
         {
             if (hit.collider.GetComponent<EntityBase>())
             {
                 EntityBase character = hit.collider.GetComponent<EntityBase>();
-                character.TakeDamage(damage);
+                character.TakeDamage(damage, dir);
             }
         }
     }
