@@ -5078,6 +5078,7 @@ MonoBehaviour:
   _iconos:
   - image: {fileID: 1882515340}
     icon: 0
+  popUp_prefab: {fileID: 0}
 --- !u!4 &124726611
 Transform:
   m_ObjectHideFlags: 0
@@ -10140,7 +10141,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274457124}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 365261353f59eea46834ceed137ed667, type: 3}
   m_Name: 
@@ -10190,6 +10191,9 @@ MonoBehaviour:
   greenblood: {fileID: 68055410}
   time_stun: 2
   anim: {fileID: 1959160892}
+  animator: {fileID: 1951866805}
+  _speedMovement: 3
+  _rotSpeed: 50
   _rb: {fileID: 0}
 --- !u!1 &302570585
 GameObject:
@@ -12945,10 +12949,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 657883403}
     m_Modifications:
-    - target: {fileID: 7015099798324989442, guid: 8adb54986b71a614898d6d7a7a64e664,
+    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
         type: 3}
-      propertyPath: m_Name
-      value: Basic hit
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
+        type: 3}
+      propertyPath: stopAction
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7015099798324989440, guid: 8adb54986b71a614898d6d7a7a64e664,
         type: 3}
@@ -12973,26 +12992,6 @@ PrefabInstance:
     - target: {fileID: 7015099798324989440, guid: 8adb54986b71a614898d6d7a7a64e664,
         type: 3}
       propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
-        type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7015099797691118042, guid: 8adb54986b71a614898d6d7a7a64e664,
-        type: 3}
-      propertyPath: stopAction
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7015099798324989441, guid: 8adb54986b71a614898d6d7a7a64e664,
@@ -13049,6 +13048,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015099798324989442, guid: 8adb54986b71a614898d6d7a7a64e664,
+        type: 3}
+      propertyPath: m_Name
+      value: Basic hit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8adb54986b71a614898d6d7a7a64e664, type: 3}
@@ -13723,11 +13727,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 657883513}
     m_Modifications:
-    - target: {fileID: 678611837486952685, guid: abcec187ad78d8e4b9eb66ae4cb93315,
-        type: 3}
-      propertyPath: m_Name
-      value: Parry
-      objectReference: {fileID: 0}
     - target: {fileID: 678611837486952682, guid: abcec187ad78d8e4b9eb66ae4cb93315,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13797,6 +13796,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.4219514
+      objectReference: {fileID: 0}
+    - target: {fileID: 678611837486952685, guid: abcec187ad78d8e4b9eb66ae4cb93315,
+        type: 3}
+      propertyPath: m_Name
+      value: Parry
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abcec187ad78d8e4b9eb66ae4cb93315, type: 3}
@@ -15024,7 +15028,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   side_Type: 0
-  directionalDash: 0
   dashTiming: 0.5
   dashSpeed: 10
   dashDeceleration: 4
@@ -15034,10 +15037,10 @@ MonoBehaviour:
   _timerOfParry: 0.3
   parryParticle: {fileID: 1263334638}
   hitParticle: {fileID: 1175148836}
+  blockAngle: 0
   lifesystem: {fileID: 1954684491}
   feedbackParry: {fileID: 1882515338}
   feedbackBlock: {fileID: 67665837}
-  txt: {fileID: 1070461116}
   anim_base: {fileID: 664825545}
   charAnimEvent: {fileID: 657530180}
   feedbackHeavy: {fileID: 5768094409238639515}

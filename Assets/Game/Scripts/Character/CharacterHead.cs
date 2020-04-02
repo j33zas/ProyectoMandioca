@@ -35,6 +35,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float _timerOfParry;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
+    [SerializeField, Range(-1, 1)] float blockAngle;
 
     [Header("Life Options")]
     [SerializeField] LifeSystem lifesystem;
@@ -81,10 +82,11 @@ public class CharacterHead : CharacterControllable
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
 
-        charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry, charanim);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle,OnEndParry, charanim);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
+        Parry += OnBeginParry;
         ChildrensUpdates += charBlock.OnUpdate;
 
         charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy);
@@ -95,7 +97,7 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
-        charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
+        charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
         charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
     }
 
@@ -222,17 +224,17 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Take Damage
-    public override Attack_Result TakeDamage(int dmg)
+    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir)
     {
         if (InDash())
             return Attack_Result.inmune;
 
-        if (charBlock.onParry)
+        if (charBlock.IsParry(rot.forward, attackDir))
         {
             PerfectParry();
             return Attack_Result.parried;
         }
-        else if (charBlock.onBlock)
+        else if (charBlock.IsBlock(rot.forward, attackDir))
         {
             charanim.BlockSomething();
             return Attack_Result.blocked;

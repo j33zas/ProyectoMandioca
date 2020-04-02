@@ -89,7 +89,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RollStart
+  m_Name: char_roll_front_start
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
@@ -409,7 +409,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RollMiddle
+  m_Name: char_roll_front_middle
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
@@ -1094,7 +1094,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RollEnd
+  m_Name: char_roll_front_end
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
@@ -1149,7 +1149,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Test Roll
+  m_Name: character_roll_blend
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1326,7 +1326,7 @@ AnimatorStateMachine:
     m_Position: {x: 180, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3729066322894572406}
-    m_Position: {x: 220, y: 360, z: 0}
+    m_Position: {x: 390, y: 380, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

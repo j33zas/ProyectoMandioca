@@ -32,7 +32,8 @@ public class StatesAttack:States
         if (Vector3.Distance(_myTransform.position, _target.position) <= distanceToFollow)
         {
             Vector3 _dir = (_target.position - _myTransform.position).normalized;
-            _myTransform.forward = Vector3.Lerp(_myTransform.forward, _dir, rotationSpeed * Time.deltaTime);
+            Vector3 fowardRotation = new Vector3(_dir.x, 0, _dir.z);
+            _myTransform.forward = Vector3.Lerp(_myTransform.forward, fowardRotation, rotationSpeed * Time.deltaTime);
 
         }
         else

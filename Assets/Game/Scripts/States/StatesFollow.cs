@@ -32,14 +32,16 @@ public class StatesFollow : States
     public override void Execute()
     {
         base.Execute();
+        
         if (Vector3.Distance(_myTransform.position, _target.position) > distanceStop)
         {
            
             Vector3 _dir = (_target.position - _myTransform.position).normalized;
+            Vector3 fowardRotation = new Vector3(_dir.x, 0, _dir.z);
             Vector3 velocity= new Vector3(_dir.x, 0, _dir.z);
             _rb.velocity = velocity * speed;
            
-            _myTransform.forward = Vector3.Lerp(_myTransform.forward, _dir, rotationSpeed * Time.deltaTime);
+            _myTransform.forward = Vector3.Lerp(_myTransform.forward, fowardRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
