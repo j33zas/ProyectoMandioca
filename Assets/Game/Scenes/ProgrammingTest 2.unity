@@ -526,10 +526,10 @@ MonoBehaviour:
   greenblood: {fileID: 68055410}
   time_stun: 2
   anim: {fileID: 1959160892}
-  animator: {fileID: 0}
-  _speedMovement: 0
-  _rotSpeed: 0
-  _rb: {fileID: 0}
+  animator: {fileID: 1951866805}
+  _speedMovement: 2
+  _rotSpeed: 10
+  _rb: {fileID: 274457127}
 --- !u!1 &346807246
 GameObject:
   m_ObjectHideFlags: 0

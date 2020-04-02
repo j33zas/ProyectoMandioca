@@ -14,6 +14,11 @@ public abstract class GenericBar : MonoBehaviour
         this.maxValue = maxValue;
         this.scaler = scaler;
     }
+    public void Configure(int maxValue, int scaler, float val)
+    {
+        this.maxValue = maxValue;
+        this.scaler = scaler;
+    }
 
     public void SetValue(float val) => OnSetValue(val);
     protected abstract void OnSetValue(float val);
