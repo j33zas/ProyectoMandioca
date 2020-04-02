@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 using DevelopTools;
 
 public class CharacterHead : CharacterControllable
@@ -15,17 +14,12 @@ public class CharacterHead : CharacterControllable
     Action ChildrensUpdates;
     Func<bool> InDash;
 
-    #region SCRIPT TEMPORAL, BORRAR
-    Action<float> changeCDDash; public void ChangeDashCD(float _cd) => changeCDDash.Invoke(_cd);
-    #endregion
-
     CharacterBlock charBlock;
     Action OnBlock;
     Action UpBlock;
     Action Parry;
 
     [Header("Dash Options")]
-    [SerializeField] bool directionalDash;
     [SerializeField] float dashTiming;
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
@@ -41,6 +35,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float _timerOfParry;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
+    [SerializeField, Range(-1, 1)] float blockAngle;
 
     [Header("Life Options")]
     [SerializeField] LifeSystem lifesystem;
@@ -48,7 +43,6 @@ public class CharacterHead : CharacterControllable
     [Header("Feedbacks")]
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
-    [SerializeField] Text txt;
 
 
     [Header("Animations")]
@@ -74,7 +68,7 @@ public class CharacterHead : CharacterControllable
         charanim = new CharacterAnimator(anim_base);
         customCam = FindObjectOfType<CustomCamera>();
 
-        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, IsDirectionalDash, charanim)
+        move = new CharacterMovement(GetComponent<Rigidbody>(), rot, charanim)
             .SetSpeed(speed)
             .SetTimerDash(dashTiming).SetDashSpeed(dashSpeed)
             .SetDashCD(dashCD)
@@ -88,10 +82,11 @@ public class CharacterHead : CharacterControllable
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
 
-        charBlock = new CharacterBlock(_timerOfParry, OnBeginParry, OnEndParry, charanim);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle,OnEndParry, charanim);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
+        Parry += OnBeginParry;
         ChildrensUpdates += charBlock.OnUpdate;
 
         charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy);
@@ -102,13 +97,8 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
-        charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSucesfull);
+        charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
         charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
-
-
-        #region SCRIPT TEMPORAL, BORRAR
-        changeCDDash += move.ChangeDashCD;
-        #endregion
     }
 
     void RompeCoco()
@@ -120,9 +110,6 @@ public class CharacterHead : CharacterControllable
     {
         ChildrensUpdates();
         charAttack.Refresh();
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button1))
-            RollDash();
     }
 
     #region Attack
@@ -223,17 +210,8 @@ public class CharacterHead : CharacterControllable
     }
     #endregion
 
-    #region Roll 
-    bool IsDirectionalDash()
-    {
-        return directionalDash;
-    }
+    #region Roll
 
-    public void ChangeDashForm()
-    {
-        directionalDash = !directionalDash;
-        txt.text = "Directional Dash = " + directionalDash.ToString();
-    }
     public void RollDash()
     {
         if (!InDash())
@@ -246,17 +224,17 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Take Damage
-    public override Attack_Result TakeDamage(int dmg)
+    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir)
     {
         if (InDash())
             return Attack_Result.inmune;
 
-        if (charBlock.onParry)
+        if (charBlock.IsParry(rot.forward, attackDir))
         {
             PerfectParry();
             return Attack_Result.parried;
         }
-        else if (charBlock.onBlock)
+        else if (charBlock.IsBlock(rot.forward, attackDir))
         {
             charanim.BlockSomething();
             return Attack_Result.blocked;
@@ -268,7 +246,6 @@ public class CharacterHead : CharacterControllable
             lifesystem.Hit(dmg);
             return Attack_Result.sucessful;
         }
-
     }
     #endregion
 

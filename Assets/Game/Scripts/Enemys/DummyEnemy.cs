@@ -20,15 +20,31 @@ public class DummyEnemy : EnemyBase
     public float time_stun;
 
     public AnimEvent anim;
+    StatesMachine sm;
+    public Animator animator;
+    [SerializeField]
+    private float _speedMovement;
+    [SerializeField]
+    private float _rotSpeed;
+    //public Follow follow;
+
+    public Rigidbody _rb;
 
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
         feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
         feedbackHitShield = new PopSignalFeedback(0.2f, obj_feedbackShield);
         feedbackAttack = new PopSignalFeedback(0.2f, obj_feedbackattack);
 
         anim.Add_Callback("DealDamage", DealDamage);
+        sm = new StatesMachine();
+        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _speedMovement));
+        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _speedMovement));
+        sm.ChangeState<StatesAttack>();
+
+        //follow.Configure(_rb);
     }
 
     public void DealDamage()
@@ -40,23 +56,23 @@ public class DummyEnemy : EnemyBase
 
     public void AttackEntity(EntityBase e)
     {
-        if (e.TakeDamage(damage) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.forward) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
         }
-        else if (e.TakeDamage(damage) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.forward) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }
     }
 
-    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh(); }
+    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh();sm.Update(); }
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
     /////////////////////////////////////////////////////////////////
-    public override Attack_Result TakeDamage(int dmg)
+    public override Attack_Result TakeDamage(int dmg, Vector3 dir)
     {
         greenblood.Play();
         return Attack_Result.sucessful; 
