@@ -63,6 +63,9 @@ public class CharacterHead : CharacterControllable
 
     CustomCamera customCam;
 
+    [Header("Interactable")]
+    public InteractSensor sensor;
+
     private void Awake()
     {
         charanim = new CharacterAnimator(anim_base);
@@ -246,6 +249,23 @@ public class CharacterHead : CharacterControllable
             lifesystem.Hit(dmg);
             return Attack_Result.sucessful;
         }
+    }
+    #endregion
+
+    #region Interact
+    public void EVENT_OnInteract()
+    {
+        sensor.Interact();
+    }
+    #endregion
+
+    #region Items
+    public override void OnReceiveItem(ItemWorld itemworld)
+    {
+        base.OnReceiveItem(itemworld);
+
+
+
     }
     #endregion
 

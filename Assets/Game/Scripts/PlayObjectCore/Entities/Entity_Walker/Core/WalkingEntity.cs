@@ -7,6 +7,7 @@ public abstract class WalkingEntity : EntityBase
     /// <summary>
     /// aca se puede implementar un A* desactivado
     /// </summary>
+    /// 
 
     private void Awake()
     {
@@ -20,4 +21,6 @@ public abstract class WalkingEntity : EntityBase
     public void GoToPosition(Vector2 pos) { /*Configure and Active AStar*/ executeAStar = true; }
     public void GoToPosition() { /*Configure and Active AStar*/ executeAStar = true; }
     protected abstract void OnUpdateEntity();
+
+    public virtual void OnReceiveItem(ItemWorld itemworld) { }
 }
