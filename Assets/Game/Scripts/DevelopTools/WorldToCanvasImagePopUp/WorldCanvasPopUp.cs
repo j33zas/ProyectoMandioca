@@ -11,13 +11,14 @@ public class WorldCanvasPopUp : MonoBehaviour
 
     private void Awake()
     {
+        _image = GetComponent<Image>();
         _pos = GetComponent<RectTransform>();
     }
     
-    public void SetCanvasPopUp(Vector3 pos, Image img)
+    public void SetCanvasPopUp(Vector2 posInCanvas, Sprite img)
     {
-        _image = img;
-        _pos.transform.position = pos;
+        _image.sprite = img;
+        _pos.anchoredPosition = posInCanvas;
     }
     
 }

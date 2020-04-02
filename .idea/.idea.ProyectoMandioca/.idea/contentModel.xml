@@ -26,6 +26,7 @@
             <e p="CombatSystem" t="Include">
               <e p="CombatComponent.cs" t="Include" />
               <e p="DummyCC_RaycastMetod.cs" t="Include" />
+              <e p="EntityBlock.cs" t="Include" />
             </e>
             <e p="CustomCamera.cs" t="Include" />
             <e p="DevelopTools" t="Include">
@@ -50,7 +51,7 @@
               <e p="UI" t="Include">
                 <e p="FastToolOptions.cs" t="Include" />
               </e>
-              <e p="WorldCanvasImagePopUp" t="Include">
+              <e p="WorldToCanvasImagePopUp" t="Include">
                 <e p="CanvasPopUpInWorld_Manager.cs" t="Include" />
                 <e p="Icon_DATA.cs" t="Include" />
                 <e p="TestPopUp.cs" t="Include" />
