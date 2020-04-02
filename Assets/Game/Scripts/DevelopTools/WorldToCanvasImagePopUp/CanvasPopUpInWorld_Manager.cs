@@ -36,21 +36,12 @@ public class CanvasPopUpInWorld_Manager : MonoBehaviour
     /// <param name="worldObjectPos"></param>
     /// <param name="icon"></param>
     /// <returns></returns>
-    public WorldCanvasPopUp MakePopUp(Vector3 worldObjectPos, Icon icon)
+    public WorldCanvasPopUp MakePopUp(Transform worldObjectPos, Icon icon)
     {
-        //Guarda la posicion del mundo V3 al canvas V2
-        Vector2 viewportPosition = Camera.main.WorldToViewportPoint(worldObjectPos);
-        
-        //Consigue la posicion real en el canvas, ya que comienza del 0,0 del rect.
-        Vector2 worldObject_ScreenPosition = new Vector2(
-            ((viewportPosition.x * canvasRect.sizeDelta.x) - (canvasRect.sizeDelta.x * 0.5f)),
-            ((viewportPosition.y * canvasRect.sizeDelta.y) - (canvasRect.sizeDelta.y * 0.5f)));
-
         //Instancia el prefab de la imagen y lo hace hijo del canvas
         WorldCanvasPopUp newPopUp = Instantiate(popUp_prefab, canvasRect.transform);
-        //Setea el nuevo objeto. Se le pasa la posicion del objeto del mundo y la imagen dentro del Dic.
-        newPopUp.SetCanvasPopUp(worldObject_ScreenPosition, imgRegistry[icon].image);
-
+        //Setea el nuevo objeto. Se le pasa la posicion del objeto del mundo y la imagen dentro del Dic y el canvas donde ubicarla.
+        newPopUp.SetCanvasPopUp(worldObjectPos, imgRegistry[icon].image, canvasRect);
         return newPopUp;
     }
     
