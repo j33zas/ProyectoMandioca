@@ -253,9 +253,13 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Interact
-    public void EVENT_OnInteract()
+    public void EVENT_OnInteractDown()
     {
-        sensor.Interact();
+        sensor.OnInteractDown();
+    }
+    public void EVENT_OnInteractUp()
+    {
+        sensor.OnInteractUp();
     }
     #endregion
 

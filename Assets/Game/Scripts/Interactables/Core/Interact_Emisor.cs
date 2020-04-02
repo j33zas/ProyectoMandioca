@@ -5,7 +5,6 @@ using UnityEngine;
 public class Interact_Emisor : Interactable
 {
     public Interact_Receptor[] results;
-
     public Transform positiontomessage;
 
     public override void Execute(WalkingEntity entity)
@@ -16,10 +15,7 @@ public class Interact_Emisor : Interactable
         }
     }
 
-    public override void Exit()
-    {
-        WorldItemInfo.instance.Hide();
-    }
+    public override void Exit() => WorldItemInfo.instance.Hide();
 
     public override void ShowInfo(WalkingEntity entity)
     {

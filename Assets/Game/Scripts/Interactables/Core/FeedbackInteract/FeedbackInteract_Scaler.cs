@@ -5,8 +5,8 @@ using UnityEngine;
 public class FeedbackInteract_Scaler : FeedbackInteractBase
 {
     public Transform toscale;
-    public Vector3 startscale = Vector3.zero;
-    public Vector3 finalscale = Vector3.zero;
+    Vector3 startscale = Vector3.zero;
+    Vector3 finalscale = Vector3.zero;
     public Vector3 cant_to_scale = new Vector3(2,2,2);
     private void Start()
     {
@@ -18,8 +18,5 @@ public class FeedbackInteract_Scaler : FeedbackInteractBase
     }
     protected override void OnShow() => toscale.transform.localScale = finalscale;
     protected override void OnHide() => toscale.transform.localScale = startscale;
-    protected override void OnUpdate()
-    {
-        
-    }
+    protected override void OnUpdate() { }
 }

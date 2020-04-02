@@ -6,37 +6,50 @@ using System;
 
 public class InteractSensor : MonoBehaviour
 {
-    Interactable most_close;
+    public Interactable most_close;
 
-    bool isclose;
+    public bool isclose;
+    public bool canrecolect;
 
-    bool canrecolect;
+    public bool optimize;
+
     [Range(0f,0.5f)]
     public float cooldownrecolect;
     float timer;
-
-    bool interact;
 
     Interactable[] interactables;
     Interactable current;
 
     public WalkingEntity collector;
 
+    public bool canInteract;
+
     private void Awake()
     {
         canrecolect = true;
-
         newitem = true;
     }
 
-    public void Interact()
+    public void OnInteractDown()
     {
-        if (isclose && most_close != null && interact)
+        canInteract = true;
+
+        if (isclose && most_close != null)
         {
             most_close.Execute(collector);
-            interact = false;
+            optimize = true;
         }
     }
+    public void OnInteractUp()
+    {
+        canInteract = false;
+
+        if (most_close != null)
+        {
+            most_close.Exit();
+        }
+    }
+
     public void Disapear()
     {
         WorldItemInfo.instance.Hide();
@@ -47,15 +60,15 @@ public class InteractSensor : MonoBehaviour
 
     private void Update()
     {
-        interactables = FindObjectsOfType<Interactable>();
-        current = interactables.ReturnMostClose(transform.position);
+        interactables = FindObjectsOfType<Interactable>();//hay que optimizar esto, es muy pesado un findobject en un Update
 
-        if (most_close == null)
-        {
+        current = interactables.ReturnMostClose(transform.position);//esto tambien se puede optimizar mas a delante con un return most close que busque por grupos
+
+        if (most_close == null) 
+        { 
             most_close = current;
+            return; 
         }
-
-        if (!most_close) return;
 
         if (current != most_close)
         {
@@ -64,7 +77,7 @@ public class InteractSensor : MonoBehaviour
             newitem = true;
         }
 
-        if (Vector3.Distance(most_close.transform.position, transform.position) < most_close.distancetoInteract)
+        if (I_Have_Good_Distace_To_Interact())
         {
             isclose = true;
 
@@ -74,23 +87,10 @@ public class InteractSensor : MonoBehaviour
                 newitem = false;
             }
 
-            if (most_close.autoexecute || Input.GetButton("XBOX360_Square"))
+            if (most_close.autoexecute || canInteract)
             {
-                if (interact)
-                {
-                    if (canrecolect)
-                    {
-                        canrecolect = false;
-                        most_close.Execute(collector);
-                        interact = false;
-                    }
-                }
-                else
-                {
-                    canrecolect = false;
-                    interact = true;
-                }
-
+                canrecolect = false;
+                most_close.Execute(collector);
                 newitem = true;
             }
         }
@@ -107,5 +107,9 @@ public class InteractSensor : MonoBehaviour
             else { canrecolect = true; timer = 0; }
         }
     }
- 
+
+
+    bool I_Have_Good_Distace_To_Interact() { return Vector3.Distance(most_close.transform.position, transform.position) < most_close.distancetoInteract; }
+
+    
 }

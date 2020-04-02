@@ -10,32 +10,21 @@ public class ItemWorld : Interactable
 {
     public Item item;
 
-    public FeedbackItem feeback;
-
     bool onselected;
 
-    Vector3 scalenormal;
-    Vector3 scalescaled;
-    Vector3 posnormal;
-    Vector3 posscaled;
     Transform model;
 
     public UnityEvent to_collect;
-
     public UnityEvent OnCreate;
 
 
     private void Awake()
     {
-        feeback = GetComponentInChildren<FeedbackItem>();
+        
         var aux = GetComponentInChildren<ParentFinder>();
         if (aux)
         {
             model = aux.transform;
-            scalenormal = model.localScale;
-            scalescaled = scalenormal + scalenormal * 0.5f;
-            posnormal = model.transform.position;
-            posscaled = new Vector3(posnormal.x, posnormal.y + 1, posnormal.z);
         }
     }
 
@@ -53,8 +42,8 @@ public class ItemWorld : Interactable
 
     public override void Exit()
     {
-        if (model) model.localScale = scalenormal;
-        if (feeback) feeback.Hide();
+        if (feedback) feedback.Hide();
+        if (feedback2) feedback2.Hide();
         WorldItemInfo.instance.Hide();
         onselected = false;
     }
@@ -63,7 +52,6 @@ public class ItemWorld : Interactable
     {
         if (!autoexecute)
         {
-            if (model) model.localScale = scalescaled;
             if (item)
             {
                 if (pointToMessage != null)
@@ -75,13 +63,20 @@ public class ItemWorld : Interactable
                     WorldItemInfo.instance.Show(this.transform.position, item.name, item.description);
                 }
             }
-            if (feeback) feeback.Show();
+            if (feedback)
+            {
+                feedback.Show();
+            }
+            if (feedback2)
+            {
+                feedback2.Show();
+            }
+
             onselected = true;
 
         }
         else
         {
-
             //para el auto execute
             Execute(entity);
         }
