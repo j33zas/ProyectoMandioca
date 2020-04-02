@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestPopUp : MonoBehaviour
 {
-    public Transform playerPos;
+    public Transform objInWorld;
 
     private WorldCanvasPopUp testPopUp;
     
@@ -21,7 +21,7 @@ public class TestPopUp : MonoBehaviour
                 return;
             }
             
-            testPopUp = CanvasPopUpInWorld_Manager.instance.MakePopUp( playerPos.transform.position + Vector3.up * 3, Icon.parry);
+            testPopUp = CanvasPopUpInWorld_Manager.instance.MakePopUp( objInWorld, Icon.parry);
         }
     }
 }
