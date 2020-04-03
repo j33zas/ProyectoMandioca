@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SkillInfo", menuName = "Skills/Active", order = 1)]
-public abstract class SkillInfo : ScriptableObject
+public class SkillInfo : ScriptableObject
 {
     //ejemplo, furia de zeus
     public string skill_name = "default_name";
