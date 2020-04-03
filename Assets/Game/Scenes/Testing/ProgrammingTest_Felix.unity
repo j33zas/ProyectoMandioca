@@ -5046,8 +5046,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD:Assets/Game/Scenes/ProgrammingTest_Felix.unity
-=======
 --- !u!1 &124726609
 GameObject:
   m_ObjectHideFlags: 0
@@ -5110,7 +5108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objInWorld: {fileID: 1202549542}
->>>>>>> master:Assets/Game/Scenes/Testing/ProgrammingTest 3.unity
 --- !u!1 &139724097
 GameObject:
   m_ObjectHideFlags: 0
@@ -10108,8 +10105,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
-<<<<<<< HEAD:Assets/Game/Scenes/ProgrammingTest_Felix.unity
-=======
 --- !u!114 &274457128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10129,7 +10124,6 @@ MonoBehaviour:
   target: {fileID: 0}
   damage: 0
   anim: {fileID: 1951866805}
->>>>>>> master:Assets/Game/Scenes/Testing/ProgrammingTest 3.unity
 --- !u!4 &274457129
 Transform:
   m_ObjectHideFlags: 0
@@ -10169,13 +10163,8 @@ MonoBehaviour:
   time_stun: 2
   anim: {fileID: 1959160892}
   animator: {fileID: 1951866805}
-<<<<<<< HEAD:Assets/Game/Scenes/ProgrammingTest_Felix.unity
   _speedMovement: 2
   _rotSpeed: 5
-=======
-  _speedMovement: 3
-  _rotSpeed: 50
->>>>>>> master:Assets/Game/Scenes/Testing/ProgrammingTest 3.unity
   _rb: {fileID: 0}
 --- !u!1 &302570585
 GameObject:
