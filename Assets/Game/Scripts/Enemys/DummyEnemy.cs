@@ -30,6 +30,9 @@ public class DummyEnemy : EnemyBase
 
     public Rigidbody _rb;
 
+    [Header("Life Options")]
+    [SerializeField] EnemyLifeBar lifesystem;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -74,6 +77,7 @@ public class DummyEnemy : EnemyBase
     /////////////////////////////////////////////////////////////////
     public override Attack_Result TakeDamage(int dmg, Vector3 dir)
     {
+        lifesystem.Hit(dmg);
         greenblood.Play();
         return Attack_Result.sucessful; 
     }

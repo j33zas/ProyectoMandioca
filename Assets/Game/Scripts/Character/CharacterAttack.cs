@@ -9,6 +9,7 @@ public class CharacterAttack
     float range;
     float heavyAttackTime = 1f;
     float buttonPressedTime;
+    float angleOfAttack;
 
     CharacterAnimator anim;
 
@@ -16,20 +17,20 @@ public class CharacterAttack
 
     Action NormalAttack;
     Action HeavyAttack;
-
+    
     bool isAttackReleased;
-
     bool isAnimationFinished;
     ParticleSystem feedbackHeavy;
 
     bool oneshot;
 
     public bool inAttack;
+    
 
-
-    public CharacterAttack(float _range, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps)
+    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps)
     {
         range = _range;
+        angleOfAttack = _angle;
         heavyAttackTime = _heavyAttackTime;
         anim = _anim;
         forwardPos = _forward;
@@ -64,7 +65,7 @@ public class CharacterAttack
         anim.OnAttackBegin();
     }
 
-    void CHECK()
+    void Check()
     {
         inCheck = false;
 
@@ -77,57 +78,49 @@ public class CharacterAttack
             HeavyAttack.Invoke();
         }
         feedbackHeavy.Stop();
-       // feedbackHeavy.gameObject.SetActive(false);
         oneshot = false;
         buttonPressedTime = 0f;
         isAnimationFinished = false;
         isAttackReleased = false;
     }
 
-    //SUELTO
     public void OnAttackEnd()
     {
         if (isAnimationFinished)
         {
-            //quiere decir que ya llegue a la animacion
-            CHECK();
-
+            Check();
         }
         else
         {
-            //quiere decir que solte antes
             isAttackReleased = true;
-        }
-       
-        
+        }          
     }
-    //ESTOY ARRIBA
+
     public void BeginCheckAttackType()
     {
         if (isAttackReleased)
         {
-            //quiere decir que ya solte
-            CHECK();
+            Check();
         }
         else
         {
-            //quiere decir que todavia no solte
             isAnimationFinished = true;
         }
     }
 
-    //triggereado por animacion
     public void Attack(int dmg, float range)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(forwardPos.transform.position, forwardPos.transform.forward, out hit, range))
+        var enemies = Physics.OverlapSphere(forwardPos.position, range);       
+        for (int i = 0; i < enemies.Length; i++)
         {
-            if (hit.collider.gameObject.GetComponent<EnemyBase>())
+            Vector3 dir = enemies[i].transform.position - forwardPos.position;
+            float angle = Vector3.Angle(forwardPos.forward, dir);
+
+            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < angleOfAttack )
             {
-                hit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(dmg, forwardPos.transform.forward);
+                enemies[i].GetComponent<EnemyBase>().TakeDamage(dmg, forwardPos.transform.forward);
             }
         }
-        Debug.DrawRay(forwardPos.transform.position, forwardPos.transform.forward, Color.black, range);
     }
 }
 
