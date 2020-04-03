@@ -85,7 +85,7 @@ public class CharacterInput : MonoBehaviour
         joystickhelper = new JoystickBasicInput();
         joystickhelper
             .SUBSCRIBE_DPAD_UP(EV_DPAD_UP)
-            .SUBSCRIBE_LBUTTON_DOWN(EV_DPAD_DOWN)
+            .SUBSCRIBE_DPAD_DOWN(EV_DPAD_DOWN)
             .SUBSCRIBE_DPAD_RIGHT(EV_DPAD_RIGHT)
             .SUBSCRIBE_DPAD_LEFT(EV_DPAD_LEFT);
     }
