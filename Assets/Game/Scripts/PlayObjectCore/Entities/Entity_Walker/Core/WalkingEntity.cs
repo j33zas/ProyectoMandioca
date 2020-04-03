@@ -23,4 +23,8 @@ public abstract class WalkingEntity : EntityBase
     protected abstract void OnUpdateEntity();
 
     public virtual void OnReceiveItem(ItemWorld itemworld) { }
+    public virtual void Stun() { }
+    public virtual void Petrified() { }
+    public virtual void OnFire() { }
+    public virtual void HalfLife() { }
 }
