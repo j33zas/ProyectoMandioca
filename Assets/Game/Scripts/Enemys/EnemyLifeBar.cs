@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EnemyLifeBar : MonoBehaviour
 {
     CharacterLifeSystem lifeSystemEnemy;
-    
+
     public FrontendStatBase uilife;
 
     public int life = 100;
+
+    public event Action deadCallback = delegate { };
+
+    public void AddEventOnDeath(Action listener) { deadCallback += listener; }
+    public void RemoveEventOnDeath(Action listener) { deadCallback -= listener; deadCallback = delegate { }; }
+
 
     private void Start()
     {
@@ -18,7 +25,10 @@ public class EnemyLifeBar : MonoBehaviour
 
     void EVENT_OnLoseLife() => Debug.Log("Enemy Lose life");
     void EVENT_OnGainLife() => Debug.Log("Enemy Gain life");
-    void EVENT_OnDeath() => Debug.Log("Enemy Death");
+    void EVENT_OnDeath()
+    {
+        deadCallback.Invoke();
+    }
 
     public void Hit(int _val)
     {

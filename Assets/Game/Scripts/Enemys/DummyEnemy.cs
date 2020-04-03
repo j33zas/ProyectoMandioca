@@ -84,6 +84,7 @@ public class DummyEnemy : EnemyBase
     {
         lifesystem.Hit(dmg);
         greenblood.Play();
+
         return Attack_Result.sucessful; 
     }
 
@@ -92,6 +93,20 @@ public class DummyEnemy : EnemyBase
         base.Petrified();
         sm.ChangeState<StatesPetrified>();
     }
+
+    public void Die()
+    {
+        Debug.Log("die");
+        var listOfEnemy = Physics.OverlapSphere(transform.position, 10);
+        foreach (var item in listOfEnemy)
+        {
+            if (item.GetComponent<EnemyBase>())
+            {
+                item.GetComponent<EnemyBase>().Petrified();
+            }
+        }
+    }
+
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }

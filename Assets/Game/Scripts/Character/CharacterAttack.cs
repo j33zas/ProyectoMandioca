@@ -25,9 +25,13 @@ public class CharacterAttack
     bool oneshot;
 
     public bool inAttack;
+
+    //FirstAttackPassive
     private bool pasiveFirstAttack;
     private bool firstAttack;
     private float _rangeOfPetrified;
+
+
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified)
     {
         range = _range;
@@ -134,9 +138,7 @@ public class CharacterAttack
     {
         if (firstAttack)
         {
-
-            PetrifiedEnemy(enemyPosition);
-           
+            PetrifiedEnemy(enemyPosition);           
         }
     }
 
