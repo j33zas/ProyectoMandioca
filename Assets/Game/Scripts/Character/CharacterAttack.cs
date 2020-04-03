@@ -25,9 +25,10 @@ public class CharacterAttack
     bool oneshot;
 
     public bool inAttack;
-    
-
-    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps)
+    private bool pasiveFirstAttack;
+    private bool firstAttack;
+    private float _rangeOfPetrified;
+    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified)
     {
         range = _range;
         angleOfAttack = _angle;
@@ -38,6 +39,7 @@ public class CharacterAttack
         NormalAttack = _normalAttack;
         HeavyAttack = _heavyAttack;
         feedbackHeavy = ps;
+        _rangeOfPetrified = rangeOfPetrified;
     }
 
     public void Refresh()
@@ -119,8 +121,45 @@ public class CharacterAttack
             if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < angleOfAttack )
             {
                 enemies[i].GetComponent<EnemyBase>().TakeDamage(dmg, forwardPos.transform.forward);
+                if (pasiveFirstAttack)
+                {
+                    FirstAttack(enemies[i].GetComponent<EnemyBase>().transform);
+                }
+            }            
+        }
+        FirstAttackReady(false);
+    }
+
+    void FirstAttack(Transform enemyPosition)
+    {
+        if (firstAttack)
+        {
+
+            PetrifiedEnemy(enemyPosition);
+           
+        }
+    }
+
+    void PetrifiedEnemy(Transform enemyPosition)
+    {
+        var listOfEnemy = Physics.OverlapSphere(enemyPosition.position, _rangeOfPetrified);
+        foreach (var item in listOfEnemy)
+        {
+            EnemyBase myEnemy = item.GetComponent<EnemyBase>();
+            if (myEnemy)
+            {
+                myEnemy.Petrified();
             }
         }
+    }
+
+    public void FirstAttackReady(bool ready)
+    {
+        firstAttack = ready;
+    }
+    public void PasiveFirstAttackReady(bool ready)
+    {
+        pasiveFirstAttack = ready;
     }
 }
 

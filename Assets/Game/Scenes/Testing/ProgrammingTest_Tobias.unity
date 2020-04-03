@@ -1159,7 +1159,22 @@ PrefabInstance:
     - target: {fileID: 461483721385685827, guid: 3fcfccb7483bcd545a3882556c928c9d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _petrifiedTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _speedMovement
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _distance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 461483721385685838, guid: 3fcfccb7483bcd545a3882556c928c9d,
         type: 3}
@@ -1995,6 +2010,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DummyEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _petrifiedTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _speedMovement
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _distance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 461483721385685838, guid: 3fcfccb7483bcd545a3882556c928c9d,
         type: 3}
@@ -4255,7 +4285,22 @@ PrefabInstance:
     - target: {fileID: 461483721385685827, guid: 3fcfccb7483bcd545a3882556c928c9d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _petrifiedTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _speedMovement
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
+        type: 3}
+      propertyPath: _distance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 461483721385685838, guid: 3fcfccb7483bcd545a3882556c928c9d,
         type: 3}
@@ -8652,8 +8697,9 @@ MonoBehaviour:
   dmg_normal: 5
   dmg_heavy: 5
   attackRange: 2
-  attackAngle: 0
+  attackAngle: 90
   timeToHeavyAttack: 1
+  rangeOfPetrified: 10
   sensor: {fileID: 0}
 --- !u!114 &1954684487
 MonoBehaviour:

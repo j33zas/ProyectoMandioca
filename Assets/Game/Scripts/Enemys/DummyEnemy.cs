@@ -26,6 +26,10 @@ public class DummyEnemy : EnemyBase
     private float _speedMovement;
     [SerializeField]
     private float _rotSpeed;
+    [SerializeField]
+    private float _petrifiedTime;
+    [SerializeField]
+    private float _distance;
     //public Follow follow;
 
     public Rigidbody _rb;
@@ -43,8 +47,9 @@ public class DummyEnemy : EnemyBase
 
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
-        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _speedMovement));
-        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _speedMovement));
+        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _speedMovement, _distance));
+        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
+        sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesAttack>();
 
         //follow.Configure(_rb);
@@ -80,6 +85,12 @@ public class DummyEnemy : EnemyBase
         lifesystem.Hit(dmg);
         greenblood.Play();
         return Attack_Result.sucessful; 
+    }
+
+    public override void Petrified()
+    {
+        base.Petrified();
+        sm.ChangeState<StatesPetrified>();
     }
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }

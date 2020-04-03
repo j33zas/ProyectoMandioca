@@ -19,21 +19,21 @@ public class Test_Attack : MonoBehaviour
     void Start()
     {
         attack += Attack;
-        sm = new StatesMachine();
-        sm.Addstate(new StatesFollow(sm, transform, GetComponent<Rigidbody>(), FindObjectOfType<CharacterHead>().transform, anim, 50, 3));
-        sm.Addstate(new StatesAttack(sm, anim, transform, FindObjectOfType<CharacterHead>().transform, 50, 3));
-        sm.ChangeState<StatesAttack>();
+        //sm = new StatesMachine();
+        //sm.Addstate(new StatesFollow(sm, transform, GetComponent<Rigidbody>(), FindObjectOfType<CharacterHead>().transform, anim, 50, 3));
+        //sm.Addstate(new StatesAttack(sm, anim, transform, FindObjectOfType<CharacterHead>().transform, 50, 3));
+        //sm.ChangeState<StatesAttack>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        sm.Update();
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            attack();
-        }
+        //sm.Update();
+        //if (Input.GetKeyDown(KeyCode.F))
+        //{
+        //    attack();
+        //}
     }
 
     void Attack()

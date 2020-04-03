@@ -57,6 +57,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float attackRange;
     [SerializeField] float attackAngle;
     [SerializeField] float timeToHeavyAttack;
+    [SerializeField] float rangeOfPetrified;
     float dmg = 5;
     Action OnAttackBegin;
     Action OnAttackEnd;
@@ -93,10 +94,11 @@ public class CharacterHead : CharacterControllable
         Parry += OnBeginParry;
         ChildrensUpdates += charBlock.OnUpdate;
 
-        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy);
+        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified);
         OnAttackBegin += charAttack.OnattackBegin;
         OnAttackEnd += charAttack.OnAttackEnd;
-
+        charAttack.PasiveFirstAttackReady(true);
+        charAttack.FirstAttackReady(true);
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
         charAnimEvent.Add_Callback("DealAttack", DealAttack);

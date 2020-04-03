@@ -9,10 +9,10 @@ public class StatesFollow : States
     protected Transform _myTransform;
     protected Rigidbody _rb;
     protected Transform _target;
-    protected float speed;
+    protected float _speed;
     protected Animator _anim;
     bool run;
-     public StatesFollow(StatesMachine sm,Transform trans,Rigidbody rb,Transform target,Animator anim,float rotSpeed,float distance) : base(sm)
+     public StatesFollow(StatesMachine sm,Transform trans,Rigidbody rb,Transform target,Animator anim,float rotSpeed,float distance,float speed) : base(sm)
      {
         _myTransform = trans;
         _rb = rb;
@@ -20,7 +20,7 @@ public class StatesFollow : States
         _anim = anim;
         rotationSpeed = rotSpeed;
         distanceStop = distance;
-        speed = 4;
+        _speed = speed;
      }
 
     public override void Start()
@@ -39,7 +39,7 @@ public class StatesFollow : States
             Vector3 _dir = (_target.position - _myTransform.position).normalized;
             Vector3 fowardRotation = new Vector3(_dir.x, 0, _dir.z);
             Vector3 velocity= new Vector3(_dir.x, 0, _dir.z);
-            _rb.velocity = velocity * speed;
+            _rb.velocity = velocity * _speed;
            
             _myTransform.forward = Vector3.Lerp(_myTransform.forward, fowardRotation, rotationSpeed * Time.deltaTime);
         }
