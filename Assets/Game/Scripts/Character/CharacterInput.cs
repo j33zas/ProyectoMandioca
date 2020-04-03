@@ -24,7 +24,8 @@ public class CharacterInput : MonoBehaviour
     [Header("Attack")]
     public UnityEvent OnAttack;
     public UnityEvent OnAttackEnd;
-    
+
+    public UnityEvent OnInteract;
     private void Update()
     {
         LeftHorizontal.Invoke(Input.GetAxis("Horizontal"));
@@ -39,6 +40,9 @@ public class CharacterInput : MonoBehaviour
         
         if (Input.GetButtonDown("Attack")) OnAttack.Invoke();
         if (Input.GetButtonUp("Attack")) OnAttackEnd.Invoke();
+
+        if (Input.GetButtonDown("Interact")) OnInteract.Invoke();
+ 
     }
 
     public void MouseInputs()
