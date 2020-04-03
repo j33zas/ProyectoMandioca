@@ -8,6 +8,8 @@ public class CharacterInput : MonoBehaviour
 {
     public enum InputType { Joystick, Mouse, Other }
     public InputType input_type;
+
+    JoystickBasicInput joystickhelper;
     
     [Header("Movement")]
     public UnityEvFloat LeftHorizontal;
@@ -25,7 +27,16 @@ public class CharacterInput : MonoBehaviour
     public UnityEvent OnAttack;
     public UnityEvent OnAttackEnd;
 
+    [Header("Interact")]
     public UnityEvent OnInteract;
+
+    [Header("Test pasives")]
+    public UnityEvent OnDpad_Up;
+    public UnityEvent OnDpad_Down;
+    public UnityEvent OnDpad_Left;
+    public UnityEvent OnDpad_Right;
+
+    private void Awake() => ConfigureJoystickHelper();
     private void Update()
     {
         LeftHorizontal.Invoke(Input.GetAxis("Horizontal"));
@@ -42,7 +53,9 @@ public class CharacterInput : MonoBehaviour
         if (Input.GetButtonUp("Attack")) OnAttackEnd.Invoke();
 
         if (Input.GetButtonDown("Interact")) OnInteract.Invoke();
- 
+
+        RefreshHelper();
+
     }
 
     public void MouseInputs()
@@ -60,12 +73,29 @@ public class CharacterInput : MonoBehaviour
         RightVertical.Invoke(Input.GetAxis("RightVertical"));
     }
 
-
     public void ChangeRotationInput()
     {
         if (input_type == InputType.Mouse) input_type = InputType.Joystick;
         else if (input_type == InputType.Joystick) input_type = InputType.Mouse;
     }
+
+    #region JoystickHelper
+    void ConfigureJoystickHelper()
+    {
+        joystickhelper = new JoystickBasicInput();
+        joystickhelper
+            .SUBSCRIBE_DPAD_UP(EV_DPAD_UP)
+            .SUBSCRIBE_LBUTTON_DOWN(EV_DPAD_DOWN)
+            .SUBSCRIBE_DPAD_RIGHT(EV_DPAD_RIGHT)
+            .SUBSCRIBE_DPAD_LEFT(EV_DPAD_LEFT);
+    }
+    void RefreshHelper() => joystickhelper.Refresh();
+    void EV_DPAD_UP() => OnDpad_Up.Invoke();
+    void EV_DPAD_DOWN() => OnDpad_Down.Invoke();
+    void EV_DPAD_LEFT() => OnDpad_Left.Invoke();
+    void EV_DPAD_RIGHT() => OnDpad_Right.Invoke();
+    #endregion
+
 
     [System.Serializable]
     public class UnityEvFloat : UnityEvent<float> { }

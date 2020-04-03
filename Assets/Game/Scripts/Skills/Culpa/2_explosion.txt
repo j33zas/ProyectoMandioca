@@ -1,0 +1,7 @@
+exactamente lo mismo que el anterior... con el cambio de arma simulado
+
+pero es todavia mas facil... en vez de darle una bonificacion de daño simplemente poner una explosion
+(ver explosiones en la carpeta de Control "minions explotan cuando mueren")
+
+no hace falta modificar el script de character
+solo le ponen la explosion ahi y ya esta
