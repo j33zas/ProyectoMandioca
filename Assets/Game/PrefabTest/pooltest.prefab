@@ -91,9 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _iconos:
-  - image: {fileID: 0}
-    icon: 0
-  popUp_prefab: {fileID: 0}
+  - {fileID: 11400000, guid: 6a3be0d92aaec4f2185a3e95c9c30df2, type: 2}
+  canvasRect: {fileID: 0}
+  popUp_prefab: {fileID: -5339186662271959044, guid: 581fc5873ba274362916f1b19492902b,
+    type: 3}
 --- !u!1 &2403563384703640958
 GameObject:
   m_ObjectHideFlags: 0
