@@ -55,6 +55,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dmg_normal = 5;
     [SerializeField] float dmg_heavy = 20;
     [SerializeField] float attackRange;
+    [SerializeField] float attackAngle;
     [SerializeField] float timeToHeavyAttack;
     float dmg = 5;
     Action OnAttackBegin;
@@ -92,7 +93,7 @@ public class CharacterHead : CharacterControllable
         Parry += OnBeginParry;
         ChildrensUpdates += charBlock.OnUpdate;
 
-        charAttack = new CharacterAttack(attackRange, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy);
+        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy);
         OnAttackBegin += charAttack.OnattackBegin;
         OnAttackEnd += charAttack.OnAttackEnd;
 
@@ -245,7 +246,6 @@ public class CharacterHead : CharacterControllable
         else
         {
             hitParticle.Play();
-
             lifesystem.Hit(dmg);
             return Attack_Result.sucessful;
         }

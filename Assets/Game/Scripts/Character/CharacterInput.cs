@@ -8,9 +8,7 @@ public class CharacterInput : MonoBehaviour
 {
     public enum InputType { Joystick, Mouse, Other }
     public InputType input_type;
-
-    public Text txt;
-
+    
     [Header("Movement")]
     public UnityEvFloat LeftHorizontal;
     public UnityEvFloat LeftVertical;
@@ -18,16 +16,16 @@ public class CharacterInput : MonoBehaviour
     public UnityEvFloat RightVertical;
     public UnityEvent Dash;
 
+    [Header("Defense")]
     public UnityEvent OnBlock;
     public UnityEvent UpBlock;
     public UnityEvent Parry;
 
+    [Header("Attack")]
     public UnityEvent OnAttack;
     public UnityEvent OnAttackEnd;
 
     public UnityEvent OnInteract;
-
-
     private void Update()
     {
         LeftHorizontal.Invoke(Input.GetAxis("Horizontal"));
@@ -67,7 +65,6 @@ public class CharacterInput : MonoBehaviour
     {
         if (input_type == InputType.Mouse) input_type = InputType.Joystick;
         else if (input_type == InputType.Joystick) input_type = InputType.Mouse;
-        txt.text = "inputType = " + input_type;
     }
 
     [System.Serializable]
