@@ -8,7 +8,7 @@ public class SkillPetrify : SkillBase
     List<PetrifyComponent> petrifyComponents = new List<PetrifyComponent>();
     public float petrifyRange = 10;
 
-    public override void OnBeginSkill()
+    protected override void OnBeginSkill()
     {
         petrifyComponents = new List<PetrifyComponent>();
         petrifyComponents = FindObjectsOfType<PetrifyComponent>().ToList();
@@ -23,7 +23,7 @@ public class SkillPetrify : SkillBase
         }
     }
 
-    public override void OnEndSkill()
+    protected override void OnEndSkill()
     {
         foreach (var item in petrifyComponents)
         {
@@ -31,7 +31,7 @@ public class SkillPetrify : SkillBase
         }
     }
 
-    public override void OnUpdateSkill()
+    protected override void OnUpdateSkill()
     {
     }
 

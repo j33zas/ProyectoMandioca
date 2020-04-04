@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillInfo", menuName = "Skills/Active", order = 1)]
 public class SkillInfo : ScriptableObject
 {
+    //los 3 tipos control, culpa, obligacion
+    public SkillType skilltype;
     //ejemplo, furia de zeus
     public string skill_name = "default_name";
 
