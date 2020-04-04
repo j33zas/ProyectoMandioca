@@ -47,7 +47,7 @@ public class DummyEnemy : EnemyBase
 
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
-        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _speedMovement, _distance));
+        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _distance, _speedMovement));
         sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesAttack>();
@@ -92,6 +92,23 @@ public class DummyEnemy : EnemyBase
     {
         base.Petrified();
         sm.ChangeState<StatesPetrified>();
+    }
+
+    public float ChangeSpeed(float newSpeed)
+    {
+        //Si le mando negativo me devuelve la original
+        //para guardarla en el componente WebSlowedComponent
+        if (newSpeed < 0)
+            return _speedMovement;
+
+        //Busco el estado follow para poder cambiarle la velocidad
+        StatesFollow statesFollow = sm.GetState<StatesFollow>();
+        if (statesFollow != null)
+        {
+            statesFollow.ChangeSpeed(newSpeed);
+        }
+
+        return _speedMovement;
     }
 
     public void Die()

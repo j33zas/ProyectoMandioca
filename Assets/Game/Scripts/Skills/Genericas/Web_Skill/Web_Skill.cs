@@ -1,0 +1,71 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Web_Skill : SkillBase
+{
+    
+    [Header("Skill Settings")]
+    [SerializeField] private Web _web_pf;
+    [SerializeField] private float _webLifeTime;
+    [Range(0,1)]
+    [SerializeField] private float _percentSlowed;
+    
+    
+    [SerializeField] private int _totalWebsSimultaneas;
+    [SerializeField] private bool deleteFirstWeb;
+    
+
+    private Queue<Web> _websDeployed;
+    private CharacterHead _hero;
+    
+    protected override void OnBeginSkill()
+    {
+        //Creo la queue de redes
+        if(_websDeployed == null)
+            _websDeployed = new Queue<Web>();
+        //Busco al hero
+        if(_hero == null)
+            _hero = FindObjectOfType<CharacterHead>();
+
+        //Si todavia puedo tirar mas redes, las tiro
+        if (_websDeployed.Count < _totalWebsSimultaneas)
+        {
+                CreateNewWeb();
+                return;
+        }
+
+        //Si tengo mi maximo de redes tiradas y "deleteFirstWeb" esta en true, voy a borrar la primer red 
+        //que tire para poder tirar otra nueva
+        if (_websDeployed.Count >= _totalWebsSimultaneas && deleteFirstWeb)
+        {
+            DeleteFirstWeb();
+            CreateNewWeb();
+        }
+        
+        
+    }
+
+    protected override void OnEndSkill()
+    {
+        
+    }
+
+    protected override void OnUpdateSkill()
+    {
+        
+    }
+
+    private void CreateNewWeb()
+    {
+        Web newWeb = Instantiate(_web_pf, _hero.transform.position, Quaternion.identity);
+        newWeb.ConfigureWeb(_webLifeTime, _percentSlowed, () => _websDeployed.Dequeue());
+        _websDeployed.Enqueue(newWeb);
+    }
+
+    private void DeleteFirstWeb()
+    {
+        Web dqWeb = _websDeployed.Dequeue();
+        Destroy(dqWeb.gameObject);
+    }
+}
