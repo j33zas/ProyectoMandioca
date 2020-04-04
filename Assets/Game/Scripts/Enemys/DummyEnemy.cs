@@ -47,7 +47,7 @@ public class DummyEnemy : EnemyBase
 
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
-        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _speedMovement, _distance));
+        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _distance, _speedMovement));
         sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesAttack>();

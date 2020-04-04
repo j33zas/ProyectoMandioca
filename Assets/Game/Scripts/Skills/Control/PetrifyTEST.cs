@@ -10,11 +10,11 @@ public class PetrifyTEST : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            skillPetrify.OnBeginSkill();
+            skillPetrify.BeginSkill();
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
-            skillPetrify.OnEndSkill();
+            skillPetrify.EndSkill();
         }
     }
 }

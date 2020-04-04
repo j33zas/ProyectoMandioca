@@ -6,7 +6,6 @@ using System;
 public class CharacterAttack
 {
     Transform forwardPos;
-    float range;
     float heavyAttackTime = 1f;
     float buttonPressedTime;
     float angleOfAttack;
@@ -34,7 +33,6 @@ public class CharacterAttack
 
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified)
     {
-        range = _range;
         angleOfAttack = _angle;
         heavyAttackTime = _heavyAttackTime;
         anim = _anim;
