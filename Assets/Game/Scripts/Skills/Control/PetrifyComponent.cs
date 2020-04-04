@@ -5,26 +5,26 @@ using System;
 
 public class PetrifyComponent : MonoBehaviour
 {
-    EnemyLifeBar EnemyLifeBar;
+    MinionLifeSystem minionlifesystem;
     Action<Vector3> listener;
 
     private void Awake()
     {
-        EnemyLifeBar = GetComponent<EnemyLifeBar>();
+        minionlifesystem = GetComponent<MinionLifeSystem>();
     }
 
     public void OnBegin()
     {
-        EnemyLifeBar.AddEventOnDeath(OnExecute);
+        minionlifesystem.AddEventOnDeath(OnExecute);
     }
     public void OnEnd()
     {
-        EnemyLifeBar.RemoveEventOnDeath(OnExecute);
+        minionlifesystem.RemoveEventOnDeath(OnExecute);
     }
 
     public void OnExecute()
     {
-        listener.Invoke(EnemyLifeBar.gameObject.transform.position);
+        listener.Invoke(minionlifesystem.gameObject.transform.position);
     }
 
     public void Configure(Action<Vector3> _listener)

@@ -35,7 +35,7 @@ public class DummyEnemy : EnemyBase
     public Rigidbody _rb;
 
     [Header("Life Options")]
-    [SerializeField] EnemyLifeBar lifesystem;
+    [SerializeField] GenericLifeSystem lifesystem;
 
     void Start()
     {

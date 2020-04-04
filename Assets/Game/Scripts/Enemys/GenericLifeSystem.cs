@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class EnemyLifeBar : MonoBehaviour
+public class GenericLifeSystem : MonoBehaviour
 {
     CharacterLifeSystem lifeSystemEnemy;
 
@@ -16,7 +16,6 @@ public class EnemyLifeBar : MonoBehaviour
     public void AddEventOnDeath(Action listener) { deadCallback += listener; }
     public void RemoveEventOnDeath(Action listener) { deadCallback -= listener; deadCallback = delegate { }; }
 
-
     private void Start()
     {
         lifeSystemEnemy = new CharacterLifeSystem();
@@ -28,6 +27,7 @@ public class EnemyLifeBar : MonoBehaviour
     void EVENT_OnDeath()
     {
         deadCallback.Invoke();
+        deadCallback = delegate { };
     }
 
     public void Hit(int _val)

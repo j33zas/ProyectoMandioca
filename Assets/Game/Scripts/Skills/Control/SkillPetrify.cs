@@ -15,8 +15,11 @@ public class SkillPetrify : SkillBase
 
         foreach (var item in petrifyComponents)
         {
-            item.Configure(ReceivePetrifyEnemy);
-            item.OnBegin();
+            if (item != null)
+            {
+                item.Configure(ReceivePetrifyEnemy);
+                item.OnBegin();
+            }
         }
     }
 
@@ -24,7 +27,7 @@ public class SkillPetrify : SkillBase
     {
         foreach (var item in petrifyComponents)
         {
-            item.OnEnd();
+            if(item!= null) item.OnEnd();
         }
     }
 
