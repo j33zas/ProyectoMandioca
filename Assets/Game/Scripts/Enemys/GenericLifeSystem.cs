@@ -11,6 +11,8 @@ public class GenericLifeSystem : MonoBehaviour
 
     public int life = 100;
 
+    bool isdeath;
+
     public event Action deadCallback = delegate { };
 
     public void AddEventOnDeath(Action listener) { deadCallback += listener; }
@@ -26,8 +28,12 @@ public class GenericLifeSystem : MonoBehaviour
     void EVENT_OnGainLife() => Debug.Log("Enemy Gain life");
     void EVENT_OnDeath()
     {
-        deadCallback.Invoke();
-        deadCallback = delegate { };
+        if (!isdeath)
+        {
+            deadCallback.Invoke();
+            deadCallback = delegate { };
+            isdeath = true;
+        }
     }
 
     public void Hit(int _val)
