@@ -6,7 +6,7 @@ using System;
 public class PetrifyComponent : MonoBehaviour
 {
     MinionLifeSystem minionlifesystem;
-    Action<Vector3> listener;
+    Action<Vector3, PetrifyComponent> listener;
 
     private void Awake()
     {
@@ -24,10 +24,10 @@ public class PetrifyComponent : MonoBehaviour
 
     public void OnExecute()
     {
-        listener.Invoke(minionlifesystem.gameObject.transform.position);
+        listener.Invoke(minionlifesystem.gameObject.transform.position, this);
     }
 
-    public void Configure(Action<Vector3> _listener)
+    public void Configure(Action<Vector3,PetrifyComponent> _listener)
     {
         listener = _listener;
     }

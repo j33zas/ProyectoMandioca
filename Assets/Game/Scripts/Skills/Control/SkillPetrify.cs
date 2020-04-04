@@ -17,7 +17,7 @@ public class SkillPetrify : SkillBase
         {
             if (item != null)
             {
-                item.Configure(ReceivePetrifyEnemy);
+                item.Configure(ReceivePetrifyOnDeathMinion);
                 item.OnBegin();
             }
         }
@@ -35,10 +35,13 @@ public class SkillPetrify : SkillBase
     {
     }
 
-    public void ReceivePetrifyEnemy(Vector3 pos)
+    public void ReceivePetrifyOnDeathMinion(Vector3 pos, PetrifyComponent p)
     {
-        var listOfEnemy = Physics.OverlapSphere(pos, petrifyRange );
-        foreach (var item in listOfEnemy)
+        var listOfEntities = Physics.OverlapSphere(pos, petrifyRange );
+
+        petrifyComponents.Remove(p);
+
+        foreach (var item in listOfEntities)
         {
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
             if (myEnemy)
