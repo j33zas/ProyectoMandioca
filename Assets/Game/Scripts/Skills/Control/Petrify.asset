@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e824c60e9557f1147a15ab7cb562e6c4, type: 3}
   m_Name: Petrify
   m_EditorClassIdentifier: 
+  skilltype: 0
   skill_name: Petrify
-  description_lore: Petrifica
-  description_technical: Petrificacion
-  img_blocked: {fileID: 21300000, guid: 0eabf4dfcc3eeb441bb8315421a83ca1, type: 3}
-  img_avaliable: {fileID: 21300000, guid: 0eabf4dfcc3eeb441bb8315421a83ca1, type: 3}
-  img_actived: {fileID: 21300000, guid: 0eabf4dfcc3eeb441bb8315421a83ca1, type: 3}
+  description_lore: los minions obtienen la bendicion de medusa, la uttilizaran como
+    ultimo recurso en batalla
+  description_technical: al morir los minions petrifican a los enemigos mas cercanos
+  img_blocked: {fileID: 21300000, guid: 388c457a39569e642b197269f8a80889, type: 3}
+  img_avaliable: {fileID: 21300000, guid: 98e3bc8793e94bd4b9b01d98e345a842, type: 3}
+  img_actived: {fileID: 21300000, guid: d771b8e268caaee44b74ca6e0ab3c0aa, type: 3}

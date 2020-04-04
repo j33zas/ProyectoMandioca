@@ -6,9 +6,6 @@ public class ExapleSkill : SkillBase
 {
     public ParticleSystem explosion;
     public ParticleSystem trail;
-    public Transform t;
-
-    float time;
 
     protected override void OnBeginSkill()
     {
@@ -20,17 +17,11 @@ public class ExapleSkill : SkillBase
         trail.Stop();
     }
 
+    float time;
     protected override void OnUpdateSkill()
     {
-        if (time < 1)
-        {
-            time = time + 1 * Time.deltaTime;
-        }
-        else
-        {
-            time = 0;
-            explosion.Play();
-        }
+        if (time < 1) time = time + 1 * Time.deltaTime;
+        else { time = 0; explosion.Play(); }
     }
 
    
