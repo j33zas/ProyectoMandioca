@@ -132,7 +132,7 @@ public class CharacterHead : CharacterControllable
 
     public void DealAttack()
     {
-        charAttack.Attack((int)dmg, 2);
+        charAttack.Attack((int)dmg, attackRange);
     }
 
     void ReleaseInNormal()
@@ -145,6 +145,21 @@ public class CharacterHead : CharacterControllable
         dmg = dmg_heavy;
         charanim.HeavyAttack();
     }
+    
+    ///////////BigWeaponSkill
+
+    public float ChangeRangeAttack(float newRangeValue)
+    {
+        if (newRangeValue < 0)
+            return attackRange;
+
+        attackRange = newRangeValue;
+
+        return newRangeValue;
+    }
+    
+    /// ////////////////////
+    
 
     /////////////////////////////////////////////////////////////////
     #endregion

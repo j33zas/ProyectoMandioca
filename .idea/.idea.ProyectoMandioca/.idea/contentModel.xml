@@ -722,12 +722,6 @@
               </e>
             </e>
           </e>
-          <e p="Scenes" t="Include">
-            <e p="Leeme.txt" t="Include" />
-            <e p="Main (Informar)" t="Include">
-              <e p="Main (borrar cuando se agregue algo).txt" t="Include" />
-            </e>
-          </e>
           <e p="Scripts" t="Include">
             <e p="Character" t="Include">
               <e p="AnimEvent.cs" t="Include" />
@@ -735,6 +729,7 @@
               <e p="CharacterAnimator.cs" t="Include" />
               <e p="CharacterAttack.cs" t="Include" />
               <e p="CharacterBlock.cs" t="Include" />
+              <e p="CharacterCollector.cs" t="Include" />
               <e p="CharacterHead.cs" t="Include" />
               <e p="CharacterInput.cs" t="Include" />
               <e p="CharacterLifeSystem.cs" t="Include" />
@@ -762,11 +757,53 @@
                 <e p="MultipleObjectPool.cs" t="Include" />
                 <e p="SingleObjectPool.cs" t="Include" />
               </e>
+              <e p="SomeTools" t="Include">
+                <e p="AdvancedTools" t="Include">
+                  <e p="ASourceCreator.cs" t="Include" />
+                  <e p="EventsClasses.cs" t="Include" />
+                  <e p="Extensions.cs" t="Include" />
+                  <e p="FinAndLink.cs" t="Include" />
+                  <e p="Localization" t="Include">
+                    <e p="Localization.cs" t="Include" />
+                    <e p="LocalizedText.cs" t="Include" />
+                  </e>
+                  <e p="Rotate.cs" t="Include" />
+                  <e p="ScreenAnimOffSet.cs" t="Include" />
+                  <e p="ScreenLimits.cs" t="Include" />
+                  <e p="Sectors" t="Include">
+                    <e p="Sector.cs" t="Include" />
+                    <e p="SectorManager.cs" t="Include" />
+                  </e>
+                  <e p="ShutDownRenderOnPlay.cs" t="Include" />
+                  <e p="UnityHelpers" t="Include">
+                    <e p="JsonSaveLoad.cs" t="Include" />
+                    <e p="Scenes.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="DontDestroy.cs" t="Include" />
+                <e p="JoystickBasicInput.cs" t="Include" />
+                <e p="MoveRaw.cs" t="Include" />
+                <e p="SceneMainBase.cs" t="Include" />
+                <e p="SceneMainManager.cs" t="Include" />
+                <e p="Sensor.cs" t="Include" />
+                <e p="SensorManagerForWeapons.cs" t="Include" />
+                <e p="SerializedObjectWorld.cs" t="Include" />
+              </e>
               <e p="TimingFeedback" t="Include">
                 <e p="PopSignalFeedback.cs" t="Include" />
               </e>
-              <e p="UI" t="Include">
+              <e p="UIs" t="Include">
+                <e p="Core" t="Include">
+                  <e p="UI_AnimBase.cs" t="Include" />
+                  <e p="UI_Base.cs" t="Include" />
+                  <e p="UI_SimpleTwo.cs" t="Include" />
+                </e>
                 <e p="FastToolOptions.cs" t="Include" />
+                <e p="UI_Animations" t="Include">
+                  <e p="UI_GoBack.cs" t="Include" />
+                </e>
+                <e p="UI_World_Feedback.cs" t="Include" />
+                <e p="WorldToUI.cs" t="Include" />
               </e>
               <e p="WorldToCanvasImagePopUp" t="Include">
                 <e p="CanvasPopUpInWorld_Manager.cs" t="Include" />
@@ -776,11 +813,44 @@
               </e>
             </e>
             <e p="Enemys" t="Include">
+              <e p="CombatDirector.cs" t="Include" />
               <e p="DummyEnemy.cs" t="Include" />
+              <e p="EnemyLifeSystem.cs" t="Include" />
               <e p="Follow.cs" t="Include" />
+              <e p="GenericLifeSystem.cs" t="Include" />
+              <e p="MinionLifeSystem.cs" t="Include" />
               <e p="Test_Attack.cs" t="Include" />
             </e>
             <e p="Enums.cs" t="Include" />
+            <e p="Interactables" t="Include">
+              <e p="Core" t="Include">
+                <e p="ActionRealize.cs" t="Include" />
+                <e p="FeedbackInteract" t="Include">
+                  <e p="FeedbackInteract_ItemType.cs" t="Include" />
+                  <e p="FeedbackInteract_Rotator.cs" t="Include" />
+                  <e p="FeedbackInteract_Scaler.cs" t="Include" />
+                  <e p="FeedbackInteractBase.cs" t="Include" />
+                </e>
+                <e p="Interact_Emisor.cs" t="Include" />
+                <e p="Interact_Receptor.cs" t="Include" />
+                <e p="Interactable.cs" t="Include" />
+                <e p="InteractSensor.cs" t="Include" />
+                <e p="WorldItemInfo.cs" t="Include" />
+              </e>
+              <e p="HalfLife.cs" t="Include" />
+              <e p="InteractMessage.cs" t="Include" />
+              <e p="IntRes_Door.cs" t="Include" />
+              <e p="ItemWorld.cs" t="Include" />
+              <e p="LinePath.cs" t="Include" />
+              <e p="OpenUIBases.cs" t="Include" />
+              <e p="ParentFinder.cs" t="Include" />
+              <e p="SaveLocation.cs" t="Include" />
+              <e p="Teleports" t="Include">
+                <e p="AccionActive.cs" t="Include" />
+                <e p="InteractableTeleport.cs" t="Include" />
+                <e p="OnlyMessage.cs" t="Include" />
+              </e>
+            </e>
             <e p="LifeSystems" t="Include">
               <e p="Bars" t="Include">
                 <e p="GenericBar.cs" t="Include" />
@@ -796,9 +866,13 @@
                 <e p="LifeBar.cs" t="Include" />
               </e>
               <e p="LifeSystem.cs" t="Include" />
+              <e p="LoseLife" t="Include">
+                <e p="ScreenFeedback.cs" t="Include" />
+              </e>
             </e>
-            <e p="ObjectHierarchy" t="Include">
+            <e p="PlayObjectCore" t="Include">
               <e p="Core" t="Include">
+                <e p="ManagerPlayObjects.cs" t="Include" />
                 <e p="PlayObject" t="Include">
                   <e p="PlayObject.cs" t="Include" />
                 </e>
@@ -836,11 +910,73 @@
                 <e p="Environment.cs" t="Include" />
               </e>
             </e>
+            <e p="Skills" t="Include">
+              <e p="#Core" t="Include">
+                <e p="0_ProcessObject" t="Include">
+                  <e p="SkillBase.cs" t="Include" />
+                </e>
+                <e p="1_Storagin" t="Include">
+                  <e p="SkillInfo.cs" t="Include" />
+                </e>
+                <e p="2_Management" t="Include">
+                  <e p="SkillManager.cs" t="Include" />
+                  <e p="SkillTemporalManager.cs" t="Include" />
+                </e>
+                <e p="3_FrontEnd" t="Include">
+                  <e p="UI_Skill.cs" t="Include" />
+                  <e p="UI_SkillHandler.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Control" t="Include">
+                <e p="#_Explicacion rapida minion.txt" t="Include" />
+                <e p="1_minion explota.txt" t="Include" />
+                <e p="2_preifica.txt" t="Include" />
+                <e p="3_minions enfoquen al enemig.txt" t="Include" />
+                <e p="ExplodeComponent.cs" t="Include" />
+                <e p="PetrifyComponent.cs" t="Include" />
+                <e p="PetrifyTEST.cs" t="Include" />
+                <e p="SkillPetrify.cs" t="Include" />
+              </e>
+              <e p="Culpa" t="Include">
+                <e p="#_explicacion Culpa.txt" t="Include" />
+                <e p="1_Bonificacion de daño.txt" t="Include" />
+                <e p="2_explosion.txt" t="Include" />
+                <e p="3_aturdir en cadena.txt" t="Include" />
+              </e>
+              <e p="Genericas" t="Include">
+                <e p="1_Big Guns.txt" t="Include" />
+                <e p="2_Pherseus Shield.txt" t="Include" />
+                <e p="3_FastTraveler.txt" t="Include" />
+                <e p="4_telaraña.txt" t="Include" />
+                <e p="5_parry caliente.txt" t="Include" />
+                <e p="BigWeapons" t="Include">
+                  <e p="BigWeapon_Component.cs" t="Include" />
+                  <e p="BigWeapon_Skill.cs" t="Include" />
+                  <e p="BigWeapons_TEST.cs" t="Include" />
+                </e>
+                <e p="Web_Skill" t="Include">
+                  <e p="Web.cs" t="Include" />
+                  <e p="Web_Skill.cs" t="Include" />
+                  <e p="WebSkill_TEST.cs" t="Include" />
+                  <e p="WebSlowedComponent.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Obligacion" t="Include">
+                <e p="1_mitad de HP.txt" t="Include" />
+                <e p="2_Petrifica primer golpe.txt" t="Include" />
+              </e>
+            </e>
             <e p="States" t="Include">
               <e p="States.cs" t="Include" />
               <e p="StatesAttack.cs" t="Include" />
               <e p="StatesFollow.cs" t="Include" />
               <e p="StatesMachine.cs" t="Include" />
+              <e p="StatesPetrified.cs" t="Include" />
+            </e>
+            <e p="ToOrder" t="Include">
+              <e p="Items" t="Include">
+                <e p="Item.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
