@@ -308,7 +308,28 @@ namespace Tools.Extensions
             T back = go.GetComponent<T>();
             go.transform.SetParent(owner.transform);
             go.transform.localPosition = Vector3.zero;
-            //go.transform.localScale = new Vector3(1, 1, 1);
+            go.transform.localScale = new Vector3(1, 1, 1);
+            return back;
+        }
+        public static T CreateDefaultSubObject<T>(this Transform owner, string name) where T : Component
+        {
+            GameObject go = new GameObject();
+            go.name = name;
+            T back = go.AddComponent<T>();
+            go.transform.SetParent(owner.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = new Vector3(1, 1, 1);
+            return back;
+        }
+
+        public static T CreateDefaultSubObject<T>(this Transform owner, string name, GameObject model) where T : Component
+        {
+            GameObject go = GameObject.Instantiate(model);
+            go.name = name;
+            T back = go.GetComponent<T>();
+            go.transform.SetParent(owner.transform);
+            go.transform.localPosition = Vector3.zero;
+            go.transform.localScale = new Vector3(1, 1, 1);
             return back;
         }
 

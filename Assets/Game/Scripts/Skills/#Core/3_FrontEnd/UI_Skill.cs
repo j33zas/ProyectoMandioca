@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
-public class UI_Skill : MonoBehaviour
+public class UI_Skill : UI_ItemBase
 {
-    // Start is called before the first frame update
-    void Start()
+    SkillInfo skillinfo;
+
+    protected override void BeginFeedback()
     {
-        
+        SetImage(skillinfo.img_actived);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void EndFeedback()
     {
-        
+        SetImage(skillinfo.img_avaliable);
     }
+
+    public void Refresh()
+    {
+        SetImage(skillinfo.img_avaliable);
+    }
+
+    public void Set_SkillInfo(SkillInfo s) => skillinfo = s;
+    public SkillInfo Get_SkilInfo() => skillinfo;
 }

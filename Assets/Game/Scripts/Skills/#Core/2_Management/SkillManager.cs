@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SkillManager : MonoBehaviour
 {
     [Header("Agreguese las skills por acá en editor")]
+    [SerializeField] UI_SkillHandler frontend;
     [SerializeField] List<SkillBase> allskills;
     Dictionary<SkillType, SkillBase> currents = new Dictionary<SkillType, SkillBase>();
 
-    [SerializeField] UI_SkillHandler frontend;
+    
 
     bool dataisloaded;
     public void LoadFromDisk(Dictionary<SkillType, SkillBase> dic) { currents = dic; dataisloaded = true; }
@@ -17,35 +19,35 @@ public class SkillManager : MonoBehaviour
     {
         // ahora esto es un start.
         // pero tiene que venir de un OnSceneLoaded
-
+        allskills = GetComponentsInChildren<SkillBase>().ToList();
         Build();
     }
 
     public void Build()
     {
-        if (!dataisloaded)
-        {
-            foreach (var skill in allskills)
-            {
-                if (!currents.ContainsKey(skill.skillinfo.skilltype))
-                {
+        if (!dataisloaded) {
+            foreach (var skill in allskills) {
+                if (!currents.ContainsKey(skill.skillinfo.skilltype)) {
                     currents.Add(skill.skillinfo.skilltype, skill);
                 }
             }
         }
 
-        foreach (var s in currents.Values)
-        {
-            s.BeginSkill();
-        }
-
-        frontend.Build(allskills);
-
+        frontend.Build(allskills,OnUISelected);
+        foreach (var s in currents.Values) s.BeginSkill();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnUISelected(int i)
     {
-        
+        Debug.Log("Recibi:" + i);
+
+        var select = allskills[i];
+        var old = currents[select.skillinfo.skilltype];
+
+        old.EndSkill();
+        select.BeginSkill();
+        currents[select.skillinfo.skilltype] = select;
+
+        frontend.SetInfoSelected(select.skillinfo);
     }
 }

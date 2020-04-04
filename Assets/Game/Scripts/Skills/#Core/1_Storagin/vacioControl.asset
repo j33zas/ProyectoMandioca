@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e824c60e9557f1147a15ab7cb562e6c4, type: 3}
-  m_Name: SkillInfo
+  m_Name: vacioControl
   m_EditorClassIdentifier: 
-  skill_name: default_name
-  description_lore: default_description_lore
-  description_technical: default_description_technical
-  img_blocked: {fileID: 0}
-  img_avaliable: {fileID: 0}
-  img_actived: {fileID: 0}
+  skilltype: 0
+  skill_name: '-'
+  description_lore: '-'
+  description_technical: '-'
+  img_blocked: {fileID: 21300000, guid: b62cba925a216754890465af63ceebfc, type: 3}
+  img_avaliable: {fileID: 21300000, guid: b62cba925a216754890465af63ceebfc, type: 3}
+  img_actived: {fileID: 21300000, guid: a765cc6a603d10840b3aa4bd4b2e9f30, type: 3}
