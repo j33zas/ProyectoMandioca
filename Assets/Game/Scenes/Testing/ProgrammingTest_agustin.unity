@@ -4314,6 +4314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   side_Type: 0
+  passives: []
+  weaponName: {fileID: 0}
   dashTiming: 0.5
   dashSpeed: 10
   dashDeceleration: 4
@@ -4406,6 +4408,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ChangeWeapon:
+    m_PersistentCalls:
+      m_Calls: []
   Dash:
     m_PersistentCalls:
       m_Calls:
@@ -4859,6 +4864,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1596232103468045405, guid: 2db761ec42946624da4b987e0f39cf8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1596232103902825372, guid: 2db761ec42946624da4b987e0f39cf8e,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
