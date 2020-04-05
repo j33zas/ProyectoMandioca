@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 [System.Serializable]
-public abstract class UI_ItemBase : Selectable, ISubmitHandler
+public abstract class UI_ItemBaseButton : Button
 {
     public Image mainImage;
     public Text cant;
@@ -31,8 +31,7 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler
    
     
     //Animacion bonita cuando tengo OnHover o cuando lo selecciono
-    public void PLay_Anim_Scale() => pingpongScale.Play(cantspeedscale);
-    public void Stop_Anim_Scale() => pingpongScale.Stop();
+    public void Anim_Scale() => pingpongScale.Play(cantspeedscale);
     void Update()
     {
         /// <summary>
@@ -47,33 +46,30 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler
     //es de Unity, solo ignoralo
     public override void OnSelect(BaseEventData eventData)
     {
-        base.OnSelect(eventData);
-        PLay_Anim_Scale();
-
-    }
-    public override void OnDeselect(BaseEventData eventData)
-    {
-        base.OnDeselect(eventData);
-        Stop_Anim_Scale();
-        AnimLerpScale(0);
-
-    }
-    public void OnSubmit(BaseEventData eventData)
-    {
         OnUI_Selected(index);
+        base.OnSelect(eventData);
     }
-    //public override void OnSubmit(BaseEventData eventData)
-    //{
-    //    base.OnSubmit(eventData);
-    //    Debug.Log("SUBMIT");
-    //}
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        base.OnPointerDown(eventData);
+        Debug.Log("pointer down");
+        
+    }
+
+    public override void OnSubmit(BaseEventData eventData)
+    {
+        base.OnSubmit(eventData);
+        Debug.Log("Submit");
+    }
     protected abstract void BeginFeedback();
     protected abstract void EndFeedback();
+
+    
 
     ////////////////////////////////////////////////////////////////////
     //// BUILDER CONFIGURATIONS
     ////////////////////////////////////////////////////////////////////
-    public UI_ItemBase Initialize(int _index, Action<int> _OnSelect)
+    public UI_ItemBaseButton Initialize(int _index, Action<int> _OnSelect)
     {
         index = _index;
 
@@ -88,9 +84,9 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler
 
         return this;
     }
-    public UI_ItemBase SetId(int id) { this.id = id; return this; }
-    public UI_ItemBase SetImage(Sprite sp) { mainImage.sprite = sp; return this; }
-    public UI_ItemBase SetCant(int c) { cant.enabled = c <= 0 ? false : true; cant.text = c.ToString(); return this; }
+    public UI_ItemBaseButton SetId(int id) { this.id = id; return this; }
+    public UI_ItemBaseButton SetImage(Sprite sp) { mainImage.sprite = sp; return this; }
+    public UI_ItemBaseButton SetCant(int c) { cant.enabled = c <= 0 ? false : true; cant.text = c.ToString(); return this; }
 
 
     ////////////////////////////////////////////////////////////////////
@@ -98,6 +94,7 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler
     ////////////////////////////////////////////////////////////////////
     public void OnUI_Select()
     {
+        
         Draw(new Color(1, 1, 1, 1), new Color(0, 0, 0, 1), new Vector3(1.3f, 1.3f, 1.3f));
         BeginFeedback();
     }
@@ -130,8 +127,6 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler
         transform.localScale = Vector3.Lerp(currentscale, amplitudDeEscala, anim);
         mainImage.color = Color.Lerp(Color.white, SelectedColor, anim);
     }
-
-    
 
     ////////////////////////////////////////////////////////////////////
     //// OLD SYSTEM REFRESH

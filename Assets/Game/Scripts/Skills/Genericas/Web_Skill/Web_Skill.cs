@@ -42,8 +42,6 @@ public class Web_Skill : SkillBase
             DeleteFirstWeb();
             CreateNewWeb();
         }
-        
-        
     }
 
     protected override void OnEndSkill()

@@ -10,7 +10,6 @@ public class SkillInfo : ScriptableObject
 
 
     //ejemplo, furia de zeus
-    
     public string skill_name = "default_name";
 
     //aca se puede poner, la parte explicativa relacionada al lore, de porque puedo tener esta habilidad,
