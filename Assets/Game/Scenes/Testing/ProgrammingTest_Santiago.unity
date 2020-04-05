@@ -3675,10 +3675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4e48fcb86dd59459a40539d9ffce41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillinfo: {fileID: 11400000, guid: 433a5623efe2b9f40b9e4cb62c8b2f4b, type: 2}
+  skillinfo: {fileID: 0}
   explosion: {fileID: 931253958}
   trail: {fileID: 1115631681}
-  t: {fileID: 1954684488}
 --- !u!4 &981809933
 Transform:
   m_ObjectHideFlags: 0
@@ -3970,7 +3969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1392347563
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4900,6 +4899,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6243031294040021969, guid: 0869c01f5a4f78d489449dfc080d2285,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7761702636467605384, guid: 0869c01f5a4f78d489449dfc080d2285,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4959,6 +4963,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Skillmanager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761702636467605390, guid: 0869c01f5a4f78d489449dfc080d2285,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7761702636467605391, guid: 0869c01f5a4f78d489449dfc080d2285,
         type: 3}
