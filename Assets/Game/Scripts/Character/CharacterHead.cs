@@ -94,7 +94,7 @@ public class CharacterHead : CharacterControllable
         Parry += OnBeginParry;
         ChildrensUpdates += charBlock.OnUpdate;
 
-        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified);
+        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg);
         OnAttackBegin += charAttack.OnattackBegin;
         OnAttackEnd += charAttack.OnAttackEnd;
         charAttack.PasiveFirstAttackReady(true);
@@ -132,7 +132,7 @@ public class CharacterHead : CharacterControllable
 
     public void DealAttack()
     {
-        charAttack.Attack((int)dmg, attackRange);
+        charAttack.Attack();
     }
 
     void ReleaseInNormal()

@@ -9,6 +9,7 @@ public class CharacterAttack
     float heavyAttackTime = 1f;
     float buttonPressedTime;
     float angleOfAttack;
+    float currentDamage;
 
     CharacterAnimator anim;
 
@@ -20,7 +21,6 @@ public class CharacterAttack
     bool isAttackReleased;
     bool isAnimationFinished;
     ParticleSystem feedbackHeavy;
-
     bool oneshot;
 
     public bool inAttack;
@@ -30,10 +30,21 @@ public class CharacterAttack
     private bool firstAttack;
     private float _rangeOfPetrified;
 
+    List<Weapon> myWeapons;
+    Weapon currentWeapon;
+    int currentIndexWeapon;
 
-    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified)
+
+    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified, float damage)
     {
-        angleOfAttack = _angle;
+        myWeapons = new List<Weapon>();
+        myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", 45));
+        myWeapons.Add(new ExampleWeaponOne(damage, _range, "Other Weapon", 45));
+        myWeapons.Add(new ExampleWeaponTwo(damage, _range, "Sarasa Weapon", 45));
+        myWeapons.Add(new ExampleWeaponThree(damage, _range, "Ultimate Blessed Weapon", 45));
+        currentWeapon = myWeapons[0];
+        currentDamage = currentWeapon.damage;
+
         heavyAttackTime = _heavyAttackTime;
         anim = _anim;
         forwardPos = _forward;
@@ -42,6 +53,11 @@ public class CharacterAttack
         HeavyAttack = _heavyAttack;
         feedbackHeavy = ps;
         _rangeOfPetrified = rangeOfPetrified;
+    }
+
+    public void ChangeWeapon()
+    {
+
     }
 
     public void Refresh()
@@ -112,22 +128,15 @@ public class CharacterAttack
         }
     }
 
-    public void Attack(int dmg, float range)
+    public void Attack()
     {
-        var enemies = Physics.OverlapSphere(forwardPos.position, range);       
-        for (int i = 0; i < enemies.Length; i++)
+        EntityBase entity = currentWeapon.Attack(forwardPos);
+        if (entity)
         {
-            Vector3 dir = enemies[i].transform.position - forwardPos.position;
-            float angle = Vector3.Angle(forwardPos.forward, dir);
-
-            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < angleOfAttack )
+            if (pasiveFirstAttack)
             {
-                enemies[i].GetComponent<EnemyBase>().TakeDamage(dmg, forwardPos.transform.forward);
-                if (pasiveFirstAttack)
-                {
-                    FirstAttack(enemies[i].GetComponent<EnemyBase>().transform);
-                }
-            }            
+                FirstAttack(entity.transform);
+            }
         }
         FirstAttackReady(false);
     }
