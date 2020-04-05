@@ -12,6 +12,7 @@ public class PetrifyTEST : MonoBehaviour
         {
             //skillPetrify.OnBeginSkill();
         }
+
         if (Input.GetKeyDown(KeyCode.N))
         {
             //skillPetrify.OnEndSkill();

@@ -21,6 +21,8 @@ public class Web_Skill : SkillBase
     
     protected override void OnBeginSkill()
     {
+        
+        
         //Creo la queue de redes
         if(_websDeployed == null)
             _websDeployed = new Queue<Web>();
@@ -28,11 +30,27 @@ public class Web_Skill : SkillBase
         if(_hero == null)
             _hero = FindObjectOfType<CharacterHead>();
 
+       _hero.AddListenerToDash(WebFabrication);
+    }
+
+    protected override void OnEndSkill()
+    {
+        Debug.Log("termina el skill");
+        _hero.RemoveListenerToDash(WebFabrication);
+    }
+
+    protected override void OnUpdateSkill()
+    {
+        
+    }
+
+    private void WebFabrication()
+    {
         //Si todavia puedo tirar mas redes, las tiro
         if (_websDeployed.Count < _totalWebsSimultaneas)
         {
-                CreateNewWeb();
-                return;
+            CreateNewWeb();
+            return;
         }
 
         //Si tengo mi maximo de redes tiradas y "deleteFirstWeb" esta en true, voy a borrar la primer red 
@@ -42,16 +60,6 @@ public class Web_Skill : SkillBase
             DeleteFirstWeb();
             CreateNewWeb();
         }
-    }
-
-    protected override void OnEndSkill()
-    {
-        
-    }
-
-    protected override void OnUpdateSkill()
-    {
-        
     }
 
     private void CreateNewWeb()

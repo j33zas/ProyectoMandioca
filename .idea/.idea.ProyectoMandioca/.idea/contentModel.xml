@@ -715,9 +715,26 @@
               <e p="README.txt" t="Include" />
             </e>
             <e p="Shaders" t="Include">
-              <e p="Materials" t="Include">
+              <e p="Materials&amp;Shaders" t="Include">
+                <e p="Block" t="Include">
+                  <e p="BlockParticles.shader" t="Include" />
+                </e>
+                <e p="ChargeHeavyAttack" t="Include">
+                  <e p="HeavyAttack.shader" t="Include" />
+                </e>
+                <e p="Parry" t="Include">
+                  <e p="ParticlesParry.shader" t="Include" />
+                </e>
                 <e p="Sword" t="Include">
-                  <e p="Sword.shader" t="Include" />
+                  <e p="Base" t="Include">
+                    <e p="Sword.shader" t="Include" />
+                  </e>
+                  <e p="Glow" t="Include">
+                    <e p="Glow.shader" t="Include" />
+                  </e>
+                  <e p="Trail" t="Include">
+                    <e p="Trail.shader" t="Include" />
+                  </e>
                 </e>
               </e>
             </e>
@@ -739,6 +756,13 @@
               <e p="CombatComponent.cs" t="Include" />
               <e p="DummyCC_RaycastMetod.cs" t="Include" />
               <e p="EntityBlock.cs" t="Include" />
+              <e p="Weapons" t="Include">
+                <e p="ExampleWeaponOne.cs" t="Include" />
+                <e p="ExampleWeaponThree.cs" t="Include" />
+                <e p="ExampleWeaponTwo.cs" t="Include" />
+                <e p="GenericSword.cs" t="Include" />
+                <e p="Weapon.cs" t="Include" />
+              </e>
             </e>
             <e p="CustomCamera.cs" t="Include" />
             <e p="DevelopTools" t="Include">
@@ -799,9 +823,12 @@
                   <e p="UI_SimpleTwo.cs" t="Include" />
                 </e>
                 <e p="FastToolOptions.cs" t="Include" />
+                <e p="PingPongLerp.cs" t="Include" />
                 <e p="UI_Animations" t="Include">
                   <e p="UI_GoBack.cs" t="Include" />
                 </e>
+                <e p="UI_ItemBase.cs" t="Include" />
+                <e p="UI_ItemBaseButton.cs" t="Include" />
                 <e p="UI_World_Feedback.cs" t="Include" />
                 <e p="WorldToUI.cs" t="Include" />
               </e>
@@ -920,11 +947,13 @@
                 </e>
                 <e p="2_Management" t="Include">
                   <e p="SkillManager.cs" t="Include" />
-                  <e p="SkillTemporalManager.cs" t="Include" />
+                  <e p="SkillManager_Activas.cs" t="Include" />
                 </e>
                 <e p="3_FrontEnd" t="Include">
                   <e p="UI_Skill.cs" t="Include" />
+                  <e p="UI_SkillContainer.cs" t="Include" />
                   <e p="UI_SkillHandler.cs" t="Include" />
+                  <e p="UI_SkillHandler_Activas.cs" t="Include" />
                 </e>
               </e>
               <e p="Control" t="Include">
@@ -942,6 +971,12 @@
                 <e p="1_Bonificacion de daño.txt" t="Include" />
                 <e p="2_explosion.txt" t="Include" />
                 <e p="3_aturdir en cadena.txt" t="Include" />
+                <e p="ExplosionCW.cs" t="Include" />
+                <e p="MoreDamageCW.cs" t="Include" />
+                <e p="PetrifyNearEnemies.cs" t="Include" />
+              </e>
+              <e p="example" t="Include">
+                <e p="ExapleSkill.cs" t="Include" />
               </e>
               <e p="Genericas" t="Include">
                 <e p="1_Big Guns.txt" t="Include" />
@@ -964,6 +999,10 @@
               <e p="Obligacion" t="Include">
                 <e p="1_mitad de HP.txt" t="Include" />
                 <e p="2_Petrifica primer golpe.txt" t="Include" />
+              </e>
+              <e p="Other" t="Include">
+                <e p="EmptySkill.cs" t="Include" />
+                <e p="ZarazaSkill.cs" t="Include" />
               </e>
             </e>
             <e p="States" t="Include">

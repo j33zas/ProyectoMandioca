@@ -301,6 +301,16 @@ public class CharacterHead : CharacterControllable
         }
     }
 
+    public void AddListenerToDash(Action listener)
+    {
+        Dash += listener;
+    }
+    
+    public void RemoveListenerToDash(Action listener)
+    {
+        Dash -= listener;
+    }
+
     #endregion
 
     #region Take Damage

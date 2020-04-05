@@ -10,8 +10,6 @@ public class BigWeapon_Skill : SkillBase
     [SerializeField] private float percentRangeModifier;
     protected override void OnBeginSkill()
     {
-        
-        Debug.Log("efseas");
         if(_bigWeaponComponent == null)
             _bigWeaponComponent = FindObjectOfType<CharacterHead>().GetComponent<BigWeapon_Component>();
         
