@@ -8,8 +8,25 @@ public class ExampleWeaponOne : Weapon
     {
     }
 
-    public override EntityBase Attack(Transform pos)
+    public override EntityBase Attack(Transform pos, float damage)
     {
-        throw new System.NotImplementedException();
+        EntityBase entity = null;
+
+        var enemies = Physics.OverlapSphere(pos.position, range);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Vector3 dir = enemies[i].transform.position - pos.position;
+            float angle = Vector3.Angle(pos.forward, dir);
+
+            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < angleAttack)
+            {
+                if (entity == null)
+                    entity = enemies[i].GetComponent<EntityBase>();
+
+                enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.forward);
+            }
+        }
+
+        return entity;
     }
 }

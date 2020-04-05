@@ -8,7 +8,7 @@ public class GenericSword : Weapon
     {
     }
 
-    public override EntityBase Attack(Transform pos)
+    public override EntityBase Attack(Transform pos, float damage)
     {
         EntityBase entity = null;
 

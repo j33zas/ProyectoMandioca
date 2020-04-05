@@ -16,6 +16,7 @@ public class CharacterInput : MonoBehaviour
     public UnityEvFloat LeftVertical;
     public UnityEvFloat RightHorizontal;
     public UnityEvFloat RightVertical;
+    public UnityEvFloat ChangeWeapon;
     public UnityEvent Dash;
 
     [Header("Defense")]
@@ -53,6 +54,7 @@ public class CharacterInput : MonoBehaviour
         if (Input.GetButtonUp("Attack")) OnAttackEnd.Invoke();
 
         if (Input.GetButtonDown("Interact")) OnInteract.Invoke();
+        ChangeWeapon.Invoke(Input.GetAxis("XBOX360_DPadHorizontal"));
 
         RefreshHelper();
 

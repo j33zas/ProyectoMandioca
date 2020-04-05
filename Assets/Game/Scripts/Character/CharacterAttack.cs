@@ -43,7 +43,7 @@ public class CharacterAttack
         myWeapons.Add(new ExampleWeaponTwo(damage, _range, "Sarasa Weapon", 45));
         myWeapons.Add(new ExampleWeaponThree(damage, _range, "Ultimate Blessed Weapon", 45));
         currentWeapon = myWeapons[0];
-        currentDamage = currentWeapon.damage;
+        currentDamage = currentWeapon.baseDamage;
 
         heavyAttackTime = _heavyAttackTime;
         anim = _anim;
@@ -55,9 +55,31 @@ public class CharacterAttack
         _rangeOfPetrified = rangeOfPetrified;
     }
 
-    public void ChangeWeapon()
+    public string ChangeName()
     {
+        return currentWeapon.weaponName;
+    }
 
+    public void BuffOrNerfDamage(float f)
+    {
+        currentDamage += f;
+    }
+
+    public void ChangeWeapon(int index)
+    {
+        currentIndexWeapon += index;
+
+        if (currentIndexWeapon >= myWeapons.Count)
+        {
+            currentIndexWeapon = 0;
+        }
+        else if (currentIndexWeapon < 0)
+        {
+            currentIndexWeapon = myWeapons.Count - 1;
+        }
+
+        currentWeapon = myWeapons[currentIndexWeapon];
+        currentDamage = currentWeapon.baseDamage;
     }
 
     public void Refresh()
@@ -130,7 +152,7 @@ public class CharacterAttack
 
     public void Attack()
     {
-        EntityBase entity = currentWeapon.Attack(forwardPos);
+        EntityBase entity = currentWeapon.Attack(forwardPos, currentDamage);
         if (entity)
         {
             if (pasiveFirstAttack)

@@ -4,22 +4,26 @@ using UnityEngine;
 
 public abstract class Weapon
 {
-    public float damage
+    public float baseDamage
     {
         get;
         private set;
     }
     protected float range;
-    protected string name;
+    public string weaponName
+    {
+        get;
+        private set;
+    }
     protected float angleAttack;
 
     public Weapon(float dmg, float r, string n, float angle)
     {
-        damage = dmg;
+        baseDamage = dmg;
         range = r;
-        name = n;
+        weaponName = n;
         angleAttack = angle;
     }
 
-    public abstract EntityBase Attack(Transform pos);
+    public abstract EntityBase Attack(Transform pos, float damage);
 }
