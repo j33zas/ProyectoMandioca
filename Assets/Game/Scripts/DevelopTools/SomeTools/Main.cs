@@ -4,9 +4,9 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-public class SceneMainManager : MonoBehaviour
+public class Main : MonoBehaviour
 {
-    public static SceneMainManager instance;
+    public static Main instance;
     private void Awake() => instance = this;
 
     public bool autofind;
@@ -74,4 +74,12 @@ public class SceneMainManager : MonoBehaviour
             FindObjectOfType<SceneMainBase>().OnPlayerDeath();
         }
     }
+
+
+    /////////////////////////////////////////////////////////////////////
+    /// PUBLIC GETTERS
+    /////////////////////////////////////////////////////////////////////
+    public CharacterHead GetChar() => character;
+    public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
+    
 }

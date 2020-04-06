@@ -179,7 +179,7 @@ public class CharacterAttack
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
             if (myEnemy)
             {
-                myEnemy.Petrified();
+                myEnemy.OnPetrified();
             }
         }
     }

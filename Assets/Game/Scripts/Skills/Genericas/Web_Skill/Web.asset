@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skilltype: 3
   skill_name: Web
-  description_lore: default_description_lore
+  description_lore: bla bla bla
   description_technical: Al hacer dash deja una web que ralentiza enemigos
-  img_blocked: {fileID: 21300000, guid: 3cc021062a6b557418966dcf5b6193e0, type: 3}
-  img_avaliable: {fileID: 21300000, guid: 01cf411a22392b649801d34bd164a422, type: 3}
-  img_actived: {fileID: 21300000, guid: ab7b6beacc88fa64b80b461090994123, type: 3}
+  img_blocked: {fileID: 21300000, guid: 8ad7887ba18584983bc8e681b99caff7, type: 3}
+  img_avaliable: {fileID: 21300000, guid: 1a5e4a6d76ac84e3ab1110d91d10c328, type: 3}
+  img_actived: {fileID: 21300000, guid: 5382937f929844781a39bb626e461671, type: 3}
