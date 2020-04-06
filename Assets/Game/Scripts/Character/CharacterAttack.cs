@@ -5,7 +5,7 @@ using System;
 
 public class CharacterAttack
 {
-    Transform forwardPos;
+    public Transform forwardPos { get; private set; }
     float heavyAttackTime = 1f;
     float buttonPressedTime;
     float angleOfAttack;
@@ -31,7 +31,7 @@ public class CharacterAttack
     private float _rangeOfPetrified;
 
     List<Weapon> myWeapons;
-    Weapon currentWeapon;
+    public Weapon currentWeapon {get; private set; }
     int currentIndexWeapon;
 
 
