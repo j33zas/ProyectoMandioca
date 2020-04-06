@@ -806,12 +806,13 @@
                 </e>
                 <e p="DontDestroy.cs" t="Include" />
                 <e p="JoystickBasicInput.cs" t="Include" />
+                <e p="Main.cs" t="Include" />
                 <e p="MoveRaw.cs" t="Include" />
                 <e p="SceneMainBase.cs" t="Include" />
-                <e p="SceneMainManager.cs" t="Include" />
                 <e p="Sensor.cs" t="Include" />
                 <e p="SensorManagerForWeapons.cs" t="Include" />
                 <e p="SerializedObjectWorld.cs" t="Include" />
+                <e p="ThreadRequestObject.cs" t="Include" />
               </e>
               <e p="TimingFeedback" t="Include">
                 <e p="PopSignalFeedback.cs" t="Include" />

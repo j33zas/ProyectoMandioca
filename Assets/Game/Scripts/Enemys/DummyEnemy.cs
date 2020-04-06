@@ -88,9 +88,9 @@ public class DummyEnemy : EnemyBase
         return Attack_Result.sucessful; 
     }
 
-    public override void Petrified()
+    public override void OnPetrified()
     {
-        base.Petrified();
+        base.OnPetrified();
         sm.ChangeState<StatesPetrified>();
     }
 
@@ -119,7 +119,7 @@ public class DummyEnemy : EnemyBase
         {
             if (item.GetComponent<EnemyBase>())
             {
-                item.GetComponent<EnemyBase>().Petrified();
+                item.GetComponent<EnemyBase>().OnPetrified();
             }
         }
     }

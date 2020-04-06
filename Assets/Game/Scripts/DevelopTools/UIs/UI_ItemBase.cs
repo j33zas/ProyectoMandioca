@@ -62,6 +62,11 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler
     {
         OnUI_Selected(index);
     }
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        base.OnPointerDown(eventData);
+        OnUI_Selected(index);
+    }
     //public override void OnSubmit(BaseEventData eventData)
     //{
     //    base.OnSubmit(eventData);

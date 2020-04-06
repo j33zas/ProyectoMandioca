@@ -46,7 +46,7 @@ public class SkillPetrify : SkillBase
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
             if (myEnemy)
             {
-                myEnemy.Petrified();
+                myEnemy.OnPetrified();
             }
         }
     }

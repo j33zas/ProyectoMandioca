@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37457f502100c42b68bae995dfd04e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillinfo: {fileID: 11400000, guid: 111db4ed79a2b49e2977052cc436e72f, type: 2}
+  skillinfo: {fileID: 11400000, guid: e790e44ceed744bcb8fc6f1c561a529f, type: 2}
   percentRangeModifier: 7.9
