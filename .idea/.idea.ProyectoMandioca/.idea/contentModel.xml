@@ -898,6 +898,9 @@
                 <e p="ScreenFeedback.cs" t="Include" />
               </e>
             </e>
+            <e p="Minion" t="Include">
+              <e p="Minion.cs" t="Include" />
+            </e>
             <e p="PlayObjectCore" t="Include">
               <e p="Core" t="Include">
                 <e p="ManagerPlayObjects.cs" t="Include" />
@@ -963,8 +966,11 @@
                 <e p="2_preifica.txt" t="Include" />
                 <e p="3_minions enfoquen al enemig.txt" t="Include" />
                 <e p="ExplodeComponent.cs" t="Include" />
+                <e p="FocusOnParryComponent.cs" t="Include" />
                 <e p="PetrifyComponent.cs" t="Include" />
                 <e p="PetrifyTEST.cs" t="Include" />
+                <e p="SkillExplodeOnDeath.cs" t="Include" />
+                <e p="SkillFocusOnParry.cs" t="Include" />
                 <e p="SkillPetrify.cs" t="Include" />
               </e>
               <e p="Culpa" t="Include">
@@ -1021,6 +1027,7 @@
               <e p="StatesFollow.cs" t="Include" />
               <e p="StatesMachine.cs" t="Include" />
               <e p="StatesPetrified.cs" t="Include" />
+              <e p="StatesWander.cs" t="Include" />
             </e>
             <e p="ToOrder" t="Include">
               <e p="Items" t="Include">

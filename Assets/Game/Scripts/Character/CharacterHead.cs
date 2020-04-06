@@ -285,10 +285,23 @@ public class CharacterHead : CharacterControllable
             Parry();
         }
     }
+    
+    //TEST FOR SKILL
+    public void AddParry(Action listener)
+    {
+        Parry += listener;
+    }
+    public void RemoveParry(Action listener)
+    {
+        Parry -= listener;
+    }
+
+
     public void PerfectParry()
     {
         parryParticle.Play();
     }
+
     void OnBeginParry() => feedbackParry.SetActive(true);
     void OnEndParry() => feedbackParry.SetActive(false);
 

@@ -13,13 +13,14 @@ public class GenericLifeSystem : MonoBehaviour
 
     bool isdeath;
 
-    public event Action deadCallback = delegate { };
+    public event Action DeadCallback = delegate { };
 
-    public void AddEventOnDeath(Action listener) { deadCallback += listener; }
-    public void RemoveEventOnDeath(Action listener) { deadCallback -= listener; deadCallback = delegate { }; }
+    public void AddEventOnDeath(Action listener) { DeadCallback += listener; }
+    public void RemoveEventOnDeath(Action listener) { DeadCallback -= listener; DeadCallback = delegate { }; }
 
     private void Start()
     {
+        uilife = GetComponentInChildren<LifeBar>(); 
         lifeSystemEnemy = new CharacterLifeSystem();
         lifeSystemEnemy.Config(life, EVENT_OnLoseLife, EVENT_OnGainLife, EVENT_OnDeath, uilife, life);
     }
@@ -30,8 +31,8 @@ public class GenericLifeSystem : MonoBehaviour
     {
         if (!isdeath)
         {
-            deadCallback.Invoke();
-            deadCallback = delegate { };
+            DeadCallback.Invoke();
+            DeadCallback = delegate { };
             isdeath = true;
         }
     }

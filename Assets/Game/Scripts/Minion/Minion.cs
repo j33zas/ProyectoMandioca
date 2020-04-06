@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Linq;
 
-public class DummyEnemy : EnemyBase
+public class Minion : Companion
 {
     [SerializeField] CombatComponent combatComponent;
     [SerializeField] int damage;
@@ -14,10 +14,9 @@ public class DummyEnemy : EnemyBase
     PopSignalFeedback feedbackStun;
     PopSignalFeedback feedbackHitShield;
     PopSignalFeedback feedbackAttack;
-    [SerializeField] GameObject feedbackFireDot;
 
     [SerializeField] ParticleSystem greenblood;
-   
+
     public float time_stun;
 
     public AnimEvent anim;
@@ -33,12 +32,8 @@ public class DummyEnemy : EnemyBase
     private float _distance;
     //public Follow follow;
 
-    public Action OnParried;
-    public bool isOnFire { get; private set; }
-    
-    
     public Rigidbody _rb;
-
+    
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
 
@@ -52,13 +47,20 @@ public class DummyEnemy : EnemyBase
 
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
-        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _distance, _speedMovement));
-        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
+        sm.Addstate(new StatesWander(sm));
+        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<DummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement));
+        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<DummyEnemy>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
-        sm.ChangeState<StatesAttack>();
+        sm.ChangeState<StatesWander>();
 
         //follow.Configure(_rb);
     }
+
+    public void ChangeToAttackState()
+    {
+        sm.ChangeState<StatesAttack>();
+    }
+
 
     public void DealDamage()
     {
@@ -73,10 +75,6 @@ public class DummyEnemy : EnemyBase
         {
             combatComponent.Stop();
             feedbackStun.Show();
-
-            //Tira evento si es parrieado. Seguro haya que cambiarlo
-            if(OnParried != null)
-                OnParried();
         }
         else if (e.TakeDamage(damage, transform.forward) == Attack_Result.blocked)
         {
@@ -84,7 +82,7 @@ public class DummyEnemy : EnemyBase
         }
     }
 
-    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh();sm.Update(); }
+    private void Update() { feedbackStun.Refresh(); feedbackHitShield.Refresh(); sm.Update(); }
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
@@ -94,12 +92,11 @@ public class DummyEnemy : EnemyBase
         lifesystem.Hit(dmg);
         greenblood.Play();
 
-        return Attack_Result.sucessful; 
+        return Attack_Result.sucessful;
     }
 
-    public override void OnPetrified()
+    public void Petrified()
     {
-        base.OnPetrified();
         sm.ChangeState<StatesPetrified>();
     }
 
@@ -119,44 +116,13 @@ public class DummyEnemy : EnemyBase
 
         return _speedMovement;
     }
-    
-    
-    public override void OnFire()
-    {
-        if (isOnFire)
-            return;
 
-        isOnFire = true;
-        feedbackFireDot.SetActive(true);
-        base.OnFire();
-        
-        lifesystem.DoTSystem(30,2,1,Damagetype.fire, () =>
-        {
-            isOnFire = false;
-            feedbackFireDot.SetActive(false);
-        });
-        
-    }
 
-    public void Die()
-    {
-        Debug.Log("die");
-        var listOfEnemy = Physics.OverlapSphere(transform.position, 10);
-        foreach (var item in listOfEnemy)
-        {
-            if (item.GetComponent<EnemyBase>())
-            {
-                item.GetComponent<EnemyBase>().OnPetrified();
-            }
-        }
-    }
-    
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
     protected override void OnUpdateEntity() { }
-
 
 }
