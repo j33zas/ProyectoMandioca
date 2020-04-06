@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Linq;
 
-public class DummyEnemy : EnemyBase
+public class Minion : Companion
 {
     [SerializeField] CombatComponent combatComponent;
     [SerializeField] int damage;
@@ -16,7 +16,7 @@ public class DummyEnemy : EnemyBase
     PopSignalFeedback feedbackAttack;
 
     [SerializeField] ParticleSystem greenblood;
-   
+
     public float time_stun;
 
     public AnimEvent anim;
@@ -33,7 +33,7 @@ public class DummyEnemy : EnemyBase
     //public Follow follow;
 
     public Rigidbody _rb;
-
+    
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
 
@@ -47,13 +47,20 @@ public class DummyEnemy : EnemyBase
 
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
-        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _distance, _speedMovement));
-        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
+        sm.Addstate(new StatesWander(sm));
+        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<DummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement));
+        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<DummyEnemy>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
-        sm.ChangeState<StatesAttack>();
+        sm.ChangeState<StatesWander>();
 
         //follow.Configure(_rb);
     }
+
+    public void ChangeToAttackState()
+    {
+        sm.ChangeState<StatesAttack>();
+    }
+
 
     public void DealDamage()
     {
@@ -75,7 +82,7 @@ public class DummyEnemy : EnemyBase
         }
     }
 
-    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh();sm.Update(); }
+    private void Update() { feedbackStun.Refresh(); feedbackHitShield.Refresh(); sm.Update(); }
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
@@ -85,12 +92,11 @@ public class DummyEnemy : EnemyBase
         lifesystem.Hit(dmg);
         greenblood.Play();
 
-        return Attack_Result.sucessful; 
+        return Attack_Result.sucessful;
     }
 
-    public override void OnPetrified()
+    public void Petrified()
     {
-        base.OnPetrified();
         sm.ChangeState<StatesPetrified>();
     }
 
@@ -111,12 +117,12 @@ public class DummyEnemy : EnemyBase
         return _speedMovement;
     }
 
+
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
     protected override void OnUpdateEntity() { }
-
 
 }
