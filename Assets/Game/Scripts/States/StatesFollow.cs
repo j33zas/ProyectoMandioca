@@ -11,6 +11,7 @@ public class StatesFollow : States
     protected Transform _target;
     protected float _speed;
     protected Animator _anim;
+    
     bool run;
      public StatesFollow(StatesMachine sm,Transform trans,Rigidbody rb,Transform target,Animator anim,float rotSpeed,float distance,float speed) : base(sm)
      {
@@ -40,13 +41,18 @@ public class StatesFollow : States
             Vector3 fowardRotation = new Vector3(_dir.x, 0, _dir.z);
             Vector3 velocity= new Vector3(_dir.x, 0, _dir.z);
             _rb.velocity = velocity * _speed;
-           
+
             _myTransform.forward = Vector3.Lerp(_myTransform.forward, fowardRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
             statemachine.ChangeState<StatesAttack>();
         }
+    }
+
+    public void ChangeSpeed(float newSpeedValue)
+    {
+        _speed = newSpeedValue;
     }
 
     public override void Sleep()

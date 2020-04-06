@@ -38,4 +38,15 @@ public class StatesMachine
     {
         return Current.GetType() == typeof(T);
     }
+    
+    public T GetState<T>() where T : States
+    {
+        foreach (States st in StateList)
+        {
+            if (st.GetType() == typeof(T))
+                return st as T;
+        }
+
+        return null;
+    }
 }

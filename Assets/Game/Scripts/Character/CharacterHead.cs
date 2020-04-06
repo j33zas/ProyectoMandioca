@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 using DevelopTools;
 
 public class CharacterHead : CharacterControllable
@@ -18,6 +19,11 @@ public class CharacterHead : CharacterControllable
     Action OnBlock;
     Action UpBlock;
     Action Parry;
+
+    [Header("Test")]
+    [SerializeField] List<SkillBase> passives;
+    [SerializeField] Text weaponName;
+
 
     [Header("Dash Options")]
     [SerializeField] float dashTiming;
@@ -94,7 +100,7 @@ public class CharacterHead : CharacterControllable
         Parry += OnBeginParry;
         ChildrensUpdates += charBlock.OnUpdate;
 
-        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified);
+        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg);
         OnAttackBegin += charAttack.OnattackBegin;
         OnAttackEnd += charAttack.OnAttackEnd;
         charAttack.PasiveFirstAttackReady(true);
@@ -118,6 +124,17 @@ public class CharacterHead : CharacterControllable
         charAttack.Refresh();
     }
 
+    public void ActiveOrDesactivePassive(SkillBase skill)
+    {
+        if (passives == null)
+            passives = new List<SkillBase>();
+
+        if (passives.Contains(skill))
+            passives.Remove(skill);
+        else
+            passives.Add(skill);
+    }
+
     #region Attack
     /////////////////////////////////////////////////////////////////
 
@@ -132,7 +149,7 @@ public class CharacterHead : CharacterControllable
 
     public void DealAttack()
     {
-        charAttack.Attack((int)dmg, 2);
+        charAttack.Attack();
     }
 
     void ReleaseInNormal()
@@ -145,10 +162,67 @@ public class CharacterHead : CharacterControllable
         dmg = dmg_heavy;
         charanim.HeavyAttack();
     }
+    
+    ///////////BigWeaponSkill
+
+    public float ChangeRangeAttack(float newRangeValue)
+    {
+        if (newRangeValue < 0)
+            return attackRange;
+
+        attackRange = newRangeValue;
+
+        return newRangeValue;
+    }
+
+    /// ////////////////////
+
 
     /////////////////////////////////////////////////////////////////
     #endregion
 
+    #region Change Weapon
+
+    bool isValue;
+
+    public void ChangeTheWeapon(float w)
+    {
+        if (!isValue && !charAttack.inAttack)
+        {
+            if (w == 1 || w == -1)
+            {
+                charAttack.ChangeWeapon((int)w);
+                if (passives != null)
+                {
+                    if (passives.Count >= 1)
+                    {
+                        passives[0].BeginSkill();
+                        weaponName.text = charAttack.ChangeName();
+                    }
+                    if (passives.Count >= 2)
+                    {
+                        passives[1].BeginSkill();
+                        weaponName.text = charAttack.ChangeName();
+                    }
+                }
+                isValue = true;
+            }
+        }
+        else
+        {
+            if (w != 1 && w != -1)
+            {
+                isValue = false;
+            }
+        }
+    }
+
+    public void ChangeDamage(float f)
+    {
+        charAttack.BuffOrNerfDamage(f);
+    }
+
+    #endregion
 
 
     #region Block & Parry
@@ -225,6 +299,16 @@ public class CharacterHead : CharacterControllable
             UpBlock();
             Dash();
         }
+    }
+
+    public void AddListenerToDash(Action listener)
+    {
+        Dash += listener;
+    }
+    
+    public void RemoveListenerToDash(Action listener)
+    {
+        Dash -= listener;
     }
 
     #endregion
