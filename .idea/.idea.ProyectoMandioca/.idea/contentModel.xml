@@ -806,12 +806,13 @@
                 </e>
                 <e p="DontDestroy.cs" t="Include" />
                 <e p="JoystickBasicInput.cs" t="Include" />
+                <e p="Main.cs" t="Include" />
                 <e p="MoveRaw.cs" t="Include" />
                 <e p="SceneMainBase.cs" t="Include" />
-                <e p="SceneMainManager.cs" t="Include" />
                 <e p="Sensor.cs" t="Include" />
                 <e p="SensorManagerForWeapons.cs" t="Include" />
                 <e p="SerializedObjectWorld.cs" t="Include" />
+                <e p="ThreadRequestObject.cs" t="Include" />
               </e>
               <e p="TimingFeedback" t="Include">
                 <e p="PopSignalFeedback.cs" t="Include" />
@@ -897,6 +898,9 @@
                 <e p="ScreenFeedback.cs" t="Include" />
               </e>
             </e>
+            <e p="Minion" t="Include">
+              <e p="Minion.cs" t="Include" />
+            </e>
             <e p="PlayObjectCore" t="Include">
               <e p="Core" t="Include">
                 <e p="ManagerPlayObjects.cs" t="Include" />
@@ -962,8 +966,11 @@
                 <e p="2_preifica.txt" t="Include" />
                 <e p="3_minions enfoquen al enemig.txt" t="Include" />
                 <e p="ExplodeComponent.cs" t="Include" />
+                <e p="FocusOnParryComponent.cs" t="Include" />
                 <e p="PetrifyComponent.cs" t="Include" />
                 <e p="PetrifyTEST.cs" t="Include" />
+                <e p="SkillExplodeOnDeath.cs" t="Include" />
+                <e p="SkillFocusOnParry.cs" t="Include" />
                 <e p="SkillPetrify.cs" t="Include" />
               </e>
               <e p="Culpa" t="Include">
@@ -985,9 +992,18 @@
                 <e p="4_telaraña.txt" t="Include" />
                 <e p="5_parry caliente.txt" t="Include" />
                 <e p="BigWeapons" t="Include">
-                  <e p="BigWeapon_Component.cs" t="Include" />
                   <e p="BigWeapon_Skill.cs" t="Include" />
                   <e p="BigWeapons_TEST.cs" t="Include" />
+                </e>
+                <e p="FireParry" t="Include">
+                  <e p="FireParry_skill.cs" t="Include" />
+                </e>
+                <e p="MedusaParry" t="Include">
+                  <e p="MedusaParry_skill.cs" t="Include" />
+                </e>
+                <e p="Teleport" t="Include">
+                  <e p="TeleportDash_Skill.cs" t="Include" />
+                  <e p="TestTeleport.cs" t="Include" />
                 </e>
                 <e p="Web_Skill" t="Include">
                   <e p="Web.cs" t="Include" />
@@ -1011,6 +1027,7 @@
               <e p="StatesFollow.cs" t="Include" />
               <e p="StatesMachine.cs" t="Include" />
               <e p="StatesPetrified.cs" t="Include" />
+              <e p="StatesWander.cs" t="Include" />
             </e>
             <e p="ToOrder" t="Include">
               <e p="Items" t="Include">

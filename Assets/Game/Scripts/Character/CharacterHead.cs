@@ -165,14 +165,45 @@ public class CharacterHead : CharacterControllable
     
     ///////////BigWeaponSkill
 
+    /// <summary>
+    /// Si manda parametro, es para cmabiar el rango de ataque
+    /// </summary>
+    /// <param name="newRangeValue"></param>
+    /// <returns></returns>
     public float ChangeRangeAttack(float newRangeValue)
     {
         if (newRangeValue < 0)
             return attackRange;
 
-        attackRange = newRangeValue;
+        charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
 
         return newRangeValue;
+    }
+    /// <summary>
+    /// Si no manda parametros vuelve al rango original del arma
+    /// </summary>
+    public void ChangeRangeAttack()
+    {
+        charAttack.currentWeapon.ModifyAttackrange();
+    }
+
+    public CharacterAttack GetCharacterAttack()
+    {
+        return charAttack;
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        if(charAttack == null)
+            return;
+
+        Vector3 attackRange_endPoint =
+            transform.position + charAttack.forwardPos.forward * charAttack.currentWeapon.GetWpnRange();
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, attackRange_endPoint);
+        Gizmos.DrawCube(attackRange_endPoint, new Vector3(.6f, .6f, .6f));
     }
 
     /// ////////////////////
@@ -254,10 +285,23 @@ public class CharacterHead : CharacterControllable
             Parry();
         }
     }
+    
+    //TEST FOR SKILL
+    public void AddParry(Action listener)
+    {
+        Parry += listener;
+    }
+    public void RemoveParry(Action listener)
+    {
+        Parry -= listener;
+    }
+
+
     public void PerfectParry()
     {
         parryParticle.Play();
     }
+
     void OnBeginParry() => feedbackParry.SetActive(true);
     void OnEndParry() => feedbackParry.SetActive(false);
 
@@ -310,6 +354,24 @@ public class CharacterHead : CharacterControllable
     {
         Dash -= listener;
     }
+
+    public void ChangeDashForTeleport()
+    {
+        Dash -= move.Roll;
+        Dash += move.Teleport;
+    }
+    
+    public void ChangeTeleportForDash()
+    {
+        Dash -= move.Teleport;
+        Dash += move.Roll;
+    }
+
+    public CharacterMovement GetCharMove()
+    {
+        return move;
+    }
+    
 
     #endregion
 

@@ -13,13 +13,14 @@ public class GenericLifeSystem : MonoBehaviour
 
     bool isdeath;
 
-    public event Action deadCallback = delegate { };
+    public event Action DeadCallback = delegate { };
 
-    public void AddEventOnDeath(Action listener) { deadCallback += listener; }
-    public void RemoveEventOnDeath(Action listener) { deadCallback -= listener; deadCallback = delegate { }; }
+    public void AddEventOnDeath(Action listener) { DeadCallback += listener; }
+    public void RemoveEventOnDeath(Action listener) { DeadCallback -= listener; DeadCallback = delegate { }; }
 
     private void Start()
     {
+        uilife = GetComponentInChildren<LifeBar>(); 
         lifeSystemEnemy = new CharacterLifeSystem();
         lifeSystemEnemy.Config(life, EVENT_OnLoseLife, EVENT_OnGainLife, EVENT_OnDeath, uilife, life);
     }
@@ -30,8 +31,8 @@ public class GenericLifeSystem : MonoBehaviour
     {
         if (!isdeath)
         {
-            deadCallback.Invoke();
-            deadCallback = delegate { };
+            DeadCallback.Invoke();
+            DeadCallback = delegate { };
             isdeath = true;
         }
     }
@@ -39,5 +40,33 @@ public class GenericLifeSystem : MonoBehaviour
     public void Hit(int _val)
     {
         lifeSystemEnemy.Hit(_val);
+    }
+
+    public void DoTSystem(float duration, float timePerTick, int tickDamage, Damagetype damagetype, Action onFinishCallback )
+    {
+        StartCoroutine(DoT(duration, timePerTick, tickDamage, damagetype, onFinishCallback));
+    }
+
+    IEnumerator DoT(float duration, float timePerTick, int tickDamage, Damagetype damagetype, Action onFinishCallback)
+    {
+        float countTime = 0;
+        float tickTimeCount = 0;
+        
+        while (countTime <= duration)
+        {
+            countTime += Time.fixedDeltaTime;
+
+            tickTimeCount += Time.fixedDeltaTime;
+
+            if (tickTimeCount >= timePerTick)
+            {
+                Hit(tickDamage);
+                tickTimeCount = 0;
+            }
+
+            yield return null;
+        }
+        
+        onFinishCallback.Invoke();
     }
 }

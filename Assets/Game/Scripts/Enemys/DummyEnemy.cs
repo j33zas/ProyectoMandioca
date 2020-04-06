@@ -14,6 +14,7 @@ public class DummyEnemy : EnemyBase
     PopSignalFeedback feedbackStun;
     PopSignalFeedback feedbackHitShield;
     PopSignalFeedback feedbackAttack;
+    [SerializeField] GameObject feedbackFireDot;
 
     [SerializeField] ParticleSystem greenblood;
    
@@ -32,6 +33,10 @@ public class DummyEnemy : EnemyBase
     private float _distance;
     //public Follow follow;
 
+    public Action OnParried;
+    public bool isOnFire { get; private set; }
+    
+    
     public Rigidbody _rb;
 
     [Header("Life Options")]
@@ -68,6 +73,10 @@ public class DummyEnemy : EnemyBase
         {
             combatComponent.Stop();
             feedbackStun.Show();
+
+            //Tira evento si es parrieado. Seguro haya que cambiarlo
+            if(OnParried != null)
+                OnParried();
         }
         else if (e.TakeDamage(damage, transform.forward) == Attack_Result.blocked)
         {
@@ -110,6 +119,24 @@ public class DummyEnemy : EnemyBase
 
         return _speedMovement;
     }
+    
+    
+    public override void OnFire()
+    {
+        if (isOnFire)
+            return;
+
+        isOnFire = true;
+        feedbackFireDot.SetActive(true);
+        base.OnFire();
+        
+        lifesystem.DoTSystem(30,2,1,Damagetype.fire, () =>
+        {
+            isOnFire = false;
+            feedbackFireDot.SetActive(false);
+        });
+        
+    }
 
     public void Die()
     {
@@ -123,7 +150,7 @@ public class DummyEnemy : EnemyBase
             }
         }
     }
-
+    
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }

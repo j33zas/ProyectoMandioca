@@ -1807,10 +1807,12 @@ GameObject:
   - component: {fileID: 1596232104377501888}
   - component: {fileID: 1596232104377501902}
   - component: {fileID: 1596232104377501903}
-  - component: {fileID: 1596232104377501891}
+  - component: {fileID: 2435591066857388880}
   - component: {fileID: 1596232104377501900}
-  - component: {fileID: 6308790320464307750}
   - component: {fileID: 1596232104377501889}
+  - component: {fileID: 6308790320464307750}
+  - component: {fileID: 7869747779476955416}
+  - component: {fileID: 1049068349218133632}
   m_Layer: 8
   m_Name: Minion temporal
   m_TagString: Untagged
@@ -1864,7 +1866,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1596232104377501891
+--- !u!114 &2435591066857388880
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1873,23 +1875,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1596232104377501901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9103f9eed145f8e4ead983f4ef647203, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f6f42e6b70ef304cba0268f5f7bb7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  side_Type: 2
+  side_Type: 0
   combatComponent: {fileID: 1596232104377501900}
-  damage: 1
+  damage: 10
   obj_feedbackStun: {fileID: 1596232105169705298}
   obj_feedbackShield: {fileID: 1596232103997272893}
   obj_feedbackattack: {fileID: 1596232105222585968}
   greenblood: {fileID: 8609845361062392048}
-  time_stun: 2
+  time_stun: 0
   anim: {fileID: 1596232103914325717}
   animator: {fileID: 1596232103906915676}
   _speedMovement: 2
   _rotSpeed: 10
   _petrifiedTime: 2
-  _distance: 5
+  _distance: 2
   _rb: {fileID: 1596232104377501902}
   lifesystem: {fileID: 1596232104377501889}
 --- !u!114 &1596232104377501900
@@ -1909,18 +1911,6 @@ MonoBehaviour:
     m_Bits: 256
   distance: 5
   target: {fileID: 0}
---- !u!114 &6308790320464307750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1596232104377501901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: feeeb8128564f3147a9cb49dd447f3ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1596232104377501889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1933,8 +1923,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4099c52d9543d4f9d5cfbcf0fbe62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uilife: {fileID: 1596232103994794629}
+  uilife: {fileID: 0}
   life: 100
+--- !u!114 &6308790320464307750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596232104377501901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feeeb8128564f3147a9cb49dd447f3ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7869747779476955416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596232104377501901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ff51c944e487043bec90c3ac354e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1049068349218133632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596232104377501901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb6eeb17dfe9404f9aae4f2d60dcac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charHead: {fileID: 0}
 --- !u!1 &1596232104489092064
 GameObject:
   m_ObjectHideFlags: 0

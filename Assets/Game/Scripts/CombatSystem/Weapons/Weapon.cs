@@ -10,6 +10,7 @@ public abstract class Weapon
         private set;
     }
     protected float range;
+    protected float originalRange;
     public string weaponName
     {
         get;
@@ -23,7 +24,32 @@ public abstract class Weapon
         range = r;
         weaponName = n;
         angleAttack = angle;
+        originalRange = range;
     }
 
+    /// <summary>
+    /// SinParametro vuelve al rangoOriginal
+    /// </summary>
+    public float ModifyAttackrange()
+    {
+        range = originalRange;
+        
+        return range;
+    }
+    /// <summary>
+    /// Cambia a un rango X que se le mande
+    /// </summary>
+    /// <param name="changedValue"></param>
+    public float ModifyAttackrange(float changedValue)
+    {
+        range = changedValue;
+
+        return range;
+    }
+
+    public float GetWpnRange()
+    {
+        return range;
+    }
     public abstract EntityBase Attack(Transform pos, float damage);
 }
