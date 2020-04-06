@@ -71,6 +71,8 @@ public class CharacterHead : CharacterControllable
 
     CustomCamera customCam;
 
+    public Action Attack;
+
     [Header("Interactable")]
     public InteractSensor sensor;
 
@@ -103,7 +105,6 @@ public class CharacterHead : CharacterControllable
         charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg);
         OnAttackBegin += charAttack.OnattackBegin;
         OnAttackEnd += charAttack.OnAttackEnd;
-        charAttack.PasiveFirstAttackReady(true);
         charAttack.FirstAttackReady(true);
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
@@ -111,6 +112,8 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
         charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
+
+        Attack += charAttack.Attack;
     }
 
     void RompeCoco()
@@ -149,7 +152,8 @@ public class CharacterHead : CharacterControllable
 
     public void DealAttack()
     {
-        charAttack.Attack();
+        Attack.Invoke();
+        //charAttack.Attack();
     }
 
     void ReleaseInNormal()

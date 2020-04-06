@@ -17,6 +17,8 @@ public class DummyEnemy : EnemyBase
     [SerializeField] GameObject feedbackFireDot;
 
     [SerializeField] ParticleSystem greenblood;
+
+    public bool special;
    
     public float time_stun;
 
@@ -99,6 +101,7 @@ public class DummyEnemy : EnemyBase
 
     public override void OnPetrified()
     {
+        Debug.Log("ON PETRIFY");
         base.OnPetrified();
         sm.ChangeState<StatesPetrified>();
     }
@@ -136,19 +139,6 @@ public class DummyEnemy : EnemyBase
             feedbackFireDot.SetActive(false);
         });
         
-    }
-
-    public void Die()
-    {
-        Debug.Log("die");
-        var listOfEnemy = Physics.OverlapSphere(transform.position, 10);
-        foreach (var item in listOfEnemy)
-        {
-            if (item.GetComponent<EnemyBase>())
-            {
-                item.GetComponent<EnemyBase>().OnPetrified();
-            }
-        }
     }
     
     protected override void OnFixedUpdate() { }

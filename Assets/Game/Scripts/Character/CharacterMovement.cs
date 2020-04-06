@@ -213,7 +213,6 @@ public class CharacterMovement
 
         anim.Roll();
         
-        Debug.Log(dashDir);
     }
 
     public bool IsDash()

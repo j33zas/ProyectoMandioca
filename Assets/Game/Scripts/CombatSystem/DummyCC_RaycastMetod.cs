@@ -9,7 +9,6 @@ public class DummyCC_RaycastMetod : CombatComponent
     [Header("Raycast Method")]
     [SerializeField] LayerMask _lm;
     [SerializeField] float distance;
-    public Transform target;
    
     bool showray;
 
@@ -24,10 +23,10 @@ public class DummyCC_RaycastMetod : CombatComponent
 
     private void OnDrawGizmos()
     {
-        if (showray) Gizmos.color = Color.red;
-        else Gizmos.color = Color.green;
+        //if (showray) Gizmos.color = Color.red;
+        //else Gizmos.color = Color.green;
             
-            Gizmos.DrawRay(transform.position, (target.position - transform.position));
+        //    Gizmos.DrawRay(transform.position, (target.position - transform.position));
     }
     public override void Play()
     {
@@ -43,7 +42,7 @@ public class DummyCC_RaycastMetod : CombatComponent
     void Calculate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, (target.position - transform.position), out hit, distance, _lm))
+        if (Physics.Raycast(transform.position, (Main.instance.GetChar().transform.position - transform.position), out hit, distance, _lm))
         {
             showray = true;
 

@@ -16,9 +16,9 @@ public class LifeSystem : MonoBehaviour
         customcamera = FindObjectOfType<CustomCamera>();
     }
 
-    void EVENT_OnLoseLife() => Debug.Log("Lose life");
-    void EVENT_OnGainLife() => Debug.Log("Gain life");
-    void EVENT_OnDeath() => Debug.Log("Death");
+    void EVENT_OnLoseLife() { }
+    void EVENT_OnGainLife() { }
+    void EVENT_OnDeath() { }
 
     public void Hit(int _val) { 
         lifesystemExample.Hit(_val);

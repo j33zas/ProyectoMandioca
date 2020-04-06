@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3060226940349901637}
   - component: {fileID: 7809993936313819910}
   m_Layer: 0
-  m_Name: FireParry
+  m_Name: FireParry_skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

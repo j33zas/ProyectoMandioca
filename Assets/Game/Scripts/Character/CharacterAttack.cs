@@ -5,6 +5,8 @@ using System;
 
 public class CharacterAttack
 {
+
+
     public Transform forwardPos { get; private set; }
     float heavyAttackTime = 1f;
     float buttonPressedTime;
@@ -33,6 +35,10 @@ public class CharacterAttack
     List<Weapon> myWeapons;
     public Weapon currentWeapon {get; private set; }
     int currentIndexWeapon;
+
+    Action<EntityBase> callback_ReceiveEntity;
+
+    event Action<Vector3> callbackPosition;
 
 
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified, float damage)
@@ -153,44 +159,25 @@ public class CharacterAttack
     public void Attack()
     {
         EntityBase entity = currentWeapon.Attack(forwardPos, currentDamage);
-        if (entity)
+
+        if (entity != null)
         {
-            if (pasiveFirstAttack)
-            {
-                FirstAttack(entity.transform);
-            }
+            callback_ReceiveEntity(entity);
         }
+
         FirstAttackReady(false);
     }
 
-    void FirstAttack(Transform enemyPosition)
-    {
-        if (firstAttack)
-        {
-            PetrifiedEnemy(enemyPosition);           
-        }
-    }
+    public void AddCAllback_ReceiveEntity(Action<EntityBase> _cb) => callback_ReceiveEntity += _cb;
+    public void RemoveCAllback_ReceiveEntity(Action<EntityBase> _cb) => callback_ReceiveEntity += _cb;
 
-    void PetrifiedEnemy(Transform enemyPosition)
-    {
-        var listOfEnemy = Physics.OverlapSphere(enemyPosition.position, _rangeOfPetrified);
-        foreach (var item in listOfEnemy)
-        {
-            EnemyBase myEnemy = item.GetComponent<EnemyBase>();
-            if (myEnemy)
-            {
-                myEnemy.OnPetrified();
-            }
-        }
-    }
+    public void ActiveFirstAttack() => firstAttack = true;
+    public void DeactiveFirstAttack() => firstAttack = false;
+    public bool IsFirstAttack() => firstAttack;
 
     public void FirstAttackReady(bool ready)
     {
         firstAttack = ready;
-    }
-    public void PasiveFirstAttackReady(bool ready)
-    {
-        pasiveFirstAttack = ready;
     }
 }
 

@@ -413,21 +413,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DummyEnemy (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 461483721385685836, guid: 3fcfccb7483bcd545a3882556c928c9d,
-        type: 3}
-      propertyPath: life
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
-        type: 3}
-      propertyPath: _petrifiedTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 461483721385685837, guid: 3fcfccb7483bcd545a3882556c928c9d,
-        type: 3}
-      propertyPath: _distance
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 461483721385685838, guid: 3fcfccb7483bcd545a3882556c928c9d,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -8,31 +8,21 @@ public class Skill_FirstAttack : SkillBase
     List<PetrifyComponent> petrifyComponents = new List<PetrifyComponent>();
     public float petrifyRange = 100;
     private CharacterHead _hero;
-    [SerializeField]
-    bool _firstAttack;
+
+    CharacterAttack charattack;
+
+    EntityBase entity;
+
+    private void Start()
+    {
+        charattack = Main.instance.GetChar().GetCharacterAttack();
+    }
 
     protected override void OnBeginSkill()
     {
-
-        if (_firstAttack)
-        {
-            petrifyComponents = new List<PetrifyComponent>();
-            petrifyComponents = FindObjectsOfType<PetrifyComponent>().ToList();
-
-            foreach (var item in petrifyComponents)
-            {
-                if (item != null)
-                {
-                    item.Configure(ReceivePetrifyOnDeathMinion);
-                    item.OnBegin();
-                }
-            }
-            //if (_hero == null)
-            //    _hero = FindObjectOfType<CharacterHead>();
-            //_hero.AddListenerToFirstAttack(AddFirstAttack);
-            FirstAttackReady(false);
-        }
-        
+        Main.instance.GetChar().Attack += ReceivePetrifyOnDeathMinion;
+        charattack.ActiveFirstAttack();
+        charattack.AddCAllback_ReceiveEntity(RecieveEntity);
     }
     protected override void OnEndSkill()
     {
@@ -40,8 +30,10 @@ public class Skill_FirstAttack : SkillBase
         {
             if (item != null) item.OnEnd();
         }
-        FirstAttackReady(false);
-        // _hero.RemoveListenerToFirstattack(AddFirstAttack);
+
+        Main.instance.GetChar().Attack -= ReceivePetrifyOnDeathMinion;
+        charattack.DeactiveFirstAttack();
+        charattack.RemoveCAllback_ReceiveEntity(RecieveEntity);
 
     }
 
@@ -49,31 +41,40 @@ public class Skill_FirstAttack : SkillBase
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            FirstAttackReady(true);
+            charattack.ActiveFirstAttack();
         }
-
     }
 
-    public void ReceivePetrifyOnDeathMinion(Vector3 pos, PetrifyComponent p)
+    public void ReceivePetrifyOnDeathMinion()
     {
-        var listOfEntities = Physics.OverlapSphere(pos, petrifyRange);
-
-        petrifyComponents.Remove(p);
-
-        foreach (var item in listOfEntities)
+        //var listOfEntities = Physics.OverlapSphere(pos, petrifyRange);
+        if (charattack.IsFirstAttack())
         {
-            EnemyBase myEnemy = item.GetComponent<EnemyBase>();
-            if (myEnemy)
+            foreach (var item in Main.instance.GetEnemies())
             {
-                myEnemy.OnPetrified();
+                EnemyBase myEnemy = item.GetComponent<EnemyBase>();
+                if (myEnemy)
+                {
+                    myEnemy.OnPetrified();
+                }
             }
+            charattack.DeactiveFirstAttack();
         }
     }
 
-   
-
-    public void FirstAttackReady(bool ready)
+    public void RecieveEntity(EntityBase _entity)
     {
-        _firstAttack = ready;
+        entity = _entity;
     }
+
+    //private void AddFirstAttack()
+    //{
+    //    //_hero.charAttack.FirstAttackReady(true);
+    //    //_hero.charAttack.PasiveFirstAttackReady(true);
+    //}
+    //private void RemoveFirstAttack()
+    //{
+    //    //_hero.charAttack.FirstAttackReady(false);
+    //    //_hero.charAttack.PasiveFirstAttackReady(false);
+    //}
 }
