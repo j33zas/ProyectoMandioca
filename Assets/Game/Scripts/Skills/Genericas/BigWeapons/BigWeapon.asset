@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BigWeapon
   m_EditorClassIdentifier: 
   skilltype: 3
-  skill_name: default_name
-  description_lore: default_description_lore
-  description_technical: default_description_technical
+  skill_name: BigWeapons
+  description_lore: La fuerza divina te da mas alcance
+  description_technical: El rango de tu ataque melee aumenta en X%
   img_blocked: {fileID: 21300000, guid: 063fee7d0e31cb142a90a920a9784e68, type: 3}
   img_avaliable: {fileID: 0}
   img_actived: {fileID: 0}

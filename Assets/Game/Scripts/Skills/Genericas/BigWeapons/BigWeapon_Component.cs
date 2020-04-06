@@ -15,14 +15,11 @@ public class BigWeapon_Component : MonoBehaviour
 
         originalAttackRange = _characterHead.ChangeRangeAttack(-1);
         currentAttackrange = originalAttackRange;
-        
-        Debug.Log(originalAttackRange + "ataque original");
     }
 
     public void ChangeWeaponAttackRange(float percent)
     {
         float newRangeValue = currentAttackrange * percent;
-        Debug.Log(newRangeValue);
         currentAttackrange = _characterHead.ChangeRangeAttack(newRangeValue);
         
     }

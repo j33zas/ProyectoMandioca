@@ -311,6 +311,24 @@ public class CharacterHead : CharacterControllable
         Dash -= listener;
     }
 
+    public void ChangeDashForTeleport()
+    {
+        Dash -= move.Roll;
+        Dash += move.Teleport;
+    }
+    
+    public void ChangeTeleportForDash()
+    {
+        Dash -= move.Teleport;
+        Dash += move.Roll;
+    }
+
+    public CharacterMovement GetCharMove()
+    {
+        return move;
+    }
+    
+
     #endregion
 
     #region Take Damage

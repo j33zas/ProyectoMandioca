@@ -14,7 +14,7 @@ public class CharacterMovement
     float rotY;
     float movX;
     float movY;
-    Vector3 dashDir;
+    private Vector3 dashDir;
 
     bool inDash;
 
@@ -28,6 +28,8 @@ public class CharacterMovement
     bool dashCdOk;
 
     CharacterAnimator anim;
+
+    private float _teleportDistance;
 
     public CharacterMovement(Rigidbody rb, Transform rot, CharacterAnimator a)
     {
@@ -210,11 +212,44 @@ public class CharacterMovement
 
 
         anim.Roll();
+        
+        Debug.Log(dashDir);
     }
 
     public bool IsDash()
     {
         return inDash;
+    }
+
+    public void Teleport()
+    {
+        if (dashCdOk)
+            return;
+
+        inDash = true;
+        dashCdOk = true;
+        if (movX != 0 || movY != 0)
+            dashDir = new Vector3(movX, 0, movY);
+        else
+            dashDir = rotTransform.forward;
+
+
+        _rb.position = _rb .position + (dashDir * _teleportDistance);
+    }
+
+    public Vector3 GetLookDirection()
+    {
+        if (movX != 0 || movY != 0)
+            dashDir = new Vector3(movX, 0, movY);
+        else
+            dashDir = rotTransform.forward;
+        
+        return dashDir;
+    }
+
+    public void ConfigureTeleport(float teleportDistance)
+    {
+        _teleportDistance = teleportDistance;
     }
 
     #region SCRIPT TEMPORAL, BORRAR

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,11 @@ public class BigWeapon_Skill : SkillBase
     }
 
     protected override void OnUpdateSkill()
+    {
+        
+    }
+
+    private void OnDrawGizmos()
     {
         
     }
