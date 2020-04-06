@@ -70,16 +70,7 @@ public class Skill_FirstAttack : SkillBase
         }
     }
 
-    private void AddFirstAttack()
-    {
-        _hero.charAttack.FirstAttackReady(true);
-        _hero.charAttack.PasiveFirstAttackReady(true);
-    }
-    private void RemoveFirstAttack()
-    {
-        _hero.charAttack.FirstAttackReady(false);
-        _hero.charAttack.PasiveFirstAttackReady(false);
-    }
+   
 
     public void FirstAttackReady(bool ready)
     {

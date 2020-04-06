@@ -19,6 +19,6 @@ MonoBehaviour:
     se activa con Z negro'
   description_technical: "el primer golpe al objetivo principal petrificara\n a los
     enemigos de la habitacion"
-  img_blocked: {fileID: 0}
-  img_avaliable: {fileID: 0}
-  img_actived: {fileID: 0}
+  img_blocked: {fileID: 21300000, guid: c4870f9125cbcfd49945b054a1bef72c, type: 3}
+  img_avaliable: {fileID: 21300000, guid: 401d2f1063767cd4483bfae5da18c6b4, type: 3}
+  img_actived: {fileID: 21300000, guid: 401d2f1063767cd4483bfae5da18c6b4, type: 3}
