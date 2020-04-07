@@ -12,28 +12,32 @@ public class ExplosionCW : SkillBase
     int damageExp;
     float timer;
 
-    [SerializeField]
     CharacterHead head;
     [SerializeField]
     ParticleSystem explosionParticles;
 
-    private void Awake()
+    bool buffActived;
+    private void Start()
     {
+        head = Main.instance.GetChar();
         explosionParticles.transform.position = head.transform.position;
         explosionParticles.transform.SetParent(head.transform);
     }
 
     protected override void OnBeginSkill()
     {
-        if (timer == 0)
+        head.ChangeWeaponPassives += IsExplosion;
+    }
+
+    void IsExplosion()
+    {
+        if (!buffActived)
             Explosion();
     }
 
     protected override void OnEndSkill()
     {
-        timer = 0;
-        explosionParticles.Stop();
-        explosionParticles.gameObject.SetActive(false);
+        head.ChangeWeaponPassives -= IsExplosion;
     }
 
     void Explosion()
@@ -50,15 +54,28 @@ public class ExplosionCW : SkillBase
                 item.GetComponent<EnemyBase>().TakeDamage(damageExp, (item.transform.position - head.transform.position).normalized);
             }
         }
+
+        buffActived = true;
     }
 
     protected override void OnUpdateSkill()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= cdToExplosion)
+        if (buffActived)
         {
-            EndSkill();
+            timer += Time.deltaTime;
+
+            if (timer >= cdToExplosion)
+            {
+                EndCD();
+            }
         }
+    }
+
+    void EndCD()
+    {
+        timer = 0;
+        explosionParticles.Stop();
+        explosionParticles.gameObject.SetActive(false);
+        buffActived = false;
     }
 }

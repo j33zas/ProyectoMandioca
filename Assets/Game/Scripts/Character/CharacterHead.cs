@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 using DevelopTools;
 
 public class CharacterHead : CharacterControllable
@@ -19,10 +18,6 @@ public class CharacterHead : CharacterControllable
     Action OnBlock;
     Action UpBlock;
     Action Parry;
-
-    [Header("Test")]
-    [SerializeField] List<SkillBase> passives;
-    [SerializeField] Text weaponName;
 
 
     [Header("Dash Options")]
@@ -49,6 +44,7 @@ public class CharacterHead : CharacterControllable
     [Header("Feedbacks")]
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
+    [SerializeField] ParticleSystem feedbackCW;
 
 
     [Header("Animations")]
@@ -72,6 +68,7 @@ public class CharacterHead : CharacterControllable
     CustomCamera customCam;
 
     public Action Attack;
+    public Action ChangeWeaponPassives = delegate { };
 
     [Header("Interactable")]
     public InteractSensor sensor;
@@ -125,17 +122,6 @@ public class CharacterHead : CharacterControllable
     {
         ChildrensUpdates();
         charAttack.Refresh();
-    }
-
-    public void ActiveOrDesactivePassive(SkillBase skill)
-    {
-        if (passives == null)
-            passives = new List<SkillBase>();
-
-        if (passives.Contains(skill))
-            passives.Remove(skill);
-        else
-            passives.Add(skill);
     }
 
     #region Attack
@@ -227,19 +213,9 @@ public class CharacterHead : CharacterControllable
             if (w == 1 || w == -1)
             {
                 charAttack.ChangeWeapon((int)w);
-                if (passives != null)
-                {
-                    if (passives.Count >= 1)
-                    {
-                        passives[0].BeginSkill();
-                        weaponName.text = charAttack.ChangeName();
-                    }
-                    if (passives.Count >= 2)
-                    {
-                        passives[1].BeginSkill();
-                        weaponName.text = charAttack.ChangeName();
-                    }
-                }
+                ChangeWeaponPassives();
+                feedbackCW.Stop();
+                feedbackCW.Play();
                 isValue = true;
             }
         }

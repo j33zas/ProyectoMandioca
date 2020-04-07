@@ -10,37 +10,60 @@ public class MoreDamageCW : SkillBase
     float timeToBuff;
     float timer;
 
-    [SerializeField]
     CharacterHead head;
+
     [SerializeField]
     ParticleSystem feedbackParticle;
-    private void Awake()
+
+    bool buffActived;
+    private void Start()
     {
+        head = Main.instance.GetChar();
         feedbackParticle.transform.position = head.transform.position;
         feedbackParticle.transform.SetParent(head.transform);
     }
     protected override void OnBeginSkill()
     {
-        head.ChangeDamage(buffDamage);
-        feedbackParticle.gameObject.SetActive(true);
-        feedbackParticle.Play();
+
+        head.ChangeWeaponPassives += MoreDamage;
+    }
+
+    void MoreDamage()
+    {
+        if (!buffActived)
+        {
+            head.ChangeDamage(buffDamage);
+            feedbackParticle.gameObject.SetActive(true);
+            feedbackParticle.Play();
+            buffActived = true;
+        }
     }
 
     protected override void OnEndSkill()
+    {
+        head.ChangeWeaponPassives -= MoreDamage;
+        LessDamage();
+    }
+
+    protected override void OnUpdateSkill()
+    {
+        if (buffActived)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= timeToBuff)
+            {
+                LessDamage();
+            }
+        }
+    }
+
+    void LessDamage()
     {
         head.ChangeDamage(-buffDamage);
         timer = 0;
         feedbackParticle.Stop();
         feedbackParticle.gameObject.SetActive(false);
-    }
-
-    protected override void OnUpdateSkill()
-    {
-        timer += Time.deltaTime;
-
-        if (timer >= timeToBuff)
-        {
-            EndSkill();
-        }
+        buffActived = false;
     }
 }
