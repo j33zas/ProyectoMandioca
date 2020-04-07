@@ -982,9 +982,6 @@
                 <e p="MoreDamageCW.cs" t="Include" />
                 <e p="PetrifyNearEnemies.cs" t="Include" />
               </e>
-              <e p="example" t="Include">
-                <e p="ExapleSkill.cs" t="Include" />
-              </e>
               <e p="Genericas" t="Include">
                 <e p="1_Big Guns.txt" t="Include" />
                 <e p="2_Pherseus Shield.txt" t="Include" />
@@ -1015,6 +1012,7 @@
               <e p="Obligacion" t="Include">
                 <e p="1_mitad de HP.txt" t="Include" />
                 <e p="2_Petrifica primer golpe.txt" t="Include" />
+                <e p="Skill_FirstAttack.cs" t="Include" />
               </e>
               <e p="Other" t="Include">
                 <e p="EmptySkill.cs" t="Include" />
@@ -1036,6 +1034,7 @@
             </e>
           </e>
         </e>
+        <e p="MyEventSystem.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

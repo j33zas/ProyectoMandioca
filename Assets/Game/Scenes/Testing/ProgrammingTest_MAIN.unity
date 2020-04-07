@@ -10532,6 +10532,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5471025780757869049, guid: c0ed6bbcb6b8b4448b68c3c8db0c6446,
+        type: 3}
+      propertyPath: augmentedSize
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471025780757869049, guid: c0ed6bbcb6b8b4448b68c3c8db0c6446,
+        type: 3}
+      propertyPath: augmentedSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471025780757869049, guid: c0ed6bbcb6b8b4448b68c3c8db0c6446,
+        type: 3}
+      propertyPath: augmentedSize.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471025780757869049, guid: c0ed6bbcb6b8b4448b68c3c8db0c6446,
+        type: 3}
+      propertyPath: augmentedSize.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5471025780757869054, guid: c0ed6bbcb6b8b4448b68c3c8db0c6446,
         type: 3}
       propertyPath: m_Name
@@ -12012,11 +12032,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657530229}
   m_LocalRotation: {x: 0.36690396, y: -0.3669039, z: -0.60446787, w: 0.6044681}
-  m_LocalPosition: {x: 0.22627766, y: 0.000000043773966, z: -0.11451543}
-  m_LocalScale: {x: 0.9999999, y: 0.99999994, z: 0.9999999}
+  m_LocalPosition: {x: 0.22627766, y: 0, z: -0.11451543}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 657883491}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &657883415
 Transform:
@@ -12362,8 +12382,8 @@ Transform:
   m_Children:
   - {fileID: 657883441}
   - {fileID: 657883403}
-  - {fileID: 657883413}
   - {fileID: 657883493}
+  - {fileID: 657883413}
   - {fileID: 657883495}
   m_Father: {fileID: 2122227816}
   m_RootOrder: 1
@@ -12380,7 +12400,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 657883491}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &657883495
 Transform:
@@ -20574,6 +20594,7 @@ MonoBehaviour:
   attackAngle: 45
   timeToHeavyAttack: 1
   rangeOfPetrified: 5
+  currentWeapon: {fileID: 657530203}
   sensor: {fileID: 0}
 --- !u!114 &1954684487
 MonoBehaviour:

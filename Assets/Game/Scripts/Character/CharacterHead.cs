@@ -70,6 +70,9 @@ public class CharacterHead : CharacterControllable
     public Action Attack;
     public Action ChangeWeaponPassives = delegate { };
 
+    //Modelo del arma para feedback placeholder
+    public GameObject currentWeapon;
+
     [Header("Interactable")]
     public InteractSensor sensor;
 
