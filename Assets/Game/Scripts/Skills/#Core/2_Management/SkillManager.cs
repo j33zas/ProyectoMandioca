@@ -39,7 +39,6 @@ public class SkillManager : MonoBehaviour
 
     void OnUISelected(int i)
     {
-       
         var select = allskills[i];
         var old = currents[select.skillinfo.skilltype];
 
