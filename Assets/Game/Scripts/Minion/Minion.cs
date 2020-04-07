@@ -77,6 +77,8 @@ public class Minion : Companion
 
     public void AttackEntity(EntityBase e)
     {
+        Debug.Log("0: dmg en minion: " + damage);
+
         if (e.TakeDamage(damage, transform.forward) == Attack_Result.parried)
         {
             combatComponent.Stop();

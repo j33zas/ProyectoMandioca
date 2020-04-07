@@ -47,6 +47,7 @@ public class SkillExplodeOnDeath : SkillBase
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
             if (myEnemy)
             {
+                Debug.Log("0: explosionDmg: " + explosionDmg);
                 myEnemy.TakeDamage(explosionDmg, Vector3.up);
             }
         }

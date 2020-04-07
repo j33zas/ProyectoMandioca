@@ -44,6 +44,8 @@ public class Test_Attack : MonoBehaviour
         {
             if (hit.collider.GetComponent<EntityBase>())
             {
+                Debug.Log("0: test attack: " + damage);
+
                 EntityBase character = hit.collider.GetComponent<EntityBase>();
                 character.TakeDamage(damage, dir);
             }

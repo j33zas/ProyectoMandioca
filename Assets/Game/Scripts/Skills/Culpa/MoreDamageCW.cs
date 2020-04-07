@@ -60,10 +60,13 @@ public class MoreDamageCW : SkillBase
 
     void LessDamage()
     {
-        head.ChangeDamage(-buffDamage);
-        timer = 0;
-        feedbackParticle.Stop();
-        feedbackParticle.gameObject.SetActive(false);
-        buffActived = false;
+        if (buffActived)
+        {
+            head.ChangeDamage(-buffDamage);
+            timer = 0;
+            feedbackParticle.Stop();
+            feedbackParticle.gameObject.SetActive(false);
+            buffActived = false;
+        }
     }
 }

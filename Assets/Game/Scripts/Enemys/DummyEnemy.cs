@@ -71,6 +71,7 @@ public class DummyEnemy : EnemyBase
 
     public void AttackEntity(EntityBase e)
     {
+
         if (e.TakeDamage(damage, transform.forward) == Attack_Result.parried)
         {
             combatComponent.Stop();
@@ -93,6 +94,8 @@ public class DummyEnemy : EnemyBase
     /////////////////////////////////////////////////////////////////
     public override Attack_Result TakeDamage(int dmg, Vector3 dir)
     {
+
+        Debug.Log("Attack result: " + dmg);
         lifesystem.Hit(dmg);
         greenblood.Play();
 
