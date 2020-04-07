@@ -116,14 +116,6 @@ public class CharacterHead : CharacterControllable
         Attack += charAttack.Attack;
     }
 
-    
-    
-
-    void RompeCoco()
-    {
-        if (customCam != null) customCam.BeginShakeCamera();
-    }
-
     private void Update()
     {
         ChildrensUpdates();
@@ -202,45 +194,8 @@ public class CharacterHead : CharacterControllable
         Gizmos.DrawCube(attackRange_endPoint, new Vector3(.6f, .6f, .6f));
     }
 
-    /// ////////////////////
-
-
     /////////////////////////////////////////////////////////////////
     #endregion
-
-    #region Change Weapon
-
-    bool isValue;
-
-    public void ChangeTheWeapon(float w)
-    {
-        if (!isValue && !charAttack.inAttack)
-        {
-            if (w == 1 || w == -1)
-            {
-                charAttack.ChangeWeapon((int)w);
-                ChangeWeaponPassives();
-                feedbackCW.Stop();
-                feedbackCW.Play();
-                isValue = true;
-            }
-        }
-        else
-        {
-            if (w != 1 && w != -1)
-            {
-                isValue = false;
-            }
-        }
-    }
-
-    public void ChangeDamage(float f)
-    {
-        charAttack.BuffOrNerfDamage(f);
-    }
-
-    #endregion
-
 
     #region Block & Parry
 
@@ -296,33 +251,6 @@ public class CharacterHead : CharacterControllable
 
     #endregion
 
-
-    #region Movimiento y Rotacion
-    public void LeftHorizontal(float axis)
-    {
-        if (!InDash())
-            MovementHorizontal(axis);
-    }
-
-    public void LeftVerical(float axis)
-    {
-        if (!InDash())
-            MovementVertical(axis);
-    }
-
-    //Joystick Derecho, Rotacion
-    public void RightHorizontal(float axis)
-    {
-        if (!InDash())
-            RotateHorizontal(axis);
-    }
-    public void RightVerical(float axis)
-    {
-        if (!InDash())
-            RotateVertical(axis);
-    }
-    #endregion
-
     #region Roll
     void OnBeginRoll()
     {
@@ -365,8 +293,37 @@ public class CharacterHead : CharacterControllable
     {
         return move;
     }
-    
+    void RompeCoco()
+    {
+        if (customCam != null) customCam.BeginShakeCamera();
+    }
 
+    #endregion
+
+    #region Movimiento y Rotacion
+    public void LeftHorizontal(float axis)
+    {
+        if (!InDash())
+            MovementHorizontal(axis);
+    }
+
+    public void LeftVerical(float axis)
+    {
+        if (!InDash())
+            MovementVertical(axis);
+    }
+
+    //Joystick Derecho, Rotacion
+    public void RightHorizontal(float axis)
+    {
+        if (!InDash())
+            RotateHorizontal(axis);
+    }
+    public void RightVerical(float axis)
+    {
+        if (!InDash())
+            RotateVertical(axis);
+    }
     #endregion
 
     #region Take Damage
@@ -392,6 +349,39 @@ public class CharacterHead : CharacterControllable
             return Attack_Result.sucessful;
         }
     }
+    #endregion
+
+    #region Change Weapon
+
+    bool isValue;
+
+    public void ChangeTheWeapon(float w)
+    {
+        if (!isValue && !charAttack.inAttack)
+        {
+            if (w == 1 || w == -1)
+            {
+                charAttack.ChangeWeapon((int)w);
+                ChangeWeaponPassives();
+                feedbackCW.Stop();
+                feedbackCW.Play();
+                isValue = true;
+            }
+        }
+        else
+        {
+            if (w != 1 && w != -1)
+            {
+                isValue = false;
+            }
+        }
+    }
+
+    public void ChangeDamage(float f)
+    {
+        charAttack.BuffOrNerfDamage(f);
+    }
+
     #endregion
 
     #region Interact
