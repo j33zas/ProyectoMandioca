@@ -2031,13 +2031,15 @@ MonoBehaviour:
   obj_feedbackattack: {fileID: 461483721077474814}
   feedbackFireDot: {fileID: 5674514750115632252}
   greenblood: {fileID: 7439138333974088574}
+  special: 0
   time_stun: 2
   anim: {fileID: 461483719833435483}
   animator: {fileID: 461483719842942674}
   _speedMovement: 5
   _rotSpeed: 10
   _petrifiedTime: 2
-  _distance: 5
+  _distance: 3
+  explosionForce: 100
   _rb: {fileID: 461483721385685824}
   lifesystem: {fileID: 461483721385685836}
 --- !u!114 &461483721385685826

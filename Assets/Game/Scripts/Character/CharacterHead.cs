@@ -73,6 +73,8 @@ public class CharacterHead : CharacterControllable
     [Header("Interactable")]
     public InteractSensor sensor;
 
+    bool canBlockCalculate;
+
     private void Awake()
     {
         charanim = new CharacterAnimator(anim_base);
@@ -92,7 +94,7 @@ public class CharacterHead : CharacterControllable
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle,OnEndParry, charanim);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, OnEndParry, charanim, feedbackBlock);
         OnBlock += charBlock.OnBlockDown;
         UpBlock += charBlock.OnBlockUp;
         Parry += charBlock.Parry;
@@ -108,10 +110,14 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
-        charAnimEvent.Add_Callback("BeginBlock", BlockFeedback);
+
+        move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
         Attack += charAttack.Attack;
     }
+
+    
+    
 
     void RompeCoco()
     {
@@ -242,21 +248,28 @@ public class CharacterHead : CharacterControllable
     {
         if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
         {
+            Debug.Log("Entrar a animacion");
             move.SetSpeed(speed / 2);
             OnBlock();
         }
     }
     public void EVENT_UpBlocking()
     {
-        feedbackBlock.SetActive(false);
-        move.SetSpeed(speed);
-        UpBlock();
+        if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
+        {
+            move.SetSpeed(speed);
+            UpBlock();
+        }
+    }
+    public void OnRealBlock_ON()
+    {
+
+    }
+    public void OnRealBlock_OFF()
+    {
+
     }
 
-    public void BlockFeedback()
-    {
-        feedbackBlock.SetActive(true);
-    }
     public void EVENT_Parry()
     {
         if (!charBlock.onBlock && !InDash() && !charAttack.inAttack)
@@ -265,8 +278,6 @@ public class CharacterHead : CharacterControllable
             Parry();
         }
     }
-    
-    //TEST FOR SKILL
     public void AddParry(Action listener)
     {
         Parry += listener;
@@ -275,8 +286,6 @@ public class CharacterHead : CharacterControllable
     {
         Parry -= listener;
     }
-
-
     public void PerfectParry()
     {
         parryParticle.Play();
@@ -315,38 +324,43 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Roll
-
+    void OnBeginRoll()
+    {
+        charBlock.flagIsStop = false;
+        charBlock.onBlock = false;
+       // canBlockCalculate = false;
+    }
+    void OnEndRoll()
+    {
+        charanim.Block(false);
+        charBlock.flagIsStop = false;
+        charBlock.onBlock = false;
+       // canBlockCalculate = true;
+    }
     public void RollDash()
     {
         if (!InDash())
         {
-            UpBlock();
+            if (charBlock.onBlock)
+            {
+                EVENT_UpBlocking();
+            }
             Dash();
         }
     }
 
-    public void AddListenerToDash(Action listener)
-    {
-        Dash += listener;
-    }
-    
-    public void RemoveListenerToDash(Action listener)
-    {
-        Dash -= listener;
-    }
-
+    public void AddListenerToDash(Action listener) => Dash += listener;
+    public void RemoveListenerToDash(Action listener) => Dash -= listener;
     public void ChangeDashForTeleport()
     {
         Dash -= move.Roll;
         Dash += move.Teleport;
     }
-    
     public void ChangeTeleportForDash()
     {
         Dash -= move.Teleport;
         Dash += move.Roll;
     }
-
     public CharacterMovement GetCharMove()
     {
         return move;
@@ -356,7 +370,7 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Take Damage
-    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir)
+    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype dmgtype)
     {
         if (InDash())
             return Attack_Result.inmune;

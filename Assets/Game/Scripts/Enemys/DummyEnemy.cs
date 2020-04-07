@@ -37,8 +37,8 @@ public class DummyEnemy : EnemyBase
 
     public Action OnParried;
     public bool isOnFire { get; private set; }
-    
-    
+
+    public float explosionForce = 200;
     public Rigidbody _rb;
 
     [Header("Life Options")]
@@ -72,7 +72,7 @@ public class DummyEnemy : EnemyBase
     public void AttackEntity(EntityBase e)
     {
 
-        if (e.TakeDamage(damage, transform.forward) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
@@ -81,7 +81,7 @@ public class DummyEnemy : EnemyBase
             if(OnParried != null)
                 OnParried();
         }
-        else if (e.TakeDamage(damage, transform.forward) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }
@@ -92,8 +92,13 @@ public class DummyEnemy : EnemyBase
     /////////////////////////////////////////////////////////////////
     //////  En desuso
     /////////////////////////////////////////////////////////////////
-    public override Attack_Result TakeDamage(int dmg, Vector3 dir)
+    public override Attack_Result TakeDamage(int dmg, Vector3 dir,  Damagetype dmgtype)
     {
+        if (dmgtype == Damagetype.explosion)
+        {
+            _rb.AddForce(dir * explosionForce, ForceMode.Impulse);
+        }
+
 
         Debug.Log("Attack result: " + dmg);
         lifesystem.Hit(dmg);
@@ -136,7 +141,7 @@ public class DummyEnemy : EnemyBase
         feedbackFireDot.SetActive(true);
         base.OnFire();
         
-        lifesystem.DoTSystem(30,2,1,Damagetype.fire, () =>
+        lifesystem.DoTSystem(30,2,1,Damagetype.Fire, () =>
         {
             isOnFire = false;
             feedbackFireDot.SetActive(false);

@@ -19,13 +19,10 @@ public class EntityBlock
         blockAngle = blockRange;
     }
 
-
     public virtual void OnBlockDown() { }
     public virtual void OnBlockUp() { }
-
-    public virtual void OnBlockSuccessful() { onBlock = true; }
-
-    public virtual void OnBlockUpSuccessful() { onBlock = false; }
+    public virtual void OnBlockSuccessful() => onBlock = true;
+    public virtual void OnBlockUpSuccessful() => onBlock = false;
 
     public virtual bool IsParry(Vector3 parryDir, Vector3 attackDir)
     {

@@ -133,6 +133,7 @@ public class CharacterAttack
         isAttackReleased = false;
     }
 
+    //input
     public void OnAttackEnd()
     {
         if (isAnimationFinished)
@@ -145,6 +146,7 @@ public class CharacterAttack
         }
     }
 
+    //anim espada arriba
     public void BeginCheckAttackType()
     {
         if (isAttackReleased)

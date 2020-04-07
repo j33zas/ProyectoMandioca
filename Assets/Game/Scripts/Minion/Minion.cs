@@ -79,12 +79,12 @@ public class Minion : Companion
     {
         Debug.Log("0: dmg en minion: " + damage);
 
-        if (e.TakeDamage(damage, transform.forward) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
         }
-        else if (e.TakeDamage(damage, transform.forward) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }
@@ -95,7 +95,7 @@ public class Minion : Companion
     /////////////////////////////////////////////////////////////////
     //////  En desuso
     /////////////////////////////////////////////////////////////////
-    public override Attack_Result TakeDamage(int dmg, Vector3 dir)
+    public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
     {
         lifesystem.Hit(dmg);
         greenblood.Play();

@@ -36,7 +36,6 @@ public class StatesFollow : States
         
         if (Vector3.Distance(_myTransform.position, _target.position) > distanceStop)
         {
-           
             Vector3 _dir = (_target.position - _myTransform.position).normalized;
             Vector3 fowardRotation = new Vector3(_dir.x, 0, _dir.z);
             Vector3 velocity= new Vector3(_dir.x, 0, _dir.z);

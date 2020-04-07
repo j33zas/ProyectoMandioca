@@ -19,7 +19,7 @@ public class StatesWander : States
     public override void Execute()
     {
         base.Execute();
-        Debug.Log("Minion wandering");
+
     }
 
     public override void Sleep()

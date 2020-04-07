@@ -47,7 +47,7 @@ public class Test_Attack : MonoBehaviour
                 Debug.Log("0: test attack: " + damage);
 
                 EntityBase character = hit.collider.GetComponent<EntityBase>();
-                character.TakeDamage(damage, dir);
+                character.TakeDamage(damage, dir, Damagetype.parriable);
             }
         }
     }

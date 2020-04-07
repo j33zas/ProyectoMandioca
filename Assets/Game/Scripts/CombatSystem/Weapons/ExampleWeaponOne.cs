@@ -23,7 +23,7 @@ public class ExampleWeaponOne : Weapon
                 if (entity == null)
                     entity = enemies[i].GetComponent<EntityBase>();
 
-                enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.forward);
+                enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.forward, Damagetype.parriable);
             }
         }
 

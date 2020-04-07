@@ -29,6 +29,9 @@ public class CharacterMovement
 
     CharacterAnimator anim;
 
+    Action OnBeginRoll;
+    Action OnEndRoll;
+
     private float _teleportDistance;
 
     public CharacterMovement(Rigidbody rb, Transform rot, CharacterAnimator a)
@@ -64,7 +67,14 @@ public class CharacterMovement
         dashDecreaseSpeed = n;
         return this;
     }
+
     #endregion
+
+    public void SetCallbacks(Action _OnBeginRoll, Action _OnEndRoll)
+    {
+        OnBeginRoll = _OnBeginRoll;
+        OnEndRoll = _OnEndRoll;
+    }
 
     #region MOVEMENT
     //Joystick Izquierdo, Movimiento
@@ -153,6 +163,7 @@ public class CharacterMovement
 
             if (timerDash >= maxTimerDash)
             {
+                OnEndRoll.Invoke();
                 inDash = false;
                 _rb.velocity = Vector3.zero;
                 timerDash = 0;
@@ -176,6 +187,8 @@ public class CharacterMovement
     {
         if (dashCdOk)
             return;
+
+        OnBeginRoll();
 
         inDash = true;
         dashCdOk = true;

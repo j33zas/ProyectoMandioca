@@ -40,6 +40,8 @@ public class SkillExplodeOnDeath : SkillBase
     {
         var listOfEntities = Physics.OverlapSphere(pos, explosionRange);
 
+
+
         petrifyComponents.Remove(p);
 
         foreach (var item in listOfEntities)
@@ -47,8 +49,10 @@ public class SkillExplodeOnDeath : SkillBase
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
             if (myEnemy)
             {
-                Debug.Log("0: explosionDmg: " + explosionDmg);
-                myEnemy.TakeDamage(explosionDmg, Vector3.up);
+                Vector3 dir = myEnemy.transform.position - pos;
+                dir.Normalize();
+
+                myEnemy.TakeDamage(explosionDmg, dir, Damagetype.explosion);
             }
         }
     }
