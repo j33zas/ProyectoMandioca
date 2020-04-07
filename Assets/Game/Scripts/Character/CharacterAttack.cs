@@ -84,8 +84,9 @@ public class CharacterAttack
             currentIndexWeapon = myWeapons.Count - 1;
         }
 
+        currentDamage -= currentWeapon.baseDamage;
         currentWeapon = myWeapons[currentIndexWeapon];
-        currentDamage = currentWeapon.baseDamage;
+        currentDamage += currentWeapon.baseDamage;
     }
 
     public void Refresh()
