@@ -29,7 +29,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Opacity: 1
-    - _OpacityDistortion: 0.87
-    - _Scale: 0.07
+    - _OpacityDistortion: 0.16411766
+    - _Scale: 0.02
     - __dirty: 0
     m_Colors: []
