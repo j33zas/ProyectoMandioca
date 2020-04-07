@@ -19,7 +19,7 @@ public class CharacterAttack
 
     Action NormalAttack;
     Action HeavyAttack;
-    
+
     bool isAttackReleased;
     bool isAnimationFinished;
     ParticleSystem feedbackHeavy;
@@ -33,15 +33,15 @@ public class CharacterAttack
     private float _rangeOfPetrified;
 
     List<Weapon> myWeapons;
-    public Weapon currentWeapon {get; private set; }
+    public Weapon currentWeapon { get; private set; }
     int currentIndexWeapon;
 
-    Action<EnemyBase> callback_ReceiveEntity;
+    Action<EnemyBase> callback_ReceiveEntity = delegate { };
 
     event Action<Vector3> callbackPosition;
 
 
-    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps,float rangeOfPetrified, float damage)
+    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float rangeOfPetrified, float damage)
     {
         myWeapons = new List<Weapon>();
         myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", 45));
@@ -101,7 +101,7 @@ public class CharacterAttack
                     feedbackHeavy.Play();
                     oneshot = true;
                 }
-               
+
             }
         }
     }
@@ -141,7 +141,7 @@ public class CharacterAttack
         else
         {
             isAttackReleased = true;
-        }          
+        }
     }
 
     public void BeginCheckAttackType()
@@ -172,7 +172,11 @@ public class CharacterAttack
     }
 
     public void AddCAllback_ReceiveEntity(Action<EnemyBase> _cb) => callback_ReceiveEntity += _cb;
-    public void RemoveCAllback_ReceiveEntity(Action<EnemyBase> _cb) => callback_ReceiveEntity += _cb;
+    public void RemoveCAllback_ReceiveEntity(Action<EnemyBase> _cb)
+    {
+        callback_ReceiveEntity -= _cb;
+        callback_ReceiveEntity = delegate { };
+    }
 
     public void ActiveFirstAttack() => firstAttack = true;
     public void DeactiveFirstAttack() => firstAttack = false;
