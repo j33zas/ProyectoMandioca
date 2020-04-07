@@ -101,7 +101,7 @@ public class DummyEnemy : EnemyBase
 
     public override void OnPetrified()
     {
-        Debug.Log("ON PETRIFY");
+        feedbackStun.Show();
         base.OnPetrified();
         sm.ChangeState<StatesPetrified>();
     }

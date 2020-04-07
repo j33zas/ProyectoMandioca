@@ -10,9 +10,6 @@ public class Skill_FirstAttack : SkillBase
     private CharacterHead _hero;
 
     CharacterAttack charattack;
-
-    EntityBase entity;
-
     private void Start()
     {
         charattack = Main.instance.GetChar().GetCharacterAttack();
@@ -20,7 +17,7 @@ public class Skill_FirstAttack : SkillBase
 
     protected override void OnBeginSkill()
     {
-        Main.instance.GetChar().Attack += ReceivePetrifyOnDeathMinion;
+        //Main.instance.GetChar().Attack += ReceivePetrifyOnDeathMinion;
         charattack.ActiveFirstAttack();
         charattack.AddCAllback_ReceiveEntity(RecieveEntity);
     }
@@ -31,7 +28,7 @@ public class Skill_FirstAttack : SkillBase
             if (item != null) item.OnEnd();
         }
 
-        Main.instance.GetChar().Attack -= ReceivePetrifyOnDeathMinion;
+        //Main.instance.GetChar().Attack -= ReceivePetrifyOnDeathMinion;
         charattack.DeactiveFirstAttack();
         charattack.RemoveCAllback_ReceiveEntity(RecieveEntity);
 
@@ -45,14 +42,14 @@ public class Skill_FirstAttack : SkillBase
         }
     }
 
-    public void ReceivePetrifyOnDeathMinion()
+    public void RecieveEntity(EnemyBase _entity)
     {
-        //var listOfEntities = Physics.OverlapSphere(pos, petrifyRange);
         if (charattack.IsFirstAttack())
         {
             foreach (var item in Main.instance.GetEnemies())
             {
                 EnemyBase myEnemy = item.GetComponent<EnemyBase>();
+
                 if (myEnemy)
                 {
                     myEnemy.OnPetrified();
@@ -60,21 +57,6 @@ public class Skill_FirstAttack : SkillBase
             }
             charattack.DeactiveFirstAttack();
         }
+        
     }
-
-    public void RecieveEntity(EntityBase _entity)
-    {
-        entity = _entity;
-    }
-
-    //private void AddFirstAttack()
-    //{
-    //    //_hero.charAttack.FirstAttackReady(true);
-    //    //_hero.charAttack.PasiveFirstAttackReady(true);
-    //}
-    //private void RemoveFirstAttack()
-    //{
-    //    //_hero.charAttack.FirstAttackReady(false);
-    //    //_hero.charAttack.PasiveFirstAttackReady(false);
-    //}
 }

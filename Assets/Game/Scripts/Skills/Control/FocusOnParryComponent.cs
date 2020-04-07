@@ -5,22 +5,20 @@ using System;
 
 public class FocusOnParryComponent : MonoBehaviour
 {
-    public CharacterHead charHead;
     Action<Vector3, FocusOnParryComponent> listener;
-
 
     public void OnBegin()
     {
-        charHead.AddParry(OnExecute);
+        Main.instance.GetChar().AddParry(OnExecute);
     }
     public void OnEnd()
     {
-        charHead.RemoveParry(OnExecute);
+        Main.instance.GetChar().RemoveParry(OnExecute);
     }
 
     public void OnExecute()
     {
-       listener.Invoke(charHead.gameObject.transform.position, this);
+       listener.Invoke(Main.instance.GetChar().gameObject.transform.position, this);
     }
 
     public void Configure(Action<Vector3, FocusOnParryComponent> _listener)

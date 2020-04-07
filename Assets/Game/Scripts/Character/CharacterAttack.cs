@@ -36,7 +36,7 @@ public class CharacterAttack
     public Weapon currentWeapon {get; private set; }
     int currentIndexWeapon;
 
-    Action<EntityBase> callback_ReceiveEntity;
+    Action<EnemyBase> callback_ReceiveEntity;
 
     event Action<Vector3> callbackPosition;
 
@@ -158,18 +158,21 @@ public class CharacterAttack
 
     public void Attack()
     {
-        EntityBase entity = currentWeapon.Attack(forwardPos, currentDamage);
+        EntityBase enemy = currentWeapon.Attack(forwardPos, currentDamage);
 
-        if (entity != null)
+        if (enemy != null)
         {
-            callback_ReceiveEntity(entity);
+            if (enemy.GetComponent<EnemyBase>())
+            {
+                callback_ReceiveEntity((EnemyBase)enemy);
+            }
         }
 
         FirstAttackReady(false);
     }
 
-    public void AddCAllback_ReceiveEntity(Action<EntityBase> _cb) => callback_ReceiveEntity += _cb;
-    public void RemoveCAllback_ReceiveEntity(Action<EntityBase> _cb) => callback_ReceiveEntity += _cb;
+    public void AddCAllback_ReceiveEntity(Action<EnemyBase> _cb) => callback_ReceiveEntity += _cb;
+    public void RemoveCAllback_ReceiveEntity(Action<EnemyBase> _cb) => callback_ReceiveEntity += _cb;
 
     public void ActiveFirstAttack() => firstAttack = true;
     public void DeactiveFirstAttack() => firstAttack = false;

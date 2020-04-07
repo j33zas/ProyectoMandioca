@@ -15,20 +15,24 @@ public class PetrifyComponent : MonoBehaviour
 
     public void OnBegin()
     {
+        if(minionlifesystem)
         minionlifesystem.AddEventOnDeath(OnExecute);
     }
     public void OnEnd()
     {
-        minionlifesystem.RemoveEventOnDeath(OnExecute);
+        if (minionlifesystem)
+            minionlifesystem.RemoveEventOnDeath(OnExecute);
     }
 
     public void OnExecute()
     {
-        listener.Invoke(minionlifesystem.gameObject.transform.position, this);
+        if (minionlifesystem)
+            listener.Invoke(minionlifesystem.gameObject.transform.position, this);
     }
 
     public void Configure(Action<Vector3,PetrifyComponent> _listener)
     {
-        listener = _listener;
+        if (minionlifesystem)
+            listener = _listener;
     }
 }

@@ -63,7 +63,11 @@ public class Main : MonoBehaviour
         return aux;
     }
 
-    void AddToMainCollection(IEnumerable<PlayObject> col) => allentities = col.ToArray();
+    void AddToMainCollection(IEnumerable<PlayObject> col)
+    {
+        Debug.Log("Addto main collection");
+        allentities = col.ToArray(); 
+    }
 
     public void OnPlayerDeath() { }
 
@@ -81,5 +85,6 @@ public class Main : MonoBehaviour
     /////////////////////////////////////////////////////////////////////
     public CharacterHead GetChar() => character;
     public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
+    public List<Minion> GetMinions() => GetListOf<Minion>();
     
 }
