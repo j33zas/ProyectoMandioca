@@ -37,6 +37,8 @@ public class Minion : Companion
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
 
+    StatesAttack attackState;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -49,16 +51,20 @@ public class Minion : Companion
         sm = new StatesMachine();
         sm.Addstate(new StatesWander(sm));
         sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<DummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement));
-        sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<DummyEnemy>().transform, _rotSpeed, _distance));
+
+        attackState = new StatesAttack(sm, animator, transform, FindObjectOfType<DummyEnemy>().transform, _rotSpeed, _distance);
+        sm.Addstate(attackState);
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesWander>();
 
         //follow.Configure(_rb);
     }
 
-    public void ChangeToAttackState()
+    public void ChangeToAttackState(Transform parriedEnemy)
     {
+        attackState.ChangeTarget(parriedEnemy);
         sm.ChangeState<StatesAttack>();
+
     }
 
 
@@ -115,7 +121,7 @@ public class Minion : Companion
         }
 
         return _speedMovement;
-    }
+    }   
 
 
     protected override void OnFixedUpdate() { }

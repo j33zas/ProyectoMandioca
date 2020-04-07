@@ -47,4 +47,10 @@ public class StatesAttack:States
         base.Sleep();
         _anim.SetBool("Attack", false);
     }
+
+    public void ChangeTarget(Transform newTarget)
+    {
+        _target = newTarget;
+        Debug.Log("target " + newTarget);
+    }
 }

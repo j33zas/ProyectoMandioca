@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeee9537a1873604cb0fc7facf14d734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillinfo: {fileID: 11400000, guid: 1be1536bbc61e3b42841ee20b116ba16, type: 2}
+  skillinfo: {fileID: 11400000, guid: d092e9e4099724a1d9f6e57b965615a2, type: 2}
 --- !u!1 &7761702635783043366
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f52471c98ad890478542fb221af1dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillinfo: {fileID: 11400000, guid: f24a1e3e812ea284e9ecd0a5efabcd15, type: 2}
+  skillinfo: {fileID: 11400000, guid: aaceb4bf5179c48bf83820aa0c2d6ecc, type: 2}
   explosionRange: 10
   explosionDmg: 20
 --- !u!1 &7761702636232835339
