@@ -4916,7 +4916,7 @@ GameObject:
   - component: {fileID: 2229150661532503488}
   - component: {fileID: 2229150661532503491}
   m_Layer: 0
-  m_Name: BlockSparks (1)Mesh
+  m_Name: NewParry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
