@@ -10,6 +10,9 @@ public class BigWeapon_Skill : SkillBase
     [Range(-10,10)]
     [SerializeField] private float percentRangeModifier;
 
+    [SerializeField] private Vector3 augmentedSize;
+    private Vector3 originalSize;
+
     private float currentAttackRange;
     protected override void OnBeginSkill()
     {
@@ -29,6 +32,8 @@ public class BigWeapon_Skill : SkillBase
             
 
         currentAttackRange = _characterAttack.currentWeapon.ModifyAttackrange();
+        originalSize = Main.instance.GetChar().currentWeapon.transform.localScale;
+        Main.instance.GetChar().currentWeapon.transform.localScale = new Vector3(augmentedSize.x, augmentedSize.y, augmentedSize.z);
         _characterAttack.currentWeapon.ModifyAttackrange(CalculateRangeAttackModifier(percentRangeModifier));
         
     }
@@ -36,6 +41,7 @@ public class BigWeapon_Skill : SkillBase
     protected override void OnEndSkill()
     {
         _characterAttack.currentWeapon.ModifyAttackrange();
+        Main.instance.GetChar().currentWeapon.transform.localScale = originalSize;
     }
 
     protected override void OnUpdateSkill()
