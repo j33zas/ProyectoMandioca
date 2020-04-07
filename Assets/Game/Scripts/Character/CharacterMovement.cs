@@ -180,7 +180,7 @@ public class CharacterMovement
         inDash = true;
         dashCdOk = true;
         if (movX != 0 || movY != 0)
-            dashDir = new Vector3(movX, 0, movY);
+            dashDir = new Vector3(movX, 0, movY).normalized;
         else
             dashDir = rotTransform.forward;
 
@@ -189,30 +189,34 @@ public class CharacterMovement
 
         float dotX = Vector3.Dot(rotTransform.forward, dashDir);
         float dotY = Vector3.Dot(rotTransform.right, dashDir);
+        anim.Roll();
+        //anim.SetVerticalRoll(dotX);
+        //anim.SetHorizontalRoll(dotY);
 
         if (dotX >= 0.5f)
         {
-            //hace el dash de frente
+            anim.SetVerticalRoll(1);
+            anim.SetHorizontalRoll(0);
         }
-        else if(dotX <= -0.5f)
+        else if (dotX <= -0.5f)
         {
-            //hace el dash para atrás
+            anim.SetVerticalRoll(-1);
+            anim.SetHorizontalRoll(0);
         }
         else
         {
-            if(dotY >= 0.5f)
+            if (dotY >= 0.5f)
             {
-                //hace el dash para la derecha
+                anim.SetVerticalRoll(0);
+                anim.SetHorizontalRoll(1);
             }
-            else if(dotY <= -0.5f)
+            else if (dotY <= -0.5f)
             {
-                //hace el dash para la izquierda
+                anim.SetVerticalRoll(0);
+                anim.SetHorizontalRoll(-1);
             }
         }
 
-
-        anim.Roll();
-        
     }
 
     public bool IsDash()
