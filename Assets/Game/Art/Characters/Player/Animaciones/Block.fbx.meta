@@ -353,7 +353,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.99040306
+      - time: 0.9816177
         functionName: EVENT_Callback
         data: BeginBlock
         objectReferenceParameter: {instanceID: 0}

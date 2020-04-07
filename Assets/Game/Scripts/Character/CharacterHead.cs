@@ -213,10 +213,15 @@ public class CharacterHead : CharacterControllable
     }
     public void EVENT_UpBlocking()
     {
-        if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
+        if (canBlockCalculate)
+            canBlockCalculate = false;
+        else
         {
-            move.SetSpeed(speed);
-            UpBlock();
+            if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
+            {
+                move.SetSpeed(speed);
+                UpBlock();
+            }
         }
     }
     public void OnRealBlock_ON()
@@ -259,14 +264,16 @@ public class CharacterHead : CharacterControllable
     {
         charBlock.flagIsStop = false;
         charBlock.onBlock = false;
-       // canBlockCalculate = false;
+        charanim.Block(false);
+        // canBlockCalculate = false;
     }
     void OnEndRoll()
     {
         charanim.Block(false);
         charBlock.flagIsStop = false;
         charBlock.onBlock = false;
-       // canBlockCalculate = true;
+        if (Input.GetButton("Block"))
+            canBlockCalculate = true;
     }
     public void RollDash()
     {
@@ -406,6 +413,24 @@ public class CharacterHead : CharacterControllable
 
 
     }
+    #endregion
+
+    #region Guilt
+    int screams;
+    public Action GuiltUltimateSkill = delegate { };
+    [SerializeField] int screamsToSkill; 
+
+    void AddScreams(int s)
+    {
+        screams += s;
+
+        if (screams >= screamsToSkill)
+        {
+            GuiltUltimateSkill();
+            screams = 0;
+        }
+    }
+
     #endregion
 
     #region Fuera de uso

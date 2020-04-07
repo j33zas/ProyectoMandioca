@@ -4,12 +4,15 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Tools;
+using DevelopTools;
 
 
 public class Main : MonoBehaviour
 {
     public static Main instance;
     private void Awake() => instance = this;
+
+    public EventManager eventManager;
 
     public bool autofind;
 
@@ -33,6 +36,7 @@ public class Main : MonoBehaviour
             bar,
             toload.ToArray()
             );
+
     }
 
     void AddType(Type type, PlayObject playobject)
