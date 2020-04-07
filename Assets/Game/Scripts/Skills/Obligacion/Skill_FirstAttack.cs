@@ -46,7 +46,9 @@ public class Skill_FirstAttack : SkillBase
     {
         if (charattack.IsFirstAttack())
         {
-            foreach (var item in Main.instance.GetEnemies())
+            if (_entity.target)
+            {
+                foreach (var item in Main.instance.GetEnemies())
             {
                 EnemyBase myEnemy = item.GetComponent<EnemyBase>();
 
@@ -55,6 +57,8 @@ public class Skill_FirstAttack : SkillBase
                     myEnemy.OnPetrified();
                 }
             }
+            }
+            
             charattack.DeactiveFirstAttack();
         }
         
