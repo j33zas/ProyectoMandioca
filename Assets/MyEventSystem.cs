@@ -18,14 +18,8 @@ namespace Tools
             else throw new System.Exception("!!!!!!!!!!! Hay dos event system !!!!!!!!!!!!!!");
         }
 
-        public void SelectGameObject(GameObject go)
-        {
-            own.SetSelectedGameObject(go);
-        }
-        public void DeselectGameObject(GameObject go)
-        {
-            //own.(go);
-        }
+        public void SelectGameObject(GameObject go) => own.SetSelectedGameObject(go);
+        public void DeselectGameObject() => own.SetSelectedGameObject(null);
     }
 }
 

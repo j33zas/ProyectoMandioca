@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
-using UnityEngine.EventSystems;
+using Tools;
+
 
 public class Main : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class Main : MonoBehaviour
     List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
     [SerializeField] PlayObject[] allentities;
     [SerializeField] CharacterHead character;
-    EventSystem myEventSystem;
 
     Dictionary<Type, List<PlayObject>> typedic = new Dictionary<Type, List<PlayObject>>();
 
@@ -88,5 +88,6 @@ public class Main : MonoBehaviour
     public CharacterHead GetChar() => character;
     public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
     public List<Minion> GetMinions() => GetListOf<Minion>();
+    public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     
 }

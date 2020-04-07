@@ -34,11 +34,9 @@ public class UI_SkillHandler : UI_Base
         img.sprite = info.img_actived;
     }
 
-    
+    bool oneshot = false;
     public void Build(List<SkillBase> skills, Action<int> callback_OnSelected)
     {
-        
-        bool oneshot = false ;
         int index = 0;
         foreach (var s in skills)
         {
@@ -77,10 +75,14 @@ public class UI_SkillHandler : UI_Base
 
     public override void Refresh() { }
     
-    protected override void OnEndCloseAnimation() { }
+    protected override void OnEndCloseAnimation() 
+    {
+        Main.instance.GetMyEventSystem().DeselectGameObject();
+        oneshot = false;
+    }
     protected override void OnEndOpenAnimation()
     {
-        //first.Select();
+        first.Select();
     }
     protected override void OnStart() { }
     protected override void OnUpdate() { }

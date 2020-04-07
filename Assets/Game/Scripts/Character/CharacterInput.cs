@@ -30,6 +30,7 @@ public class CharacterInput : MonoBehaviour
 
     [Header("Interact")]
     public UnityEvent OnInteract;
+    public UnityEvent Back;
 
     [Header("Test pasives")]
     public UnityEvent OnDpad_Up;
@@ -55,6 +56,8 @@ public class CharacterInput : MonoBehaviour
 
         if (Input.GetButtonDown("Interact")) OnInteract.Invoke();
         ChangeWeapon.Invoke(Input.GetAxis("XBOX360_DPadHorizontal"));
+
+        if (Input.GetButtonDown("Back")) Back.Invoke();
 
         RefreshHelper();
 

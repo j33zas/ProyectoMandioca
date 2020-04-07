@@ -10,7 +10,7 @@ public class SkillManager : MonoBehaviour
     [SerializeField] List<SkillBase> allskills;
     Dictionary<SkillType, SkillBase> currents = new Dictionary<SkillType, SkillBase>();
 
-    
+    public bool isOpen = false;
 
     bool dataisloaded;
     public void LoadFromDisk(Dictionary<SkillType, SkillBase> dic) { currents = dic; dataisloaded = true; }
@@ -21,6 +21,22 @@ public class SkillManager : MonoBehaviour
         // pero tiene que venir de un OnSceneLoaded
         allskills = GetComponentsInChildren<SkillBase>().ToList();
         Build();
+    }
+
+    public void EVENT_OnbackButton()
+    {
+        if (!isOpen)
+        {
+            isOpen = true;
+            frontend.Open();
+            //lo abrimos
+        }
+        else
+        {
+            isOpen = false;
+            frontend.Close();
+            //lo cerramos
+        }
     }
 
     public void Build()

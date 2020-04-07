@@ -7,7 +7,6 @@ public class OpenUIBases : Interactable
     public string title;
     public string info;
 
-
     public int id_UI_Base;
 
     public UI_Base ui_to_open;
