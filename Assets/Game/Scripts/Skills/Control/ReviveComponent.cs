@@ -5,14 +5,14 @@ using System;
 
 public class ReviveComponent : MonoBehaviour
 {
-    EnemyLifeSystem enemyLifeSystem;
+    GenericLifeSystem enemyLifeSystem;
     Action<Vector3, ReviveComponent, GameObject> listener;
     public GameObject prefab;
 
 
     private void Awake()
     {
-        enemyLifeSystem = GetComponent<EnemyLifeSystem>();
+        enemyLifeSystem = GetComponent<GenericLifeSystem>();
     }
 
     public void OnBegin()

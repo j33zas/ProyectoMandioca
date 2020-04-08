@@ -23,7 +23,6 @@ public class SkillRevive : SkillBase
         {
             if (item != null)
             {
-                Debug.Log("Config " + item.name);
                 item.Configure(SpawnMinionOnEnemyDeath);
                 item.OnBegin();
             }
@@ -43,7 +42,6 @@ public class SkillRevive : SkillBase
     {
         var myMinion = GameObject.Instantiate(prefab);
         myMinion.transform.position = pos;
-        Debug.Log("ReviveMinion");
 
     }
 
