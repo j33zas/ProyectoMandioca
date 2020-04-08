@@ -16,14 +16,14 @@ public class MoreDamageCW : SkillBase
     ParticleSystem feedbackParticle;
 
     bool buffActived;
-    private void Start()
-    {
-        head = Main.instance.GetChar();
-        feedbackParticle.transform.position = head.transform.position;
-        feedbackParticle.transform.SetParent(head.transform);
-    }
     protected override void OnBeginSkill()
     {
+        if (head == null)
+        {
+            head = Main.instance.GetChar();
+            feedbackParticle.transform.position = head.transform.position;
+            feedbackParticle.transform.SetParent(head.transform);
+        }
 
         head.ChangeWeaponPassives += MoreDamage;
     }

@@ -1957,6 +1957,7 @@ GameObject:
   - component: {fileID: 461483721385685826}
   - component: {fileID: 461483721385685836}
   - component: {fileID: 5428425818309884644}
+  - component: {fileID: 2883567960676475490}
   m_Layer: 8
   m_Name: DummyEnemy
   m_TagString: Untagged
@@ -2087,6 +2088,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556c3f22bc348430a8a291a0653808fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2883567960676475490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461483721385685827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad610f29c31a1794e8002e41593dfb55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1596232104377501901, guid: 2db761ec42946624da4b987e0f39cf8e, type: 3}
 --- !u!1 &461483721431382126
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,15 +2322,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8adb54986b71a614898d6d7a7a64e664, type: 3}
---- !u!198 &7439138333974088574 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7015099798324989440, guid: 8adb54986b71a614898d6d7a7a64e664,
-    type: 3}
-  m_PrefabInstance: {fileID: 461483721079850366}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7439138333974088575 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7015099798324989441, guid: 8adb54986b71a614898d6d7a7a64e664,
+    type: 3}
+  m_PrefabInstance: {fileID: 461483721079850366}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7439138333974088574 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7015099798324989440, guid: 8adb54986b71a614898d6d7a7a64e664,
     type: 3}
   m_PrefabInstance: {fileID: 461483721079850366}
   m_PrefabAsset: {fileID: 0}

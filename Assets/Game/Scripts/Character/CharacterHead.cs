@@ -419,9 +419,9 @@ public class CharacterHead : CharacterControllable
     int screams;
     public Action GuiltUltimateSkill = delegate { };
     public Action<int> AddScreamAction = delegate { };
-    [SerializeField] int screamsToSkill; 
+    public int screamsToSkill; 
 
-    void AddScreams(int s)
+    public void AddScreams(int s)
     {
         screams += s;
 

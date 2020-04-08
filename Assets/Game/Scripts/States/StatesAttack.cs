@@ -29,7 +29,7 @@ public class StatesAttack:States
     public override void Execute()
     {
         base.Execute();
-        if (Vector3.Distance(_myTransform.position, _target.position) <= distanceToFollow)
+        if (Vector3.Distance(_myTransform.position, _target.position) <= distanceToFollow   )
         {
             Vector3 _dir = (_target.position - _myTransform.position).normalized;
             Vector3 fowardRotation = new Vector3(_dir.x, 0, _dir.z);
@@ -51,6 +51,5 @@ public class StatesAttack:States
     public void ChangeTarget(Transform newTarget)
     {
         _target = newTarget;
-        Debug.Log("target " + newTarget);
     }
 }
