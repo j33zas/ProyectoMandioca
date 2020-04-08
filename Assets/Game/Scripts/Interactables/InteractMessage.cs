@@ -19,12 +19,12 @@ public class InteractMessage : Interactable
 
     public override void Exit()
     {
-        feedback.Hide();
+        if (feedback.Length > 0) foreach (var i in feedback) i.Hide();
     }
 
     public override void ShowInfo(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(pointToMessage.position, "Interactuable", "Esto es un interactuable", "interactuar");
-        feedback.Show();
+        if (feedback.Length > 0) foreach (var i in feedback) i.Show();
     }
 }

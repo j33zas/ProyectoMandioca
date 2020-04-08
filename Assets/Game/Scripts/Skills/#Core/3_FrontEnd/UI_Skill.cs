@@ -6,21 +6,35 @@ using UnityEngine;
 public class UI_Skill : UI_ItemBase
 {
     SkillInfo skillinfo;
+    GenericBar genbar;
+    [SerializeField] Image backgroundImage;
 
-    protected override void BeginFeedback()
+    protected override void Awake()
     {
-        SetImage(skillinfo.img_actived);
+
     }
 
-    protected override void EndFeedback()
+    public void SetImages(Sprite bkg, Sprite main)
     {
-        SetImage(skillinfo.img_avaliable);
+        mainImage.sprite = main;
+        backgroundImage.sprite = bkg;
     }
 
-    public void Refresh()
+    public void Cooldown_ConfigureTime(float _cooldown)
     {
-        SetImage(skillinfo.img_avaliable);
+        Debug.Log("cooldown1");
+        genbar = GetComponentInChildren<GenericBar>();
+        genbar.Configure(_cooldown, 0.01f);
     }
+    public void Cooldown_SetValueTime(float _currentValue)
+    {
+        genbar.SetValue(_currentValue);
+    }
+
+    protected override void BeginFeedback() => SetImage(skillinfo.img_actived);
+    protected override void EndFeedback() => SetImage(skillinfo.img_avaliable);
+
+    public void Refresh() => SetImage(skillinfo.img_avaliable);
 
     public void Set_SkillInfo(SkillInfo s) => skillinfo = s;
     public SkillInfo Get_SkilInfo() => skillinfo;

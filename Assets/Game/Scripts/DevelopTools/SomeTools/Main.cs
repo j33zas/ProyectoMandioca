@@ -28,6 +28,8 @@ public class Main : MonoBehaviour
 
     public GenericBar bar;
 
+    bool openUI;
+
     void Start()
     {
         toload.Add(AddToMainCollection);
@@ -85,6 +87,12 @@ public class Main : MonoBehaviour
         }
     }
 
+    public void Set_Opened_UI() { openUI = true; Pause(); }
+    public void Set_Closed_UI() { openUI = false; Play(); }
+
+    public void Play() { foreach (var e in allentities) e.Resume(); }
+    public void Pause() { foreach (var e in allentities) e.Pause(); }
+
 
     /////////////////////////////////////////////////////////////////////
     /// PUBLIC GETTERS
@@ -93,5 +101,6 @@ public class Main : MonoBehaviour
     public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
+    public bool Ui_Is_Open() => openUI;
     
 }

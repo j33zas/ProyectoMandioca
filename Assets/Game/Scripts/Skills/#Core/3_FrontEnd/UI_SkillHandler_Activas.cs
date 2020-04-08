@@ -19,12 +19,29 @@ public class UI_SkillHandler_Activas : UI_Base
     //public Text desc_tec_skill;
     //public Image img;
 
-    public Image img1;
-    public Image img2;
-    public Image img3;
-    public Image img4;
+    public UI_Skill[] uiskills;
 
     //UI_Skill first;
+    public void Refresh(SkillActivas[] col, Action<int> OnUiSelected)
+    {
+        for (int i = 0; i < col.Length; i++)
+        {
+            uiskills[i].Initialize(i, OnUiSelected);
+            uiskills[i].Set_SkillInfo(col[i].skillinfo);
+            uiskills[i].SetImages(col[i].skillinfo.img_avaliable, col[i].skillinfo.img_actived);
+            col[i].SetUI(uiskills[i]);
+        }
+    }
+
+    public void Reconfigurate(SkillActivas[] col)
+    {
+        for (int i = 0; i < col.Length; i++)
+        {
+            uiskills[i].Set_SkillInfo(col[i].skillinfo);
+            uiskills[i].SetImages(col[i].skillinfo.img_avaliable, col[i].skillinfo.img_actived);
+            col[i].SetUI(uiskills[i]);
+        }
+    }
 
     protected override void OnAwake() 
     {

@@ -95,8 +95,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distancetoInteract: 1
   pointToMessage: {fileID: 1025494531906001844}
-  feedback: {fileID: 1025494531523561478}
-  feedback2: {fileID: 0}
+  feedback:
+  - {fileID: 1025494531523561478}
   autoexecute: 1
   message: simple message
 --- !u!114 &1025494531523561478
