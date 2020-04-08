@@ -38,6 +38,7 @@ public class Minion : Companion
     [SerializeField] GenericLifeSystem lifesystem;
 
     StatesAttack attackState;
+    StatesFollow followState;
 
     void Start()
     {
@@ -50,10 +51,13 @@ public class Minion : Companion
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
         sm.Addstate(new StatesWander(sm));
-        sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<DummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement));
+
+        followState = new StatesFollow(sm, transform, _rb, FindObjectOfType<DummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement);
+        sm.Addstate(followState);
 
         attackState = new StatesAttack(sm, animator, transform, FindObjectOfType<DummyEnemy>().transform, _rotSpeed, _distance);
         sm.Addstate(attackState);
+
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesWander>();
 
@@ -63,8 +67,8 @@ public class Minion : Companion
     public void ChangeToAttackState(Transform parriedEnemy)
     {
         attackState.ChangeTarget(parriedEnemy);
-        sm.ChangeState<StatesAttack>();
-
+        followState.ChangeTarget(parriedEnemy);
+        sm.ChangeState<StatesFollow>();
     }
 
 

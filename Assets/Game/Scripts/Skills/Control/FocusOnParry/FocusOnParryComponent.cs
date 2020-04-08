@@ -9,11 +9,17 @@ public class FocusOnParryComponent : MonoBehaviour
 
     public void OnBegin()
     {
-        Main.instance.GetChar().AddParry(OnExecute);
+        foreach (var item in Main.instance.GetEnemies())
+        {
+            item.OnParried += OnExecute;
+        }
     }
     public void OnEnd()
     {
-        Main.instance.GetChar().RemoveParry(OnExecute);
+        foreach (var item in Main.instance.GetEnemies())
+        {
+            item.OnParried -= OnExecute;
+        }
     }
 
     public void OnExecute()

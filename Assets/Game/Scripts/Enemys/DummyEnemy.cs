@@ -38,6 +38,8 @@ public class DummyEnemy : EnemyBase
     public Action OnParried;
     public bool isOnFire { get; private set; }
 
+    public bool isTarget;
+
     public float explosionForce = 200;
     public Rigidbody _rb;
 
@@ -58,6 +60,8 @@ public class DummyEnemy : EnemyBase
         sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesAttack>();
+        
+        lifesystem.AddEventOnDeath(Die);
 
         //follow.Configure(_rb);
     }
@@ -135,6 +139,17 @@ public class DummyEnemy : EnemyBase
         return _speedMovement;
     }
     
+    public void getFocusedOnParry()
+    {
+        foreach (var item in Main.instance.GetEnemies())
+        {
+            if(item != this)
+                item.isTarget = false;
+            else
+                isTarget = true;
+        }
+    }
+
     
     public override void OnFire()
     {
@@ -152,7 +167,10 @@ public class DummyEnemy : EnemyBase
         });
         
     }
-    
+    public void Die()
+    {
+        gameObject.SetActive(false);
+    }
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
     protected override void OnResume() { }

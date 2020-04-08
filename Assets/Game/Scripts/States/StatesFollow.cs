@@ -58,4 +58,8 @@ public class StatesFollow : States
     {
         base.Sleep();
     }
+    public void ChangeTarget(Transform newTarget)
+    {
+        _target = newTarget;
+    }
 }

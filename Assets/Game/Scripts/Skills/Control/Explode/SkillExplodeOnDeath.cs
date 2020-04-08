@@ -5,16 +5,16 @@ using System.Linq;
 
 public class SkillExplodeOnDeath : SkillBase
 {
-    List<ExplodeComponent> petrifyComponents = new List<ExplodeComponent>();
+    List<ExplodeComponent> explodeComponents = new List<ExplodeComponent>();
     public float explosionRange = 10;
     public int explosionDmg = 20;
 
     protected override void OnBeginSkill()
     {
-        petrifyComponents = new List<ExplodeComponent>();
-        petrifyComponents = FindObjectsOfType<ExplodeComponent>().ToList();
+        explodeComponents = new List<ExplodeComponent>();
+        explodeComponents = FindObjectsOfType<ExplodeComponent>().ToList();
 
-        foreach (var item in petrifyComponents)
+        foreach (var item in explodeComponents)
         {
             if (item != null)
             {
@@ -26,7 +26,7 @@ public class SkillExplodeOnDeath : SkillBase
 
     protected override void OnEndSkill()
     {
-        foreach (var item in petrifyComponents)
+        foreach (var item in explodeComponents)
         {
             if (item != null) item.OnEnd();
         }
@@ -40,19 +40,15 @@ public class SkillExplodeOnDeath : SkillBase
     {
         var listOfEntities = Physics.OverlapSphere(pos, explosionRange);
 
-
-
-        petrifyComponents.Remove(p);
+        explodeComponents.Remove(p);
 
         foreach (var item in listOfEntities)
         {
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
             if (myEnemy)
             {
-                Vector3 dir = myEnemy.transform.position - pos;
-                dir.Normalize();
-
-                myEnemy.TakeDamage(explosionDmg, dir, Damagetype.explosion);
+                Debug.Log("0: explosionDmg: " + explosionDmg);
+                myEnemy.TakeDamage(explosionDmg, Vector3.up, Damagetype.explosion);
             }
         }
     }
