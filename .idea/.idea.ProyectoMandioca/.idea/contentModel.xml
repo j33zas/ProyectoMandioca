@@ -836,6 +836,11 @@
               <e p="WorldToCanvasImagePopUp" t="Include">
                 <e p="CanvasPopUpInWorld_Manager.cs" t="Include" />
                 <e p="Icon_DATA.cs" t="Include" />
+                <e p="LvlUpSkillSelection_UI" t="Include">
+                  <e p="GameUI_controller.cs" t="Include" />
+                  <e p="LvlUpSkillSelection_UI.cs" t="Include" />
+                  <e p="Skill_Btt_template.cs" t="Include" />
+                </e>
                 <e p="TestPopUp.cs" t="Include" />
                 <e p="WorldCanvasPopUp.cs" t="Include" />
               </e>
@@ -849,7 +854,9 @@
               <e p="MinionLifeSystem.cs" t="Include" />
               <e p="Test_Attack.cs" t="Include" />
             </e>
+            <e p="EnemysInRoom.cs" t="Include" />
             <e p="Enums.cs" t="Include" />
+            <e p="GameEvents.cs" t="Include" />
             <e p="Interactables" t="Include">
               <e p="Core" t="Include">
                 <e p="ActionRealize.cs" t="Include" />
@@ -941,6 +948,7 @@
                 <e p="Environment.cs" t="Include" />
               </e>
             </e>
+            <e p="ScreamsBar.cs" t="Include" />
             <e p="Skills" t="Include">
               <e p="#Core" t="Include">
                 <e p="0_ProcessObject" t="Include">
@@ -978,6 +986,7 @@
                 <e p="1_Bonificacion de daño.txt" t="Include" />
                 <e p="2_explosion.txt" t="Include" />
                 <e p="3_aturdir en cadena.txt" t="Include" />
+                <e p="BaseGuiltPassive.cs" t="Include" />
                 <e p="ExplosionCW.cs" t="Include" />
                 <e p="MoreDamageCW.cs" t="Include" />
                 <e p="PetrifyNearEnemies.cs" t="Include" />
