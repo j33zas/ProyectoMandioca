@@ -362,20 +362,21 @@ namespace Tools.Extensions
                 maxValue += candidatos[i].Item1;
             }
 
-            var orderCandidatesMaxToMin = candidatos.OrderByDescending(x => x.Item1).ToList();
-    
+            var shuffleCandidates = candidatos.Shuffle().ToList();
             
             int rgn = Random.Range(0, maxValue);
 
-            for (int i = 0; i < orderCandidatesMaxToMin.Count; i++)
+            int sum = 0;
+            
+            for (int i = 0; i < shuffleCandidates.Count; i++)
             {
-                if (rgn >= orderCandidatesMaxToMin[i].Item1)
-                {
-                    return orderCandidatesMaxToMin[i].Item2;
-                }
+                sum += shuffleCandidates[i].Item1;
+
+                if (sum > rgn)
+                    return shuffleCandidates[i].Item2;
             }
 
-            return orderCandidatesMaxToMin.LastOrDefault().Item2;
+            return default;
         }
     }
 }

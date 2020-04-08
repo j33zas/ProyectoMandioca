@@ -722,6 +722,9 @@
                 <e p="ChargeHeavyAttack" t="Include">
                   <e p="HeavyAttack.shader" t="Include" />
                 </e>
+                <e p="LowPoly" t="Include">
+                  <e p="Low.shader" t="Include" />
+                </e>
                 <e p="Parry" t="Include">
                   <e p="ParticlesParry.shader" t="Include" />
                 </e>
