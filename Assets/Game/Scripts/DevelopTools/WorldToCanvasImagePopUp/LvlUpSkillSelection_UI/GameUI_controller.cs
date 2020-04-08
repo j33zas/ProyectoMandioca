@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tools.Extensions;
 
 public class GameUI_controller : MonoBehaviour
 {
@@ -45,7 +46,14 @@ public class GameUI_controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            CreateNewSkillSelectionPopUp(skillsTEST, info =>Debug.Log(info.skill_name) );
+            List<Tuple<int, GameObject>> tuplas = new List<Tuple<int, GameObject>>();
+            tuplas.Add(new Tuple<int, GameObject>(500, this.gameObject));
+            tuplas.Add(new Tuple<int, GameObject>(50, this.gameObject));
+            tuplas.Add(new Tuple<int, GameObject>(70, this.gameObject));
+
+            Extensions.WheelSelection(tuplas);
+            //CreateNewSkillSelectionPopUp(skillsTEST, info =>Debug.Log(info.skill_name) );
+
         }
     }
 }

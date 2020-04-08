@@ -346,6 +346,37 @@ namespace Tools.Extensions
                 RandomUnity.Range(ScreenLimits.Left_Inferior.x, ScreenLimits.Right_Superior.x),
                 RandomUnity.Range(ScreenLimits.Left_Inferior.y, ScreenLimits.Right_Superior.y));
         }
+
+        /// <summary>
+        /// Dale una lista de tuplas con <peso, objetoRandom> y te va a devolver uno elegido al azar
+        /// </summary>
+        /// <param name="candidatos"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T WheelSelection<T>(List<Tuple<int, T>> candidatos)
+        {
+            int maxValue = 0;
+            
+            for (int i = 0; i < candidatos.Count; i++)
+            {
+                maxValue += candidatos[i].Item1;
+            }
+
+            var orderCandidatesMaxToMin = candidatos.OrderByDescending(x => x.Item1).ToList();
+    
+            
+            int rgn = Random.Range(0, maxValue);
+
+            for (int i = 0; i < orderCandidatesMaxToMin.Count; i++)
+            {
+                if (rgn >= orderCandidatesMaxToMin[i].Item1)
+                {
+                    return orderCandidatesMaxToMin[i].Item2;
+                }
+            }
+
+            return orderCandidatesMaxToMin.LastOrDefault().Item2;
+        }
     }
 }
 

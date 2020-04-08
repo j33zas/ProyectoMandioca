@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
-public class Skill_Btt_template : MonoBehaviour
+public class Skill_Btt_template : MonoBehaviour, ISelectHandler
 {
     private SkillInfo allocatedSkill;
 
@@ -27,8 +25,9 @@ public class Skill_Btt_template : MonoBehaviour
         OnSelected(allocatedSkill);
     }
 
+
     public void OnSelect(BaseEventData eventData)
     {
-        
+        Debug.Log("caca");
     }
 }
