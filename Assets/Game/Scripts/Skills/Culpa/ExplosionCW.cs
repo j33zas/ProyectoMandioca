@@ -17,15 +17,16 @@ public class ExplosionCW : SkillBase
     ParticleSystem explosionParticles;
 
     bool buffActived;
-    private void Start()
-    {
-        head = Main.instance.GetChar();
-        explosionParticles.transform.position = head.transform.position;
-        explosionParticles.transform.SetParent(head.transform);
-    }
 
     protected override void OnBeginSkill()
     {
+        if (head == null)
+        {
+            head = Main.instance.GetChar();
+            explosionParticles.transform.position = head.transform.position;
+            explosionParticles.transform.SetParent(head.transform);
+        }
+
         head.ChangeWeaponPassives += IsExplosion;
     }
 

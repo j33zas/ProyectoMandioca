@@ -63,6 +63,7 @@ public class DummyEnemy : EnemyBase
         
         lifesystem.AddEventOnDeath(Die);
 
+
         //follow.Configure(_rb);
     }
 
@@ -169,6 +170,7 @@ public class DummyEnemy : EnemyBase
     }
     public void Die()
     {
+        Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
         gameObject.SetActive(false);
     }
     protected override void OnFixedUpdate() { }
@@ -177,12 +179,4 @@ public class DummyEnemy : EnemyBase
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
     protected override void OnUpdateEntity() { }
-
-    void OnDead()
-    {
-        if (petrified)
-        {
-            Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
-        }
-    }
 }

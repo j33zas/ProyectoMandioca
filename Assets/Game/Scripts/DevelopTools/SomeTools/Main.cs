@@ -10,9 +10,14 @@ using DevelopTools;
 public class Main : MonoBehaviour
 {
     public static Main instance;
-    private void Awake() => instance = this;
 
     public EventManager eventManager;
+
+    private void Awake()
+    {
+        instance = this;
+        eventManager = new EventManager();
+    }
 
     public bool autofind;
 

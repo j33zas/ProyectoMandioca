@@ -18,12 +18,6 @@ public class BaseGuiltPassive : SkillBase
     [SerializeField]
     FrontendStatBase myBar;
 
-    bool buffActived;
-    private void Start()
-    {
-        feedbackParticle.transform.position = head.transform.position;
-        feedbackParticle.transform.SetParent(head.transform);
-    }
     protected override void OnBeginSkill()
     {
         if (head == null)
@@ -31,7 +25,7 @@ public class BaseGuiltPassive : SkillBase
 
         myBar.gameObject.SetActive(true);
 
-        myBar.OnValueChange(0, maxScreamsToSpawn);
+        myBar.OnValueChange(0, head.screamsToSkill);
 
         head.GuiltUltimateSkill += PetrifyAllEnemies;
         head.AddScreamAction += UpdateHUD;
@@ -61,13 +55,12 @@ public class BaseGuiltPassive : SkillBase
 
     void UpdateHUD(int i)
     {
-        myBar.OnValueChange(i, maxScreamsToSpawn);
+        myBar.OnValueChange(i, head.screamsToSkill);
     }
 
     void SpawnScream(params object[] param)
     {
         Vector3 pos = (Vector3)param[0];
-        pos += Vector3.up;
 
 
         List<Vector3> myAreaToSpawn = SetArea(pos);
@@ -101,9 +94,10 @@ public class BaseGuiltPassive : SkillBase
             for (int z = 0; z < 5; z++)
             {
                 result.Add(new Vector3(currentX, pos.y, currentZ));
-                currentZ += 1;
+                currentZ += 0.5f;
             }
-            currentX += 1;
+            currentZ = minZ;
+            currentX += 0.5f;
         }
 
         return result;
@@ -111,12 +105,13 @@ public class BaseGuiltPassive : SkillBase
 
     void PetrifyAllEnemies()
     {
+        feedbackParticle.Play();
         var listOfEntities = Main.instance.GetEnemies();
 
         foreach (var item in listOfEntities)
         {
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
-            if (myEnemy)
+            if (myEnemy.gameObject.activeSelf)
             {
                 myEnemy.OnPetrified();
             }
