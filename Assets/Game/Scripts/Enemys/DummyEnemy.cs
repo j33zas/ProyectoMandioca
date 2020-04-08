@@ -160,5 +160,11 @@ public class DummyEnemy : EnemyBase
     protected override void OnTurnOn() { }
     protected override void OnUpdateEntity() { }
 
-
+    void OnDead()
+    {
+        if (petrified)
+        {
+            Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
+        }
+    }
 }
