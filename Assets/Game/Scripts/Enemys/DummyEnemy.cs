@@ -67,7 +67,11 @@ public class DummyEnemy : EnemyBase
         combatComponent.ManualTriggerAttack();
     }
 
-    public void EndStun() => combatComponent.Play();
+    public void EndStun()
+    {
+        combatComponent.Play();
+        petrified = false;
+    }
 
     public void AttackEntity(EntityBase e)
     {

@@ -64,7 +64,6 @@ namespace DevelopTools
         {
             if (eventsParam.Count == 0 && events.Count==0)
             {
-                Debug.LogWarning("No events subscribed");
                 return;
             }
 

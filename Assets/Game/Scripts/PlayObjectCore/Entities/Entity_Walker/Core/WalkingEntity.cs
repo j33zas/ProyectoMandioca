@@ -9,6 +9,8 @@ public abstract class WalkingEntity : EntityBase
     /// </summary>
     /// 
 
+    protected bool petrified;
+
     private void Awake()
     {
         
@@ -24,7 +26,7 @@ public abstract class WalkingEntity : EntityBase
 
     public virtual void OnReceiveItem(ItemWorld itemworld) { }
     public virtual void OnStun() { }
-    public virtual void OnPetrified() { }
+    public virtual void OnPetrified() { petrified = true; }
     public virtual void OnFire() { }
     public virtual void HalfLife() { }
 }

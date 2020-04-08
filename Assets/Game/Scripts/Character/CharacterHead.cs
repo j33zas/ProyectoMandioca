@@ -418,6 +418,7 @@ public class CharacterHead : CharacterControllable
     #region Guilt
     int screams;
     public Action GuiltUltimateSkill = delegate { };
+    public Action<int> AddScreamAction = delegate { };
     [SerializeField] int screamsToSkill; 
 
     void AddScreams(int s)
@@ -426,9 +427,12 @@ public class CharacterHead : CharacterControllable
 
         if (screams >= screamsToSkill)
         {
+            screams = screamsToSkill;
             GuiltUltimateSkill();
             screams = 0;
         }
+
+        AddScreamAction(screams);
     }
 
     #endregion
