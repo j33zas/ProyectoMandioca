@@ -821,15 +821,27 @@
                 <e p="PopSignalFeedback.cs" t="Include" />
               </e>
               <e p="UIs" t="Include">
+                <e p="CharacterStats_UI" t="Include">
+                  <e p="CharStats_UI.cs" t="Include" />
+                </e>
                 <e p="Core" t="Include">
                   <e p="UI_AnimBase.cs" t="Include" />
                   <e p="UI_Base.cs" t="Include" />
                   <e p="UI_SimpleTwo.cs" t="Include" />
                 </e>
                 <e p="FastToolOptions.cs" t="Include" />
+                <e p="LvlUpSkillSelection_UI" t="Include">
+                  <e p="GameUI_controller.cs" t="Include" />
+                  <e p="LvlUpSkillSelection_UI.cs" t="Include" />
+                  <e p="Skill_Btt_template.cs" t="Include" />
+                </e>
                 <e p="PingPongLerp.cs" t="Include" />
                 <e p="UI_Animations" t="Include">
                   <e p="UI_GoBack.cs" t="Include" />
+                </e>
+                <e p="UI_Inventory" t="Include">
+                  <e p="UI_CompMenuBase.cs" t="Include" />
+                  <e p="UI_InventoryBase.cs" t="Include" />
                 </e>
                 <e p="UI_ItemBase.cs" t="Include" />
                 <e p="UI_ItemBaseButton.cs" t="Include" />
@@ -839,11 +851,6 @@
               <e p="WorldToCanvasImagePopUp" t="Include">
                 <e p="CanvasPopUpInWorld_Manager.cs" t="Include" />
                 <e p="Icon_DATA.cs" t="Include" />
-                <e p="LvlUpSkillSelection_UI" t="Include">
-                  <e p="GameUI_controller.cs" t="Include" />
-                  <e p="LvlUpSkillSelection_UI.cs" t="Include" />
-                  <e p="Skill_Btt_template.cs" t="Include" />
-                </e>
                 <e p="TestPopUp.cs" t="Include" />
                 <e p="WorldCanvasPopUp.cs" t="Include" />
               </e>
@@ -888,6 +895,23 @@
                 <e p="InteractableTeleport.cs" t="Include" />
                 <e p="OnlyMessage.cs" t="Include" />
               </e>
+            </e>
+            <e p="Inventories items Menues UIs" t="Include">
+              <e p="Core" t="Include">
+                <e p="InventoryBase.cs" t="Include" />
+                <e p="InventoryHandler.cs" t="Include" />
+                <e p="ManagerInventories.cs" t="Include" />
+                <e p="MenuBase.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Items" t="Include">
+              <e p="Item.cs" t="Include" />
+              <e p="ItemReceiver.cs" t="Include" />
+            </e>
+            <e p="LevelSystem" t="Include">
+              <e p="ExpCollector.cs" t="Include" />
+              <e p="LevelData.cs" t="Include" />
+              <e p="LevelSystem.cs" t="Include" />
             </e>
             <e p="LifeSystems" t="Include">
               <e p="Bars" t="Include">
@@ -955,6 +979,7 @@
             <e p="Skills" t="Include">
               <e p="#Core" t="Include">
                 <e p="0_ProcessObject" t="Include">
+                  <e p="SkillActivas.cs" t="Include" />
                   <e p="SkillBase.cs" t="Include" />
                 </e>
                 <e p="1_Storagin" t="Include">
@@ -971,28 +996,38 @@
                   <e p="UI_SkillHandler_Activas.cs" t="Include" />
                 </e>
               </e>
+              <e p="Activas" t="Include">
+                <e p="ActivaExample.cs" t="Include" />
+              </e>
               <e p="Control" t="Include">
                 <e p="#_Explicacion rapida minion.txt" t="Include" />
-                <e p="1_minion explota.txt" t="Include" />
-                <e p="2_preifica.txt" t="Include" />
-                <e p="3_minions enfoquen al enemig.txt" t="Include" />
-                <e p="ExplodeComponent.cs" t="Include" />
-                <e p="FocusOnParryComponent.cs" t="Include" />
-                <e p="PetrifyComponent.cs" t="Include" />
-                <e p="PetrifyTEST.cs" t="Include" />
-                <e p="SkillExplodeOnDeath.cs" t="Include" />
-                <e p="SkillFocusOnParry.cs" t="Include" />
-                <e p="SkillPetrify.cs" t="Include" />
+                <e p="Explode" t="Include">
+                  <e p="1_minion explota.txt" t="Include" />
+                  <e p="ExplodeComponent.cs" t="Include" />
+                  <e p="SkillExplodeOnDeath.cs" t="Include" />
+                </e>
+                <e p="FocusOnParry" t="Include">
+                  <e p="3_minions enfoquen al enemig.txt" t="Include" />
+                  <e p="FocusOnParryComponent.cs" t="Include" />
+                  <e p="SkillFocusOnParry.cs" t="Include" />
+                </e>
+                <e p="Petrify" t="Include">
+                  <e p="2_preifica.txt" t="Include" />
+                  <e p="PetrifyComponent.cs" t="Include" />
+                  <e p="PetrifyTEST.cs" t="Include" />
+                  <e p="SkillPetrify.cs" t="Include" />
+                </e>
+                <e p="ReviveComponent.cs" t="Include" />
+                <e p="SkillRevive.cs" t="Include" />
               </e>
               <e p="Culpa" t="Include">
-                <e p="#_explicacion Culpa.txt" t="Include" />
-                <e p="1_Bonificacion de daño.txt" t="Include" />
-                <e p="2_explosion.txt" t="Include" />
                 <e p="3_aturdir en cadena.txt" t="Include" />
                 <e p="BaseGuiltPassive.cs" t="Include" />
                 <e p="ExplosionCW.cs" t="Include" />
                 <e p="MoreDamageCW.cs" t="Include" />
                 <e p="PetrifyNearEnemies.cs" t="Include" />
+                <e p="ScreamItemWorld.cs" t="Include" />
+                <e p="ScreamPool.cs" t="Include" />
               </e>
               <e p="Genericas" t="Include">
                 <e p="1_Big Guns.txt" t="Include" />
@@ -1028,6 +1063,7 @@
               </e>
               <e p="Other" t="Include">
                 <e p="EmptySkill.cs" t="Include" />
+                <e p="EmptySkillActivas.cs" t="Include" />
                 <e p="ZarazaSkill.cs" t="Include" />
               </e>
             </e>
@@ -1038,11 +1074,6 @@
               <e p="StatesMachine.cs" t="Include" />
               <e p="StatesPetrified.cs" t="Include" />
               <e p="StatesWander.cs" t="Include" />
-            </e>
-            <e p="ToOrder" t="Include">
-              <e p="Items" t="Include">
-                <e p="Item.cs" t="Include" />
-              </e>
             </e>
           </e>
         </e>

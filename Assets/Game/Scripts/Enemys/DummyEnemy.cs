@@ -105,7 +105,6 @@ public class DummyEnemy : EnemyBase
 
     protected override void OnUpdateEntity() 
     {
-        Debug.Log("OnUpdate");
         sm.Update();
     }
     protected override void OnPause() 

@@ -9,13 +9,17 @@ public class GameUI_controller : MonoBehaviour
     public static GameUI_controller instance;
 
     [SerializeField] private GameObject skillSelection_template_pf;
+    [SerializeField] private GameObject charStats_template_pf;
     
+    private CharStats_UI _charStats_Ui;
     Dictionary<UI_templates, GameObject> UiTemplateRegistry = new Dictionary<UI_templates, GameObject>();
 
+    [Header("--XX--Canvas containers--XX--")]
     [SerializeField] private RectTransform leftCanvas;
     [SerializeField] private RectTransform rightCanvas;
 
-    public List<SkillInfo> skillsTEST;
+    #region Config
+
     void Awake()
     {
         if (instance == null)
@@ -24,10 +28,20 @@ public class GameUI_controller : MonoBehaviour
         RegistrarUIPrefabs();
     }
 
+    private void Start()
+    {
+        _charStats_Ui = Instantiate<GameObject>(UiTemplateRegistry[UI_templates.charStats], leftCanvas).GetComponent<CharStats_UI>();
+    }
+
     private void RegistrarUIPrefabs()
     {
         UiTemplateRegistry.Add(UI_templates.skillSelection, skillSelection_template_pf);
+        UiTemplateRegistry.Add(UI_templates.charStats, charStats_template_pf);
     }
+
+    #endregion
+
+    #region Public methods
 
     /// <summary>
     /// Creas el popUp para elegir skill.
@@ -42,17 +56,42 @@ public class GameUI_controller : MonoBehaviour
         return newPopUp;
     }
 
+    public void UI_SendLevelUpNotification()
+    {
+        //aca le mando todo el festejo de que subiste de nivel
+        //Pausar
+        //Cartel de Subiste de nivel capo // o feedback
+        //Boton para seguir juego
+    }
+    public void UI_SendActivePlusNotification(bool val)
+    {
+        //aca activo o desactivo la lucecita o el algo que indique que puedo elegir una skill
+    }
+    public void UI_RefreshExpBar(int currentExp, int maxExp, int currentLevel)
+    {
+        //aca lo mando a una barrita que refresque todo esto
+        //y me muestre el nivel y la experienca acumulada
+        _charStats_Ui.UpdateXP_UI(currentExp,maxExp, currentLevel);
+        
+    }
+
+    #endregion
+    
+    
+    
+    
+    
+    
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            List<Tuple<int, GameObject>> tuplas = new List<Tuple<int, GameObject>>();
-            tuplas.Add(new Tuple<int, GameObject>(500, this.gameObject));
-            tuplas.Add(new Tuple<int, GameObject>(50, this.gameObject));
-            tuplas.Add(new Tuple<int, GameObject>(70, this.gameObject));
-
-            Extensions.WheelSelection(tuplas);
-            //CreateNewSkillSelectionPopUp(skillsTEST, info =>Debug.Log(info.skill_name) );
+            Debug.Log("Abro el menu");
+            if(Main.instance.Ui_Is_Open())
+                Main.instance.Set_Closed_UI();
+            else
+                Main.instance.Set_Opened_UI();    
 
         }
     }

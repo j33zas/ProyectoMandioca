@@ -17,12 +17,14 @@ public class Main : MonoBehaviour
     List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
     ThreadRequestObject<PlayObject> req;
     bool openUI;
-    
+
     [Header("Inspector References")]
     public LevelSystem levelsystem;
     public EventManager eventManager;
     [SerializeField] CharacterHead character;
     [SerializeField] PlayObject[] allentities;
+
+public GameUI_controller gameUiController;
 
     private void Awake()
     {
@@ -107,5 +109,5 @@ public class Main : MonoBehaviour
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     public bool Ui_Is_Open() => openUI;
-    
+
 }

@@ -121,10 +121,14 @@ public class CharacterHead : CharacterControllable
         Attack += charAttack.Attack;
     }
 
-    //private void Update()
-    //{
-
-    //}
+    /// <summary>
+    /// No se si esto va a quedar asi, me parece feo
+    /// </summary>
+    /// <returns></returns>
+    public CharacterLifeSystem GetCharacterLifeSystem()
+    {
+        return lifesystem.lifesystemExample;
+    }
 
     protected override void OnUpdateEntity()
     {
