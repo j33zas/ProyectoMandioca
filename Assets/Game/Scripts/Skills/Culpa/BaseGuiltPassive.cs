@@ -13,7 +13,7 @@ public class BaseGuiltPassive : SkillBase
     ParticleSystem feedbackParticle;
 
     [SerializeField]
-    GameObject screamPrefab;
+    ScreamPool screamPool;
 
     [SerializeField]
     FrontendStatBase myBar;
@@ -37,6 +37,8 @@ public class BaseGuiltPassive : SkillBase
         }
 
         Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, SpawnScream);
+
+        screamPool.StartPool(10);
     }
 
     protected override void OnEndSkill()
@@ -70,7 +72,7 @@ public class BaseGuiltPassive : SkillBase
         {
             Vector3 selectRandomPos = myAreaToSpawn[Random.Range(0, myAreaToSpawn.Count)];
 
-            var newScream = Instantiate(screamPrefab);
+            var newScream = screamPool.GetScream();
             newScream.transform.position = selectRandomPos;
             myAreaToSpawn.Remove(selectRandomPos);
         }

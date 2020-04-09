@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 using DevelopTools;
 
 public class CharacterHead : CharacterControllable
@@ -45,6 +46,7 @@ public class CharacterHead : CharacterControllable
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
     [SerializeField] ParticleSystem feedbackCW;
+    [SerializeField] ParticleSystem feedbackScream;
 
 
     [Header("Animations")]
@@ -449,6 +451,13 @@ public class CharacterHead : CharacterControllable
         }
 
         AddScreamAction(screams);
+    }
+
+    public void CollectScream()
+    {
+        AddScreams(1);
+        feedbackScream.Stop();
+        feedbackScream.Play();
     }
 
     #endregion
