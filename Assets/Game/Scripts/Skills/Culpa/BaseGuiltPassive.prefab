@@ -9372,6 +9372,50 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &7486814768488159302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6523348710719323831}
+  - component: {fileID: 4421413429440777585}
+  m_Layer: 0
+  m_Name: Pool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6523348710719323831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486814768488159302}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8498596452485345724}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4421413429440777585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486814768488159302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c0e909f145ea504ba13df30650f4f1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 2450964416905894773, guid: 751e4cf09a634d04b8caa7be136650f5, type: 3}
 --- !u!1 &8498596452485345727
 GameObject:
   m_ObjectHideFlags: 0
@@ -9401,6 +9445,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6109407440349381965}
+  - {fileID: 6523348710719323831}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9417,8 +9462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillinfo: {fileID: 11400000, guid: a64b0cf1b584b794f9e63b93509e2c02, type: 2}
-  maxScreamsToSpawn: 5
+  maxScreamsToSpawn: 7
   feedbackParticle: {fileID: 6109407440364584973}
-  screamPrefab: {fileID: 6393286648409481096, guid: 74d801f2dd696e14fbc018136ebf128b,
-    type: 3}
-  myBar: {fileID: 0}
+  screamPool: {fileID: 4421413429440777585}
+  myBar: {fileID: 6080125045554954862, guid: bf2a48529a9f76f4d9cabd3119662e3d, type: 3}

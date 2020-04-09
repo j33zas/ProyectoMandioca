@@ -16,6 +16,6 @@ MonoBehaviour:
   skill_name: Terrible Headache
   description_lore: gg nomas
   description_technical: Killing a stunned enemy stuns nearby enemies.
-  img_blocked: {fileID: 0}
-  img_avaliable: {fileID: 0}
-  img_actived: {fileID: 0}
+  img_blocked: {fileID: 21300000, guid: d585d3349a962ad4db48c5810355fd5d, type: 3}
+  img_avaliable: {fileID: 21300000, guid: 5d8fc410dc0aff54c967be047b92ce2e, type: 3}
+  img_actived: {fileID: 21300000, guid: 08a75a5f005779b46b57e8dfc4f9f789, type: 3}
