@@ -12,35 +12,23 @@ public class Main : MonoBehaviour
 {
     public static Main instance;
 
-    public EventManager eventManager;
+    [Header("Main Options")]
+    public GenericBar bar;
+    List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
+    ThreadRequestObject<PlayObject> req;
+    bool openUI;
+    
+    [Header("Inspector References")]
     public LevelSystem levelsystem;
-
-    GamePad gp;
+    public EventManager eventManager;
+    [SerializeField] CharacterHead character;
+    [SerializeField] PlayObject[] allentities;
 
     private void Awake()
     {
         instance = this;
         eventManager = new EventManager();
-
-        gp = new GamePad();
-
     }
-
-    public bool autofind;
-
-    List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
-    [SerializeField] PlayObject[] allentities;
-    [SerializeField] CharacterHead character;
-
-    Dictionary<Type, List<PlayObject>> typedic = new Dictionary<Type, List<PlayObject>>();
-
-    // CharacterHead;
-
-    ThreadRequestObject<PlayObject> req;
-
-    public GenericBar bar;
-
-    bool openUI;
 
     void Start()
     {
@@ -54,7 +42,7 @@ public class Main : MonoBehaviour
 
 
     bool pause;
-    private void Update()//test
+    private void Update()//test//borrar
     {
         pause = !pause;
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -67,30 +55,12 @@ public class Main : MonoBehaviour
             {
                 Play();
             }
-            
         }
     }
 
     void OnLoadEnded()
     {
         Play();
-    }
-
-    void AddType(Type type, PlayObject playobject)
-    {
-        if (!typedic.ContainsKey(type))
-        {
-            var list = new List<PlayObject>();
-            list.Add(playobject);
-            typedic.Add(type, list);
-        }
-        else
-        {
-            if (!typedic[type].Contains(playobject))
-            {
-                typedic[type].Add(playobject);
-            }
-        }
     }
 
     public List<T> GetListOf<T>() where T : PlayObject
@@ -108,11 +78,8 @@ public class Main : MonoBehaviour
 
     void AddToMainCollection(IEnumerable<PlayObject> col)
     {
-        Debug.Log("Addto main collection");
         allentities = col.ToArray();
-
         OnLoadEnded();
-        
     }
 
     public void OnPlayerDeath() { }

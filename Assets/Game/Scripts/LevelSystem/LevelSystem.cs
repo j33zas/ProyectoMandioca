@@ -30,7 +30,6 @@ public class LevelSystem : MonoBehaviour
         RefreshUI();
     }
 
-
     public void RefreshUI()
     {
         UI_SendActivePlusNotification(point_to_spend > 0);
