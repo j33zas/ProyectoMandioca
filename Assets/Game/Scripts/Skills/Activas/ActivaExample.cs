@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivaExample : MonoBehaviour
+public class ActivaExample : SkillActivas
 {
-    // Start is called before the first frame update
-    void Start()
+    protected override void OnBeginSkill()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEndSkill()
+    {
+        
+    }
+
+    protected override void OnExecute()
+    {
+        
+    }
+
+    protected override void OnUpdateSkill()
     {
         
     }

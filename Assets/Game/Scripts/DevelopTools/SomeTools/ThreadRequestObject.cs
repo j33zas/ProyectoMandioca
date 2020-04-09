@@ -64,6 +64,8 @@ public class ThreadRequestObject<T> where T : MonoBehaviour
 
         callbackCollection(col);
 
+        bar.gameObject.SetActive(false);
+
         yield return null;
     }
 }

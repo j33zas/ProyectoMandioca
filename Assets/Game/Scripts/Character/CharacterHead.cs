@@ -146,11 +146,13 @@ public class CharacterHead : CharacterControllable
     void ReleaseInNormal()
     {
         dmg = dmg_normal;
+        charAttack.ChangeDamageBase((int)dmg);
         charanim.NormalAttack();
     }
     void ReleaseInHeavy()
     {
         dmg = dmg_heavy;
+        charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
     }
     
