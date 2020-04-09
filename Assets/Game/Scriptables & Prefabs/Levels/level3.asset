@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015bfa6890343874bae3a0728c3aea1e, type: 3}
   m_Name: level3
   m_EditorClassIdentifier: 
-  level: 3
-  maxt_to_level_up: 25
+  maxt_to_level_up: 100
   can_get_skill_point: 1

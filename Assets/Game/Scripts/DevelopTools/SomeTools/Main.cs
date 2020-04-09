@@ -13,6 +13,7 @@ public class Main : MonoBehaviour
     public static Main instance;
 
     public EventManager eventManager;
+    public LevelSystem levelsystem;
 
     GamePad gp;
 
