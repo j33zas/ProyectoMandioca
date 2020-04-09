@@ -42,7 +42,8 @@ public class DummyEnemy : EnemyBase
 
     public float explosionForce = 200;
     public Rigidbody _rb;
-
+    [SerializeField]
+    private bool off;
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
 
@@ -65,6 +66,8 @@ public class DummyEnemy : EnemyBase
 
 
         //follow.Configure(_rb);
+        if (off)
+            Off();
     }
 
     public void DealDamage()
@@ -96,16 +99,16 @@ public class DummyEnemy : EnemyBase
         }
     }
 
-    //private void Update()
-    //{
-    //    feedbackStun.Refresh();
-    //    feedbackHitShield.Refresh();
-        
-    //}
+
 
     protected override void OnUpdateEntity() 
     {
-        sm.Update();
+        if (canupdate)
+        {
+            feedbackStun.Refresh();
+            feedbackHitShield.Refresh();
+            sm.Update();
+        }
     }
     protected override void OnPause() 
     {
@@ -118,11 +121,14 @@ public class DummyEnemy : EnemyBase
     }
 
 
+
     /////////////////////////////////////////////////////////////////
     //////  En desuso
     /////////////////////////////////////////////////////////////////
     public override Attack_Result TakeDamage(int dmg, Vector3 dir,  Damagetype dmgtype)
     {
+        if (Invinsible)
+            return Attack_Result.inmune;
         if (dmgtype == Damagetype.explosion)
         {
             _rb.AddForce(dir * explosionForce, ForceMode.Impulse);
@@ -135,7 +141,13 @@ public class DummyEnemy : EnemyBase
 
         return Attack_Result.sucessful; 
     }
-
+    public override void HalfLife()
+    {
+        base.HalfLife();
+        TakeDamage(lifesystem.life / 2, transform.position, Damagetype.normal);
+        if (!target)
+            Invinsible = true;
+    }
     public override void OnPetrified()
     {
         feedbackStun.Show();

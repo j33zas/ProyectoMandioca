@@ -6,6 +6,7 @@ public class Sensor : MonoBehaviour
 {
     public LayerMask layers;
     event Action<GameObject> Ev_Colision;
+    event Action<GameObject> Ev_Exit;
 
     public Collider myc;
 
@@ -26,12 +27,22 @@ public class Sensor : MonoBehaviour
     }
 
     public Sensor SubscribeAction(Action<GameObject> ac) { Ev_Colision += ac; return this; }
+    public Sensor SubscribeExitAction(Action<GameObject> ac) { Ev_Exit+= ac; return this; }
 
-    private void OnTriggerEnter(Collider col)
+    protected virtual void OnTriggerEnter(Collider col)
     {
         if ((1 << col.gameObject.layer & layers) != 0)
         {
             Ev_Colision(col.gameObject);
+            //myc.enabled = false;
+        }
+    }
+    protected virtual void OnTriggerExit(Collider col)
+    {
+        if ((1 << col.gameObject.layer & layers) != 0)
+        {
+            Ev_Exit(col.gameObject);
+            //myc.enabled = false;
         }
     }
 }

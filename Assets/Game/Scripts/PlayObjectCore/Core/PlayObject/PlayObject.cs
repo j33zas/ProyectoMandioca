@@ -6,7 +6,7 @@ using System;
 
 public abstract class PlayObject : MonoBehaviour
 {
-    private bool canupdate;
+    protected bool canupdate;
     public void On() { canupdate = true; OnTurnOn(); }
     public void Off() { canupdate = false; OnTurnOff(); }
     public void Pause() { canupdate = false; OnPause(); }

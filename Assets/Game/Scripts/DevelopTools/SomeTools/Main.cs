@@ -32,6 +32,9 @@ public GameUI_controller gameUiController;
         eventManager = new EventManager();
     }
 
+    private SensorForEnemysInRoom mySensorRoom;
+    BaseRoom _currentRoom;
+
     void Start()
     {
         toload.Add(AddToMainCollection);
@@ -108,5 +111,10 @@ public GameUI_controller gameUiController;
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     public bool Ui_Is_Open() => gameUiController.openUI;
+
+    public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
+    public BaseRoom GetRoom() => _currentRoom; 
+    
+
 
 }

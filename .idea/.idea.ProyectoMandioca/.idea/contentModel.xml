@@ -864,7 +864,6 @@
               <e p="MinionLifeSystem.cs" t="Include" />
               <e p="Test_Attack.cs" t="Include" />
             </e>
-            <e p="EnemysInRoom.cs" t="Include" />
             <e p="Enums.cs" t="Include" />
             <e p="GameEvents.cs" t="Include" />
             <e p="Interactables" t="Include">
@@ -975,6 +974,11 @@
                 <e p="Environment.cs" t="Include" />
               </e>
             </e>
+            <e p="Rooms" t="Include">
+              <e p="BaseRoom.cs" t="Include" />
+              <e p="IRoomElement.cs" t="Include" />
+              <e p="SensorForEnemysInRoom.cs" t="Include" />
+            </e>
             <e p="ScreamsBar.cs" t="Include" />
             <e p="Skills" t="Include">
               <e p="#Core" t="Include">
@@ -1060,6 +1064,7 @@
                 <e p="1_mitad de HP.txt" t="Include" />
                 <e p="2_Petrifica primer golpe.txt" t="Include" />
                 <e p="Skill_FirstAttack.cs" t="Include" />
+                <e p="Skill_HalfLife.cs" t="Include" />
               </e>
               <e p="Other" t="Include">
                 <e p="EmptySkill.cs" t="Include" />

@@ -6,6 +6,7 @@ public abstract class EnemyBase : NPCBase
 {
     public bool target;
     public GameObject _targetFeedback;
+    public bool Invinsible;
     public virtual void Awake()
     {
         side_Type = side_type.enemy;
@@ -14,5 +15,10 @@ public abstract class EnemyBase : NPCBase
     {
         target = true;
         _targetFeedback.SetActive(true);
+    }
+    public virtual void IsNormal()
+    {
+        target = false;
+        _targetFeedback.SetActive(false);
     }
 }
