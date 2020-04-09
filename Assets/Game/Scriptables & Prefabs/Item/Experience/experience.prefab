@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distancetoInteract: 1
+  autoexecute: 1
   pointToMessage: {fileID: 8697729265398221661}
   feedback:
   - {fileID: 8697729266127985054}
   - {fileID: 8697729265575932405}
-  autoexecute: 0
   item: {fileID: 11400000, guid: 510b34f739835d5428195b8e1c2f658c, type: 2}
   to_collect:
     m_PersistentCalls:

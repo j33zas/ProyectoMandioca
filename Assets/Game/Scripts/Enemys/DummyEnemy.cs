@@ -96,7 +96,28 @@ public class DummyEnemy : EnemyBase
         }
     }
 
-    private void Update() { feedbackStun.Refresh();  feedbackHitShield.Refresh();sm.Update(); }
+    //private void Update()
+    //{
+    //    feedbackStun.Refresh();
+    //    feedbackHitShield.Refresh();
+        
+    //}
+
+    protected override void OnUpdateEntity() 
+    {
+        Debug.Log("OnUpdate");
+        sm.Update();
+    }
+    protected override void OnPause() 
+    {
+        
+    }
+    protected override void OnResume() 
+    {
+        
+       
+    }
+
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
@@ -174,9 +195,8 @@ public class DummyEnemy : EnemyBase
         gameObject.SetActive(false);
     }
     protected override void OnFixedUpdate() { }
-    protected override void OnPause() { }
-    protected override void OnResume() { }
+    
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
-    protected override void OnUpdateEntity() { }
+    
 }

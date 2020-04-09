@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Tools;
 using DevelopTools;
+using XInputDotNetPure;
 
 
 public class Main : MonoBehaviour
@@ -13,10 +14,15 @@ public class Main : MonoBehaviour
 
     public EventManager eventManager;
 
+    GamePad gp;
+
     private void Awake()
     {
         instance = this;
         eventManager = new EventManager();
+
+        gp = new GamePad();
+
     }
 
     public bool autofind;
@@ -43,7 +49,30 @@ public class Main : MonoBehaviour
             bar,
             toload.ToArray()
             );
+    }
 
+
+    bool pause;
+    private void Update()//test
+    {
+        pause = !pause;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pause)
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
+            
+        }
+    }
+
+    void OnLoadEnded()
+    {
+        Play();
     }
 
     void AddType(Type type, PlayObject playobject)
@@ -79,7 +108,10 @@ public class Main : MonoBehaviour
     void AddToMainCollection(IEnumerable<PlayObject> col)
     {
         Debug.Log("Addto main collection");
-        allentities = col.ToArray(); 
+        allentities = col.ToArray();
+
+        OnLoadEnded();
+        
     }
 
     public void OnPlayerDeath() { }

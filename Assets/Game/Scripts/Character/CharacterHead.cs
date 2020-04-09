@@ -119,10 +119,24 @@ public class CharacterHead : CharacterControllable
         Attack += charAttack.Attack;
     }
 
-    private void Update()
+    //private void Update()
+    //{
+
+    //}
+
+    protected override void OnUpdateEntity()
     {
         ChildrensUpdates();
         charAttack.Refresh();
+    }
+
+    protected override void OnPause()
+    {
+        
+    }
+    protected override void OnResume()
+    {
+
     }
 
     #region Attack
@@ -155,7 +169,7 @@ public class CharacterHead : CharacterControllable
         charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
     }
-    
+
     ///////////BigWeaponSkill
 
     /// <summary>
@@ -188,12 +202,12 @@ public class CharacterHead : CharacterControllable
 
     private void OnDrawGizmos()
     {
-        if(charAttack == null)
+        if (charAttack == null)
             return;
 
         Vector3 attackRange_endPoint =
             transform.position + charAttack.forwardPos.forward * charAttack.currentWeapon.GetWpnRange();
-        
+
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, attackRange_endPoint);
         Gizmos.DrawCube(attackRange_endPoint, new Vector3(.6f, .6f, .6f));
@@ -421,7 +435,7 @@ public class CharacterHead : CharacterControllable
     int screams;
     public Action GuiltUltimateSkill = delegate { };
     public Action<int> AddScreamAction = delegate { };
-    public int screamsToSkill; 
+    public int screamsToSkill;
 
     public void AddScreams(int s)
     {
@@ -440,11 +454,10 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Fuera de uso
-    protected override void OnUpdateEntity() { }
+
     protected override void OnTurnOn() { }
     protected override void OnTurnOff() { }
     protected override void OnFixedUpdate() { }
-    protected override void OnPause() { }
-    protected override void OnResume() { }
-    #endregion 
+
+    #endregion
 }

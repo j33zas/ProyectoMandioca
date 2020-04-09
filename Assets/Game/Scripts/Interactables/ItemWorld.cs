@@ -13,6 +13,9 @@ public class ItemWorld : Interactable
 
     bool onselected;
 
+    bool canAnimate;
+    [SerializeField] bool animationToChar;
+
     Transform model;
 
     public UnityEvent to_collect;
@@ -45,6 +48,10 @@ public class ItemWorld : Interactable
     ///////////////////////////////////////////////////////////////////
     public override void Execute(WalkingEntity collector)
     {
+        if (animationToChar)
+        {
+            //canAnimate;
+        }
         collector.OnReceiveItem(this);
         to_collect.Invoke();
         Destroy(this.gameObject);
