@@ -44647,7 +44647,10 @@ MonoBehaviour:
   frontend: {fileID: 7268128996064042063}
   allskills: []
   isOpen: 0
-  skillinfos: []
+  skillinfos:
+  - {fileID: 11400000, guid: bbde7c23c2ea34b4cb07bb7a398ef510, type: 2}
+  - {fileID: 11400000, guid: aaceb4bf5179c48bf83820aa0c2d6ecc, type: 2}
+  - {fileID: 11400000, guid: e016ecd1d7659b445aeffa3e8414c4d0, type: 2}
 --- !u!114 &7761702637489507250
 MonoBehaviour:
   m_ObjectHideFlags: 0

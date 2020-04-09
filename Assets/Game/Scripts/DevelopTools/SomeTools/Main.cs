@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using Tools;
 using DevelopTools;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 
 
 public class Main : MonoBehaviour
@@ -16,7 +16,7 @@ public class Main : MonoBehaviour
     public GenericBar bar;
     List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
     ThreadRequestObject<PlayObject> req;
-    bool openUI;
+    
 
     [Header("Inspector References")]
     public LevelSystem levelsystem;
@@ -94,8 +94,7 @@ public GameUI_controller gameUiController;
         }
     }
 
-    public void Set_Opened_UI() { openUI = true; Pause(); }
-    public void Set_Closed_UI() { openUI = false; Play(); }
+    
 
     public void Play() { foreach (var e in allentities) e.Resume(); }
     public void Pause() { foreach (var e in allentities) e.Pause(); }
@@ -108,6 +107,6 @@ public GameUI_controller gameUiController;
     public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
-    public bool Ui_Is_Open() => openUI;
+    public bool Ui_Is_Open() => gameUiController.openUI;
 
 }

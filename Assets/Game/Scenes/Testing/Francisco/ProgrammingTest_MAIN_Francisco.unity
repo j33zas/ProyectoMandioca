@@ -41127,9 +41127,9 @@ MonoBehaviour:
   allskills: []
   isOpen: 0
   skillinfos:
-  - {fileID: 11400000, guid: c348740c0f7143c4b92ef6572c44bd4a, type: 2}
-  - {fileID: 11400000, guid: e790e44ceed744bcb8fc6f1c561a529f, type: 2}
-  - {fileID: 11400000, guid: 5e16aa6fb021a4f28be1c394235671d5, type: 2}
+  - {fileID: 11400000, guid: 4cc251e5a29d0456ab2d10e958fe3257, type: 2}
+  - {fileID: 11400000, guid: e016ecd1d7659b445aeffa3e8414c4d0, type: 2}
+  - {fileID: 11400000, guid: d092e9e4099724a1d9f6e57b965615a2, type: 2}
 --- !u!114 &7761702637489507250
 MonoBehaviour:
   m_ObjectHideFlags: 0

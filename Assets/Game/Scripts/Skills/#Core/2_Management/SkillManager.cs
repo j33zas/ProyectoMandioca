@@ -69,7 +69,8 @@ public class SkillManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            SelectPasivas();
+            //Main.instance.gameUiController.RefreshPassiveSkills_UI(skillinfos);
+            //SelectPasivas();
         }
     }
 
