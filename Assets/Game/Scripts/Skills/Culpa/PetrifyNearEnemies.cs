@@ -1,18 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DevelopTools;
 
-public class PetrifyNearEnemies : MonoBehaviour
+public class PetrifyNearEnemies : SkillBase
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    float buffRange;
+
+    [SerializeField]
+    ParticleSystem feedbackParticle;
+    
+    protected override void OnBeginSkill()
     {
-        
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, PetrifyWhenDie);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEndSkill()
     {
-        
+        Main.instance.eventManager.UnsubscribeToEvent(GameEvents.ENEMY_DEAD, PetrifyWhenDie);
+        feedbackParticle.Stop();
+    }
+
+    protected override void OnUpdateSkill()
+    {
+
+    }
+
+    void PetrifyWhenDie(params object[] param)
+    {
+        Vector3 pos = (Vector3)param[0];
+        bool isPetrified = (bool)param[1];
+
+        if (isPetrified)
+        {
+            feedbackParticle.Stop();
+            feedbackParticle.transform.position = pos;
+            feedbackParticle.Play();
+
+            var overlap = Physics.OverlapSphere(pos, buffRange);
+
+            foreach (var item in overlap)
+            {
+                if (item.GetComponent<EnemyBase>())
+                {
+                    item.GetComponent<EnemyBase>().OnPetrified();
+                }
+            }
+        }
     }
 }

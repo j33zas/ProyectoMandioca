@@ -56,7 +56,7 @@ namespace DevelopTools
         /// Creo un objeto del prefab y lo agrego al pool previo apagarlo
         /// </summary>
         /// <param name="amount"></param>
-        private void AddObject(int amount)
+        protected void AddObject(int amount)
         {
             var newObject = GameObject.Instantiate(prefab);
             newObject.gameObject.SetActive(false);

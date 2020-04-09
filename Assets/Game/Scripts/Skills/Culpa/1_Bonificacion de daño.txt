@@ -1,7 +1,0 @@
-cambiar de arma da una pequeña bonificacion de daño
-
-agregarle al character una bonificacion, si se puede con eventos joya...
-
-sino a lo negro cabeza no pasa nada...
-
-pero muy importante... prestar mucha atencion y preguntar si un compañero esta modificando el script del Character ya que es un script muy comun de uso

@@ -29,7 +29,8 @@ public class CharacterInput : MonoBehaviour
     public UnityEvent OnAttackEnd;
 
     [Header("Interact")]
-    public UnityEvent OnInteract;
+    public UnityEvent OnInteractBegin;
+    public UnityEvent OnInteractEnd;
     public UnityEvent Back;
 
     [Header("Test pasives")]
@@ -54,7 +55,8 @@ public class CharacterInput : MonoBehaviour
         if (Input.GetButtonDown("Attack")) OnAttack.Invoke();
         if (Input.GetButtonUp("Attack")) OnAttackEnd.Invoke();
 
-        if (Input.GetButtonDown("Interact")) OnInteract.Invoke();
+        if (Input.GetButtonDown("Interact")) OnInteractBegin.Invoke();
+        if (Input.GetButtonUp("Interact")) OnInteractEnd.Invoke();
         ChangeWeapon.Invoke(Input.GetAxis("XBOX360_DPadHorizontal"));
 
         if (Input.GetButtonDown("Back")) Back.Invoke();

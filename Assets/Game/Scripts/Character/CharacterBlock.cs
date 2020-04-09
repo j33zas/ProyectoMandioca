@@ -39,35 +39,44 @@ public class CharacterBlock : EntityBlock
     {
         Debug.Log("la animacion me dice que puedo bloquear");
 
-        if (!flagIsStop)
+        if (Input.GetButton("Block"))
         {
-            
             feedback.SetActive(true);
             onBlock = true;
         }
+        else
+        {
+            OnBlockUp();
+        }
+        //if (!flagIsStop)
+        //{
+            
+        //    feedback.SetActive(true);
+        //    onBlock = true;
+        //}
 
-        flagIsStop = false;
+        //flagIsStop = false;
 
     }
+
 
     //se dispara por input
     public override void OnBlockUpSuccessful()
     {
-        // base.OnBlockUpSuccessful();
-        // feedback.SetActive(false);
-        // Debug.Log("On BLock UP succesful");
+        feedback.SetActive(false);
+        onBlock = false;
 
-        if (onBlock)
-        {
-            Debug.Log("se dispara cuando suelto la tecla");
-            feedback.SetActive(false);
-            onBlock = false;
-        }
-        else
-        {
-            Debug.Log("se soltó la tecla");
-            flagIsStop = true;
-        }
+        //if (onBlock)
+        //{
+        //    Debug.Log("se dispara cuando suelto la tecla");
+        //    feedback.SetActive(false);
+        //    onBlock = false;
+        //}
+        //else
+        //{
+        //    Debug.Log("se soltó la tecla");
+        //    flagIsStop = true;
+        //}
     }
 
     public override void FinishParry()

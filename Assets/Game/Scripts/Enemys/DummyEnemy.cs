@@ -38,6 +38,8 @@ public class DummyEnemy : EnemyBase
     public Action OnParried;
     public bool isOnFire { get; private set; }
 
+    public bool isTarget;
+
     public float explosionForce = 200;
     public Rigidbody _rb;
     [SerializeField]
@@ -59,6 +61,9 @@ public class DummyEnemy : EnemyBase
         sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesAttack>();
+        
+        lifesystem.AddEventOnDeath(Die);
+
 
         //follow.Configure(_rb);
         if (off)
@@ -70,7 +75,11 @@ public class DummyEnemy : EnemyBase
         combatComponent.ManualTriggerAttack();
     }
 
-    public void EndStun() => combatComponent.Play();
+    public void EndStun()
+    {
+        combatComponent.Play();
+        petrified = false;
+    }
 
     public void AttackEntity(EntityBase e)
     {
@@ -90,7 +99,9 @@ public class DummyEnemy : EnemyBase
         }
     }
 
-    private void Update()
+
+
+    protected override void OnUpdateEntity() 
     {
         if (canupdate)
         {
@@ -98,8 +109,18 @@ public class DummyEnemy : EnemyBase
             feedbackHitShield.Refresh();
             sm.Update();
         }
+    }
+    protected override void OnPause() 
+    {
+        
+    }
+    protected override void OnResume() 
+    {
+        
        
     }
+
+
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
@@ -151,6 +172,17 @@ public class DummyEnemy : EnemyBase
         return _speedMovement;
     }
     
+    public void getFocusedOnParry()
+    {
+        foreach (var item in Main.instance.GetEnemies())
+        {
+            if(item != this)
+                item.isTarget = false;
+            else
+                isTarget = true;
+        }
+    }
+
     
     public override void OnFire()
     {
@@ -168,13 +200,14 @@ public class DummyEnemy : EnemyBase
         });
         
     }
-    
+    public void Die()
+    {
+        Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
+        gameObject.SetActive(false);
+    }
     protected override void OnFixedUpdate() { }
-    protected override void OnPause() { }
-    protected override void OnResume() { }
+    
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
-    protected override void OnUpdateEntity() { }
-
-
+    
 }

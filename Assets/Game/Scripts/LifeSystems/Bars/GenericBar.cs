@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 public abstract class GenericBar : MonoBehaviour
 {
-    protected int maxValue;
+    protected float maxValue;
     protected float scaler;
 
     [Header("para visualizar la barra")]
@@ -15,6 +15,11 @@ public abstract class GenericBar : MonoBehaviour
         this.scaler = scaler;
     }
     public void Configure(int maxValue, int scaler, float val)
+    {
+        this.maxValue = maxValue;
+        this.scaler = scaler;
+    }
+    public void Configure(float maxValue, float scaler)
     {
         this.maxValue = maxValue;
         this.scaler = scaler;

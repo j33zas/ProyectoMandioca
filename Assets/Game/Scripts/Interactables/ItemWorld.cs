@@ -8,9 +8,13 @@ using UnityEngine.Events;
 
 public class ItemWorld : Interactable
 {
+    [Header("Item World Setup")]
     public Item item;
 
     bool onselected;
+
+    bool canAnimate;
+    [SerializeField] bool animationToChar;
 
     Transform model;
 
@@ -20,30 +24,43 @@ public class ItemWorld : Interactable
 
     private void Awake()
     {
-        
+
         var aux = GetComponentInChildren<ParentFinder>();
         if (aux)
         {
             model = aux.transform;
         }
     }
-
-    public override void Execute(WalkingEntity collector)
+    private void Update()
     {
-        collector.OnReceiveItem(this);
-        to_collect.Invoke();
-        Destroy(this.gameObject);
+        if (onselected)
+        {
+            if (model) model.Rotate(0, 20 * Time.deltaTime, 0);
+        }
     }
-
     public void OnAppearInScene()
     {
         OnCreate.Invoke();
     }
 
+    ///////////////////////////////////////////////////////////////////
+    ///// PROPIAS DE INTERACTABLE (HERENCIA)
+    ///////////////////////////////////////////////////////////////////
+    public override void Execute(WalkingEntity collector)
+    {
+        if (animationToChar)
+        {
+            //canAnimate;
+        }
+        collector.OnReceiveItem(this);
+        to_collect.Invoke();
+        Destroy(this.gameObject);
+    }
+
     public override void Exit()
     {
-        if (feedback) feedback.Hide();
-        if (feedback2) feedback2.Hide();
+        if (feedback.Length > 0) foreach (var fdbck in feedback) fdbck.Hide();
+
         WorldItemInfo.instance.Hide();
         onselected = false;
     }
@@ -63,14 +80,9 @@ public class ItemWorld : Interactable
                     WorldItemInfo.instance.Show(this.transform.position, item.name, item.description);
                 }
             }
-            if (feedback)
-            {
-                feedback.Show();
-            }
-            if (feedback2)
-            {
-                feedback2.Show();
-            }
+
+            if (feedback.Length > 0) foreach (var fdbck in feedback) fdbck.Show();
+
 
             onselected = true;
 
@@ -83,11 +95,4 @@ public class ItemWorld : Interactable
 
     }
 
-    private void Update()
-    {
-        if (onselected)
-        {
-            if (model) model.Rotate(0, 20 * Time.deltaTime, 0);
-        }
-    }
 }

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 [System.Serializable]
-public abstract class UI_ItemBase : Selectable, ISubmitHandler
+public abstract class UI_ItemBase : Selectable, ISubmitHandler, ISelectHandler
 {
     public Image mainImage;
     public Text cant;

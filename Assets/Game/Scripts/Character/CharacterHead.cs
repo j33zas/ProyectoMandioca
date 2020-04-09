@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 using DevelopTools;
 
 public class CharacterHead : CharacterControllable
@@ -45,6 +46,7 @@ public class CharacterHead : CharacterControllable
     public GameObject feedbackParry;
     public GameObject feedbackBlock;
     [SerializeField] ParticleSystem feedbackCW;
+    [SerializeField] ParticleSystem feedbackScream;
 
 
     [Header("Animations")]
@@ -119,10 +121,28 @@ public class CharacterHead : CharacterControllable
         Attack += charAttack.Attack;
     }
 
-    private void Update()
+    /// <summary>
+    /// No se si esto va a quedar asi, me parece feo
+    /// </summary>
+    /// <returns></returns>
+    public CharacterLifeSystem GetCharacterLifeSystem()
+    {
+        return lifesystem.lifesystemExample;
+    }
+
+    protected override void OnUpdateEntity()
     {
         ChildrensUpdates();
         charAttack.Refresh();
+    }
+
+    protected override void OnPause()
+    {
+        
+    }
+    protected override void OnResume()
+    {
+
     }
 
     #region Attack
@@ -146,14 +166,16 @@ public class CharacterHead : CharacterControllable
     void ReleaseInNormal()
     {
         dmg = dmg_normal;
+        charAttack.ChangeDamageBase((int)dmg);
         charanim.NormalAttack();
     }
     void ReleaseInHeavy()
     {
         dmg = dmg_heavy;
+        charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
     }
-    
+
     ///////////BigWeaponSkill
 
     /// <summary>
@@ -186,12 +208,12 @@ public class CharacterHead : CharacterControllable
 
     private void OnDrawGizmos()
     {
-        if(charAttack == null)
+        if (charAttack == null)
             return;
 
         Vector3 attackRange_endPoint =
             transform.position + charAttack.forwardPos.forward * charAttack.currentWeapon.GetWpnRange();
-        
+
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, attackRange_endPoint);
         Gizmos.DrawCube(attackRange_endPoint, new Vector3(.6f, .6f, .6f));
@@ -213,10 +235,15 @@ public class CharacterHead : CharacterControllable
     }
     public void EVENT_UpBlocking()
     {
-        if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
+        if (canBlockCalculate)
+            canBlockCalculate = false;
+        else
         {
-            move.SetSpeed(speed);
-            UpBlock();
+            if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
+            {
+                move.SetSpeed(speed);
+                UpBlock();
+            }
         }
     }
     public void OnRealBlock_ON()
@@ -259,14 +286,16 @@ public class CharacterHead : CharacterControllable
     {
         charBlock.flagIsStop = false;
         charBlock.onBlock = false;
-       // canBlockCalculate = false;
+        charanim.Block(false);
+        // canBlockCalculate = false;
     }
     void OnEndRoll()
     {
         charanim.Block(false);
         charBlock.flagIsStop = false;
         charBlock.onBlock = false;
-       // canBlockCalculate = true;
+        if (Input.GetButton("Block"))
+            canBlockCalculate = true;
     }
     public void RollDash()
     {
@@ -408,12 +437,40 @@ public class CharacterHead : CharacterControllable
     }
     #endregion
 
+    #region Guilt
+    int screams;
+    public Action GuiltUltimateSkill = delegate { };
+    public Action<int> AddScreamAction = delegate { };
+    public int screamsToSkill;
+
+    public void AddScreams(int s)
+    {
+        screams += s;
+
+        if (screams >= screamsToSkill)
+        {
+            screams = screamsToSkill;
+            GuiltUltimateSkill();
+            screams = 0;
+        }
+
+        AddScreamAction(screams);
+    }
+
+    public void CollectScream()
+    {
+        AddScreams(1);
+        feedbackScream.Stop();
+        feedbackScream.Play();
+    }
+
+    #endregion
+
     #region Fuera de uso
-    protected override void OnUpdateEntity() { }
+
     protected override void OnTurnOn() { }
     protected override void OnTurnOff() { }
     protected override void OnFixedUpdate() { }
-    protected override void OnPause() { }
-    protected override void OnResume() { }
-    #endregion 
+
+    #endregion
 }

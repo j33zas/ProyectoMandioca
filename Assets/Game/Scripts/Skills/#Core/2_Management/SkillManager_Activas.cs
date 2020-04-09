@@ -10,44 +10,93 @@ public class SkillManager_Activas : MonoBehaviour
     //[SerializeField] List<SkillBase> allskills;
     //Dictionary<SkillType, SkillBase> currents = new Dictionary<SkillType, SkillBase>();
 
-    
+    public UI_SkillHandler_Activas frontend;
 
-    //bool dataisloaded;
-    //public void LoadFromDisk(Dictionary<SkillType, SkillBase> dic) { currents = dic; dataisloaded = true; }
+    [Header("All skills data base")]
+    [SerializeField] List<SkillActivas> allskillsDatabase;
+    Dictionary<SkillInfo, SkillActivas> fastreference;
 
-    void Start()
+    public SkillActivas[] myActiveSkills = new SkillActivas[5];
+
+    public SkillActivas vacio;
+    public SkillActivas vacio2;
+
+
+    private void Awake()
     {
-        //// ahora esto es un start.
-        //// pero tiene que venir de un OnSceneLoaded
-        //allskills = GetComponentsInChildren<SkillBase>().ToList();
-        //Build();
+        myActiveSkills = new SkillActivas[5];
+        for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
+        
+        allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
+        FillDiccionary();
+
+        frontend.Refresh(myActiveSkills, OnUISelected);
+
+        for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
     }
 
-    public void Build()
+    public void OnUISelected(int selected)
     {
-        //if (!dataisloaded) {
-        //    foreach (var skill in allskills) {
-        //        if (!currents.ContainsKey(skill.skillinfo.skilltype)) {
-        //            currents.Add(skill.skillinfo.skilltype, skill);
-        //        }
-        //    }
-        //}
-
-        //frontend.Build(allskills,OnUISelected);
-        //foreach (var s in currents.Values) s.BeginSkill();
+        myActiveSkills[selected].Execute();
     }
 
-    void OnUISelected(int i)
+    private void Update()
     {
-        //Debug.Log("Recibi:" + i);
-
-        //var select = allskills[i];
-        //var old = currents[select.skillinfo.skilltype];
-
-        //old.EndSkill();
-        //select.BeginSkill();
-        //currents[select.skillinfo.skilltype] = select;
-
-        //frontend.SetInfoSelected(select.skillinfo);
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            ReplaceFor(vacio.skillinfo, 0);
+            ReplaceFor(vacio2.skillinfo, 1);
+            frontend.Reconfigurate(myActiveSkills);
+        }
     }
+
+
+    public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;
+    public void ReplaceFor(SkillInfo _skillinfo, int index)
+    {
+        myActiveSkills[index].EndSkill();
+        myActiveSkills[index] = fastreference[_skillinfo];
+
+        frontend.Reconfigurate(myActiveSkills);
+        myActiveSkills[index].BeginSkill();
+    }
+    void FillDiccionary()
+    {
+        fastreference = new Dictionary<SkillInfo, SkillActivas>();
+        foreach (var s in allskillsDatabase)
+            if (!fastreference.ContainsKey(s.skillinfo))
+                fastreference.Add(s.skillinfo, s);
+    }
+
+    //void DropSkill(SkillInfo skill) { }
+    //void Refresh() { }
+    //void OnUISelected(int i)
+    //{
+    //    //Debug.Log("Recibi:" + i);
+    //    //var select = allskills[i];
+    //    //var old = currents[select.skillinfo.skilltype];
+    //    //old.EndSkill();
+    //    //select.BeginSkill();
+    //    //currents[select.skillinfo.skilltype] = select;
+    //    //frontend.SetInfoSelected(select.skillinfo);
+    //}
+    //void Start()
+    //{
+    //    //// ahora esto es un start.
+    //    //// pero tiene que venir de un OnSceneLoaded
+    //    //allskills = GetComponentsInChildren<SkillBase>().ToList();
+    //    //Build();
+    //}
+    //public void Build()
+    //{
+    //    //if (!dataisloaded) {
+    //    //    foreach (var skill in allskills) {
+    //    //        if (!currents.ContainsKey(skill.skillinfo.skilltype)) {
+    //    //            currents.Add(skill.skillinfo.skilltype, skill);
+    //    //        }
+    //    //    }
+    //    //}
+    //    //frontend.Build(allskills,OnUISelected);
+    //    //foreach (var s in currents.Values) s.BeginSkill();
+    //}
 }

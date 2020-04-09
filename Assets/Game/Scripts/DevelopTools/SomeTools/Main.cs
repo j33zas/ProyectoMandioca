@@ -4,26 +4,33 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Tools;
+using DevelopTools;
+using XInputDotNetPure;
 
 
 public class Main : MonoBehaviour
 {
     public static Main instance;
-    private void Awake() => instance = this;
 
-    public bool autofind;
-
-    List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
-    [SerializeField] PlayObject[] allentities;
-    [SerializeField] CharacterHead character;
-
-    Dictionary<Type, List<PlayObject>> typedic = new Dictionary<Type, List<PlayObject>>();
-
-    // CharacterHead;
-
-    ThreadRequestObject<PlayObject> req;
-
+    [Header("Main Options")]
     public GenericBar bar;
+    List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
+    ThreadRequestObject<PlayObject> req;
+    bool openUI;
+
+    [Header("Inspector References")]
+    public LevelSystem levelsystem;
+    public EventManager eventManager;
+    [SerializeField] CharacterHead character;
+    [SerializeField] PlayObject[] allentities;
+
+public GameUI_controller gameUiController;
+
+    private void Awake()
+    {
+        instance = this;
+        eventManager = new EventManager();
+    }
 
     private SensorForEnemysInRoom mySensorRoom;
     BaseRoom _currentRoom;
@@ -38,21 +45,27 @@ public class Main : MonoBehaviour
             );
     }
 
-    void AddType(Type type, PlayObject playobject)
+
+    bool pause;
+    private void Update()//test//borrar
     {
-        if (!typedic.ContainsKey(type))
+        pause = !pause;
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            var list = new List<PlayObject>();
-            list.Add(playobject);
-            typedic.Add(type, list);
-        }
-        else
-        {
-            if (!typedic[type].Contains(playobject))
+            if (pause)
             {
-                typedic[type].Add(playobject);
+                Pause();
+            }
+            else
+            {
+                Play();
             }
         }
+    }
+
+    void OnLoadEnded()
+    {
+        Play();
     }
 
     public List<T> GetListOf<T>() where T : PlayObject
@@ -70,8 +83,8 @@ public class Main : MonoBehaviour
 
     void AddToMainCollection(IEnumerable<PlayObject> col)
     {
-        Debug.Log("Addto main collection");
-        allentities = col.ToArray(); 
+        allentities = col.ToArray();
+        OnLoadEnded();
     }
 
     public void OnPlayerDeath() { }
@@ -84,6 +97,12 @@ public class Main : MonoBehaviour
         }
     }
 
+    public void Set_Opened_UI() { openUI = true; Pause(); }
+    public void Set_Closed_UI() { openUI = false; Play(); }
+
+    public void Play() { foreach (var e in allentities) e.Resume(); }
+    public void Pause() { foreach (var e in allentities) e.Pause(); }
+
 
     /////////////////////////////////////////////////////////////////////
     /// PUBLIC GETTERS
@@ -92,7 +111,12 @@ public class Main : MonoBehaviour
     public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
+
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
     public BaseRoom GetRoom() => _currentRoom; 
     
+
+    public bool Ui_Is_Open() => openUI;
+
+
 }

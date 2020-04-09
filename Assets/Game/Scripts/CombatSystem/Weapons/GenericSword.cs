@@ -6,6 +6,7 @@ public class GenericSword : Weapon
 {
     public GenericSword(float dmg, float r, string n, float angle) : base(dmg, r, n, angle)
     {
+        
     }
 
     public override EntityBase Attack(Transform pos, float damage)

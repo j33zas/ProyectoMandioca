@@ -159,6 +159,8 @@ public class CharacterAttack
         }
     }
 
+    public void ChangeDamageBase(int dmg) => currentDamage = dmg;
+
     public void Attack()
     {
         EntityBase enemy = currentWeapon.Attack(forwardPos, currentDamage);

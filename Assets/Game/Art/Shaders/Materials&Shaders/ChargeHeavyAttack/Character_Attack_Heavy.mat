@@ -31,5 +31,5 @@ Material:
     - _Opacity: 1
     - _OpacityDistortion: 0.16411766
     - _Scale: 0.02
-    - __dirty: 0
+    - __dirty: 1
     m_Colors: []

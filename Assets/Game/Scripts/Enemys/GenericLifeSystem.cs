@@ -42,6 +42,7 @@ public class GenericLifeSystem : MonoBehaviour
         lifeSystemEnemy.Hit(_val);
     }
 
+    
     public void DoTSystem(float duration, float timePerTick, int tickDamage, Damagetype damagetype, Action onFinishCallback )
     {
         StartCoroutine(DoT(duration, timePerTick, tickDamage, damagetype, onFinishCallback));

@@ -9,6 +9,7 @@ PluginImporter:
   isPreloaded: 0
   isOverridable: 0
   isExplicitlyReferenced: 0
+  validateReferences: 1
   platformData:
   - first:
       '': Any
@@ -22,9 +23,10 @@ PluginImporter:
         Exclude LinuxUniversal: 1
         Exclude OSXIntel: 1
         Exclude OSXIntel64: 1
-        Exclude OSXUniversal: 1
+        Exclude OSXUniversal: 0
         Exclude Win: 0
         Exclude Win64: 0
+        Exclude iOS: 0
   - first:
       '': Editor
     second:
@@ -96,9 +98,9 @@ PluginImporter:
   - first:
       Standalone: OSXUniversal
     second:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: None
+        CPU: AnyCPU
   - first:
       Standalone: Win
     second:
@@ -120,8 +122,10 @@ PluginImporter:
   - first:
       iPhone: iOS
     second:
-      enabled: 0
+      enabled: 1
       settings:
+        AddToEmbeddedBinaries: false
+        CPU: AnyCPU
         CompileFlags: 
         FrameworkDependencies: 
   userData: 
