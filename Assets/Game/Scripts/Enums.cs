@@ -6,4 +6,4 @@ public enum Damagetype { Fire, normal, parriable, explosion }
 //////////
 // UI stuff
 
-public enum UI_templates {skillSelection};
+public enum UI_templates {skillSelection, charStats};

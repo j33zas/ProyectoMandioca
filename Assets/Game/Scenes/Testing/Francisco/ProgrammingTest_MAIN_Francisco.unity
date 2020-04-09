@@ -10224,13 +10224,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3c1eb54c9843a4f8a2b3d914cd327c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  most_close: {fileID: 0}
   isclose: 0
-  canrecolect: 0
-  optimize: 0
-  cooldownrecolect: 0.1
   collector: {fileID: 1954684486}
-  canInteract: 0
+  time_to_fast_recollection: 0.5
+  can_fast_recollecion: 0
+  timerfastrec: 0
+  cooldownrecolect: 0.1
+  cooldown_to_next_recollection: 0
 --- !u!1 &309625273
 GameObject:
   m_ObjectHideFlags: 0
@@ -11047,6 +11047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8892abf2d3db91d41ad609a01c7874d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelsystem: {fileID: 1702280743}
+  gameUiController: {fileID: 816310111}
   autofind: 0
   allentities: []
   character: {fileID: 1954684486}
@@ -12771,6 +12773,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689271551}
   m_CullTransparentMesh: 0
+--- !u!1001 &696550903
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 514050525206128005, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_Name
+      value: LevelSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514050525206128006, guid: 2af263c522383b34da7135672613dc5b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2af263c522383b34da7135672613dc5b, type: 3}
 --- !u!1001 &733839141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13100,7 +13171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.040000003, y: 0.5398888}
   m_AnchorMax: {x: 0.5, y: 0.89367175}
-  m_AnchoredPosition: {x: 0, y: -0.040039062}
+  m_AnchoredPosition: {x: 0, y: -99}
   m_SizeDelta: {x: 0, y: 0.069999695}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &787907415
@@ -13413,12 +13484,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSelection_template_pf: {fileID: 1828569144411053076, guid: 202b11896d7a143cb881137387b8ca96,
     type: 3}
+  charStats_template_pf: {fileID: 6878648162145026083, guid: 8b8fde75d980f412babfa2d19590b18b,
+    type: 3}
   leftCanvas: {fileID: 1673563631}
   rightCanvas: {fileID: 1392347563}
-  skillsTEST:
-  - {fileID: 11400000, guid: 5a3b2a35b0eb34946b12eac23969697b, type: 2}
-  - {fileID: 11400000, guid: 8c81bde3c8bb28e45b5483a454f1e5e0, type: 2}
-  - {fileID: 11400000, guid: d092e9e4099724a1d9f6e57b965615a2, type: 2}
 --- !u!1 &825056043
 GameObject:
   m_ObjectHideFlags: 0
@@ -15293,6 +15362,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699574846}
   m_CullTransparentMesh: 0
+--- !u!114 &1702280743 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 514050525206128007, guid: 2af263c522383b34da7135672613dc5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 696550903}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12eb385610e3b5341989e41d7c4476fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1702920490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20606,10 +20687,11 @@ MonoBehaviour:
   feedbackParry: {fileID: 1882515338}
   feedbackBlock: {fileID: 67665837}
   feedbackCW: {fileID: 2643877388966419744}
+  feedbackScream: {fileID: 0}
   anim_base: {fileID: 664825545}
   charAnimEvent: {fileID: 657530180}
   feedbackHeavy: {fileID: 6038556470509301953}
-  dmg_normal: 5
+  dmg_normal: 50
   dmg_heavy: 5
   attackRange: 2
   attackAngle: 45
@@ -20785,7 +20867,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnInteract:
+  OnInteractBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnInteractEnd:
     m_PersistentCalls:
       m_Calls: []
   Back:
@@ -21381,7 +21466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2103249331
 RectTransform:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class Main : MonoBehaviour
 
     public EventManager eventManager;
     public LevelSystem levelsystem;
+    public GameUI_controller gameUiController;
 
     GamePad gp;
 
