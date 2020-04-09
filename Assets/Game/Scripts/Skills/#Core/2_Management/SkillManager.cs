@@ -64,4 +64,25 @@ public class SkillManager : MonoBehaviour
 
         frontend.SetInfoSelected(select.skillinfo);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            SelectPasivas();
+        }
+    }
+
+     
+
+[Header("Test")]
+    public List<SkillInfo> skillinfos;
+    void ReturnSkill(SkillInfo info)
+    {
+        Debug.Log("Me retorno: " + info.skill_name);
+    }
+    void SelectPasivas()
+    {
+        Main.instance.gameUiController.CreateNewSkillSelectionPopUp(skillinfos, ReturnSkill);
+    }
 }

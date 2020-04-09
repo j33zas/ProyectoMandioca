@@ -42,7 +42,7 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
             if (!isFirst)
             {
                 isFirst = true;
-                newButton.GetComponent<Button>().Select(); ;
+                newButton.GetComponent<Button>().Select();
                 currentSkillSelected = sk;
             }
         }

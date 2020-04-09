@@ -11047,12 +11047,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8892abf2d3db91d41ad609a01c7874d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelsystem: {fileID: 1702280743}
-  gameUiController: {fileID: 816310111}
-  autofind: 0
-  allentities: []
-  character: {fileID: 1954684486}
   bar: {fileID: 1834068282}
+  levelsystem: {fileID: 1702280743}
+  character: {fileID: 1954684486}
+  allentities: []
+  gameUiController: {fileID: 816310111}
 --- !u!1 &646421242
 GameObject:
   m_ObjectHideFlags: 0
@@ -41127,6 +41126,10 @@ MonoBehaviour:
   frontend: {fileID: 775520065}
   allskills: []
   isOpen: 0
+  skillinfos:
+  - {fileID: 11400000, guid: c348740c0f7143c4b92ef6572c44bd4a, type: 2}
+  - {fileID: 11400000, guid: e790e44ceed744bcb8fc6f1c561a529f, type: 2}
+  - {fileID: 11400000, guid: 5e16aa6fb021a4f28be1c394235671d5, type: 2}
 --- !u!114 &7761702637489507250
 MonoBehaviour:
   m_ObjectHideFlags: 0

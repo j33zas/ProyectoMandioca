@@ -76,17 +76,16 @@ public class GameUI_controller : MonoBehaviour
     }
 
     #endregion
-    
-    
-    
-    
-    
+
+
     
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
+            //CreateNewSkillSelectionPopUp(skillinfos, ReturnSkill);
+
             Debug.Log("Abro el menu");
             if(Main.instance.Ui_Is_Open())
                 Main.instance.Set_Closed_UI();
