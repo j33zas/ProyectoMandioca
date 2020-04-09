@@ -25,6 +25,9 @@ public class Main : MonoBehaviour
 
     public GenericBar bar;
 
+    private SensorForEnemysInRoom mySensorRoom;
+    BaseRoom _currentRoom;
+
     void Start()
     {
         toload.Add(AddToMainCollection);
@@ -89,5 +92,7 @@ public class Main : MonoBehaviour
     public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
+    public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
+    public BaseRoom GetRoom() => _currentRoom; 
     
 }
