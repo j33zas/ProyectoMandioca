@@ -75,7 +75,7 @@ public class ManagerInventories : MonoBehaviour
     {
         OnEventSystem();
         inMenuesState = true;
-        Main.instance.Set_Opened_UI();
+        Main.instance.gameUiController.Set_Opened_UI();
         foreach (var v in inventoryBase) v.On_OpenMenu();
     }
 

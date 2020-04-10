@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tools.Extensions;
+using UnityEngine.UI;
 
 public class GameUI_controller : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameUI_controller : MonoBehaviour
 
     [SerializeField] private GameObject skillSelection_template_pf;
     [SerializeField] private GameObject charStats_template_pf;
+    [SerializeField] private WorldCanvasPopUp lvlUp_pf;
     
     private CharStats_UI _charStats_Ui;
     Dictionary<UI_templates, GameObject> UiTemplateRegistry = new Dictionary<UI_templates, GameObject>();
@@ -17,6 +19,11 @@ public class GameUI_controller : MonoBehaviour
     [Header("--XX--Canvas containers--XX--")]
     [SerializeField] private RectTransform leftCanvas;
     [SerializeField] private RectTransform rightCanvas;
+
+    [SerializeField] Canvas myCanvas; public Canvas MyCanvas { get => myCanvas;}
+
+    public bool openUI { get; private set; }
+   
 
     #region Config
 
@@ -43,6 +50,12 @@ public class GameUI_controller : MonoBehaviour
 
     #region Public methods
 
+    public void Set_Opened_UI()
+    {
+        openUI = true; Main.instance.Pause();
+    }
+    public void Set_Closed_UI() { openUI = false; Main.instance.Play(); }
+
     /// <summary>
     /// Creas el popUp para elegir skill.
     /// El callback recibe un skillinfo. Ese skillInfo es el seleccionado.
@@ -56,16 +69,22 @@ public class GameUI_controller : MonoBehaviour
         return newPopUp;
     }
 
+    public void UI_Send_NameSkillType(string s)
+    {
+        //el nombre de el tipo de skill
+    }
+
     public void UI_SendLevelUpNotification()
     {
-        //aca le mando todo el festejo de que subiste de nivel
-        //Pausar
-        //Cartel de Subiste de nivel capo // o feedback
-        //Boton para seguir juego
+        
+        CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);
     }
     public void UI_SendActivePlusNotification(bool val)
     {
+        Debug.Log(val);
         //aca activo o desactivo la lucecita o el algo que indique que puedo elegir una skill
+        if(val) _charStats_Ui.ToggleLvlUpSign();
+            
     }
     public void UI_RefreshExpBar(int currentExp, int maxExp, int currentLevel)
     {
@@ -74,6 +93,12 @@ public class GameUI_controller : MonoBehaviour
         _charStats_Ui.UpdateXP_UI(currentExp,maxExp, currentLevel);
         
     }
+
+    public void RefreshPassiveSkills_UI(List<SkillInfo> skillsNuevas)
+    {
+        _charStats_Ui.UpdatePasiveSkills(skillsNuevas);   
+    }
+
 
     #endregion
 
@@ -84,13 +109,12 @@ public class GameUI_controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            //CreateNewSkillSelectionPopUp(skillinfos, ReturnSkill);
 
             Debug.Log("Abro el menu");
-            if(Main.instance.Ui_Is_Open())
-                Main.instance.Set_Closed_UI();
+            if (Main.instance.Ui_Is_Open())
+                Set_Closed_UI();
             else
-                Main.instance.Set_Opened_UI();    
+                Set_Opened_UI();
 
         }
     }

@@ -5,17 +5,24 @@ public abstract class SkillBase : MonoBehaviour
     public SkillInfo skillinfo;
     protected UI_Skill ui_skill;
     public void SetUI(UI_Skill _ui) => ui_skill = _ui;
+    bool alreadyActived;
     public virtual void BeginSkill()
     {
-        canupdate = true;
-        OnBeginSkill();
-        ui_skill.OnUI_Select();
+        if (!alreadyActived)
+        {
+            alreadyActived = true;
+            canupdate = true;
+            OnBeginSkill();
+            if(ui_skill) ui_skill.OnUI_Select();
+        }
+       
     }
     public virtual void EndSkill()
     {
+        alreadyActived = false;
         canupdate = false;
         OnEndSkill();
-        ui_skill.OnUI_Unselect();
+        if (ui_skill) ui_skill.OnUI_Unselect();
     }
     private void Update() { absUpdate(); }
     internal virtual void absUpdate() { if (canupdate) OnUpdateSkill(); }
