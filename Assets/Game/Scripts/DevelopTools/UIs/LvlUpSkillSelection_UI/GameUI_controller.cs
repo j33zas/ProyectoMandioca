@@ -11,7 +11,11 @@ public class GameUI_controller : MonoBehaviour
 
     [SerializeField] private GameObject skillSelection_template_pf;
     [SerializeField] private GameObject charStats_template_pf;
-    [SerializeField] private WorldCanvasPopUp lvlUp_pf;
+    [SerializeField] private WorldCanvasPopUp lvlUp_pf;//quiero sacarlo de aca. Habria que hacer un pool o biblioteca de feedbacks
+
+    [SerializeField] private GameMenu_UI _gameMenuUi_pf; 
+    private GameMenu_UI _currentGameMenuUi;
+    
     
     private CharStats_UI _charStats_Ui;
     Dictionary<UI_templates, GameObject> UiTemplateRegistry = new Dictionary<UI_templates, GameObject>();
@@ -57,14 +61,13 @@ public class GameUI_controller : MonoBehaviour
     public void Set_Closed_UI() { openUI = false; Main.instance.Play(); }
 
     /// <summary>
-    /// Creas el popUp para elegir skill.
-    /// El callback recibe un skillinfo. Ese skillInfo es el seleccionado.
+    /// DEPRECATED
     /// </summary>
     /// <param name="uiTemplates"></param>
     /// <returns></returns>
     public LvlUpSkillSelection_UI CreateNewSkillSelectionPopUp(List<SkillInfo> skillsParaElegir, Action<SkillInfo> callback)
     {
-        LvlUpSkillSelection_UI newPopUp = Instantiate(UiTemplateRegistry[UI_templates.skillSelection], leftCanvas).GetComponent<LvlUpSkillSelection_UI>();
+        LvlUpSkillSelection_UI newPopUp = Instantiate(UiTemplateRegistry[UI_templates.skillSelection]).GetComponent<LvlUpSkillSelection_UI>();
         newPopUp.Configure(skillsParaElegir, callback);
         return newPopUp;
     }
@@ -76,12 +79,10 @@ public class GameUI_controller : MonoBehaviour
 
     public void UI_SendLevelUpNotification()
     {
-        
         CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);
     }
     public void UI_SendActivePlusNotification(bool val)
     {
-        Debug.Log(val);
         //aca activo o desactivo la lucecita o el algo que indique que puedo elegir una skill
         if(val) _charStats_Ui.ToggleLvlUpSign();
             
@@ -99,6 +100,18 @@ public class GameUI_controller : MonoBehaviour
         _charStats_Ui.UpdatePasiveSkills(skillsNuevas);   
     }
 
+    public void OpenGameMenu()
+    {
+        _currentGameMenuUi = Instantiate(_gameMenuUi_pf, myCanvas.transform);
+        
+    }
+    
+    public void CloseGameMenu()
+    {
+        Destroy(_currentGameMenuUi.gameObject);
+    }
+    
+
 
     #endregion
 
@@ -107,14 +120,20 @@ public class GameUI_controller : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-
-            Debug.Log("Abro el menu");
             if (Main.instance.Ui_Is_Open())
+            {
+                CloseGameMenu();
                 Set_Closed_UI();
+            }
             else
+            {
+                OpenGameMenu();
                 Set_Opened_UI();
+                
+            }
+                
 
         }
     }

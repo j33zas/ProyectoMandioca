@@ -852,6 +852,10 @@
                   <e p="UI_SimpleTwo.cs" t="Include" />
                 </e>
                 <e p="FastToolOptions.cs" t="Include" />
+                <e p="GameMenu_UI" t="Include">
+                  <e p="GameMenu_UI.cs" t="Include" />
+                  <e p="PassiveSkill_template.cs" t="Include" />
+                </e>
                 <e p="LvlUpSkillSelection_UI" t="Include">
                   <e p="GameUI_controller.cs" t="Include" />
                   <e p="LvlUpSkillSelection_UI.cs" t="Include" />

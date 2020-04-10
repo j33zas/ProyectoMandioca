@@ -12,6 +12,7 @@ public class CharStats_UI : MonoBehaviour
 
     private CharacterHead _hero;
     private CharacterLifeSystem heroLifeSystem;
+    private List<string> _currenSkillsName = new List<string>();
 
     [SerializeField] private Image currentLife_Bar;
     [SerializeField] private Image currentXp_Bar;
@@ -72,8 +73,13 @@ public class CharStats_UI : MonoBehaviour
     {
         foreach (SkillInfo si in skillsNuevas)
         {
-            GameObject newSkill = Instantiate(skillImage_template_pf, skills_container.transform);
-            newSkill.GetComponent<Image>().sprite = si.img_actived;
+            if (!_currenSkillsName.Contains(si.skill_name))
+            {
+                GameObject newSkill = Instantiate(skillImage_template_pf, skills_container.transform);
+                newSkill.GetComponent<Image>().sprite = si.img_actived;
+                _currenSkillsName.Add(si.skill_name);
+            }
+
         }
     }
 }

@@ -9,10 +9,10 @@ public class CanvasPopUpInWorld_Manager : MonoBehaviour
 
     public static CanvasPopUpInWorld_Manager instance;//Instancia de manager
     
-    [SerializeField] private List<Icon_DATA> _iconos = new List<Icon_DATA>();//lista donde se agregan todas las imagenes y sus IDs ("tupla custom").
-                                                                             //Puede ser un scriptable object...
+    [SerializeField] private List<Icon_DATA> _iconos = new List<Icon_DATA>();//lista donde se agregan todas las imagenes y sus IDs
     
     private static Dictionary<Icon, Icon_DATA> imgRegistry = new Dictionary<Icon, Icon_DATA>();//registro de todas las imagenes y sus IDs
+    
     
     [SerializeField] private RectTransform canvasRect;//el canvas donde va a estar ubicado el popUp
 

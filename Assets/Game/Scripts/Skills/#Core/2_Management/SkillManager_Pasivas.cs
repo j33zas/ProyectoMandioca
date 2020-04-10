@@ -12,7 +12,7 @@ public class SkillManager_Pasivas : MonoBehaviour
     [SerializeField] List<SkillLevelByBranch> alllevels;
     public Dictionary<SkillType, List<SkillLevelByBranch>> database_levelbytype = new Dictionary<SkillType, List<SkillLevelByBranch>>();
     
-    List<SkillBase> current_list_of_skills = new List<SkillBase>();
+    public List<SkillBase> current_list_of_skills = new List<SkillBase>();
     SkillType current_skill_type;
     SkillBase current_skills;
 
@@ -80,10 +80,18 @@ public class SkillManager_Pasivas : MonoBehaviour
             Main.instance.gameUiController.CreateNewSkillSelectionPopUp(dequeuedRequest.ToList(), ReturnSkill);
         }
     }
+    
+    //Devuelvo un request
+    public List<SkillInfo> GetSkillRequest()
+    {
+        return  newSkillRequests.Dequeue().ToList();
+    }
     public bool I_Have_An_Active_Request() => newSkillRequests.Count() > 0;
 
-    void ReturnSkill(SkillInfo info)
+    //Te la hice publica para poder agarrarla desde el menu.
+    public void ReturnSkill(SkillInfo info)
     {
+        Debug.Log("Devuelvo " + info.skill_name);
         if (!current_list_of_skills.Contains(database_basebyinfo[info]))
         {
             current_list_of_skills.Add(database_basebyinfo[info]);
@@ -99,6 +107,11 @@ public class SkillManager_Pasivas : MonoBehaviour
         }
         Main.instance.gameUiController.UI_Send_NameSkillType(current_skill_type.ToString());
         Main.instance.gameUiController.RefreshPassiveSkills_UI(current_list_of_skills.Select(x => x.skillinfo).ToList());
+    }
+
+    public List<SkillInfo> GetCurrentPassiveSkills()
+    {
+        return current_list_of_skills.Select(x => x.skillinfo).ToList();
     }
     
 

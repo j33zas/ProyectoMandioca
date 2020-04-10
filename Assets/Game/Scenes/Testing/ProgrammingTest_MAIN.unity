@@ -17226,6 +17226,10 @@ MonoBehaviour:
     type: 3}
   charStats_template_pf: {fileID: 6878648162145026083, guid: 8b8fde75d980f412babfa2d19590b18b,
     type: 3}
+  lvlUp_pf: {fileID: -6629579772184285048, guid: 996b8fc0850194b71a97f032fb488063,
+    type: 3}
+  _gameMenuUi_pf: {fileID: 7956148892697789936, guid: d6aa97946c8c24fd1ac0b4d34d89a38c,
+    type: 3}
   leftCanvas: {fileID: 1673563631}
   rightCanvas: {fileID: 1392347563}
   myCanvas: {fileID: 816310109}
@@ -46112,6 +46116,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4883908fe714f478abb0102fb8d54d7b, type: 2}
   - {fileID: 11400000, guid: 3a6f2323490c24c938724aabb4a6e8b3, type: 2}
   - {fileID: 11400000, guid: aa6dc873775094649a71aea95082c9e2, type: 2}
+  current_list_of_skills: []
   testing: 0
   skillinfos:
   - {fileID: 11400000, guid: 775eaf44cb51abe45b11c32cacc2c435, type: 2}

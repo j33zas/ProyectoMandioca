@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "PopUp", menuName = "UI/PopUp/Image")]
+[CreateAssetMenu(fileName = "PopUp_static", menuName = "UI/PopUp/Static")]
 public class Icon_DATA : ScriptableObject 
 {
     public Sprite image;
     public Icon icon;
+    
 }
