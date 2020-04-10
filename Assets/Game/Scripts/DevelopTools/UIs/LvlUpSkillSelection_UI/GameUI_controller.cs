@@ -17,8 +17,11 @@ public class GameUI_controller : MonoBehaviour
     [Header("--XX--Canvas containers--XX--")]
     [SerializeField] private RectTransform leftCanvas;
     [SerializeField] private RectTransform rightCanvas;
-    
+
+    [SerializeField] Canvas myCanvas; public Canvas MyCanvas { get => myCanvas;}
+
     public bool openUI { get; private set; }
+   
 
     #region Config
 
@@ -62,6 +65,11 @@ public class GameUI_controller : MonoBehaviour
         LvlUpSkillSelection_UI newPopUp = Instantiate(UiTemplateRegistry[UI_templates.skillSelection], leftCanvas).GetComponent<LvlUpSkillSelection_UI>();
         newPopUp.Configure(skillsParaElegir, callback);
         return newPopUp;
+    }
+
+    public void UI_Send_NameSkillType(string s)
+    {
+        //el nombre de el tipo de skill
     }
 
     public void UI_SendLevelUpNotification()

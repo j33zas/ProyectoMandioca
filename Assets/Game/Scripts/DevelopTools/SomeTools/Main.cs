@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using DevelopTools;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Tools;
-using DevelopTools;
+using UnityEngine;
 //using XInputDotNetPure;
-
 
 public class Main : MonoBehaviour
 {
@@ -16,15 +14,26 @@ public class Main : MonoBehaviour
     public GenericBar bar;
     List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
     ThreadRequestObject<PlayObject> req;
-    
+    public bool use_selector = true;
+    bool gameisbegin;
+
 
     [Header("Inspector References")]
     public LevelSystem levelsystem;
     public EventManager eventManager;
     [SerializeField] CharacterHead character;
     [SerializeField] PlayObject[] allentities;
+    public UI_Menu ui_menu;
 
-public GameUI_controller gameUiController;
+    public GameUI_controller gameUiController;
+
+    [Header("Skills")]
+    public GameObject model_skill_selector;
+    GameObject selector;
+    public SkillManager_Pasivas skillmanager_pasivas;
+    public SkillManager_Activas skillmanager_activas;
+
+
 
     private void Awake()
     {
@@ -37,29 +46,54 @@ public GameUI_controller gameUiController;
 
     void Start()
     {
+        if (use_selector)
+        {
+            selector = GameObject.Instantiate(model_skill_selector, gameUiController.MyCanvas.transform);
+            selector.GetComponent<UI_BeginSkillSelector>().Initialize(SkillSelected);
+        }
+        else
+        {
+            LoadLevelPlayObjects();
+        }
+
+    }
+
+    void SkillSelected(SkillType _skillType)
+    {
+        skillmanager_pasivas.Initialize();
+        skillmanager_pasivas.SelectASkillType(_skillType);
+        levelsystem.Initialize();
+        LoadLevelPlayObjects();
+        selector.gameObject.SetActive(false);
+    }
+
+    void LoadLevelPlayObjects()
+    {
         toload.Add(AddToMainCollection);
         req = new ThreadRequestObject<PlayObject>(
             this,
             bar,
             toload.ToArray()
             );
+
+
+        gameisbegin = true;
     }
 
-
-    bool pause;
-    private void Update()//test//borrar
+    public void OpenMenu()
     {
-        pause = !pause;
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (gameisbegin)
         {
-            if (pause)
-            {
-                Pause();
-            }
-            else
-            {
-                Play();
-            }
+            Pause();
+            ui_menu.Open();
+        }
+    }
+    public void CloseMenu()
+    {
+        if (gameisbegin)
+        {
+            Play();
+            ui_menu.Close();
         }
     }
 
@@ -97,7 +131,7 @@ public GameUI_controller gameUiController;
         }
     }
 
-    
+
 
     public void Play() { foreach (var e in allentities) e.Resume(); }
     public void Pause() { foreach (var e in allentities) e.Pause(); }
@@ -113,8 +147,8 @@ public GameUI_controller gameUiController;
     public bool Ui_Is_Open() => gameUiController.openUI;
 
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
-    public BaseRoom GetRoom() => _currentRoom; 
-    
+    public BaseRoom GetRoom() => _currentRoom;
+
 
 
 }

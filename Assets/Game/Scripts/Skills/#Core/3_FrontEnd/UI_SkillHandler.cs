@@ -67,6 +67,7 @@ public class UI_SkillHandler : UI_Base
             {
                 oneshot = true;
                 first = ui;
+                ConfigurateFirst(ui.gameObject);
             }
 
             index++;

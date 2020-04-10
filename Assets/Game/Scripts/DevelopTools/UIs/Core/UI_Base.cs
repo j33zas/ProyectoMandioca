@@ -7,6 +7,7 @@ public abstract class UI_Base : MonoBehaviour
     public int idfinder;
 
     public bool isActive;
+    public GameObject firstToOpenMenu;
 
     public void SetSpeed(float speed) { anim.speed = speed; }
 
@@ -37,9 +38,28 @@ public abstract class UI_Base : MonoBehaviour
     protected abstract void OnEndCloseAnimation();
     protected abstract void OnUpdate();
     public abstract void Refresh();
-    public void Open() { anim.Open(); parent.SetActive(true); Refresh(); isActive = true; }
+    
     public void OnForSettings() { parent.SetActive(true); }
     public void OFFForSettings() { parent.SetActive(false); }
     public void PreOpen() { parent.SetActive(true); }
-    public void Close() { anim.Close(); /*isActive = false; */}
+
+    public void ConfigurateFirst(GameObject go)
+    {
+        firstToOpenMenu = go;
+    }
+
+    public virtual void Open()
+    {
+        anim.Open();
+        parent.SetActive(true);
+        Refresh();
+        isActive = true;
+        Main.instance.GetMyEventSystem().Set_First(firstToOpenMenu.gameObject);
+    }
+    public void Close()
+    {
+        anim.Close();
+        /*isActive = false; */
+        Main.instance.GetMyEventSystem().DeselectGameObject();
+    }
 }
