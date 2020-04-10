@@ -17,6 +17,8 @@ public class CharStats_UI : MonoBehaviour
     [SerializeField] private Image currentXp_Bar;
     [SerializeField] private Text currentPath_txt;//tengo que ver de donde agarro esto
     [SerializeField] private Text currentLvl_txt;
+    [SerializeField] private Text hp_txt;
+    [SerializeField] private Text xp_txt;
     [SerializeField] private GameObject lvlUpSign; 
     [SerializeField] private GameObject skills_container;
 
@@ -29,6 +31,7 @@ public class CharStats_UI : MonoBehaviour
 
         heroLifeSystem = _hero.GetCharacterLifeSystem();
         
+        
         maxHP = heroLifeSystem.GetMax();
     }
 
@@ -40,6 +43,7 @@ public class CharStats_UI : MonoBehaviour
     public void UpdateLife_UI(float newValue)
     {
         currentLife_Bar.fillAmount = newValue / maxHP;
+        hp_txt.text = newValue + " / " + maxHP;
     }
     
     public void UpdateXP_UI(int current, int maxXP, int currentLvl)
@@ -51,6 +55,8 @@ public class CharStats_UI : MonoBehaviour
         
         currentXp_Bar.fillAmount = cur / max;
 
+        xp_txt.text = current + " / " + maxXP;
+        
         currentLvl_txt.text = "Lvl " + currentLvl;
     }
 
