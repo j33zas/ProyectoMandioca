@@ -49,7 +49,6 @@ public class CharStats_UI : MonoBehaviour
     
     public void UpdateXP_UI(int current, int maxXP, int currentLvl)
     {
-        Debug.Log("la current es " + current + " y la max es " + maxXP);
 
         float cur = current;
         float max = maxXP;

@@ -21,4 +21,9 @@ public abstract class EnemyBase : NPCBase
         target = false;
         _targetFeedback.SetActive(false);
     }
+
+    public void Mortal()
+    {
+        Invinsible = false;
+    }
 }

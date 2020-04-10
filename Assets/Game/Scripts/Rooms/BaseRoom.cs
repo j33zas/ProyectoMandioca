@@ -60,4 +60,9 @@ public class BaseRoom : MonoBehaviour
     {
         myEnemies.Remove(enemy);
     }
+
+    public List<EnemyBase> myenemies()
+    {
+        return myEnemies;
+    }
 }

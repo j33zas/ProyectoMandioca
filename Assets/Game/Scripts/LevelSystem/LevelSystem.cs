@@ -22,8 +22,6 @@ public class LevelSystem : MonoBehaviour
     {
         currentExpValue += exp;
 
-        Debug.Log("Experiemncia agregada " + exp + " mi current es: " + currentExpValue);
-
         if (currentExpValue >= levels[currentIndex].maxt_to_level_up)
         {
             //point_to_spend++;

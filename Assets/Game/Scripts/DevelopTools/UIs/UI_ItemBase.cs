@@ -22,17 +22,17 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler, ISelectHandler
     public PingPongLerp pingpongScale;
     Vector3 currentscale;
     Vector3 amplitudDeEscala;
-    
+
     public RectTransform rect;
 
     protected Color SelectedColor;
 
     Action<int> OnUI_Selected;
-   
-    
+
+
     //Animacion bonita cuando tengo OnHover o cuando lo selecciono
-    public void PLay_Anim_Scale() => pingpongScale.Play(cantspeedscale);
-    public void Stop_Anim_Scale() => pingpongScale.Stop();
+    public void PLay_Anim_Scale() { if (pingpongScale != null) { pingpongScale.Play(cantspeedscale); } }
+    public void Stop_Anim_Scale() { if (pingpongScale != null) { pingpongScale.Stop(); } }
     void Update()
     {
         /// <summary>

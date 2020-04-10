@@ -64,18 +64,15 @@ public class SkillManager_Pasivas : MonoBehaviour
     int requestindex = 0;
     public void CreateRequest_NewSkill()
     {
-        Debug.Log("create a request");
+       
         var req = database_levelbytype[current_skill_type][requestindex].Selection;
         newSkillRequests.Enqueue(req);
-        Debug.Log("Req _" + newSkillRequests.Count);
         requestindex++;
     }
     public void EVENT_GetRequest()
     {
-        Debug.Log("SPEND REQUEST");
         if (newSkillRequests.Count > 0)
         {
-            Debug.Log("# SPEND REQUEST");
             var dequeuedRequest = newSkillRequests.Dequeue();
             Main.instance.gameUiController.CreateNewSkillSelectionPopUp(dequeuedRequest.ToList(), ReturnSkill);
         }

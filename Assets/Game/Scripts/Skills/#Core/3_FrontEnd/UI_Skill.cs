@@ -22,7 +22,6 @@ public class UI_Skill : UI_ItemBase
 
     public void Cooldown_ConfigureTime(float _cooldown)
     {
-        Debug.Log("cooldown1");
         genbar = GetComponentInChildren<GenericBar>();
         genbar.Configure(_cooldown, 0.01f);
     }
