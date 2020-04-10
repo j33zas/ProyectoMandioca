@@ -2,6 +2,7 @@
 public enum side_type { neutral, ally, enemy }
 public enum SkillType { control, culpa, obligacion, generics, others }
 public enum Damagetype { Fire, normal, parriable, explosion }
+public enum CommonStates { IDLE, ATTACK, ENABLE, DISABLE, DIE, CHASING, GO_TO_POS }
 
 //////////
 // UI stuff
