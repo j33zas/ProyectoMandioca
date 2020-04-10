@@ -24,6 +24,12 @@ public class WorldCanvasPopUp : MonoBehaviour
         _image.sprite = img;
         
     }
+    
+    public void SetCanvasPopUp(Transform wordlObj, RectTransform canvas)
+    {
+        _worldObj = wordlObj;
+        _canvas = canvas;
+    }
 
     private void Update()
     {

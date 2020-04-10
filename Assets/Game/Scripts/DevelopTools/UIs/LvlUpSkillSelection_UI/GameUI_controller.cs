@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tools.Extensions;
+using UnityEngine.UI;
 
 public class GameUI_controller : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class GameUI_controller : MonoBehaviour
 
     [SerializeField] private GameObject skillSelection_template_pf;
     [SerializeField] private GameObject charStats_template_pf;
+    [SerializeField] private WorldCanvasPopUp lvlUp_pf;
     
     private CharStats_UI _charStats_Ui;
     Dictionary<UI_templates, GameObject> UiTemplateRegistry = new Dictionary<UI_templates, GameObject>();
@@ -74,10 +76,8 @@ public class GameUI_controller : MonoBehaviour
 
     public void UI_SendLevelUpNotification()
     {
-        //aca le mando todo el festejo de que subiste de nivel
-        //Pausar
-        //Cartel de Subiste de nivel capo // o feedback
-        //Boton para seguir juego
+        
+        CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);
     }
     public void UI_SendActivePlusNotification(bool val)
     {

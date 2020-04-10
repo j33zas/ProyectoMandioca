@@ -45,6 +45,15 @@ public class CanvasPopUpInWorld_Manager : MonoBehaviour
         return newPopUp;
     }
     
+    public WorldCanvasPopUp MakePopUpAnimated(Transform worldObjectPos, WorldCanvasPopUp icon)
+    {
+        //Instancia el prefab de la imagen y lo hace hijo del canvas
+        WorldCanvasPopUp newPopUp = Instantiate(icon, canvasRect.transform);
+        //Setea el nuevo objeto. Se le pasa la posicion del objeto del mundo y la imagen dentro del Dic y el canvas donde ubicarla.
+        newPopUp.SetCanvasPopUp(worldObjectPos, canvasRect);
+        return newPopUp;
+    }
+    
 }
 //IDs de las diferentes imagens de popUp
 public enum Icon {parry};

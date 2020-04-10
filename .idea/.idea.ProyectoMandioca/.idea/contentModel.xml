@@ -780,6 +780,23 @@
                 <e p="ScriptRandom.cs" t="Include" />
               </e>
               <e p="EventManager.cs" t="Include" />
+              <e p="LeanTween" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="LeanTweenDocumentationEditor.cs" t="Include" />
+                </e>
+                <e p="Framework" t="Include">
+                  <e p="LeanAudio.cs" t="Include" />
+                  <e p="LeanSmooth.cs" t="Include" />
+                  <e p="LeanTest.cs" t="Include" />
+                  <e p="LeanTween.cs" t="Include" />
+                  <e p="LeanTweenExt.cs" t="Include" />
+                  <e p="LTDescr.cs" t="Include" />
+                  <e p="LTDescrOptional.cs" t="Include" />
+                  <e p="LTSeq.cs" t="Include" />
+                </e>
+                <e p="License.txt" t="Include" />
+                <e p="README.txt" t="Include" />
+              </e>
               <e p="PoolObjects" t="Include">
                 <e p="Espada.cs" t="Include" />
                 <e p="ItemPrefab_test.cs" t="Include" />
@@ -842,6 +859,9 @@
                 </e>
                 <e p="PingPongLerp.cs" t="Include" />
                 <e p="UI_Animations" t="Include">
+                  <e p="LvlUp" t="Include">
+                    <e p="LvlUp_animation_helper.cs" t="Include" />
+                  </e>
                   <e p="UI_GoBack.cs" t="Include" />
                 </e>
                 <e p="UI_Inventory" t="Include">
