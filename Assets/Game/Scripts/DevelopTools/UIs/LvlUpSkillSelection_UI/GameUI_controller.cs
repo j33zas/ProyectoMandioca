@@ -81,7 +81,6 @@ public class GameUI_controller : MonoBehaviour
     }
     public void UI_SendActivePlusNotification(bool val)
     {
-        Debug.Log(val);
         //aca activo o desactivo la lucecita o el algo que indique que puedo elegir una skill
         if(val) _charStats_Ui.ToggleLvlUpSign();
             
