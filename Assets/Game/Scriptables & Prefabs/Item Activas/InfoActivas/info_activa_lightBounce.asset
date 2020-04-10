@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e824c60e9557f1147a15ab7cb562e6c4, type: 3}
-  m_Name: SkillInfoActiva
+  m_Name: info_activa_lightBounce
   m_EditorClassIdentifier: 
   skilltype: 4
-  skill_name: el ejemplo
+  skill_name: light bounces
   description_lore: default_description_lore
-  description_technical: default_description_technical
-  img_blocked: {fileID: 21300000, guid: 17badaf6a6d858a418388fee7930ba02, type: 3}
-  img_avaliable: {fileID: 21300000, guid: 01cf411a22392b649801d34bd164a422, type: 3}
-  img_actived: {fileID: 21300000, guid: 3cc021062a6b557418966dcf5b6193e0, type: 3}
+  description_technical: la luz rebota en el escudo
+  img_blocked: {fileID: 21300000, guid: 8e9639ae67da9bd4587eab08e2f38e26, type: 3}
+  img_avaliable: {fileID: 21300000, guid: 7e5a1df906a3b044eb1787d68a97bd25, type: 3}
+  img_actived: {fileID: 21300000, guid: 9e4ed1bc0178eee40bd5bf321a04fe9e, type: 3}
