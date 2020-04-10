@@ -16,6 +16,7 @@ public class Main : MonoBehaviour
     ThreadRequestObject<PlayObject> req;
     public bool use_selector = true;
     bool gameisbegin;
+    bool inmenu;
 
 
     [Header("Inspector References")]
@@ -80,12 +81,20 @@ public class Main : MonoBehaviour
         gameisbegin = true;
     }
 
-    public void OpenMenu()
+    public void EVENT_OpenMenu()
     {
         if (gameisbegin)
         {
-            Pause();
-            ui_menu.Open();
+            if (!Ui_Is_Open())
+            {
+                gameUiController.Set_Opened_UI();
+                ui_menu.Open();
+            }
+            else
+            {
+                gameUiController.Set_Closed_UI();
+                ui_menu.Close();
+            }
         }
     }
     public void CloseMenu()
@@ -145,7 +154,6 @@ public class Main : MonoBehaviour
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     public bool Ui_Is_Open() => gameUiController.openUI;
-
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
     public BaseRoom GetRoom() => _currentRoom;
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Tools.Extensions;
 
 public class SkillManager_Activas : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class SkillManager_Activas : MonoBehaviour
 
     private void Awake()
     {
-        myActiveSkills = new SkillActivas[5];
+        myActiveSkills = new SkillActivas[4];
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
         
         allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
@@ -52,13 +53,18 @@ public class SkillManager_Activas : MonoBehaviour
 
 
     public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;
+    int indextest;
     public void ReplaceFor(SkillInfo _skillinfo, int index)
     {
-        myActiveSkills[index].EndSkill();
-        myActiveSkills[index] = fastreference[_skillinfo];
+        indextest = indextest.NextIndex(myActiveSkills.Length);
+
+        myActiveSkills[indextest].EndSkill();
+        myActiveSkills[indextest] = fastreference[_skillinfo];
 
         frontend.Reconfigurate(myActiveSkills);
-        myActiveSkills[index].BeginSkill();
+        myActiveSkills[indextest].BeginSkill();
+
+        //spawnear el viejo
     }
     void FillDiccionary()
     {

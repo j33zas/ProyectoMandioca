@@ -39,7 +39,6 @@ public class InteractSensor : MonoBehaviour
         {
             most_close.Exit();
         }
-        Debug.Log("DISABLE");
         calculate_fast_recollection = false;
         timerfastrec = 0;
     }
