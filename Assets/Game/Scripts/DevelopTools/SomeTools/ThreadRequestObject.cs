@@ -53,12 +53,14 @@ public class ThreadRequestObject<T> where T : MonoBehaviour
 
             foreach (var child in gos[i].GetComponentsInChildren<T>())
             {
-                col.Add(child);
+                if (!col.Contains(child))
+                    col.Add(child);
             }
             var c = gos[i].GetComponent<T>();
             if (c != null)
             {
-                col.Add(c);
+                if(!col.Contains(c))
+                    col.Add(c);
             }
         }
 

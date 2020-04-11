@@ -198,4 +198,9 @@ public class DummyEnemy : EnemyBase
     {
         
     }
+
+    public override void IAInitialize(CombatDirector _director)
+    {
+
+    }
 }

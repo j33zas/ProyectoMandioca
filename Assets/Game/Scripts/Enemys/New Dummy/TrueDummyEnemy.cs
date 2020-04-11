@@ -55,9 +55,11 @@ public class TrueDummyEnemy : EnemyBase
 
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
-
+    }
+    public override void IAInitialize(CombatDirector _director)
+    {
+        director = _director;
         SetStates();
-
         canupdate = true;
     }
 
@@ -99,7 +101,8 @@ public class TrueDummyEnemy : EnemyBase
         {
             feedbackStun.Refresh();
             feedbackHitShield.Refresh();
-            sm.Update();
+            if(sm!=null)
+                sm.Update();
         }
     }
     protected override void OnPause()
@@ -183,6 +186,7 @@ public class TrueDummyEnemy : EnemyBase
     }
     public void Die()
     {
+        director.AddOrRemoveToList(this);
         Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
         gameObject.SetActive(false);
         //sm.SendInput(DummyEnemyInputs.DIE);
@@ -259,8 +263,8 @@ public class TrueDummyEnemy : EnemyBase
         var head = Main.instance.GetChar();
 
         //Asignando las funciones de cada estado
-        new DummyIdleState(idle, sm, IsAttack, CurrentTargetPos, distanceToAttack, normalDistance).SetAnimator(animator).SetRoot(rootTransform)
-                                                                                                                     .SetTarget(head.transform);
+        new DummyIdleState(idle, sm, IsAttack, CurrentTargetPos, distanceToAttack, normalDistance,this).SetAnimator(animator).SetRoot(rootTransform)
+                                                                                                                     .SetTarget(head.transform).SetDirector(director);
 
         new DummyFollowState(goToPos, sm, avoidRadious, avoidWeight, GetCurrentSpeed, CurrentTargetPos, normalDistance, this).SetAnimator(animator).SetRigidbody(rb)
                                                                                                           .SetRoot(rootTransform).SetTarget(head.transform);

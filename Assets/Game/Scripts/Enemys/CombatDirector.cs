@@ -19,6 +19,11 @@ public class CombatDirector : MonoBehaviour
 
     private void Start()
     {
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_END_LOAD, Initialize);
+    }
+
+    public void Initialize()
+    {
         head = Main.instance.GetChar().transform;
 
         Vector3 east = head.position + Vector3.right * 2;
@@ -35,20 +40,29 @@ public class CombatDirector : MonoBehaviour
         positionsToAttack.Add(CreateNewPos(northWest));
         positionsToAttack.Add(CreateNewPos(-northWest));
 
-        StartCoroutine(MyCourroutine());
-    }
+        var enemies = new List<EnemyBase>();
 
-    IEnumerator MyCourroutine()
-    {
-        yield return new WaitForSeconds(0.5f);
-        var enemies = Main.instance.GetEnemies();
+        enemies = Main.instance.GetEnemies();
 
-        Debug.Log(Main.instance.GetEnemies().Count);
+        Debug.Log(enemies.Count);
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            AddOrRemoveToList(enemies[i]);
+            if (enemies[i].gameObject.activeSelf)
+            {
+                enemies[i].IAInitialize(this);
+                AddOrRemoveToList(enemies[i]);
+            }
         }
+    }
+
+    public void GetNewNearPos(ICombatDirector e)
+    {
+        Transform pos = e.CurrentTargetPos();
+
+        positionsToAttack.Add(pos);
+
+        e.SetTargetPos(GetNearPos(e.CurrentPos()));
     }
 
     public void RunDirector()
@@ -148,6 +162,14 @@ public class CombatDirector : MonoBehaviour
             {
                 waitToAttack.Remove(e);
             }
+            else if (inAttack.Contains(e))
+            {
+                positionsToAttack.Add(e.CurrentTargetPos());
+                e.SetTargetPos(null);
+                inAttack.Remove(e);
+                if (waitToAttack.Count > 0)
+                    AssignPos();
+            }
         }
 
         if (toAttack.Count > 0 && !run)
@@ -167,6 +189,8 @@ public class CombatDirector : MonoBehaviour
                 timer = 0;
                 ICombatDirector enemy = toAttack[Random.Range(0, toAttack.Count)];
                 enemy.ToAttack();
+
+                Debug.Log("atacá papu");
 
                 CalculateTimer();
 

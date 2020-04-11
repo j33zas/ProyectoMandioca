@@ -85,7 +85,7 @@ public class Main : MonoBehaviour
     {
         gameisbegin = true;
         Play();
-        
+        eventManager.TriggerEvent(GameEvents.GAME_END_LOAD);
     }
 
     public void EVENT_OpenMenu() { if (gameisbegin) gameUiController.BTN_Back_OpenMenu(); }
@@ -114,7 +114,20 @@ public class Main : MonoBehaviour
         return aux;
     }
 
-    
+    public List<T> GetListOfComponent<T>() where T : PlayObject
+    {
+        List<T> aux = new List<T>();
+        foreach (var obj in allentities)
+        {
+            var myComp = obj.GetComponent<T>();
+
+            if (myComp != null)
+            {
+                aux.Add((T)obj);
+            }
+        }
+        return aux;
+    }
 
     public void OnPlayerDeath() { }
 
@@ -128,7 +141,7 @@ public class Main : MonoBehaviour
 
 
 
-    public void Play() { foreach (var e in allentities) e.Resume(); }
+    public void Play() { foreach (var e in allentities) e.Resume();  }
     public void Pause() { foreach (var e in allentities) e.Pause(); }
 
 
@@ -136,7 +149,8 @@ public class Main : MonoBehaviour
     /// PUBLIC GETTERS
     /////////////////////////////////////////////////////////////////////
     public CharacterHead GetChar() => character;
-    public List<EnemyBase> GetEnemies() => GetListOf<EnemyBase>();
+    public List<EnemyBase> GetEnemies() => GetListOfComponent<EnemyBase>();
+
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     public bool Ui_Is_Open() => gameUiController.openUI;

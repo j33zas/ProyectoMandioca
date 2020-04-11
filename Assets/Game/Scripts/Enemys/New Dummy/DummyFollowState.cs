@@ -50,6 +50,8 @@ namespace Tools.StateMachine
             if (GetMyPos() == null)
             {
                 ObstacleAvoidance(root.forward);
+                if (Vector3.Distance(target.position, root.position) <= normalDistance)
+                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
             }
             else
             {
@@ -80,7 +82,7 @@ namespace Tools.StateMachine
                 {
                     if (item.GetComponent<EntityBase>())
                     {
-                        if (!item.GetComponent<CharacterHead>() && item.GetComponent<EntityBase>() != noObs)
+                        if (item.GetComponent<EntityBase>() != noObs)
                         {
                             if (!obs)
                                 obs = item.transform;

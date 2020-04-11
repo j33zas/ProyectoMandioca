@@ -52,9 +52,11 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
 
     public abstract void ToAttack();
 
+    public abstract void IAInitialize(CombatDirector _director);
+
     public abstract float ChangeSpeed(float newSpeed);
 
-    public void GetFocusedOnParry()
+    public virtual void GetFocusedOnParry()
     {
         foreach (var item in Main.instance.GetEnemies())
         {

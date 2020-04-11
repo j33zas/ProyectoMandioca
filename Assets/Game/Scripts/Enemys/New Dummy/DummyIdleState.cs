@@ -13,16 +13,17 @@ namespace Tools.StateMachine
         float distanceMin;
         float distanceMax;
         float currentDis;
+        ICombatDirector enemy;
 
         public DummyIdleState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm,
-                              Func<bool> _isAttack, Func<Transform> _isTarget, float _disInCom, float _disNormal) : base(myState, _sm)
+                              Func<bool> _isAttack, Func<Transform> _isTarget, float _disInCom, float _disNormal, ICombatDirector _enemy) : base(myState, _sm)
         {
             IsAttack += _isAttack;
             MyPos += _isTarget;
             distanceMax = _disNormal;
             distanceMin = _disInCom;
+            enemy = _enemy;
 
-            Debug.Log("entré");
             myState.OnUpdate += Update;
         }
 
@@ -63,9 +64,13 @@ namespace Tools.StateMachine
                     currentDis = distanceMax;
                 }
 
-                Debug.Log(Vector3.Distance(target.position, root.position) + "  " + currentDis);
+                //Debug.Log(Vector3.Distance(target.position, root.position) + "  " + currentDis);
                 if (Vector3.Distance(target.position, root.position) >= currentDis)
+                {
+                    if (currentDis == distanceMin)
+                        combatDirector.GetNewNearPos(enemy);
                     sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+                }
             }
         }
     }
