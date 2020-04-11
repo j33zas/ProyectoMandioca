@@ -51,7 +51,8 @@ public class Main : MonoBehaviour
         {
             skillmanager_pasivas.Initialize();
             skillmanager_activas.Initialize();
-            gameUiController.Initialize(skillmanager_pasivas, skillmanager_activas);
+            levelsystem.Initialize();
+            gameUiController.Initialize();
             selector = GameObject.Instantiate(model_skill_selector, gameUiController.MyCanvas.transform);
             selector.GetComponent<UI_BeginSkillSelector>().Initialize(SkillSelected);
         }
@@ -65,7 +66,6 @@ public class Main : MonoBehaviour
     void SkillSelected(SkillType _skillType)
     {
         skillmanager_pasivas.SelectASkillType(_skillType);
-        levelsystem.Initialize();
         LoadLevelPlayObjects();
         selector.gameObject.SetActive(false);
     }

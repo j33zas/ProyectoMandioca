@@ -36,10 +36,9 @@ public class GameUI_controller : MonoBehaviour
         RegistrarUIPrefabs();
     }
 
-    public void Initialize(SkillManager_Pasivas _pasivas, SkillManager_Activas _activas)
+    public void Initialize()
     {
         _charStats_Ui = Instantiate<GameObject>(UiTemplateRegistry[UI_templates.charStats], leftCanvas).GetComponent<CharStats_UI>();
-        gameMenu_UI.Initialize();
     }
 
     private void RegistrarUIPrefabs()

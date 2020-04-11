@@ -14,31 +14,14 @@ public class GameMenu_UI : UI_Base
     [SerializeField] private RectTransform passiveSkillsSelection_container;
     [SerializeField] private PassiveSkill_template ps_template_pf;
     [SerializeField] private LvlUpSkillSelection_UI psSelection_template_pf;
-
     [SerializeField] private Text skillDescription_txt;
-
     Dictionary<SkillInfo, PassiveSkill_template> templates = new Dictionary<SkillInfo, PassiveSkill_template>();
 
-    public void Initialize()
-    {
-        skill_manager = Main.instance.skillmanager_pasivas;
-    }
-
-
     void RegistryButtons() { /*Registro las acciones de los botones del menu*/ }
-    void UpdateSkillDescription(SkillInfo skill)
+    void UpdateSkillDescription(SkillInfo skill) => skillDescription_txt.text = skill.description_technical;
+
+    public override void Refresh()
     {
-        skillDescription_txt.text = skill.description_technical;
-    }
-
-
-    #region UI_base Methods
-    protected override void OnAwake() { }
-    protected override void OnStart() { }
-    protected override void OnEndOpenAnimation() { }
-    protected override void OnEndCloseAnimation() { }
-    protected override void OnUpdate() { }
-    public override void Refresh() {
         bool first = false;
 
         var infos = Main.instance.skillmanager_pasivas.current_list_of_skills.Select(x => x.skillinfo);
@@ -58,10 +41,19 @@ public class GameMenu_UI : UI_Base
             }
         }
 
+        skill_manager = Main.instance.skillmanager_pasivas;
+
         if (skill_manager.I_Have_An_Active_Request())
         {
             Instantiate(psSelection_template_pf, passiveSkillsSelection_container).Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill);
         }
     }
+
+    #region UI_base Methods
+    protected override void OnAwake() { }
+    protected override void OnStart() { }
+    protected override void OnEndOpenAnimation() { }
+    protected override void OnEndCloseAnimation() { }
+    protected override void OnUpdate() { }
     #endregion
 }
