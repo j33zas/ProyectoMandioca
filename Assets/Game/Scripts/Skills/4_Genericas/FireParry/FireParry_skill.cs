@@ -10,12 +10,12 @@ public class FireParry_skill : SkillBase
     [SerializeField] private float timePerTick;
     [SerializeField] private int dmgPerTick;
 
-    private List<DummyEnemy> _enemies;
+    private List<EnemyBase> _enemies;
     
     protected override void OnBeginSkill()
     {
-        _enemies = new List<DummyEnemy>();
-        _enemies = FindObjectsOfType<DummyEnemy>().ToList();
+        _enemies = new List<EnemyBase>();
+        _enemies = Main.instance.GetEnemies();
 
         foreach (var item in _enemies)
         {

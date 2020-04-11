@@ -2,41 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Combat director viejo, estaba un poco Acoplado
-//el que lo agarre que lo desacople y que lo haga con una
-//lista de Enemies
-
 public class CombatDirector : MonoBehaviour
 {
     List<ICombatDirector> toAttack = new List<ICombatDirector>();
+    List<ICombatDirector> inAttack = new List<ICombatDirector>();
     List<ICombatDirector> waitToAttack = new List<ICombatDirector>();
     List<Transform> positionsToAttack = new List<Transform>();
-    [SerializeField] int maxEnemies;
+    [SerializeField, Range(1, 8)] int maxEnemies = 1;
+    Transform head;
 
     bool run;
     float timer;
-    float time_to_next_attack;
-    public float time_MIN_Attack;
-    public float time_MAX_Attack;
+    float timeToAttack;
+    [SerializeField] float timerMin=1;
+    [SerializeField] float timerMax=5;
 
-    //RoomTriggerManager manager;
-    private void Awake()
+    private void Start()
     {
-        //manager = GetComponent<RoomTriggerManager>();
+        head = Main.instance.GetChar().transform;
+
+        Vector3 east = head.position + Vector3.right * 2;
+        Vector3 north = head.position + Vector3.forward * 2;
+        Vector3 northEast = head.position + (Vector3.right + Vector3.forward) * 1.9f;
+        Vector3 northWest = head.position + (Vector3.forward + Vector3.left) * 1.9f;
+
+        positionsToAttack.Add(CreateNewPos(east));
+        positionsToAttack.Add(CreateNewPos(-east));
+        positionsToAttack.Add(CreateNewPos(north));
+        positionsToAttack.Add(CreateNewPos(-north));
+        positionsToAttack.Add(CreateNewPos(northEast));
+        positionsToAttack.Add(CreateNewPos(-northEast));
+        positionsToAttack.Add(CreateNewPos(northWest));
+        positionsToAttack.Add(CreateNewPos(-northWest));
+
+        StartCoroutine(MyCourroutine());
     }
 
-    //public void Subscribe_ToDirection(State_InPosToAttack _sub) {
-    //   // if (!subs.Contains(_sub)) subs.Add(_sub);
-    //   // if (subs.Count > 0) RunDirector();
-    //}
-    //public void UnSubscribe_ToDirection(State_InPosToAttack _sub) {
-    //   // if (subs.Contains(_sub)) subs.Remove(_sub);
-    //   // if (subs.Count < 1) StopDirector();
-    //}
-    public void RunDirector() {
-        //manager.Alert();
-        run = true; timer = 0; Calculate_Time_To_Next_Attack(); }
-    public void StopDirector() { run = false; timer = 0; }
+    IEnumerator MyCourroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        var enemies = Main.instance.GetEnemies();
+
+        Debug.Log(Main.instance.GetEnemies().Count);
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            AddOrRemoveToList(enemies[i]);
+        }
+    }
+
+    public void RunDirector()
+    {
+        run = true; timer = 0;
+        CalculateTimer();
+    }
+
+    public void StopDirector()
+    {
+        run = false;
+        timer = 0;
+    }
 
     void AssignPos()
     {
@@ -77,16 +102,31 @@ public class CombatDirector : MonoBehaviour
         return current;
     }
 
-    void CreateNewPos(Vector3 pos)
+    Transform CreateNewPos(Vector3 pos)
     {
+        var newEmpty = new GameObject("PosToAttack");
+        newEmpty.transform.position = pos;
+        newEmpty.transform.SetParent(head);
+        return newEmpty.transform;
+    }
 
+    public void AttackRelease(ICombatDirector e)
+    {
+        if (inAttack.Contains(e))
+        {
+            positionsToAttack.Add(e.CurrentTargetPos());
+            e.SetTargetPos(null);
+            inAttack.Remove(e);
+            if (waitToAttack.Count > 0)
+                AssignPos();
+        }
     }
 
     public void AddOrRemoveToList(ICombatDirector e)
     {
         if(!toAttack.Contains(e) && !waitToAttack.Contains(e))
         {
-            if (toAttack.Count < maxEnemies)
+            if (toAttack.Count + inAttack.Count < maxEnemies)
             {
                 toAttack.Add(e);
                 AssignPos(e);
@@ -101,35 +141,39 @@ public class CombatDirector : MonoBehaviour
         {
             if (toAttack.Contains(e))
             {
-                positionsToAttack.Add(e.CurrentTargetPos());
-                e.SetTargetPos(null);
                 toAttack.Remove(e);
-                if (waitToAttack.Count > 0)
-                    AssignPos();
+                inAttack.Add(e);
             }
             else if (waitToAttack.Contains(e))
             {
                 waitToAttack.Remove(e);
             }
         }
+
+        if (toAttack.Count > 0 && !run)
+            RunDirector();
+        else if (toAttack.Count == 0 && waitToAttack.Count == 0)
+            StopDirector();
     }
 
     private void Update()
     {
         if (run)
         {
-            if (timer < time_to_next_attack)
-            {
-                timer = timer + 1 * Time.deltaTime;
-            }
-            else
+            timer += Time.deltaTime;
+
+            if (timer >= timeToAttack)
             {
                 timer = 0;
-                //subs[Random.Range(0, subs.Count)].Attack();
-                Calculate_Time_To_Next_Attack();
+                ICombatDirector enemy = toAttack[Random.Range(0, toAttack.Count)];
+                enemy.ToAttack();
+
+                CalculateTimer();
+
+                AddOrRemoveToList(enemy);
             }
         }
     }
 
-    void Calculate_Time_To_Next_Attack() => time_to_next_attack = Random.Range(time_MIN_Attack, time_MAX_Attack);
+    void CalculateTimer() => timeToAttack = Random.Range(timerMin, timerMax);
 }

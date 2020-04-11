@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public abstract class EnemyBase : NPCBase
+public abstract class EnemyBase : NPCBase, ICombatDirector
 {
     public bool target;
+    protected bool attacking;
     public GameObject _targetFeedback;
+    public Action OnParried;
+    public bool minionTarget;
     public bool Invinsible;
     public virtual void Awake()
     {
@@ -25,5 +29,39 @@ public abstract class EnemyBase : NPCBase
     public void Mortal()
     {
         Invinsible = false;
+    }
+
+    protected Transform _target;
+
+    public Transform CurrentTargetPos()
+    {
+        return _target;
+    }
+
+    public void SetTargetPos(Transform pos)
+    {
+        _target = pos;
+    }
+
+    public Vector3 CurrentPos()
+    {
+        return transform.position;
+    }
+
+    protected bool IsAttack() { return attacking; }
+
+    public abstract void ToAttack();
+
+    public abstract float ChangeSpeed(float newSpeed);
+
+    public void GetFocusedOnParry()
+    {
+        foreach (var item in Main.instance.GetEnemies())
+        {
+            if (item != this)
+                item.minionTarget = false;
+            else
+                minionTarget = true;
+        }
     }
 }

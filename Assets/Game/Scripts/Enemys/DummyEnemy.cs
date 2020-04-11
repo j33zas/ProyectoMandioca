@@ -34,11 +34,7 @@ public class DummyEnemy : EnemyBase
     [SerializeField]
     private float _distance;
     //public Follow follow;
-
-    public Action OnParried;
     public bool isOnFire { get; private set; }
-
-    public bool isTarget;
 
     public float explosionForce = 200;
     public Rigidbody _rb;
@@ -145,7 +141,7 @@ public class DummyEnemy : EnemyBase
     {
         base.HalfLife();
         TakeDamage(lifesystem.life / 2, transform.position, Damagetype.normal);
-        if (!target)
+        if (!base.target)
             Invinsible = true;
     }
     public override void OnPetrified()
@@ -155,7 +151,7 @@ public class DummyEnemy : EnemyBase
         sm.ChangeState<StatesPetrified>();
     }
 
-    public float ChangeSpeed(float newSpeed)
+    public override float ChangeSpeed(float newSpeed)
     {
         //Si le mando negativo me devuelve la original
         //para guardarla en el componente WebSlowedComponent
@@ -171,18 +167,6 @@ public class DummyEnemy : EnemyBase
 
         return _speedMovement;
     }
-    
-    public void getFocusedOnParry()
-    {
-        foreach (var item in Main.instance.GetEnemies())
-        {
-            if(item != this)
-                item.isTarget = false;
-            else
-                isTarget = true;
-        }
-    }
-
     
     public override void OnFire()
     {
@@ -209,5 +193,9 @@ public class DummyEnemy : EnemyBase
     
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
-    
+
+    public override void ToAttack()
+    {
+        
+    }
 }

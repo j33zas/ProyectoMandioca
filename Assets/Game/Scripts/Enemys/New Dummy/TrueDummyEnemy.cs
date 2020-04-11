@@ -22,8 +22,10 @@ public class TrueDummyEnemy : EnemyBase
     public bool special;
 
     public float time_stun;
+    [SerializeField] CombatDirector director;
+    [SerializeField] Transform rootTransform;
 
-    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, ENABLE, CHASING, TAKE_DAMAGE, PETRIFIED };
+    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED };
 
     [SerializeField] AnimEvent anim;
     EventStateMachine<DummyEnemyInputs> sm;
@@ -31,13 +33,10 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] float speedMovement;
     [SerializeField] float rotSpeed;
     [SerializeField] float petrifiedTime;
-    [SerializeField] float distance;
+    [SerializeField] float distanceToAttack;
+    [SerializeField] float normalDistance;
 
-
-    public Action OnParried;
     public bool isOnFire { get; private set; }
-
-    public bool isTarget;
 
     [SerializeField] float explosionForce = 200;
     Rigidbody rb;
@@ -56,11 +55,16 @@ public class TrueDummyEnemy : EnemyBase
 
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
+
+        SetStates();
+
+        canupdate = true;
     }
 
     public void DealDamage()
     {
         combatComponent.ManualTriggerAttack();
+        attacking = false;
     }
 
     public void EndStun()
@@ -121,9 +125,13 @@ public class TrueDummyEnemy : EnemyBase
         {
             rb.AddForce(dir * explosionForce, ForceMode.Impulse);
         }
+        else
+        {
+            rb.AddForce(dir * forceRecall, ForceMode.Impulse);
+        }
 
+        sm.SendInput(DummyEnemyInputs.TAKE_DAMAGE);
 
-        Debug.Log("Attack result: " + dmg);
         lifesystem.Hit(dmg);
         greenblood.Play();
 
@@ -133,7 +141,7 @@ public class TrueDummyEnemy : EnemyBase
     {
         base.HalfLife();
         TakeDamage(lifesystem.life / 2, transform.position, Damagetype.normal);
-        if (!target)
+        if (!base.target)
             Invinsible = true;
     }
     public override void OnPetrified()
@@ -143,7 +151,7 @@ public class TrueDummyEnemy : EnemyBase
         sm.SendInput(DummyEnemyInputs.PETRIFIED);
     }
 
-    public float ChangeSpeed(float newSpeed)
+    public override float ChangeSpeed(float newSpeed)
     {
         //Si le mando negativo me devuelve la original
         //para guardarla en el componente WebSlowedComponent
@@ -156,18 +164,6 @@ public class TrueDummyEnemy : EnemyBase
 
         return speedMovement;
     }
-
-    public void getFocusedOnParry()
-    {
-        foreach (var item in Main.instance.GetEnemies())
-        {
-            if (item != this)
-                item.isTarget = false;
-            else
-                isTarget = true;
-        }
-    }
-
 
     public override void OnFire()
     {
@@ -189,11 +185,18 @@ public class TrueDummyEnemy : EnemyBase
     {
         Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
         gameObject.SetActive(false);
+        //sm.SendInput(DummyEnemyInputs.DIE);
     }
     protected override void OnFixedUpdate() { }
 
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
+
+    public override void ToAttack()
+    {
+        attacking = true;
+        Debug.Log("doy la orden");
+    }
 
     #region STATE MACHINE THINGS
 
@@ -201,7 +204,6 @@ public class TrueDummyEnemy : EnemyBase
     {
         var idle = new EState<DummyEnemyInputs>();
         var goToPos = new EState<DummyEnemyInputs>();
-        var chasing = new EState<DummyEnemyInputs>();
         var attack = new EState<DummyEnemyInputs>();
         var takeDamage = new EState<DummyEnemyInputs>();
         var die = new EState<DummyEnemyInputs>();
@@ -210,8 +212,8 @@ public class TrueDummyEnemy : EnemyBase
 
         ConfigureState.Create(idle)
             .SetTransition(DummyEnemyInputs.GO_TO_POS, goToPos)
-            .SetTransition(DummyEnemyInputs.CHASING, chasing)
             .SetTransition(DummyEnemyInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(DummyEnemyInputs.ATTACK, attack)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
@@ -219,15 +221,6 @@ public class TrueDummyEnemy : EnemyBase
 
         ConfigureState.Create(goToPos)
             .SetTransition(DummyEnemyInputs.IDLE, idle)
-            .SetTransition(DummyEnemyInputs.CHASING, chasing)
-            .SetTransition(DummyEnemyInputs.TAKE_DAMAGE, takeDamage)
-            .SetTransition(DummyEnemyInputs.DIE, die)
-            .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
-            .SetTransition(DummyEnemyInputs.DISABLE, disable)
-            .Done();
-
-        ConfigureState.Create(chasing)
-            .SetTransition(DummyEnemyInputs.ATTACK, attack)
             .SetTransition(DummyEnemyInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
@@ -242,9 +235,9 @@ public class TrueDummyEnemy : EnemyBase
 
         ConfigureState.Create(takeDamage)
             .SetTransition(DummyEnemyInputs.IDLE, idle)
-            .SetTransition(DummyEnemyInputs.CHASING, chasing)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.DIE, die)
             .Done();
 
         ConfigureState.Create(die)
@@ -254,141 +247,51 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .Done();
 
-        
-
-        ConfigureState.Create(takeDamage)
+        ConfigureState.Create(petrified)
             .SetTransition(DummyEnemyInputs.IDLE, idle)
-            .SetTransition(DummyEnemyInputs.CHASING, chasing)
+            .SetTransition(DummyEnemyInputs.ATTACK, attack)
+            .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
-            .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
             .Done();
-
-        //Asignando las funciones de cada estado
-        CreateIdle(idle);
-        CreateGoTo(goToPos);
-        CreateChasing(chasing);
-        CreateTakeDamage(takeDamage);
-        CreatePetrified(petrified);
-        CreateDie(die);
-        CreateDisable(disable);
-        /////////////////////////////////////////////////
-
 
         sm = new EventStateMachine<DummyEnemyInputs>(idle);
 
+        var head = Main.instance.GetChar();
+
+        //Asignando las funciones de cada estado
+        new DummyIdleState(idle, sm, IsAttack, CurrentTargetPos, distanceToAttack, normalDistance).SetAnimator(animator).SetRoot(rootTransform)
+                                                                                                                     .SetTarget(head.transform);
+
+        new DummyFollowState(goToPos, sm, avoidRadious, avoidWeight, GetCurrentSpeed, CurrentTargetPos, normalDistance, this).SetAnimator(animator).SetRigidbody(rb)
+                                                                                                          .SetRoot(rootTransform).SetTarget(head.transform);
+
+        new DummyAttackState(attack, sm, cdToAttack, this).SetAnimator(animator).SetDirector(director);
+
+        new DummyTDState(takeDamage, sm, recallTime).SetAnimator(animator);
+
+        new DummyStunState(petrified, sm, petrifiedTime, attack).SetAnimator(animator);
+
+        new DummyDieState(die, sm).SetAnimator(animator).SetDirector(director).SetRigidbody(rb);
+
+        new DummyDisableState(disable, sm, EnableObject, DisableObject);
+
+        /////////////////////////////////////////////////
+        ///
+
     }
 
-    #region STATES
     float currentSpeed;
+    [SerializeField] float avoidWeight;
+    [SerializeField] float avoidRadious;
+    [SerializeField] float cdToAttack;
+    [SerializeField] float recallTime;
+    [SerializeField] float forceRecall;
 
+    float GetCurrentSpeed() { return currentSpeed; }
 
-    void CreateIdle(EState<DummyEnemyInputs> idle)
-    {
-        //idle.OnEnter +=;
+    void DisableObject() { }
 
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreateGoTo(EState<DummyEnemyInputs> goTo)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreateChasing(EState<DummyEnemyInputs> chasing)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreateAttack(EState<DummyEnemyInputs> attack)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreateTakeDamage(EState<DummyEnemyInputs> takeDmg)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreatePetrified(EState<DummyEnemyInputs> petrified)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreateDie(EState<DummyEnemyInputs> die)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    void CreateDisable(EState<DummyEnemyInputs> disable)
-    {
-        //idle.OnEnter +=;
-
-        //idle.OnUpdate +=;
-
-        //idle.OnLateUpdate +=;
-
-        //idle.OnFixedUpdate +=;
-
-        //idle.OnExit +=;
-    }
-
-    #endregion
-
-
+    void EnableObject() { }
 
     #endregion
 

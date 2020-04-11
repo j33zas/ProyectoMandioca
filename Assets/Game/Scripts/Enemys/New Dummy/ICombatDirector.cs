@@ -9,4 +9,6 @@ public interface ICombatDirector
     void SetTargetPos(Transform pos);
 
     Vector3 CurrentPos();
+
+    void ToAttack();
 }

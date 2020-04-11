@@ -15,6 +15,8 @@ namespace Tools.StateMachine
         protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
         {
             base.Enter(input);
+
+            //Acá pondría la animación de muerte... ¡¡Si tan solo tuviera una!!
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)

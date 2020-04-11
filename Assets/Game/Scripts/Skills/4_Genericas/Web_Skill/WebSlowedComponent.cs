@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WebSlowedComponent : MonoBehaviour
 {
-    private DummyEnemy _dummyEnemy;
+    private EnemyBase _dummyEnemy;
 
     private float _originalSpeed;
     void Awake()
     {
-        _dummyEnemy = GetComponent<DummyEnemy>();
+        _dummyEnemy = GetComponent<EnemyBase>();
 
         _originalSpeed = _dummyEnemy.ChangeSpeed(-1);
     }

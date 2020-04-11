@@ -1,15 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 namespace Tools.StateMachine
 {
     public class DummyIdleState : DummyEnemyStates
     {
-        public DummyIdleState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm) : base(myState, _sm)
-        {
+        Func<bool> IsAttack;
+        Func<Transform> MyPos;
+        float distanceMin;
+        float distanceMax;
+        float currentDis;
 
+        public DummyIdleState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm,
+                              Func<bool> _isAttack, Func<Transform> _isTarget, float _disInCom, float _disNormal) : base(myState, _sm)
+        {
+            IsAttack += _isAttack;
+            MyPos += _isTarget;
+            distanceMax = _disNormal;
+            distanceMin = _disInCom;
+
+            Debug.Log("entré");
+            myState.OnUpdate += Update;
         }
 
         protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
@@ -35,6 +49,24 @@ namespace Tools.StateMachine
         protected override void Update()
         {
             base.Update();
+
+            if (IsAttack())
+                sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
+            else
+            {
+                if (MyPos())
+                {
+                    currentDis = distanceMin;
+                }
+                else
+                {
+                    currentDis = distanceMax;
+                }
+
+                Debug.Log(Vector3.Distance(target.position, root.position) + "  " + currentDis);
+                if (Vector3.Distance(target.position, root.position) >= currentDis)
+                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+            }
         }
     }
 }

@@ -9,12 +9,28 @@ namespace Tools.StateMachine
         protected EState<TrueDummyEnemy.DummyEnemyInputs> lastState;
         protected Animator anim;
         protected Transform target;
+        protected Transform root;
         protected Rigidbody rb;
+        protected CombatDirector combatDirector;
 
         public DummyEnemyStates(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm) : base(myState, _sm)
         {
 
         }
+
+        #region Builder
+
+        public DummyEnemyStates SetAnimator(Animator _anim) { anim = _anim; return this; }
+
+        public DummyEnemyStates SetTarget(Transform _target) { target = _target; return this; }
+
+        public DummyEnemyStates SetRigidbody(Rigidbody _rb) { rb = _rb; return this; }
+
+        public DummyEnemyStates SetRoot(Transform _root) { root = _root; return this; }
+
+        public DummyEnemyStates SetDirector(CombatDirector _director) { combatDirector = _director; return this; }
+
+        #endregion
 
         protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
         {

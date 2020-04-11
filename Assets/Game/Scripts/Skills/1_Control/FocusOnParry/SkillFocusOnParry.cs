@@ -7,19 +7,19 @@ public class SkillFocusOnParry : SkillBase
 {
 
     List<FocusOnParryComponent> focusOnParryComponents = new List<FocusOnParryComponent>();
-    List<DummyEnemy> enemies = new List<DummyEnemy>();
+    List<EnemyBase> enemies = new List<EnemyBase>();
 
 
     protected override void OnBeginSkill()
     {
-        enemies = new List<DummyEnemy>();
+        enemies = new List<EnemyBase>();
         enemies = Main.instance.GetEnemies();
 
         foreach (var item in enemies)
         {
             if(item != null)
             {   
-                item.OnParried += item.getFocusedOnParry;
+                item.OnParried += item.GetFocusedOnParry;
             }
         }
 
@@ -43,8 +43,8 @@ public class SkillFocusOnParry : SkillBase
         {
             if (item != null)
             {
-                item.OnParried -= item.getFocusedOnParry;
-                item.isTarget = false;
+                item.OnParried -= item.GetFocusedOnParry;
+                item.minionTarget = false;
             }
         }
     }
@@ -62,7 +62,7 @@ public class SkillFocusOnParry : SkillBase
 
             foreach (var enemy in enemies)
             {
-                if(enemy.isTarget)
+                if(enemy.minionTarget)
                 {
                     myMinion.ChangeToAttackState(enemy.transform);
                 }
