@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6387895767042992400}
   - component: {fileID: 7091554892313947760}
   m_Layer: 0
-  m_Name: ActivaExample
+  m_Name: pf_activa_damage_in_room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
   feedback:
   - {fileID: 6387895768298947330}
   - {fileID: 6387895767777012585}
-  item: {fileID: 11400000, guid: f73c73e14b373d9429b41e72dde555bd, type: 2}
+  item: {fileID: 11400000, guid: 87b7a0422d89a9040a67c6852003dd1e, type: 2}
   animationToChar: 0
   to_collect:
     m_PersistentCalls:

@@ -22,7 +22,6 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
         OnFinishSelection = callback;
         finishSelection_btt.onClick.AddListener(FinishSelection);
         Populate(skills);
-        
     }
 
     void FinishSelection()
@@ -71,6 +70,7 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
     IEnumerator SelfDestroy()
     {
         yield return new WaitForEndOfFrame();
+        finishSelection_btt.onClick.RemoveAllListeners();//se remueve para que no quede flotando en memoria
         Destroy(gameObject);
     }
 }

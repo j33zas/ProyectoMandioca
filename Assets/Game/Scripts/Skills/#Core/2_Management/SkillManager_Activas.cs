@@ -20,16 +20,16 @@ public class SkillManager_Activas : MonoBehaviour
     public SkillActivas[] myActiveSkills = new SkillActivas[5];
 
     public SkillActivas vacio;
-    public SkillActivas vacio2;
 
 
-    private void Awake()
+    public void Initialize()
     {
         myActiveSkills = new SkillActivas[4];
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
         
         allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
         FillDiccionary();
+
 
         frontend.Refresh(myActiveSkills, OnUISelected);
 
@@ -41,15 +41,15 @@ public class SkillManager_Activas : MonoBehaviour
         myActiveSkills[selected].Execute();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            ReplaceFor(vacio.skillinfo, 0);
-            ReplaceFor(vacio2.skillinfo, 1);
-            frontend.Reconfigurate(myActiveSkills);
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.G))
+    //    {
+    //        ReplaceFor(vacio.skillinfo, 0);
+    //        ReplaceFor(vacio2.skillinfo, 1);
+    //        frontend.Reconfigurate(myActiveSkills);
+    //    }
+    //}
 
 
     public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;

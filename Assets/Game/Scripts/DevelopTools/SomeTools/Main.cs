@@ -49,6 +49,9 @@ public class Main : MonoBehaviour
     {
         if (use_selector)
         {
+            skillmanager_pasivas.Initialize();
+            skillmanager_activas.Initialize();
+            gameUiController.Initialize(skillmanager_pasivas, skillmanager_activas);
             selector = GameObject.Instantiate(model_skill_selector, gameUiController.MyCanvas.transform);
             selector.GetComponent<UI_BeginSkillSelector>().Initialize(SkillSelected);
         }
@@ -61,7 +64,6 @@ public class Main : MonoBehaviour
 
     void SkillSelected(SkillType _skillType)
     {
-        skillmanager_pasivas.Initialize();
         skillmanager_pasivas.SelectASkillType(_skillType);
         levelsystem.Initialize();
         LoadLevelPlayObjects();
@@ -76,27 +78,18 @@ public class Main : MonoBehaviour
             bar,
             toload.ToArray()
             );
-
-
-        gameisbegin = true;
     }
+    void AddToMainCollection(IEnumerable<PlayObject> col) { allentities = col.ToArray(); OnLoadEnded(); }
 
-    public void EVENT_OpenMenu()
+    void OnLoadEnded()
     {
-        if (gameisbegin)
-        {
-            if (!Ui_Is_Open())
-            {
-                gameUiController.Set_Opened_UI();
-                ui_menu.Open();
-            }
-            else
-            {
-                gameUiController.Set_Closed_UI();
-                ui_menu.Close();
-            }
-        }
+        gameisbegin = true;
+        Play();
+        
     }
+
+    public void EVENT_OpenMenu() { if (gameisbegin) gameUiController.BTN_Back_OpenMenu(); }
+
     public void CloseMenu()
     {
         if (gameisbegin)
@@ -106,10 +99,7 @@ public class Main : MonoBehaviour
         }
     }
 
-    void OnLoadEnded()
-    {
-        Play();
-    }
+    
 
     public List<T> GetListOf<T>() where T : PlayObject
     {
@@ -124,11 +114,7 @@ public class Main : MonoBehaviour
         return aux;
     }
 
-    void AddToMainCollection(IEnumerable<PlayObject> col)
-    {
-        allentities = col.ToArray();
-        OnLoadEnded();
-    }
+    
 
     public void OnPlayerDeath() { }
 

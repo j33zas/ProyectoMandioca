@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a591d0e9a8b1db409326de423977213, type: 3}
-  m_Name: Item_ActivaExample
+  m_Name: itm_activa_damage_in_room
   m_EditorClassIdentifier: 
-  name: ejemplo de activa
-  id: 1
-  description: "este el texto que lo acompa\xF1a"
+  name: damage in room
+  id: 3
+  description: "al ser utilizado hace da\xF1o en toda la habitacion"
   unique: 0
   noconsumible: 0
   can_not_place_inventory: 0
   equipable: 0
   model_versionEquipable: {fileID: 0}
   model: {fileID: 6387895767042992414, guid: 6dfa6ff4d3dcfc04380d4c71e5026ab5, type: 3}
-  img: {fileID: 21300000, guid: 2c400b7efc4344100af025a4a265be6f, type: 3}
+  img: {fileID: 21300000, guid: fc2afd0a48de22646b2f336fb59f8695, type: 3}

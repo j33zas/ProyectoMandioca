@@ -14,11 +14,6 @@ public class UI_Menu : UI_Base
         btn_newSkill.interactable = Main.instance.skillmanager_pasivas.I_Have_An_Active_Request();
     }
 
-    public void BTN_ReturnGame()
-    {
-        Main.instance.CloseMenu();
-    }
-
     public void BTN_Spend_SkillPoint()
     {
         Main.instance.skillmanager_pasivas.EVENT_GetRequest();

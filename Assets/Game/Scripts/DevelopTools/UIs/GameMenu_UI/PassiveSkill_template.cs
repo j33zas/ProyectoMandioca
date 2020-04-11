@@ -34,14 +34,10 @@ public class PassiveSkill_template : Selectable, ISubmitHandler, ISelectHandler,
     {
         selector.SetActive(true);
         OnSelectedSkill(_skill);
-        Debug.Log("OnSelect");
     }
-
-    
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("OnEnter");
         selector.SetActive(true);
         OnSelectedSkill(_skill);
     }

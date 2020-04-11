@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
-public class GameMenu_UI : MonoBehaviour
+public class GameMenu_UI : UI_Base
 {
-    List<SkillInfo> _skillInfos = new List<SkillInfo>();
-    private SkillManager_Pasivas _skillManagerPasivas;
+    [Header("GameMenu_UI")]
+    private SkillManager_Pasivas skill_manager;
 
     [SerializeField] private RectTransform passiveSkills_container;
     [SerializeField] private RectTransform passiveSkillsSelection_container;
@@ -15,63 +16,52 @@ public class GameMenu_UI : MonoBehaviour
     [SerializeField] private LvlUpSkillSelection_UI psSelection_template_pf;
 
     [SerializeField] private Text skillDescription_txt;
-    
-    private void Start()
-    {
-        _skillManagerPasivas = FindObjectOfType<SkillManager_Pasivas>();
 
-        if (_skillManagerPasivas != null)
-        {
-            _skillInfos = _skillManagerPasivas.GetCurrentPassiveSkills();
-            PopulatePassiveSkills();
-        }
-        
-        SetSkillSelection();
+    Dictionary<SkillInfo, PassiveSkill_template> templates = new Dictionary<SkillInfo, PassiveSkill_template>();
+
+    public void Initialize()
+    {
+        skill_manager = Main.instance.skillmanager_pasivas;
     }
 
-    void RegistryButtons()
+
+    void RegistryButtons() { /*Registro las acciones de los botones del menu*/ }
+    void UpdateSkillDescription(SkillInfo skill)
     {
-        //Registro las acciones de los botones del menu
+        skillDescription_txt.text = skill.description_technical;
     }
-    
-    void PopulatePassiveSkills()
-    {
+
+
+    #region UI_base Methods
+    protected override void OnAwake() { }
+    protected override void OnStart() { }
+    protected override void OnEndOpenAnimation() { }
+    protected override void OnEndCloseAnimation() { }
+    protected override void OnUpdate() { }
+    public override void Refresh() {
         bool first = false;
-        //Pongo todos los skills que tengo pasivos
-        foreach (SkillInfo sI in _skillInfos)
+
+        var infos = Main.instance.skillmanager_pasivas.current_list_of_skills.Select(x => x.skillinfo);
+
+        foreach (var info in infos)
         {
-            PassiveSkill_template newSkill = Instantiate(ps_template_pf, passiveSkills_container);
-            newSkill.Configure(sI, UpdateSkillDescription);
-            
+            if (!templates.ContainsKey(info))
+            {
+                PassiveSkill_template newSkill = Instantiate(ps_template_pf, passiveSkills_container);
+                newSkill.Configure(info, UpdateSkillDescription);
+                templates.Add(info, newSkill);
+            }
             if (!first)
             {
                 first = true;
-                newSkill.Select();
+                ConfigurateFirst(templates[info].gameObject);
             }
         }
-    }
 
-    void SetSkillSelection()
-    {
-        Debug.Log("entro a ver si hay skill");
-        //Aca veo si tengo que elegir skill o no
-        if (_skillManagerPasivas.I_Have_An_Active_Request())
+        if (skill_manager.I_Have_An_Active_Request())
         {
-            var newSelection = Instantiate(psSelection_template_pf, passiveSkillsSelection_container);
-            newSelection.Configure(_skillManagerPasivas.GetSkillRequest() ,_skillManagerPasivas.ReturnSkill);
+            Instantiate(psSelection_template_pf, passiveSkillsSelection_container).Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill);
         }
     }
-
-    void UpdateSkillDescription(SkillInfo skill)
-    {
-        //Dependiendo el currentSelected, tengo que escribir el texto de su descripcion
-        skillDescription_txt.text = skill.description_technical;
-
-    }
-
-    void Refresh()
-    {
-        //Hago todo denuevo por si hay algun cambio
-    }
-    
+    #endregion
 }

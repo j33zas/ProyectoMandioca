@@ -12,17 +12,16 @@ public abstract class SkillBase : MonoBehaviour
         {
             alreadyActived = true;
             canupdate = true;
-            OnBeginSkill();
             if(ui_skill) ui_skill.OnUI_Select();
+            OnBeginSkill();
         }
-       
     }
     public virtual void EndSkill()
     {
         alreadyActived = false;
         canupdate = false;
-        OnEndSkill();
         if (ui_skill) ui_skill.OnUI_Unselect();
+        OnEndSkill();
     }
     private void Update() { absUpdate(); }
     internal virtual void absUpdate() { if (canupdate) OnUpdateSkill(); }

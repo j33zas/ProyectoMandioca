@@ -9,9 +9,10 @@ public abstract class SkillActivas : SkillBase
     bool begincooldown;
     public override void BeginSkill()
     {
-        base.BeginSkill();
+        begincooldown = false;
         ui_skill.SetImages(skillinfo.img_avaliable, skillinfo.img_actived);
         ui_skill.Cooldown_ConfigureTime(cooldown);
+        base.BeginSkill();
     }
     public override void EndSkill()
     {
@@ -20,7 +21,13 @@ public abstract class SkillActivas : SkillBase
 
     public void Execute()
     {
-        begincooldown = true;
+        if (!begincooldown)
+        {
+            Debug.Log("EXECUTE" + this.gameObject.name);
+            begincooldown = true;
+            time_cooldown = 0;
+            OnExecute();
+        }
     }
 
     internal override void absUpdate()
@@ -28,7 +35,7 @@ public abstract class SkillActivas : SkillBase
         base.absUpdate();
         if (begincooldown)
         {
-            if (time_cooldown > cooldown)
+            if (time_cooldown < cooldown)
             {
                 time_cooldown = time_cooldown + 1 * Time.deltaTime;
                 ui_skill.Cooldown_SetValueTime(time_cooldown);
