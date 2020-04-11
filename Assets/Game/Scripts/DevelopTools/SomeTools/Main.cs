@@ -136,7 +136,7 @@ public class Main : MonoBehaviour
     /// PUBLIC GETTERS
     /////////////////////////////////////////////////////////////////////
     public CharacterHead GetChar() => character;
-    public List<DummyEnemy> GetEnemies() => GetListOf<DummyEnemy>();
+    public List<EnemyBase> GetEnemies() => GetListOf<EnemyBase>();
     public List<Minion> GetMinions() => GetListOf<Minion>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     public bool Ui_Is_Open() => gameUiController.openUI;
