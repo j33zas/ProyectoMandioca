@@ -4,9 +4,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
-public class Skill_Btt_template : MonoBehaviour, ISelectHandler, ISubmitHandler, IPointerEnterHandler, IPointerDownHandler
+public class Skill_Btt_template : MonoBehaviour, ISelectHandler, ISubmitHandler, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler
 {
     private SkillInfo allocatedSkill;
+    [SerializeField] private GameObject selectedImage;
 
     private Action<SkillInfo> OnSelected;
 
@@ -29,10 +30,12 @@ public class Skill_Btt_template : MonoBehaviour, ISelectHandler, ISubmitHandler,
     public void OnSelect(BaseEventData eventData)
     {
         Debug.Log("caca Hover Jopystick o teclado");
+        selectedImage.SetActive(true);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("caca Hover mouse");
+        selectedImage.SetActive(true);
     }
 
     ////////////Selecion ACEPTAR
@@ -44,5 +47,10 @@ public class Skill_Btt_template : MonoBehaviour, ISelectHandler, ISubmitHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("caca en el Mouse");
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        selectedImage.SetActive(false);
     }
 }

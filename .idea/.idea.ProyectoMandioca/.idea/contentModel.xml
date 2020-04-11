@@ -747,6 +747,19 @@
               </e>
             </e>
           </e>
+          <e p="Scriptables &amp; Prefabs" t="Include">
+            <e p="Item Activas" t="Include">
+              <e p="InfoActivas" t="Include">
+                <e p="SkillActive_DamageInRoom.cs" t="Include" />
+                <e p="SkillActive_Empty.cs" t="Include" />
+                <e p="SkillActive_FreezeRange.cs" t="Include" />
+                <e p="SkillActive_Invisible.cs" t="Include" />
+                <e p="SkillActive_LightBounce.cs" t="Include" />
+                <e p="SkillActive_RainArrows.cs" t="Include" />
+                <e p="SkillActive_SomeHeal.cs" t="Include" />
+              </e>
+            </e>
+          </e>
           <e p="Scripts" t="Include">
             <e p="Character" t="Include">
               <e p="AnimEvent.cs" t="Include" />
@@ -893,9 +906,17 @@
               <e p="MinionLifeSystem.cs" t="Include" />
               <e p="New Dummy" t="Include">
                 <e p="ConfigureState.cs" t="Include" />
+                <e p="DummyAttackState.cs" t="Include" />
+                <e p="DummyDieState.cs" t="Include" />
+                <e p="DummyDisableState.cs" t="Include" />
                 <e p="DummyEnemyStates.cs" t="Include" />
+                <e p="DummyFollowState.cs" t="Include" />
+                <e p="DummyIdleState.cs" t="Include" />
+                <e p="DummyStunState.cs" t="Include" />
+                <e p="DummyTDState.cs" t="Include" />
                 <e p="EState.cs" t="Include" />
                 <e p="EventStateMachine.cs" t="Include" />
+                <e p="ICombatDirector.cs" t="Include" />
                 <e p="StatesFunctions.cs" t="Include" />
                 <e p="TransitionState.cs" t="Include" />
                 <e p="TrueDummyEnemy.cs" t="Include" />
@@ -1113,6 +1134,11 @@
                 <e p="EmptySkillActivas.cs" t="Include" />
                 <e p="ZarazaSkill.cs" t="Include" />
               </e>
+            </e>
+            <e p="SpawnManager" t="Include">
+              <e p="DropItems.cs" t="Include" />
+              <e p="SpawnData.cs" t="Include" />
+              <e p="Spawner.cs" t="Include" />
             </e>
             <e p="States" t="Include">
               <e p="States.cs" t="Include" />

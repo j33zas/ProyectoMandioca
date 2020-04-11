@@ -21,7 +21,8 @@ public class GameUI_controller : MonoBehaviour
     [Header("--XX--Canvas containers--XX--")]
     [SerializeField] private RectTransform leftCanvas;
     [SerializeField] private RectTransform rightCanvas;
-    
+
+    private SkillManager_Pasivas _skillManagerPasivas;
 
     public bool openUI { get; private set; }
 
@@ -39,6 +40,7 @@ public class GameUI_controller : MonoBehaviour
     public void Initialize()
     {
         _charStats_Ui = Instantiate<GameObject>(UiTemplateRegistry[UI_templates.charStats], leftCanvas).GetComponent<CharStats_UI>();
+        gameMenu_UI.Configure(_charStats_Ui.ToggleLvlUpSignOFF);
     }
 
     private void RegistrarUIPrefabs()
@@ -58,14 +60,15 @@ public class GameUI_controller : MonoBehaviour
     public LvlUpSkillSelection_UI CreateNewSkillSelectionPopUp(List<SkillInfo> skillsParaElegir, Action<SkillInfo> callback)
     {
         LvlUpSkillSelection_UI newPopUp = Instantiate(UiTemplateRegistry[UI_templates.skillSelection]).GetComponent<LvlUpSkillSelection_UI>();
-        newPopUp.Configure(skillsParaElegir, callback);
+        newPopUp.Configure(skillsParaElegir, callback, () => Debug.Log("esto se esta usando?"));
         return newPopUp;
     }
     public void UI_Send_NameSkillType(string s) { }
     public void UI_SendLevelUpNotification() => CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);
-    public void UI_SendActivePlusNotification(bool val) { if (val) _charStats_Ui.ToggleLvlUpSign(); }
+    public void UI_SendActivePlusNotification(bool val) { if (val) _charStats_Ui.ToggleLvlUpSignON(); }
     public void UI_RefreshExpBar(int currentExp, int maxExp, int currentLevel) => _charStats_Ui.UpdateXP_UI(currentExp, maxExp, currentLevel);
     public void RefreshPassiveSkills_UI(List<SkillInfo> skillsNuevas) => _charStats_Ui.UpdatePasiveSkills(skillsNuevas);
+    public void SetSelectedPath(string pathName) => _charStats_Ui.SetPathChoosen(pathName);
     public void UI_RefreshMenu() => gameMenu_UI.Refresh();
     public void OpenGameMenu() => gameMenu_UI.Open();
     public void CloseGameMenu() => gameMenu_UI.Close();

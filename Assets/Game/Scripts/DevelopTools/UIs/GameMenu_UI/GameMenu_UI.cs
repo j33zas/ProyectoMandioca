@@ -17,13 +17,22 @@ public class GameMenu_UI : UI_Base
     [SerializeField] private Text skillDescription_txt;
     Dictionary<SkillInfo, PassiveSkill_template> templates = new Dictionary<SkillInfo, PassiveSkill_template>();
 
+    private Action OnFinishLvlUpSkillSelection;
+    
     void RegistryButtons() { /*Registro las acciones de los botones del menu*/ }
     void UpdateSkillDescription(SkillInfo skill) => skillDescription_txt.text = skill.description_technical;
 
+    //Lo estoy usando para apagar el sign de que tenes skills para aprender. Seguro se puede hacer con el Base_UI y su refresh
+    public void Configure(Action callback)
+    {
+        OnFinishLvlUpSkillSelection = callback;
+    }
+    
     public override void Refresh()
     {
         bool first = false;
-
+        
+        
         var infos = Main.instance.skillmanager_pasivas.current_list_of_skills.Select(x => x.skillinfo);
 
         foreach (var info in infos)
@@ -45,7 +54,8 @@ public class GameMenu_UI : UI_Base
 
         if (skill_manager.I_Have_An_Active_Request())
         {
-            Instantiate(psSelection_template_pf, passiveSkillsSelection_container).Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill);
+           Instantiate(psSelection_template_pf, passiveSkillsSelection_container).
+                        Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill, OnFinishLvlUpSkillSelection);
         }
     }
 

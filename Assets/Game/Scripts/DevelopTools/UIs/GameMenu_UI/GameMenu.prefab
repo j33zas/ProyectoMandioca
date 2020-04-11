@@ -535,6 +535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cbff10bf0cda47ada8378c0aa044b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstToOpenMenu: {fileID: 0}
+  parent: {fileID: 0}
   passiveSkills_container: {fileID: 6003239123053234478}
   passiveSkillsSelection_container: {fileID: 6003239123902131892}
   ps_template_pf: {fileID: 7896504576756461384, guid: ff1ce919019684d2b9c7b464e024a330,

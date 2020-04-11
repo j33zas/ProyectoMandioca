@@ -16,10 +16,12 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
     private SkillInfo currentSkillSelected;
 
     private Action<SkillInfo> OnFinishSelection; 
+    private Action UpdateGameUILvlUpSign; 
 
-    public void Configure(List<SkillInfo> skills, Action<SkillInfo> callback)
+    public void Configure(List<SkillInfo> skills, Action<SkillInfo> skillManager_callback, Action statsUI_callback)
     {
-        OnFinishSelection = callback;
+        OnFinishSelection = skillManager_callback;
+        UpdateGameUILvlUpSign = statsUI_callback;
         finishSelection_btt.onClick.AddListener(FinishSelection);
         Populate(skills);
     }
@@ -27,6 +29,7 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
     void FinishSelection()
     {
         OnFinishSelection.Invoke(currentSkillSelected);
+        UpdateGameUILvlUpSign();
         StartCoroutine(SelfDestroy());
     }
     

@@ -60,12 +60,14 @@ public class CharStats_UI : MonoBehaviour
         currentLvl_txt.text = "Lvl " + currentLvl;
     }
 
-    public void ToggleLvlUpSign()
+    public void ToggleLvlUpSignON()
     {
-        if (lvlUpSign.activeInHierarchy)
-            return;
-        
-        lvlUpSign.SetActive(!lvlUpSign.activeInHierarchy);
+        lvlUpSign.SetActive(true);
+    }
+    
+    public void ToggleLvlUpSignOFF()
+    {
+        lvlUpSign.SetActive(false);
     }
 
     public void UpdatePasiveSkills(List<SkillInfo> skillsNuevas)
@@ -80,5 +82,10 @@ public class CharStats_UI : MonoBehaviour
             }
 
         }
+    }
+
+    public void SetPathChoosen(string pathName)
+    {
+        currentPath_txt.text = pathName;
     }
 }

@@ -105,6 +105,7 @@ public class SkillManager_Pasivas : MonoBehaviour
         Main.instance.gameUiController.UI_Send_NameSkillType(current_skill_type.ToString());
         Main.instance.gameUiController.RefreshPassiveSkills_UI(current_list_of_skills.Select(x => x.skillinfo).ToList());
         Main.instance.gameUiController.UI_RefreshMenu();
+        Main.instance.gameUiController.SetSelectedPath(current_skill_type.ToString());
     }
 
     public List<SkillInfo> GetCurrentPassiveSkills()
