@@ -143,6 +143,14 @@ public class Main : MonoBehaviour
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
     public BaseRoom GetRoom() => _currentRoom;
 
+    Spawner spawner = new Spawner();
 
+    public ItemWorld SpawnItem(ItemWorld item, Transform pos) => spawner.SpawnItem(item, pos);
+    public GameObject SpawnItem(GameObject item, Transform pos) => spawner.SpawnItem(item, pos);
+    public List<ItemWorld> SpawnListItems(ItemWorld item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
+    public List<GameObject> SpawnListItems(GameObject item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
+
+
+    public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn,pos);
 
 }
