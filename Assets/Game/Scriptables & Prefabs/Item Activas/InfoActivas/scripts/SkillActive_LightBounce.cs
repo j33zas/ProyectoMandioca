@@ -7,15 +7,15 @@ public class SkillActive_LightBounce : SkillActivas
     [SerializeField] private int damage;
     [SerializeField] private Damagetype dmgType;
     [SerializeField] private float range;
-    
+
     public float laserWidth = 0.1f;
     public float laserMaxLength = 5f;
-    
+
     private CharacterHead _hero;
     private EntityBlock blocker;
 
     [SerializeField] private LineRenderer _lineRenderer;
-    
+
     protected override void OnExecute() { }
 
     protected override void OnBeginSkill()
@@ -29,7 +29,7 @@ public class SkillActive_LightBounce : SkillActivas
     {
         if (blocker.onBlock)
         {
-            ShootLaserFromTargetPosition(_hero.transform.position + Vector3.up * 1, _hero.GetCharMove().GetLookDirection(), range);
+            ShootLaserFromTargetPosition(_hero.transform.position + Vector3.up * 1, _hero.GetCharMove().GetRotatorDirection(), range);
             _lineRenderer.enabled = true;
         }
         else
@@ -38,24 +38,38 @@ public class SkillActive_LightBounce : SkillActivas
         }
 
     }
-    
-    void ShootLaserFromTargetPosition( Vector3 targetPosition, Vector3 direction, float length )
+
+    void ShootLaserFromTargetPosition(Vector3 targetPosition, Vector3 direction, float length)
     {
-        Ray ray = new Ray( targetPosition, direction );
+        Ray ray = new Ray(targetPosition, direction);
         RaycastHit raycastHit;
-        Vector3 endPosition = targetPosition + ( length * direction );
- 
-        if( Physics.Raycast( ray, out raycastHit, length ) ) 
+        Vector3 endPosition = targetPosition + (length * direction);
+
+
+        
+
+        if (Physics.Raycast(ray, out raycastHit, length))
         {
-            if (raycastHit.collider.gameObject.GetComponent<EnemyBase>())
+            var enemy = raycastHit.collider.gameObject.GetComponent<EnemyBase>();
+
+
+            if (enemy != null)
             {
-                raycastHit.collider.gameObject.GetComponent<EnemyBase>().TakeDamage(damage, targetPosition, dmgType);
-            }else
+                // raycastHit.collider.gameObject.GetComponent<EnemyBase>().
+
+                Vector3 dir = enemy.transform.position - _hero.transform.position;
+                dir.Normalize();
+
+                enemy.TakeDamage(damage, dir, dmgType);
+            }
+            else
+            {
                 endPosition = raycastHit.point;
+            }
         }
- 
-        _lineRenderer.SetPosition( 0, targetPosition );
-        _lineRenderer.SetPosition( 1, endPosition );
+
+        _lineRenderer.SetPosition(0, targetPosition);
+        _lineRenderer.SetPosition(1, endPosition);
     }
-    
+
 }

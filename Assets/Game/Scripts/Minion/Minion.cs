@@ -52,16 +52,20 @@ public class Minion : Companion
         sm = new StatesMachine();
         sm.Addstate(new StatesWander(sm));
 
-        followState = new StatesFollow(sm, transform, _rb, FindObjectOfType<DummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement);
+        followState = new StatesFollow(sm, transform, _rb, FindObjectOfType<TrueDummyEnemy>().transform, animator, _rotSpeed, _distance, _speedMovement);
         sm.Addstate(followState);
 
-        attackState = new StatesAttack(sm, animator, transform, FindObjectOfType<DummyEnemy>().transform, _rotSpeed, _distance);
+        attackState = new StatesAttack(sm, animator, transform, FindObjectOfType<TrueDummyEnemy>().transform, _rotSpeed, _distance);
         sm.Addstate(attackState);
 
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
         sm.ChangeState<StatesWander>();
 
         //follow.Configure(_rb);
+    }
+    protected override void OnUpdateEntity() 
+    {
+        feedbackStun.Refresh(); feedbackHitShield.Refresh(); sm.Update();
     }
 
     public void ChangeToAttackState(Transform parriedEnemy)
@@ -93,8 +97,6 @@ public class Minion : Companion
             feedbackHitShield.Show();
         }
     }
-
-    private void Update() { feedbackStun.Refresh(); feedbackHitShield.Refresh(); sm.Update(); }
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso
@@ -135,6 +137,6 @@ public class Minion : Companion
     protected override void OnResume() { }
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
-    protected override void OnUpdateEntity() { }
+    
 
 }

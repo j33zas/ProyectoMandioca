@@ -253,6 +253,11 @@ public class CharacterMovement
         _rb.position = _rb .position + (dashDir * _teleportDistance);
     }
 
+    public Vector3 GetRotatorDirection()
+    {
+        return rotTransform.forward;
+    }
+
     public Vector3 GetLookDirection()
     {
         if (movX != 0 || movY != 0)
