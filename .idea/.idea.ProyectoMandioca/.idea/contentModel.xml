@@ -741,6 +741,8 @@
                     <e p="Glow.shader" t="Include" />
                   </e>
                   <e p="Trail" t="Include">
+                    <e p="SecondTrail.shader" t="Include" />
+                    <e p="ThirdTrail.shader" t="Include" />
                     <e p="Trail.shader" t="Include" />
                   </e>
                 </e>
@@ -750,13 +752,20 @@
           <e p="Scriptables &amp; Prefabs" t="Include">
             <e p="Item Activas" t="Include">
               <e p="InfoActivas" t="Include">
-                <e p="SkillActive_DamageInRoom.cs" t="Include" />
-                <e p="SkillActive_Empty.cs" t="Include" />
-                <e p="SkillActive_FreezeRange.cs" t="Include" />
-                <e p="SkillActive_Invisible.cs" t="Include" />
-                <e p="SkillActive_LightBounce.cs" t="Include" />
-                <e p="SkillActive_RainArrows.cs" t="Include" />
-                <e p="SkillActive_SomeHeal.cs" t="Include" />
+                <e p="Scripts" t="Include">
+                  <e p="SkillActive_DamageInRoom.cs" t="Include" />
+                  <e p="SkillActive_Empty.cs" t="Include" />
+                  <e p="SkillActive_FreezeRange.cs" t="Include" />
+                  <e p="SkillActive_Invisible.cs" t="Include" />
+                  <e p="SkillActive_LightBounce.cs" t="Include" />
+                  <e p="SkillActive_RainArrows.cs" t="Include" />
+                  <e p="SkillActive_SomeHeal.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="Skills" t="Include">
+              <e p="5_Others" t="Include">
+                <e p="ActiveSkills_Test.cs" t="Include" />
               </e>
             </e>
           </e>
@@ -916,6 +925,7 @@
                 <e p="DummyTDState.cs" t="Include" />
                 <e p="EState.cs" t="Include" />
                 <e p="EventStateMachine.cs" t="Include" />
+                <e p="FreezeState.cs" t="Include" />
                 <e p="ICombatDirector.cs" t="Include" />
                 <e p="StatesFunctions.cs" t="Include" />
                 <e p="TransitionState.cs" t="Include" />

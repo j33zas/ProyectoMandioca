@@ -2028,6 +2028,8 @@ MonoBehaviour:
   side_Type: 2
   target: 0
   _targetFeedback: {fileID: 3971370425286048996}
+  minionTarget: 0
+  Invinsible: 0
   combatComponent: {fileID: 461483721385685826}
   damage: 1
   obj_feedbackStun: {fileID: 461483721289736924}
@@ -2042,9 +2044,11 @@ MonoBehaviour:
   _speedMovement: 5
   _rotSpeed: 10
   _petrifiedTime: 2
+  _frozenTime: 0
   _distance: 3
   explosionForce: 100
   _rb: {fileID: 461483721385685824}
+  off: 0
   lifesystem: {fileID: 461483721385685836}
 --- !u!114 &461483721385685826
 MonoBehaviour:
