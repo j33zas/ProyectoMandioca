@@ -32,6 +32,8 @@ public class DummyEnemy : EnemyBase
     [SerializeField]
     private float _petrifiedTime;
     [SerializeField]
+    private float _frozenTime;
+    [SerializeField]
     private float _distance;
     //public Follow follow;
     public bool isOnFire { get; private set; }
@@ -56,6 +58,7 @@ public class DummyEnemy : EnemyBase
         sm.Addstate(new StatesFollow(sm, transform, _rb, FindObjectOfType<CharacterHead>().transform, animator, _rotSpeed, _distance, _speedMovement));
         sm.Addstate(new StatesAttack(sm, animator, transform, FindObjectOfType<CharacterHead>().transform, _rotSpeed, _distance));
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
+        sm.Addstate(new FreezeState(sm, _frozenTime));
         sm.ChangeState<StatesAttack>();
         
         lifesystem.AddEventOnDeath(Die);
@@ -117,6 +120,14 @@ public class DummyEnemy : EnemyBase
     }
 
 
+    //No sabia muy bien donde ponerlo, asi que lo pongo aca. Esto lo llama el freeze_range active skill
+
+    public override void OnFreeze()
+    {
+        base.OnFreeze();
+        sm.ChangeState<FreezeState>();
+        
+    }
 
     /////////////////////////////////////////////////////////////////
     //////  En desuso

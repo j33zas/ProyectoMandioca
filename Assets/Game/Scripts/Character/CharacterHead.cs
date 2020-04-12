@@ -246,6 +246,12 @@ public class CharacterHead : CharacterControllable
             }
         }
     }
+    
+    //lo uso para el skill del escudo que refleja luz
+    public EntityBlock GetCharBlock()
+    {
+        return charBlock;
+    }
     public void OnRealBlock_ON()
     {
 
