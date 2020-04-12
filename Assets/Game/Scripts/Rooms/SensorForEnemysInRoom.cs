@@ -19,10 +19,7 @@ public class SensorForEnemysInRoom : Sensor
             EnemyBase enemy = other.gameObject.GetComponent<EnemyBase>();
             if (!MyEnemys.Contains(enemy))
                 MyEnemys.Add(enemy);
-
-
         }
-       
     }
 
     IEnumerator Timer()

@@ -161,6 +161,7 @@ public class Main : MonoBehaviour
 
     public ItemWorld SpawnItem(ItemWorld item, Transform pos) => spawner.SpawnItem(item, pos);
     public GameObject SpawnItem(GameObject item, Transform pos) => spawner.SpawnItem(item, pos);
+    public void SpawnItem(Item item, Transform pos) => spawner.SpawnItem(item, pos);
     public List<ItemWorld> SpawnListItems(ItemWorld item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
     public List<GameObject> SpawnListItems(GameObject item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
 

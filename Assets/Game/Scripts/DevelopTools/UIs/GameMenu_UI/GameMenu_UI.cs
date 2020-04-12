@@ -30,8 +30,9 @@ public class GameMenu_UI : UI_Base
     
     public override void Refresh()
     {
+        GameObject myselected = new GameObject();
+
         bool first = false;
-        
         
         var infos = Main.instance.skillmanager_pasivas.current_list_of_skills.Select(x => x.skillinfo);
 
@@ -46,7 +47,9 @@ public class GameMenu_UI : UI_Base
             if (!first)
             {
                 first = true;
-                ConfigurateFirst(templates[info].gameObject);
+
+                myselected = templates[info].gameObject;
+                
             }
         }
 
@@ -55,8 +58,11 @@ public class GameMenu_UI : UI_Base
         if (skill_manager.I_Have_An_Active_Request())
         {
            Instantiate(psSelection_template_pf, passiveSkillsSelection_container).
-                        Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill, OnFinishLvlUpSkillSelection);
+                        Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill, OnFinishLvlUpSkillSelection, out myselected);
         }
+
+
+        ConfigurateFirst(myselected);
     }
 
     #region UI_base Methods

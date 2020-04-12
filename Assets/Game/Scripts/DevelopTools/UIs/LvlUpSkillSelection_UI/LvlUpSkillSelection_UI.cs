@@ -18,23 +18,13 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
     private Action<SkillInfo> OnFinishSelection; 
     private Action UpdateGameUILvlUpSign; 
 
-    public void Configure(List<SkillInfo> skills, Action<SkillInfo> skillManager_callback, Action statsUI_callback)
+    public void Configure(List<SkillInfo> skills, Action<SkillInfo> skillManager_callback, Action statsUI_callback, out GameObject selected)
     {
+        selected = null;
         OnFinishSelection = skillManager_callback;
         UpdateGameUILvlUpSign = statsUI_callback;
         finishSelection_btt.onClick.AddListener(FinishSelection);
-        Populate(skills);
-    }
 
-    void FinishSelection()
-    {
-        OnFinishSelection.Invoke(currentSkillSelected);
-        UpdateGameUILvlUpSign();
-        StartCoroutine(SelfDestroy());
-    }
-    
-    private void Populate(List<SkillInfo> skills)
-    {
         bool isFirst = false;
         foreach (SkillInfo sk in skills)
         {
@@ -44,11 +34,19 @@ public class LvlUpSkillSelection_UI : MonoBehaviour
             if (!isFirst)
             {
                 isFirst = true;
-                newButton.GetComponent<Button>().Select();
+                selected = newButton.GetComponent<Button>().gameObject;
                 currentSkillSelected = sk;
             }
         }
     }
+
+    void FinishSelection()
+    {
+        OnFinishSelection.Invoke(currentSkillSelected);
+        UpdateGameUILvlUpSign();
+        StartCoroutine(SelfDestroy());
+    }
+   
 
     private void Update()
     {

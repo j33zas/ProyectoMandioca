@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6387895767042992400}
   - component: {fileID: 7091554892313947760}
   m_Layer: 0
-  m_Name: pf_activa_damage_in_room
+  m_Name: pf_activa_light bounce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ MonoBehaviour:
   feedback:
   - {fileID: 6387895768298947330}
   - {fileID: 6387895767777012585}
-  item: {fileID: 11400000, guid: 87b7a0422d89a9040a67c6852003dd1e, type: 2}
+  item: {fileID: 11400000, guid: 2cb2e4278ac42ae45a49ff01efa6c04d, type: 2}
   animationToChar: 0
   to_collect:
     m_PersistentCalls:
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ee4f78eea6ea441b20038ff6833b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: {fileID: 11400000, guid: 7f9b4e91ac861004c8439a5470abcfc2, type: 2}
+  info: {fileID: 11400000, guid: f98f270c6ab15e44bb8f98b750139a98, type: 2}
 --- !u!1 &6387895767777012587
 GameObject:
   m_ObjectHideFlags: 0

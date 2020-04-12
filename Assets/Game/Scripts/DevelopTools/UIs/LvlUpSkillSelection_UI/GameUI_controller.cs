@@ -59,8 +59,10 @@ public class GameUI_controller : MonoBehaviour
     /// <returns></returns>
     public LvlUpSkillSelection_UI CreateNewSkillSelectionPopUp(List<SkillInfo> skillsParaElegir, Action<SkillInfo> callback)
     {
+
+        GameObject go = new GameObject();
         LvlUpSkillSelection_UI newPopUp = Instantiate(UiTemplateRegistry[UI_templates.skillSelection]).GetComponent<LvlUpSkillSelection_UI>();
-        newPopUp.Configure(skillsParaElegir, callback, () => Debug.Log("esto se esta usando?"));
+        newPopUp.Configure(skillsParaElegir, callback, () => Debug.Log("esto se esta usando?"), out go);
         return newPopUp;
     }
     public void UI_Send_NameSkillType(string s) { }
