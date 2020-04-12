@@ -45,7 +45,9 @@ namespace Tools.StateMachine
         {
             base.Update();
 
-            root.forward = (target.position - root.position).normalized;
+            Vector3 dirForward = (target.position - root.position).normalized;
+
+            root.forward = new Vector3(dirForward.x, 0, dirForward.z);
 
             if (GetMyPos() == null)
             {
@@ -58,7 +60,9 @@ namespace Tools.StateMachine
                 Vector3 dir = GetMyPos().position - root.position;
                 dir.Normalize();
 
-                ObstacleAvoidance(dir);
+                Vector3 dirFix = new Vector3(dir.x, 0, dir.z);
+
+                ObstacleAvoidance(dirFix);
 
                 float distanceX = Mathf.Abs(GetMyPos().transform.position.x - root.position.x);
                 float distanceZ = Mathf.Abs(GetMyPos().transform.position.z - root.position.z);
