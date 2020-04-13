@@ -5,6 +5,7 @@ public abstract class SkillBase : MonoBehaviour
     public SkillInfo skillinfo;
     protected UI_Skill ui_skill;
     public void SetUI(UI_Skill _ui) => ui_skill = _ui;
+    public UI_Skill GetUI() => ui_skill;
     bool alreadyActived;
     public virtual void BeginSkill()
     {

@@ -33,14 +33,14 @@ public class Minion : Companion
     //public Follow follow;
 
     public Rigidbody _rb;
-    
+
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
 
     StatesAttack attackState;
     StatesFollow followState;
 
-    void Start()
+    protected override void OnResume()
     {
         _rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
@@ -59,11 +59,12 @@ public class Minion : Companion
         sm.Addstate(attackState);
 
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
-        sm.ChangeState<StatesWander>();
+        
+        sm.ChangeState<StatesFollow>();
 
-        //follow.Configure(_rb);
     }
-    protected override void OnUpdateEntity() 
+
+    protected override void OnUpdateEntity()
     {
         feedbackStun.Refresh(); feedbackHitShield.Refresh(); sm.Update();
     }
@@ -129,14 +130,14 @@ public class Minion : Companion
         }
 
         return _speedMovement;
-    }   
+    }
 
 
     protected override void OnFixedUpdate() { }
     protected override void OnPause() { }
-    protected override void OnResume() { }
+
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
-    
+
 
 }

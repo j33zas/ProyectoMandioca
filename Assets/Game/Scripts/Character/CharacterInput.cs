@@ -97,10 +97,10 @@ public class CharacterInput : MonoBehaviour
             .SUBSCRIBE_DPAD_LEFT(EV_DPAD_LEFT);
     }
     void RefreshHelper() => joystickhelper.Refresh();
-    void EV_DPAD_UP() => OnDpad_Up.Invoke();
-    void EV_DPAD_DOWN() => OnDpad_Down.Invoke();
-    void EV_DPAD_LEFT() => OnDpad_Left.Invoke();
-    void EV_DPAD_RIGHT() => OnDpad_Right.Invoke();
+    void EV_DPAD_UP() { OnDpad_Up.Invoke(); Debug.Log("UP"); }
+    void EV_DPAD_DOWN() { OnDpad_Down.Invoke(); Debug.Log("DOWN"); }
+    void EV_DPAD_LEFT() { OnDpad_Left.Invoke(); Debug.Log("LEFT"); }
+    void EV_DPAD_RIGHT() { OnDpad_Right.Invoke(); Debug.Log("RIGHT"); }
     #endregion
 
 

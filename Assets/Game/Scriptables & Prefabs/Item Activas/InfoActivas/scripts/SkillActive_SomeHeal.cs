@@ -13,7 +13,7 @@ public class SkillActive_SomeHeal : SkillActivas
 
     protected override void OnExecute()
     {
-        _lifeSystem.AddHealth(healAmount);
+        _lifeSystem.Heal(healAmount);
         healFeedback.Play();
     }
 

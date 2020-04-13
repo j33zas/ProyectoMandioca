@@ -20,6 +20,8 @@ public class ExplosionCW : SkillBase
 
     protected override void OnBeginSkill()
     {
+        Debug.Log("ESNTRO A LA SKILL");
+
         if (head == null)
         {
             head = Main.instance.GetChar();

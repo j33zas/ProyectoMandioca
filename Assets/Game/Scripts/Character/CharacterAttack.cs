@@ -149,6 +149,7 @@ public class CharacterAttack
     //anim espada arriba
     public void BeginCheckAttackType()
     {
+        Main.instance.Vibrate();
         if (isAttackReleased)
         {
             Check();

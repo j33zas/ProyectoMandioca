@@ -14,10 +14,6 @@ public abstract class SkillActivas : SkillBase
         ui_skill.Cooldown_ConfigureTime(cooldown);
         base.BeginSkill();
     }
-    public override void EndSkill()
-    {
-        base.EndSkill();
-    }
 
     public void Execute()
     {

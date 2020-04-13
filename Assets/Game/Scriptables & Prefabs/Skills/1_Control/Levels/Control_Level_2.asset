@@ -15,5 +15,6 @@ MonoBehaviour:
   skilltype: 0
   Selection:
   - {fileID: 11400000, guid: e016ecd1d7659b445aeffa3e8414c4d0, type: 2}
-  - {fileID: 11400000, guid: e790e44ceed744bcb8fc6f1c561a529f, type: 2}
-  - {fileID: 11400000, guid: 5a3b2a35b0eb34946b12eac23969697b, type: 2}
+  - {fileID: 11400000, guid: d092e9e4099724a1d9f6e57b965615a2, type: 2}
+  - {fileID: 11400000, guid: 4cc251e5a29d0456ab2d10e958fe3257, type: 2}
+  aleatorios: []

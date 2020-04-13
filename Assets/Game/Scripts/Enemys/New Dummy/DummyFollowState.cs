@@ -100,9 +100,15 @@ namespace Tools.StateMachine
 
             if (obs)
             {
-                dir += (root.position - obs.position).normalized * avoidWeight;
+                Vector3 diraux = (root.position - obs.position).normalized;
+                //diraux
+
+                diraux = new Vector3(diraux.x,0, diraux.z);
+
+                dir += diraux * avoidWeight;
             }
-            rb.velocity = dir * GetSpeed();
+
+            rb.velocity = new Vector3(dir.x * GetSpeed(), rb.velocity.y, dir.z * GetSpeed());
 
             //setear animación
         }

@@ -16,6 +16,7 @@ public class CombatDirector : MonoBehaviour
     float timeToAttack;
     [SerializeField] float timerMin=1;
     [SerializeField] float timerMax=5;
+    [SerializeField, Range(0.5f, 2)] float commonRadius = 1.5f;
 
     private void Start()
     {
@@ -26,10 +27,10 @@ public class CombatDirector : MonoBehaviour
     {
         head = Main.instance.GetChar().transform;
 
-        Vector3 east = head.position + Vector3.right * 2;
-        Vector3 north = head.position + Vector3.forward * 2;
-        Vector3 northEast = head.position + (Vector3.right + Vector3.forward) * 1.9f;
-        Vector3 northWest = head.position + (Vector3.forward + Vector3.left) * 1.9f;
+        Vector3 east = head.position + Vector3.right * commonRadius;
+        Vector3 north = head.position + Vector3.forward * commonRadius;
+        Vector3 northEast = head.position + (Vector3.right + Vector3.forward) * commonRadius;
+        Vector3 northWest = head.position + (Vector3.forward + Vector3.left) * commonRadius;
 
         positionsToAttack.Add(CreateNewPos(east));
         positionsToAttack.Add(CreateNewPos(-east));
@@ -43,8 +44,6 @@ public class CombatDirector : MonoBehaviour
         var enemies = new List<EnemyBase>();
 
         enemies = Main.instance.GetEnemies();
-
-        Debug.Log(enemies.Count);
 
         for (int i = 0; i < enemies.Count; i++)
         {

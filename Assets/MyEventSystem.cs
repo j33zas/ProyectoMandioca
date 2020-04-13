@@ -34,6 +34,8 @@ namespace Tools
             }
         }
 
+        public EventSystem GetMyEventSystem() => own;
+
         public void Set_First(GameObject go) { current = go; own.SetSelectedGameObject(go); }
         public void Delete_First() => current = null;
         public void SelectGameObject(GameObject go) => own.SetSelectedGameObject(go);

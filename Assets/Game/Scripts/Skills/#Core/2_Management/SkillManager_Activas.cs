@@ -16,11 +16,24 @@ public class SkillManager_Activas : MonoBehaviour
     [Header("All skills data base")]
     [SerializeField] List<SkillActivas> allskillsDatabase;
     Dictionary<SkillInfo, SkillActivas> fastreference;
+    Dictionary<SkillInfo, Item> fastreference_item = new Dictionary<SkillInfo, Item>();
 
-    public SkillActivas[] myActiveSkills = new SkillActivas[5];
+    public SkillActivas[] myActiveSkills = new SkillActivas[4];
 
     public SkillActivas vacio;
 
+    public void EV_Up_DPad() => Press(0);
+    public void EV_Left_DPad() => Press(1);
+    public void EV_Down_DPad() => Press(2);
+    public void EV_Right_DPad() => Press(3);
+
+    public void Press(int index) 
+    {
+        var ui = myActiveSkills[index].GetUI();
+
+        var event_data = new UnityEngine.EventSystems.BaseEventData(Main.instance.GetMyEventSystem().GetMyEventSystem());
+        ui.OnSubmit(event_data);
+    }
 
     public void Initialize()
     {
@@ -56,13 +69,54 @@ public class SkillManager_Activas : MonoBehaviour
     int indextest;
     public void ReplaceFor(SkillInfo _skillinfo, int index)
     {
-        indextest = indextest.NextIndex(myActiveSkills.Length);
 
         myActiveSkills[indextest].EndSkill();
         myActiveSkills[indextest] = fastreference[_skillinfo];
 
+
+
         frontend.Reconfigurate(myActiveSkills);
         myActiveSkills[indextest].BeginSkill();
+
+        indextest = indextest.NextIndex(myActiveSkills.Length);
+
+        //spawnear el viejo
+    }
+    public void ReplaceFor(SkillInfo _skillinfo, int index, Item item)
+    {
+
+        foreach (var i in myActiveSkills)
+        {
+            if (_skillinfo == i.skillinfo)
+            {
+                var _item = fastreference_item[_skillinfo];
+                Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
+
+                return;
+            }
+        }
+
+
+        myActiveSkills[indextest].EndSkill();
+
+        if (fastreference_item.ContainsKey(myActiveSkills[indextest].skillinfo))
+        {
+            var _item = fastreference_item[myActiveSkills[indextest].skillinfo];
+            Main.instance.SpawnItem(_item,Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
+            //fastreference_item.Remove(myActiveSkills[indextest].skillinfo);
+        }
+
+        myActiveSkills[indextest] = fastreference[_skillinfo];
+
+        if (!fastreference_item.ContainsKey(_skillinfo))
+        {
+            fastreference_item.Add(_skillinfo, item);
+        }
+
+        frontend.Reconfigurate(myActiveSkills);
+        myActiveSkills[indextest].BeginSkill();
+
+        indextest = indextest.NextIndex(myActiveSkills.Length);
 
         //spawnear el viejo
     }

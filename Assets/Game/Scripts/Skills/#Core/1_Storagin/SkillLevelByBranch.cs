@@ -7,4 +7,5 @@ public class SkillLevelByBranch : ScriptableObject
 {
     public SkillType skilltype;
     public SkillInfo[] Selection;
+    public SkillInfo[] aleatorios;
 }

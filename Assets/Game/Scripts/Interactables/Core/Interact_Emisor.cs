@@ -5,7 +5,6 @@ using UnityEngine;
 public class Interact_Emisor : Interactable
 {
     public Interact_Receptor[] results;
-    public Transform positiontomessage;
 
     public override void Execute(WalkingEntity entity)
     {
@@ -19,9 +18,17 @@ public class Interact_Emisor : Interactable
 
     public override void ShowInfo(WalkingEntity entity)
     {
-        WorldItemInfo.instance.Show(positiontomessage.position,
+        WorldItemInfo.instance.Show(pointToMessage.position,
                                     "Boton",
                                     "",
                                     "pulsar");
+    }
+
+    private void OnDrawGizmos()
+    {
+        foreach (var r in results)
+        {
+            Gizmos.DrawLine(this.transform.position, r.transform.position);
+        }
     }
 }

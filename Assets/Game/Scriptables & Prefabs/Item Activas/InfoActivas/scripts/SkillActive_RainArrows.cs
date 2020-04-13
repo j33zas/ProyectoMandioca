@@ -36,12 +36,11 @@ public class SkillActive_RainArrows : SkillActivas
 
     protected override void OnBeginSkill()
     {
-        base.BeginSkill();
 
         _hero = Main.instance.GetChar();
 
     }
-    protected override void OnEndSkill() { base.EndSkill();}
+    protected override void OnEndSkill() { }
 
     protected override void OnUpdateSkill()
     {

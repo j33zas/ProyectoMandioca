@@ -70,6 +70,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  to_collect_item:
+    m_PersistentCalls:
+      m_Calls: []
   OnCreate:
     m_PersistentCalls:
       m_Calls: []

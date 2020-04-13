@@ -17,6 +17,7 @@ public class Main : MonoBehaviour
     public bool use_selector = true;
     bool gameisbegin;
     bool inmenu;
+    Rumble rumble;
 
 
     [Header("Inspector References")]
@@ -40,6 +41,8 @@ public class Main : MonoBehaviour
     {
         instance = this;
         eventManager = new EventManager();
+
+        rumble = new Rumble();
     }
 
     private SensorForEnemysInRoom mySensorRoom;
@@ -61,6 +64,11 @@ public class Main : MonoBehaviour
             LoadLevelPlayObjects();
         }
 
+    }
+
+    private void Update()
+    {
+        rumble.OnUpdate();
     }
 
     void SkillSelected(SkillType _skillType)
@@ -157,11 +165,15 @@ public class Main : MonoBehaviour
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
     public BaseRoom GetRoom() => _currentRoom;
 
+    public void Vibrate() => rumble.OneShootRumble();
+    public void Vibrate(float _strengh = 1, float _time_to_rumble = 0.2f) => rumble.OneShootRumble(_strengh, _time_to_rumble);
+
     Spawner spawner = new Spawner();
 
     public ItemWorld SpawnItem(ItemWorld item, Transform pos) => spawner.SpawnItem(item, pos);
     public GameObject SpawnItem(GameObject item, Transform pos) => spawner.SpawnItem(item, pos);
     public void SpawnItem(Item item, Transform pos) => spawner.SpawnItem(item, pos);
+    public void SpawnItem(Item item, Vector3 pos) => spawner.SpawnItem(item, pos);
     public List<ItemWorld> SpawnListItems(ItemWorld item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
     public List<GameObject> SpawnListItems(GameObject item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
 

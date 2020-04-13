@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Tools.EventClasses;
 
 //implementar items
 //implementar collector
@@ -20,6 +21,7 @@ public class ItemWorld : Interactable
 
     public UnityEvent to_collect;
     public UnityEvent OnCreate;
+
 
 
     private void Awake()

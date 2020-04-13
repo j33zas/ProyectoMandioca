@@ -11,6 +11,13 @@ public class Spawner
         return myItem;
 
     }
+    public ItemWorld SpawnItem(ItemWorld item, Vector3 position)
+    {
+        ItemWorld myItem = GameObject.Instantiate(item);
+        myItem.transform.position = position;
+        return myItem;
+
+    }
     public GameObject SpawnItem(GameObject gameObject, Transform position)
     {
         GameObject myItem = GameObject.Instantiate(gameObject);
@@ -19,6 +26,15 @@ public class Spawner
     }
 
     public List<ItemWorld> spawnListItems(ItemWorld obj, Transform pos, int quantity)
+    {
+        List<ItemWorld> aux = new List<ItemWorld>();
+        for (int i = 0; i < quantity; i++)
+        {
+            aux.Add(SpawnItem(obj, pos));
+        }
+        return aux;
+    }
+    public List<ItemWorld> spawnListItems(ItemWorld obj, Vector3 pos, int quantity)
     {
         List<ItemWorld> aux = new List<ItemWorld>();
         for (int i = 0; i < quantity; i++)
@@ -43,8 +59,14 @@ public class Spawner
         myItem.transform.position = position.position;
         return myItem;
     }
+    public GameObject SpawnItem(Item item, Vector3 position)
+    {
+        GameObject myItem = GameObject.Instantiate(item.model);
+        myItem.transform.position = position;
+        return myItem;
+    }
 
-   
+
     public GameObject SpawnByWheel(SpawnData data, Transform pos)
     {
         GameObject myGameObject;

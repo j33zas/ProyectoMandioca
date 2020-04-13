@@ -171,6 +171,7 @@ public class CharacterHead : CharacterControllable
     }
     void ReleaseInHeavy()
     {
+        
         dmg = dmg_heavy;
         charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
