@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill_HalfLife : SkillBase
+public class Skill_HalfLife : SkillBase_Obligacion
 {
     CharacterHead character;
 
@@ -12,6 +12,7 @@ public class Skill_HalfLife : SkillBase
     }
     protected override void OnBeginSkill()
     {
+        base.OnBeginSkill();
         var enemysInRoom = Main.instance.GetRoom().myenemies();
         for (int i = 0; i < enemysInRoom.Count; i++)
         {
@@ -22,6 +23,7 @@ public class Skill_HalfLife : SkillBase
 
     protected override void OnEndSkill()
     {
+        base.OnEndSkill();
         var enemysInRoom = Main.instance.GetRoom().myenemies();
         for (int i = 0; i < enemysInRoom.Count; i++)
         {

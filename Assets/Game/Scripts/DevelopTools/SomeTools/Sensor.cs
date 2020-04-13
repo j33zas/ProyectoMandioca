@@ -28,6 +28,8 @@ public class Sensor : MonoBehaviour
 
     public Sensor SubscribeAction(Action<GameObject> ac) { Ev_Colision += ac; return this; }
     public Sensor SubscribeExitAction(Action<GameObject> ac) { Ev_Exit+= ac; return this; }
+    public Sensor UnSubscribeAction(Action<GameObject> ac) { Ev_Colision -= ac; return this; }
+    public Sensor UnSubscribeExitAction(Action<GameObject> ac) { Ev_Exit -= ac; return this; }
 
     protected virtual void OnTriggerEnter(Collider col)
     {

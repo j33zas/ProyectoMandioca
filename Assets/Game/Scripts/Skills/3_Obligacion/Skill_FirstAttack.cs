@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Skill_FirstAttack : SkillBase
+public class Skill_FirstAttack : SkillBase_Obligacion
 {
     List<PetrifyComponent> petrifyComponents = new List<PetrifyComponent>();
     public float petrifyRange = 100;
@@ -18,11 +18,13 @@ public class Skill_FirstAttack : SkillBase
     protected override void OnBeginSkill()
     {
         //Main.instance.GetChar().Attack += ReceivePetrifyOnDeathMinion;
+        base.OnBeginSkill();
         charattack.ActiveFirstAttack();
         charattack.AddCAllback_ReceiveEntity(RecieveEntity);
     }
     protected override void OnEndSkill()
     {
+        base.OnEndSkill();
         foreach (var item in petrifyComponents)
         {
             if (item != null) item.OnEnd();
@@ -49,14 +51,14 @@ public class Skill_FirstAttack : SkillBase
             if (_entity.target)
             {
                 foreach (var item in Main.instance.GetEnemies())
-            {
-                EnemyBase myEnemy = item.GetComponent<EnemyBase>();
-
-                if (myEnemy)
                 {
+                 EnemyBase myEnemy = item.GetComponent<EnemyBase>();
+
+                 if (myEnemy)
+                 {
                     myEnemy.OnPetrified();
+                 }
                 }
-            }
             }
             
             charattack.DeactiveFirstAttack();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseRoom : MonoBehaviour
 {
-    SensorForEnemysInRoom _sensor;
+    public SensorForEnemysInRoom _sensor;
     List<EnemyBase> myEnemies = new List<EnemyBase>();
     // Start is called before the first frame update
     void Start()
@@ -28,20 +28,28 @@ public class BaseRoom : MonoBehaviour
             _sensor.myContent.SetActive(true);
             Main.instance.SetRoom(this);
             myEnemies = new List<EnemyBase>();
-
-           myEnemies= _sensor.MyEnemys;
-           
-            int index = Random.Range(0, myEnemies.Count);
-            myEnemies[index].IsTarget();
-            for (int i = 0; i < myEnemies.Count; i++)
+            var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
+            foreach(var item in enemysInChilderen)
             {
-                myEnemies[i].On();
-                if (i != index)
-                    myEnemies[i].IsNormal();
+                var enemys = item.GetComponent<EnemyBase>();
+                if (enemys)
+                {
+                    myEnemies.Add(enemys);
+                }
             }
+            //myEnemies = _sensor.MyEnemys;
+
+            //int index = Random.Range(0, myEnemies.Count);
+            //myEnemies[index].IsTarget();
+            //for (int i = 0; i < myEnemies.Count; i++)
+            //{
+            //    myEnemies[i].On();
+            //    if (i != index)
+            //        myEnemies[i].IsNormal();
+            //}
         }
     }
-    void ExitRoom(GameObject player)
+    public void ExitRoom(GameObject player)
     {
         if (player.GetComponent<CharacterHead>())
         {
@@ -64,5 +72,16 @@ public class BaseRoom : MonoBehaviour
     public List<EnemyBase> myenemies()
     {
         return myEnemies;
+    }
+
+    public bool VIPInRoom()
+    {
+        for (int i = 0; i < myEnemies.Count; i++)
+        {
+            if (myEnemies[i].target)
+                return true;
+
+        }
+        return false;
     }
 }
