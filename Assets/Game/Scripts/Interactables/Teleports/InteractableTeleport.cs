@@ -12,6 +12,8 @@ public class InteractableTeleport : Interactable
 
     public bool show = true;
 
+    public Transform go_to;
+
     [Space(10)]
     [Header("Manualmente con mensaje personalizado")]
     public bool manual;
@@ -19,7 +21,7 @@ public class InteractableTeleport : Interactable
 
     public override void Execute(WalkingEntity entity)
     {
-        //teleport
+        Main.instance.GetChar().transform.position = go_to.position;
     }
 
     public override void Exit()

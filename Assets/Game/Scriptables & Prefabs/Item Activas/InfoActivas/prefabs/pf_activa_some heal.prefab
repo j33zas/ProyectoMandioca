@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 6387895768298947330}
   - {fileID: 6387895767777012585}
   item: {fileID: 11400000, guid: 451dd01e7352bbe41ac8f490d0286769, type: 2}
-  animationToChar: 0
+  canrecolectoranim: 0
   to_collect:
     m_PersistentCalls:
       m_Calls:
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8bfdb16e232b948a2791af27b8abc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toscale: {fileID: 0}
+  toscale: {fileID: 6387895768468247760}
   cant_to_scale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &6387895768468247761
 GameObject:

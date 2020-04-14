@@ -24,6 +24,8 @@ public class SkillManager_Activas : MonoBehaviour
 
     public Item[] items_to_spawn;
 
+    bool percenslot;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///// INPUT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,6 +41,15 @@ public class SkillManager_Activas : MonoBehaviour
         ui.OnSubmit(event_data);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            percenslot = !percenslot;
+            ReceiveLife((int)Main.instance.GetChar().GetCharacterLifeSystem().Life,100);
+        }
+    }
+
     const int MAX = 100;
     readonly int[] percentedvalues = new int[] { 0, 25, 50, 75 };
     bool[] slots = new bool[4];
@@ -51,6 +62,14 @@ public class SkillManager_Activas : MonoBehaviour
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = aux_value > percentedvalues[i];
+        }
+
+        if (!percenslot)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i] = true;
+            }
         }
 
         frontend.RefreshButtons(slots);
