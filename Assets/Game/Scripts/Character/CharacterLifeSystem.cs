@@ -15,6 +15,11 @@ public class CharacterLifeSystem
         life.AddEventListener_LoseLife(OnLoseLife);
     }
 
+    public void AddCallback_LifeChange(Action<int, int> callback)
+    {
+        life.AddEventListener_OnLifeChange(callback);
+    }
+
     public float Life
     {
         get

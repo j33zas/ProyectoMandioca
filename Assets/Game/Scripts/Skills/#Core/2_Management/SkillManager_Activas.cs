@@ -22,6 +22,9 @@ public class SkillManager_Activas : MonoBehaviour
 
     public SkillActivas vacio;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///// INPUT
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void EV_Up_DPad() => Press(0);
     public void EV_Left_DPad() => Press(1);
     public void EV_Down_DPad() => Press(2);
@@ -30,9 +33,25 @@ public class SkillManager_Activas : MonoBehaviour
     public void Press(int index) 
     {
         var ui = myActiveSkills[index].GetUI();
-
         var event_data = new UnityEngine.EventSystems.BaseEventData(Main.instance.GetMyEventSystem().GetMyEventSystem());
         ui.OnSubmit(event_data);
+    }
+
+    const int MAX = 100;
+    readonly int[] percentedvalues = new int[] { 0, 25, 50, 75 };
+    bool[] slots = new bool[4];
+    public void ReceiveLife(int _life, int max)
+    {
+        //ahora sabemos que 100 es el maximo, agregarle que lo calcule con el maximo sacando porcentaje
+
+        var aux_value = MAX - _life;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = aux_value > percentedvalues[i];
+        }
+
+        frontend.RefreshButtons(slots);
     }
 
     public void Initialize()
@@ -53,17 +72,6 @@ public class SkillManager_Activas : MonoBehaviour
     {
         myActiveSkills[selected].Execute();
     }
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.G))
-    //    {
-    //        ReplaceFor(vacio.skillinfo, 0);
-    //        ReplaceFor(vacio2.skillinfo, 1);
-    //        frontend.Reconfigurate(myActiveSkills);
-    //    }
-    //}
-
 
     public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;
     int indextest;

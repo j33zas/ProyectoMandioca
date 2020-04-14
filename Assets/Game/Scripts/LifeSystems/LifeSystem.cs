@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Tools.EventClasses;
 public class LifeSystem : MonoBehaviour
 {
     public CharacterLifeSystem lifesystemExample;
@@ -8,12 +9,21 @@ public class LifeSystem : MonoBehaviour
 
     CustomCamera customcamera;
 
+    public EventTwoInt OnChangeValue;
+
     private void Start()  
     {
         lifesystemExample = new CharacterLifeSystem();
         lifesystemExample.Config(100, EVENT_OnLoseLife, EVENT_OnGainLife, EVENT_OnDeath, uilife, life);
 
         customcamera = FindObjectOfType<CustomCamera>();
+
+        lifesystemExample.AddCallback_LifeChange(OnLifeChange);
+    }
+
+    void OnLifeChange(int current, int max)
+    {
+        OnChangeValue.Invoke(current, max);
     }
 
     void EVENT_OnLoseLife() { }

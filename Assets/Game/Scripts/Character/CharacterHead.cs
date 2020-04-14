@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using DevelopTools;
+using Tools.EventClasses;
 
 public class CharacterHead : CharacterControllable
 {
@@ -78,6 +79,8 @@ public class CharacterHead : CharacterControllable
     public InteractSensor sensor;
 
     bool canBlockCalculate;
+
+    
 
     private void Awake()
     {
