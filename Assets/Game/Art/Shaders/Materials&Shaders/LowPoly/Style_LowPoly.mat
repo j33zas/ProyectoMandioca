@@ -22,9 +22,9 @@ Material:
     m_Floats:
     - _Intensity: 0.91
     - _Intensity1: 0
-    - __dirty: 1
+    - __dirty: 0
     m_Colors:
-    - _Color6: {r: 0.361542, g: 1, b: 0, a: 0}
+    - _Color6: {r: 0.4406653, g: 0.4433962, b: 0.35764506, a: 0}
     - _Color7: {r: 1, g: 0.4570943, b: 0, a: 0}
     - _Min: {r: 0, g: 0, b: 0, a: 0}
     - _Min1: {r: 0, g: 0, b: 0, a: 0}
