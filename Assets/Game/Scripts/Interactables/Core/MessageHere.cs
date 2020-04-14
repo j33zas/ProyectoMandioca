@@ -7,6 +7,9 @@ public class MessageHere : Interact_Receptor
     public Item[] items;
     public Transform trans;
 
+    public int cant;
+    public GameObject model;
+
     Vector3 getPosRandom(int radio, Transform t)
     {
         Vector3 min = new Vector3(t.position.x - radio, t.position.y - radio, t.position.z - radio);
@@ -19,6 +22,13 @@ public class MessageHere : Interact_Receptor
         foreach (var i in items)
         {
             Main.instance.SpawnItem(i, getPosRandom(2, trans));
+        }
+
+        for (int i = 0; i < cant; i++)
+        {
+            GameObject go = Instantiate(model);
+            go.transform.position = getPosRandom(10, this.transform);
+            
         }
     }
 }
