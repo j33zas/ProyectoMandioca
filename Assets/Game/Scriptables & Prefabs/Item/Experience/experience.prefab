@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8697729264707728270}
   - component: {fileID: 8697729264707728268}
   - component: {fileID: 7941249752761002219}
+  - component: {fileID: 7717666947142472638}
   m_Layer: 0
   m_Name: experience
   m_TagString: Untagged
@@ -48,14 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab9036eb80912f346946f01ceb2d9ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distancetoInteract: 2
+  distancetoInteract: 3
   autoexecute: 1
   pointToMessage: {fileID: 8697729265398221661}
   feedback:
   - {fileID: 8697729266127985054}
   - {fileID: 8697729265575932405}
   item: {fileID: 11400000, guid: 510b34f739835d5428195b8e1c2f658c, type: 2}
-  animationToChar: 0
+  canrecolectoranim: 0
   to_collect:
     m_PersistentCalls:
       m_Calls:
@@ -86,6 +87,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cant_exp_to_collect: 1
+--- !u!114 &7717666947142472638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8697729264707728258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a54fcd6c50695546a08c87605768dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  distance_to_collect: 0.2
 --- !u!1 &8697729265398221662
 GameObject:
   m_ObjectHideFlags: 0

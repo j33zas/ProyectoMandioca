@@ -22,6 +22,8 @@ public class SkillManager_Activas : MonoBehaviour
 
     public SkillActivas vacio;
 
+    public Item[] items_to_spawn;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///// INPUT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +32,7 @@ public class SkillManager_Activas : MonoBehaviour
     public void EV_Down_DPad() => Press(2);
     public void EV_Right_DPad() => Press(3);
 
-    public void Press(int index) 
+    public void Press(int index)
     {
         var ui = myActiveSkills[index].GetUI();
         var event_data = new UnityEngine.EventSystems.BaseEventData(Main.instance.GetMyEventSystem().GetMyEventSystem());
@@ -58,7 +60,7 @@ public class SkillManager_Activas : MonoBehaviour
     {
         myActiveSkills = new SkillActivas[4];
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
-        
+
         allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
         FillDiccionary();
 
@@ -66,6 +68,12 @@ public class SkillManager_Activas : MonoBehaviour
         frontend.Refresh(myActiveSkills, OnUISelected);
 
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
+    }
+
+    void EnemyDeath(params object[] param)
+    {
+        Main.instance.SpawnItem(items_to_spawn[Random.Range(0, items_to_spawn.Length)], (Vector3)param[0]);
     }
 
     public void OnUISelected(int selected)
@@ -110,7 +118,7 @@ public class SkillManager_Activas : MonoBehaviour
         if (fastreference_item.ContainsKey(myActiveSkills[indextest].skillinfo))
         {
             var _item = fastreference_item[myActiveSkills[indextest].skillinfo];
-            Main.instance.SpawnItem(_item,Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
+            Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
             //fastreference_item.Remove(myActiveSkills[indextest].skillinfo);
         }
 

@@ -12,10 +12,19 @@ public class LevelSystem : MonoBehaviour
     int currentExpValue;
     //int point_to_spend;
 
+    public Item experience;
+
     Func<bool> I_have_an_active_request;
     public void Initialize()
     {
         I_have_an_active_request = Main.instance.skillmanager_pasivas.I_Have_An_Active_Request;
+
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
+    }
+
+    void EnemyDeath(params object[] param)
+    {
+        Main.instance.SpawnItem(experience, (Vector3)param[0]);
     }
 
     public void AddExperiencie(int exp)
