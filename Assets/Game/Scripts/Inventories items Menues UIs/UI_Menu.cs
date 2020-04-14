@@ -16,7 +16,7 @@ public class UI_Menu : UI_Base
 
     public void BTN_Spend_SkillPoint()
     {
-        Main.instance.skillmanager_pasivas.EVENT_GetRequest();
+        //Main.instance.skillmanager_pasivas.EVENT_GetRequest();
     }
 
     protected override void OnAwake() { }

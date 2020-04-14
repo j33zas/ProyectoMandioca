@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Culpa_Lvl_4
   m_EditorClassIdentifier: 
   skilltype: 1
-  Selection:
-  - {fileID: 11400000, guid: e146a3fb6a88f86459b734174277b19b, type: 2}
+  Selection: []
+  isFromRandom: 1
+  max_from_this_branch: 1
+  max_from_generics: 2

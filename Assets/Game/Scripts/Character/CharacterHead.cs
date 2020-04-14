@@ -20,7 +20,6 @@ public class CharacterHead : CharacterControllable
     Action UpBlock;
     Action Parry;
 
-
     [Header("Dash Options")]
     [SerializeField] float dashTiming;
     [SerializeField] float dashSpeed;

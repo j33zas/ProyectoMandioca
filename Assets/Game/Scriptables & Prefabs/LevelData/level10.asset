@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12574df8a2009946bb579f6422f3649, type: 3}
-  m_Name: Generic_Lvl_5
+  m_Script: {fileID: 11500000, guid: 015bfa6890343874bae3a0728c3aea1e, type: 3}
+  m_Name: level10
   m_EditorClassIdentifier: 
-  skilltype: 3
-  Selection:
-  - {fileID: 11400000, guid: 5a3b2a35b0eb34946b12eac23969697b, type: 2}
+  level: 0
+  maxt_to_level_up: 225
+  can_get_skill_point: 1

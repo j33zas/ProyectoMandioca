@@ -29,7 +29,6 @@ public class BigWeapon_Skill : SkillBase
             
            
         }
-            
 
         currentAttackRange = _characterAttack.currentWeapon.ModifyAttackrange();
         originalSize = Main.instance.GetChar().currentWeapon.transform.localScale;
