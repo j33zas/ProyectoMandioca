@@ -5,6 +5,7 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="asd.cs" t="Include" />
         <e p="Game" t="Include">
           <e p="Art" t="Include">
             <e p="AmplifyShaderEditor" t="Include">
@@ -729,6 +730,9 @@
                 </e>
                 <e p="LowPoly" t="Include">
                   <e p="Low.shader" t="Include" />
+                  <e p="UVS" t="Include">
+                    <e p="LowPoly.shader" t="Include" />
+                  </e>
                 </e>
                 <e p="Parry" t="Include">
                   <e p="ParticlesParry.shader" t="Include" />
@@ -855,6 +859,7 @@
                 <e p="JoystickBasicInput.cs" t="Include" />
                 <e p="Main.cs" t="Include" />
                 <e p="MoveRaw.cs" t="Include" />
+                <e p="Rumble.cs" t="Include" />
                 <e p="SceneMainBase.cs" t="Include" />
                 <e p="Sensor.cs" t="Include" />
                 <e p="SensorManagerForWeapons.cs" t="Include" />
@@ -948,6 +953,10 @@
                 <e p="Interact_Receptor.cs" t="Include" />
                 <e p="Interactable.cs" t="Include" />
                 <e p="InteractSensor.cs" t="Include" />
+                <e p="ItemBehaviour" t="Include">
+                  <e p="Item_animRecolect.cs" t="Include" />
+                </e>
+                <e p="MessageHere.cs" t="Include" />
                 <e p="WorldItemInfo.cs" t="Include" />
               </e>
               <e p="HalfLife.cs" t="Include" />
@@ -1111,6 +1120,7 @@
                 <e p="2_Petrifica primer golpe.txt" t="Include" />
                 <e p="Skill_FirstAttack.cs" t="Include" />
                 <e p="Skill_HalfLife.cs" t="Include" />
+                <e p="SkillBase_Obligacion.cs" t="Include" />
               </e>
               <e p="4_Genericas" t="Include">
                 <e p="1_Big Guns.txt" t="Include" />

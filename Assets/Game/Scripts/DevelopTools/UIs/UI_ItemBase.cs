@@ -29,6 +29,8 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler, ISelectHandler
 
     Action<int> OnUI_Selected;
 
+    bool canInterct;
+
 
     //Animacion bonita cuando tengo OnHover o cuando lo selecciono
     public void PLay_Anim_Scale() { if (pingpongScale != null) { pingpongScale.Play(cantspeedscale); } }
@@ -42,17 +44,30 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler, ISelectHandler
         if (pingpongScale != null) pingpongScale.Updatear();
     }
 
+    public void CanNotInteract()
+    {
+        Draw(new Color(0, 0, 0, 1), new Vector3(0.75f, 0.75f, 0.75f));
+        canInterct = false;
+    }
+    public void CanInteract()
+    {
+        Draw(Color.white,currentscale);
+        canInterct = true;
+    }
+
     //sobreescritura del OnSelect
     //esto es para que funque nomas la selection
     //es de Unity, solo ignoralo
     public override void OnSelect(BaseEventData eventData)
     {
+        if (!canInterct) return;
         base.OnSelect(eventData);
         PLay_Anim_Scale();
 
     }
     public override void OnDeselect(BaseEventData eventData)
     {
+        if (!canInterct) return;
         base.OnDeselect(eventData);
         Stop_Anim_Scale();
         AnimLerpScale(0);
@@ -60,10 +75,12 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler, ISelectHandler
     }
     public void OnSubmit(BaseEventData eventData)
     {
+        if (!canInterct) return;
         OnUI_Selected(index);
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if (!canInterct) return;
         base.OnPointerDown(eventData);
         OnUI_Selected(index);
     }
@@ -72,6 +89,7 @@ public abstract class UI_ItemBase : Selectable, ISubmitHandler, ISelectHandler
     //    base.OnSubmit(eventData);
     //    Debug.Log("SUBMIT");
     //}
+
     protected abstract void BeginFeedback();
     protected abstract void EndFeedback();
 

@@ -18,12 +18,15 @@ public class LifeBase : StatBase
     public event Action death;
     public event Action cannotAddMore = delegate { };
     public event Action cannotRemoveMore = delegate { };
+    public event Action<int, int> lifechange = delegate { };
 
     public void AddEventListener_LoseLife(Action listener) { loselife += listener; }
     public void AddEventListener_GainLife(Action listener) { gainlife += listener; }
     public void AddEventListener_Death(Action listener) { death += listener; }
     public void AddEventListener_CannotAddMore(Action listener) { cannotAddMore += listener; }
     public void AddEventListener_CannotRemoveMore(Action listener) { cannotRemoveMore += listener; }
+    public void AddEventListener_OnLifeChange(Action<int, int> listener) { lifechange += listener; }
+
 
     public override void OnAdd() { gainlife.Invoke(); }
     public override void OnRemove() { loselife.Invoke(); }
@@ -33,6 +36,7 @@ public class LifeBase : StatBase
 
     public override void OnValueChange(int value, int max)
     {
-        if(uilife != null) uilife.OnValueChange(value, max);
+        lifechange.Invoke(value, max);
+        if (uilife != null) uilife.OnValueChange(value, max);
     }
 }

@@ -19,7 +19,7 @@ public class SkillActive_DamageInRoom : SkillActivas
         
         foreach (EnemyBase enemy in enemies)
         {
-            enemy.TakeDamage(damagePower, Vector3.up, dmgType);
+            enemy.TakeDamage(damagePower, Vector3.up, dmgType, _hero);
         }
     }
 

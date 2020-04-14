@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using DevelopTools;
+using Tools.EventClasses;
 
 public class CharacterHead : CharacterControllable
 {
@@ -19,7 +20,6 @@ public class CharacterHead : CharacterControllable
     Action OnBlock;
     Action UpBlock;
     Action Parry;
-
 
     [Header("Dash Options")]
     [SerializeField] float dashTiming;
@@ -79,6 +79,8 @@ public class CharacterHead : CharacterControllable
     public InteractSensor sensor;
 
     bool canBlockCalculate;
+
+    
 
     private void Awake()
     {

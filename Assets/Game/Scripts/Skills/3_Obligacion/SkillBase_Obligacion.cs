@@ -36,7 +36,7 @@ public class SkillBase_Obligacion : SkillBase
 
     protected override void OnUpdateSkill()
     {
-        throw new System.NotImplementedException();
+        
     }
     protected void ExitTheRoom(GameObject player)
     {

@@ -19,6 +19,13 @@ namespace Tools.StateMachine
         public void Exit(T input) { OnExit(input); }
 
 
+        public string Name { get; private set; }
+
+        public EState(string _name)
+        {
+            Name = _name;
+        }
+
         public EState<T> Configure(Dictionary<T, TransitionState<T>> transitions)
         {
             this.transitions = transitions;

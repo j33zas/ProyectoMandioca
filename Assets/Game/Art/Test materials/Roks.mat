@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - _Intensity: 0
+    - _Intensity: 0.85
     - _Intensity1: 0
     - __dirty: 0
     m_Colors:
     - _Color6: {r: 0.5188679, g: 0.48221305, b: 0.4185208, a: 0}
     - _Color7: {r: 1, g: 0.4570943, b: 0, a: 0}
-    - _Min: {r: 0.4, g: 0, b: 0, a: 0}
+    - _Min: {r: 0.12, g: 0, b: 0, a: 0}
     - _Min1: {r: 0, g: 0, b: 0, a: 0}

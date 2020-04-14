@@ -43,6 +43,22 @@ public class UI_SkillHandler_Activas : UI_Base
         }
     }
 
+    public void RefreshButtons(bool[] actives)
+    {
+        for (int i = 0; i < actives.Length; i++)
+        {
+            if (actives[i])
+            {
+                uiskills[i].CanInteract();
+            }
+            else 
+            {
+                uiskills[i].CanNotInteract();
+            }
+            
+        }
+    }
+
     protected override void OnAwake() 
     {
 

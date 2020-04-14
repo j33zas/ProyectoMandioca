@@ -14,10 +14,10 @@ public class ItemWorld : Interactable
 
     bool onselected;
 
-    bool canAnimate;
-    [SerializeField] bool animationToChar;
-
     Transform model;
+
+    Item_animRecolect recolector_anim;
+    public bool canrecolectoranim;
 
     public UnityEvent to_collect;
     public UnityEvent OnCreate;
@@ -32,6 +32,9 @@ public class ItemWorld : Interactable
         {
             model = aux.transform;
         }
+
+        recolector_anim = GetComponent<Item_animRecolect>();
+        if (recolector_anim != null) canrecolectoranim = true;
     }
     private void Update()
     {
@@ -50,10 +53,19 @@ public class ItemWorld : Interactable
     ///////////////////////////////////////////////////////////////////
     public override void Execute(WalkingEntity collector)
     {
-        if (animationToChar)
+        if (canrecolectoranim)
         {
-            //canAnimate;
+            recolector_anim.BeginRecollect(collector, Collect);
         }
+        else
+        {
+            Collect(collector);
+        }
+
+    }
+
+    void Collect(WalkingEntity collector)
+    {
         collector.OnReceiveItem(this);
         to_collect.Invoke();
         Destroy(this.gameObject);

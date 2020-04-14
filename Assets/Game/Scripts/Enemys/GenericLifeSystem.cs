@@ -25,8 +25,8 @@ public class GenericLifeSystem : MonoBehaviour
         lifeSystemEnemy.Config(life, EVENT_OnLoseLife, EVENT_OnGainLife, EVENT_OnDeath, uilife, life);
     }
 
-    void EVENT_OnLoseLife() => Debug.Log("Enemy Lose life");
-    void EVENT_OnGainLife() => Debug.Log("Enemy Gain life");
+    void EVENT_OnLoseLife() { }
+    void EVENT_OnGainLife() { }
     void EVENT_OnDeath()
     {
         if (!isdeath)

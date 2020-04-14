@@ -60,7 +60,7 @@ public class SkillActive_LightBounce : SkillActivas
                 Vector3 dir = enemy.transform.position - _hero.transform.position;
                 dir.Normalize();
 
-                enemy.TakeDamage(damage, dir, dmgType);
+                enemy.TakeDamage(damage, dir, dmgType, _hero);
             }
             else
             {

@@ -18,6 +18,8 @@ public abstract class Weapon
     }
     protected float angleAttack;
 
+    protected CharacterHead _head;
+
     public Weapon(float dmg, float r, string n, float angle)
     {
         baseDamage = dmg;
@@ -25,6 +27,7 @@ public abstract class Weapon
         weaponName = n;
         angleAttack = angle;
         originalRange = range;
+        _head = Main.instance.GetChar();
     }
 
     /// <summary>

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Obligacion_Lvl_4
   m_EditorClassIdentifier: 
   skilltype: 2
-  Selection:
-  - {fileID: 11400000, guid: 8c81bde3c8bb28e45b5483a454f1e5e0, type: 2}
+  Selection: []
+  isFromRandom: 1
+  max_from_this_branch: 1
+  max_from_generics: 2

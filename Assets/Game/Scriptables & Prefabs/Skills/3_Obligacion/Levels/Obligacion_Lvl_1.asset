@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skilltype: 2
   Selection:
-  - {fileID: 11400000, guid: 8c81bde3c8bb28e45b5483a454f1e5e0, type: 2}
+  - {fileID: 11400000, guid: 15f590a57b2dd284da7bc2bd176b59d9, type: 2}
+  isFromRandom: 0
+  max_from_this_branch: 1
+  max_from_generics: 2

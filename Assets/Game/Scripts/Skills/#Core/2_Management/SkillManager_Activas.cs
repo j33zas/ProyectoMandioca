@@ -22,24 +22,64 @@ public class SkillManager_Activas : MonoBehaviour
 
     public SkillActivas vacio;
 
+    public Item[] items_to_spawn;
+
+    bool percenslot;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///// INPUT
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void EV_Up_DPad() => Press(0);
     public void EV_Left_DPad() => Press(1);
     public void EV_Down_DPad() => Press(2);
     public void EV_Right_DPad() => Press(3);
 
-    public void Press(int index) 
+    public void Press(int index)
     {
         var ui = myActiveSkills[index].GetUI();
-
         var event_data = new UnityEngine.EventSystems.BaseEventData(Main.instance.GetMyEventSystem().GetMyEventSystem());
         ui.OnSubmit(event_data);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            percenslot = !percenslot;
+            ReceiveLife((int)Main.instance.GetChar().GetCharacterLifeSystem().Life,100);
+        }
+    }
+
+    const int MAX = 100;
+    readonly int[] percentedvalues = new int[] { 0, 25, 50, 75 };
+    bool[] slots = new bool[4];
+    public void ReceiveLife(int _life, int max)
+    {
+        //ahora sabemos que 100 es el maximo, agregarle que lo calcule con el maximo sacando porcentaje
+
+        var aux_value = MAX - _life;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = aux_value > percentedvalues[i];
+        }
+
+        if (!percenslot)
+        {
+            for (int i = 0; i < slots.Length; i++)
+            {
+                slots[i] = true;
+            }
+        }
+
+        frontend.RefreshButtons(slots);
     }
 
     public void Initialize()
     {
         myActiveSkills = new SkillActivas[4];
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
-        
+
         allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
         FillDiccionary();
 
@@ -47,23 +87,18 @@ public class SkillManager_Activas : MonoBehaviour
         frontend.Refresh(myActiveSkills, OnUISelected);
 
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
+    }
+
+    void EnemyDeath(params object[] param)
+    {
+        Main.instance.SpawnItem(items_to_spawn[Random.Range(0, items_to_spawn.Length)], (Vector3)param[0]);
     }
 
     public void OnUISelected(int selected)
     {
         myActiveSkills[selected].Execute();
     }
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.G))
-    //    {
-    //        ReplaceFor(vacio.skillinfo, 0);
-    //        ReplaceFor(vacio2.skillinfo, 1);
-    //        frontend.Reconfigurate(myActiveSkills);
-    //    }
-    //}
-
 
     public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;
     int indextest;
@@ -102,7 +137,7 @@ public class SkillManager_Activas : MonoBehaviour
         if (fastreference_item.ContainsKey(myActiveSkills[indextest].skillinfo))
         {
             var _item = fastreference_item[myActiveSkills[indextest].skillinfo];
-            Main.instance.SpawnItem(_item,Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
+            Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
             //fastreference_item.Remove(myActiveSkills[indextest].skillinfo);
         }
 

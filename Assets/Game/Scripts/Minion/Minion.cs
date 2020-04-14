@@ -44,9 +44,12 @@ public class Minion : Companion
     {
         _rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
+        Main.instance.GetCombatDirector().AddNewTarget(this);
         feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
         feedbackHitShield = new PopSignalFeedback(0.2f, obj_feedbackShield);
         feedbackAttack = new PopSignalFeedback(0.2f, obj_feedbackattack);
+
+        lifesystem.AddEventOnDeath(OnDead);
 
         anim.Add_Callback("DealDamage", DealDamage);
         sm = new StatesMachine();
@@ -62,6 +65,11 @@ public class Minion : Companion
         
         sm.ChangeState<StatesFollow>();
 
+    }
+
+    void OnDead()
+    {
+        Main.instance.GetCombatDirector().RemoveTarget(this);
     }
 
     protected override void OnUpdateEntity()
@@ -88,12 +96,12 @@ public class Minion : Companion
     {
         Debug.Log("0: dmg en minion: " + damage);
 
-        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable, this) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
         }
-        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable, this) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }

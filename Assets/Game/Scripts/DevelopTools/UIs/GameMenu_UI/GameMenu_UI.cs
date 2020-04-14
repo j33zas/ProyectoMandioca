@@ -57,8 +57,9 @@ public class GameMenu_UI : UI_Base
 
         if (skill_manager.I_Have_An_Active_Request())
         {
+            Debug.LogWarning("TENGO UNA REQUEST ACTIVA");
            Instantiate(psSelection_template_pf, passiveSkillsSelection_container).
-                        Configure(skill_manager.GetSkillRequest(), skill_manager.ReturnSkill, OnFinishLvlUpSkillSelection, out myselected);
+                        Configure(skill_manager.GetPeekedRequest(), skill_manager.ReturnSkill, OnFinishLvlUpSkillSelection, out myselected);
         }
 
 

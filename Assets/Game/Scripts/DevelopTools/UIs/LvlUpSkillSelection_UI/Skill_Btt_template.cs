@@ -29,24 +29,20 @@ public class Skill_Btt_template : MonoBehaviour, ISelectHandler, ISubmitHandler,
     ////////////////HOVER
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log("caca Hover Jopystick o teclado");
         selectedImage.SetActive(true);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("caca Hover mouse");
         selectedImage.SetActive(true);
     }
 
     ////////////Selecion ACEPTAR
     public void OnSubmit(BaseEventData eventData)
     {
-        Debug.Log("caca en el joystick");
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("caca en el Mouse");
     }
 
     public void OnPointerExit(PointerEventData eventData)
