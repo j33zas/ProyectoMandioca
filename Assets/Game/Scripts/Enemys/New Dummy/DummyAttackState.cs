@@ -22,7 +22,7 @@ namespace Tools.StateMachine
             base.Enter(input);
 
             anim.SetBool("Attack", true);
-            combatDirector.AttackRelease(enemy);
+            combatDirector.RemoveToAttack(enemy, enemy.CurrentTarget());
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)
@@ -33,7 +33,9 @@ namespace Tools.StateMachine
             {
                 timer = 0;
                 anim.SetBool("Attack", false);
-                combatDirector.AddOrRemoveToList(enemy);
+                var myEnemy = (EnemyBase)enemy;
+                myEnemy.attacking = false;
+                combatDirector.AddToAttack(enemy, enemy.CurrentTarget());
             }
         }
 

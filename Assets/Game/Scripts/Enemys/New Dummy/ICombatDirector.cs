@@ -6,9 +6,19 @@ public interface ICombatDirector
 {
     Transform CurrentTargetPos();
 
-    void SetTargetPos(Transform pos);
+    Transform CurrentTargetPosDir();
+
+    void SetTargetPosDir(Transform pos);
+
+    void SetTarget(EntityBase entity);
+
+    EntityBase CurrentTarget();
 
     Vector3 CurrentPos();
 
     void ToAttack();
+
+    bool IsInPos();
+
+    void SetBool(bool isPos);
 }

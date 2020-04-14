@@ -66,7 +66,6 @@ public class TrueDummyEnemy : EnemyBase
     public void DealDamage()
     {
         combatComponent.ManualTriggerAttack();
-        attacking = false;
     }
 
     public void EndStun()
@@ -101,8 +100,10 @@ public class TrueDummyEnemy : EnemyBase
         {
             feedbackStun.Refresh();
             feedbackHitShield.Refresh();
-            if(sm!=null)
+            if (sm != null)
+            {
                 sm.Update();
+            }
         }
     }
     protected override void OnPause()
@@ -140,6 +141,19 @@ public class TrueDummyEnemy : EnemyBase
 
         return Attack_Result.sucessful;
     }
+
+    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype damagetype, EntityBase owner_entity)
+    {
+        //if (!attacking && entityTarget != owner_entity)
+        //{
+        //    director.RemoveToAttack(this, entityTarget);
+        //    SetTarget(owner_entity);
+        //    director.AddToAttack(this, entityTarget);
+        //}
+
+        return TakeDamage(dmg, attackDir, damagetype);
+    }
+
     public override void HalfLife()
     {
         base.HalfLife();
@@ -186,7 +200,7 @@ public class TrueDummyEnemy : EnemyBase
     }
     public void Die()
     {
-        director.AddOrRemoveToList(this);
+        director.RemoveToAttack(this, entityTarget);
         Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
         gameObject.SetActive(false);
         //sm.SendInput(DummyEnemyInputs.DIE);
@@ -199,7 +213,6 @@ public class TrueDummyEnemy : EnemyBase
     public override void ToAttack()
     {
         attacking = true;
-        Debug.Log("doy la orden");
     }
 
     #region STATE MACHINE THINGS
@@ -264,10 +277,10 @@ public class TrueDummyEnemy : EnemyBase
 
         //Asignando las funciones de cada estado
         new DummyIdleState(idle, sm, IsAttack, CurrentTargetPos, distanceToAttack, normalDistance,this).SetAnimator(animator).SetRoot(rootTransform)
-                                                                                                                     .SetTarget(head.transform).SetDirector(director);
+                                                                                                                     .SetDirector(director);
 
         new DummyFollowState(goToPos, sm, avoidRadious, avoidWeight, GetCurrentSpeed, CurrentTargetPos, normalDistance, this).SetAnimator(animator).SetRigidbody(rb)
-                                                                                                          .SetRoot(rootTransform).SetTarget(head.transform);
+                                                                                                          .SetRoot(rootTransform);
 
         new DummyAttackState(attack, sm, cdToAttack, this).SetAnimator(animator).SetDirector(director);
 

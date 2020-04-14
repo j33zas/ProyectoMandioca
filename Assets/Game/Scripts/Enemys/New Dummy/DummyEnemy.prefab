@@ -1992,6 +1992,7 @@ MonoBehaviour:
   _targetFeedback: {fileID: 530351151401865635}
   minionTarget: 0
   Invinsible: 0
+  distancePos: 2
   combatComponent: {fileID: 3901963547881250309}
   damage: 1
   obj_feedbackStun: {fileID: 3901963546435207828}

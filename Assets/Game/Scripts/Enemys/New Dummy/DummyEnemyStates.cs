@@ -8,7 +8,6 @@ namespace Tools.StateMachine
     {
         protected EState<TrueDummyEnemy.DummyEnemyInputs> lastState;
         protected Animator anim;
-        protected Transform target;
         protected Transform root;
         protected Rigidbody rb;
         protected CombatDirector combatDirector;
@@ -21,8 +20,6 @@ namespace Tools.StateMachine
         #region Builder
 
         public DummyEnemyStates SetAnimator(Animator _anim) { anim = _anim; return this; }
-
-        public DummyEnemyStates SetTarget(Transform _target) { target = _target; return this; }
 
         public DummyEnemyStates SetRigidbody(Rigidbody _rb) { rb = _rb; return this; }
 

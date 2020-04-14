@@ -55,7 +55,7 @@ namespace Tools.StateMachine
                 sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
             else
             {
-                if (MyPos())
+                if (enemy.IsInPos())
                 {
                     currentDis = distanceMin;
                 }
@@ -64,8 +64,7 @@ namespace Tools.StateMachine
                     currentDis = distanceMax;
                 }
 
-                //Debug.Log(Vector3.Distance(target.position, root.position) + "  " + currentDis);
-                if (Vector3.Distance(target.position, root.position) >= currentDis)
+                if (Vector3.Distance(enemy.CurrentTarget().transform.position, root.position) >= currentDis)
                 {
                     if (currentDis == distanceMin)
                         combatDirector.GetNewNearPos(enemy);

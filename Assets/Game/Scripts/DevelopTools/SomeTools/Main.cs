@@ -160,6 +160,8 @@ public class Main : MonoBehaviour
     public List<EnemyBase> GetEnemies() => GetListOfComponent<EnemyBase>();
 
     public List<Minion> GetMinions() => GetListOf<Minion>();
+
+    public CombatDirector GetCombatDirector() => GetComponent<CombatDirector>();
     public MyEventSystem GetMyEventSystem() => MyEventSystem.instance;
     public bool Ui_Is_Open() => gameUiController.openUI;
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;

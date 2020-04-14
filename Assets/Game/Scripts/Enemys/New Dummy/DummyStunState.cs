@@ -25,6 +25,7 @@ namespace Tools.StateMachine
             base.Enter(input);
             currentAnimVel = anim.speed;
             anim.speed = 0;
+            Debug.Log("me petrifican");
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)

@@ -45,14 +45,16 @@ namespace Tools.StateMachine
         {
             base.Update();
 
-            Vector3 dirForward = (target.position - root.position).normalized;
-
-            root.forward = new Vector3(dirForward.x, 0, dirForward.z);
+            if(noObs.CurrentTarget() != null)
+            {
+                Vector3 dirForward = (noObs.CurrentTarget().transform.position - root.position).normalized;
+                root.forward = new Vector3(dirForward.x, 0, dirForward.z);
+            }
 
             if (GetMyPos() == null)
             {
                 ObstacleAvoidance(root.forward);
-                if (Vector3.Distance(target.position, root.position) <= normalDistance)
+                if (Vector3.Distance(noObs.CurrentTarget().transform.position, root.position) <= normalDistance)
                     sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
             }
             else
