@@ -18677,7 +18677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f86752788527749be3922bbec333b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemies: 8
+  maxEnemies: 5
   timerMin: 0.3
   timerMax: 2
 --- !u!4 &653540777 stripped

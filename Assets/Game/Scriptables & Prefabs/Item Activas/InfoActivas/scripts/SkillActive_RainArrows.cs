@@ -87,7 +87,7 @@ public class SkillActive_RainArrows : SkillActivas
     {
         foreach (T en in enemiesAffected)
         {
-            en.TakeDamage(Mathf.RoundToInt(dmgPerTick), Vector3.up, Damagetype.normal);
+            en.TakeDamage(Mathf.RoundToInt(dmgPerTick), Vector3.up, Damagetype.normal, _hero);
         }
     }
 }

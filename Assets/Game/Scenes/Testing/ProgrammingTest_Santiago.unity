@@ -13777,7 +13777,6 @@ MonoBehaviour:
   maxEnemies: 4
   timerMin: 0.3
   timerMax: 2
-  commonRadius: 1.5
 --- !u!33 &654491913
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17583,7 +17582,7 @@ PrefabInstance:
     - target: {fileID: 3901963547881250308, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3901963547881250311, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
@@ -18809,7 +18808,7 @@ PrefabInstance:
     - target: {fileID: 3901963547881250308, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3901963547881250311, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
@@ -22265,7 +22264,7 @@ PrefabInstance:
     - target: {fileID: 3901963547881250308, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3901963547881250311, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
@@ -30479,7 +30478,7 @@ PrefabInstance:
     - target: {fileID: 3901963547881250308, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3901963547881250311, guid: 2a69aece938c0a04da1666b0c4108765,
         type: 3}
@@ -52875,7 +52874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f122231cec0d13f40a647b5ad4ccdf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allskills: []
+  my_current_active_skills: []
   alllevels:
   - {fileID: 11400000, guid: 161715b085b932d499d631ef42d2871e, type: 2}
   - {fileID: 11400000, guid: aaf6b99aeb3d93b4c84de8a9278ac77c, type: 2}
@@ -52885,16 +52884,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 13b98cbc658bc4d53a773306d0a43828, type: 2}
   - {fileID: 11400000, guid: 7fb48b17a3c1f4598bbd811ded0836cd, type: 2}
   - {fileID: 11400000, guid: 4fe4ba9a4abc248e99554403eb85074b, type: 2}
-  - {fileID: 11400000, guid: 2225a16c44b244ea8a25076109f2cdcb, type: 2}
-  - {fileID: 11400000, guid: 5e7ed9b0c67774cdb9448e8dc8435c23, type: 2}
-  - {fileID: 11400000, guid: 2992836a795e642988d214ea1d3ee4c3, type: 2}
-  - {fileID: 11400000, guid: d4bb2993c02b343ebba9f42d1583fc33, type: 2}
-  - {fileID: 11400000, guid: 677661a3e65a9465faef8d2515e6da4e, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 1f21c9e8de8d446efbfc538f0df0dac4, type: 2}
   - {fileID: 11400000, guid: 4883908fe714f478abb0102fb8d54d7b, type: 2}
   - {fileID: 11400000, guid: 3a6f2323490c24c938724aabb4a6e8b3, type: 2}
   - {fileID: 11400000, guid: aa6dc873775094649a71aea95082c9e2, type: 2}
   current_list_of_skills: []
+  debugRequest: []
+  list_of_generics: []
   testing: 0
   skillinfos: []
   frontend: {fileID: 7268128996064042063}

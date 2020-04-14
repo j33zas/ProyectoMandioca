@@ -56,7 +56,7 @@ public class ExplosionCW : SkillBase
             {
                 Debug.Log("0: Damage explosion: " + damageExp);
 
-                item.GetComponent<EnemyBase>().TakeDamage(damageExp, (item.transform.position - head.transform.position).normalized,  Damagetype.explosion);
+                item.GetComponent<EnemyBase>().TakeDamage(damageExp, (item.transform.position - head.transform.position).normalized,  Damagetype.explosion, head);
             }
         }
 

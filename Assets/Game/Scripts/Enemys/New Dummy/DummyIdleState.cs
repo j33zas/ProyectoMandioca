@@ -51,6 +51,12 @@ namespace Tools.StateMachine
         {
             base.Update();
 
+            if(enemy.CurrentTarget() != null)
+            {
+                Vector3 myForward = (enemy.CurrentTarget().transform.position - root.position).normalized;
+                root.forward = new Vector3(myForward.x, 0, myForward.z);
+            }
+
             if (IsAttack())
                 sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
             else

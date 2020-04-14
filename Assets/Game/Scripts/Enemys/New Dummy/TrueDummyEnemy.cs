@@ -144,12 +144,13 @@ public class TrueDummyEnemy : EnemyBase
 
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype damagetype, EntityBase owner_entity)
     {
-        //if (!attacking && entityTarget != owner_entity)
-        //{
-        //    director.RemoveToAttack(this, entityTarget);
-        //    SetTarget(owner_entity);
-        //    director.AddToAttack(this, entityTarget);
-        //}
+        if (sm.Current.Name != "Attack" && entityTarget != owner_entity)
+        {
+            attacking = false;
+            director.RemoveToAttack(this, entityTarget);
+            SetTarget(owner_entity);
+            director.AddToAttack(this, entityTarget);
+        }
 
         return TakeDamage(dmg, attackDir, damagetype);
     }
@@ -219,13 +220,13 @@ public class TrueDummyEnemy : EnemyBase
 
     void SetStates()
     {
-        var idle = new EState<DummyEnemyInputs>();
-        var goToPos = new EState<DummyEnemyInputs>();
-        var attack = new EState<DummyEnemyInputs>();
-        var takeDamage = new EState<DummyEnemyInputs>();
-        var die = new EState<DummyEnemyInputs>();
-        var disable = new EState<DummyEnemyInputs>();
-        var petrified = new EState<DummyEnemyInputs>();
+        var idle = new EState<DummyEnemyInputs>("Idle");
+        var goToPos = new EState<DummyEnemyInputs>("Follow");
+        var attack = new EState<DummyEnemyInputs>("Attack");
+        var takeDamage = new EState<DummyEnemyInputs>("Take_Damage");
+        var die = new EState<DummyEnemyInputs>("Die");
+        var disable = new EState<DummyEnemyInputs>("Disable");
+        var petrified = new EState<DummyEnemyInputs>("Petrified");
 
         ConfigureState.Create(idle)
             .SetTransition(DummyEnemyInputs.GO_TO_POS, goToPos)
