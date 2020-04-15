@@ -12,10 +12,6 @@ public class ItemWorld : Interactable
     [Header("Item World Setup")]
     public Item item;
 
-    bool onselected;
-
-    Transform model;
-
     Item_animRecolect recolector_anim;
     public bool canrecolectoranim;
 
@@ -26,22 +22,8 @@ public class ItemWorld : Interactable
 
     private void Awake()
     {
-
-        var aux = GetComponentInChildren<ParentFinder>();
-        if (aux)
-        {
-            model = aux.transform;
-        }
-
         recolector_anim = GetComponent<Item_animRecolect>();
         if (recolector_anim != null) canrecolectoranim = true;
-    }
-    private void Update()
-    {
-        if (onselected)
-        {
-            if (model) model.Rotate(0, 20 * Time.deltaTime, 0);
-        }
     }
     public void OnAppearInScene()
     {
@@ -51,7 +33,7 @@ public class ItemWorld : Interactable
     ///////////////////////////////////////////////////////////////////
     ///// PROPIAS DE INTERACTABLE (HERENCIA)
     ///////////////////////////////////////////////////////////////////
-    public override void Execute(WalkingEntity collector)
+    public override void OnExecute(WalkingEntity collector)
     {
         if (canrecolectoranim)
         {
@@ -71,15 +53,12 @@ public class ItemWorld : Interactable
         Destroy(this.gameObject);
     }
 
-    public override void Exit()
+    public override void OnExit()
     {
-        if (feedback.Length > 0) foreach (var fdbck in feedback) fdbck.Hide();
-
         WorldItemInfo.instance.Hide();
-        onselected = false;
     }
 
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         if (!autoexecute)
         {
@@ -94,12 +73,6 @@ public class ItemWorld : Interactable
                     WorldItemInfo.instance.Show(this.transform.position, item.name, item.description);
                 }
             }
-
-            if (feedback.Length > 0) foreach (var fdbck in feedback) fdbck.Show();
-
-
-            onselected = true;
-
         }
         else
         {

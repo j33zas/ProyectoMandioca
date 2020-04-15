@@ -88,7 +88,7 @@ public class InteractSensor : MonoBehaviour
 
             if (can_show_info)
             {
-                most_close.ShowInfo(collector);
+                most_close.Enter(collector);
                 can_show_info = false;
             }
 

@@ -6,7 +6,7 @@ public class Interact_Emisor : Interactable
 {
     public Interact_Receptor[] results;
 
-    public override void Execute(WalkingEntity entity)
+    public override void OnExecute(WalkingEntity entity)
     {
         foreach (var r in results)
         {
@@ -14,9 +14,9 @@ public class Interact_Emisor : Interactable
         }
     }
 
-    public override void Exit() => WorldItemInfo.instance.Hide();
+    public override void OnExit() => WorldItemInfo.instance.Hide();
 
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(pointToMessage.position,
                                     "Boton",

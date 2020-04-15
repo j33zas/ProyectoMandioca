@@ -9,19 +9,19 @@ public class DropItems : Interactable
     public int QuantityToSpawn;
     public SpawnData data;
 
-    public override void Execute(WalkingEntity collector)
+    public override void OnExecute(WalkingEntity collector)
     {
         //if (QuantityToSpawn == 1) Main.instance.SpawnItem(itemToDrop, posToDrop);
         //else Main.instance.SpawnListItems(itemToDrop, posToDrop, QuantityToSpawn);
         Main.instance.SpawnWheel(data, posToDrop);
     }
 
-    public override void Exit()
+    public override void OnExit()
     {
         WorldItemInfo.instance.Hide();
     }
 
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(posToDrop.position, "Drop items", "Dropea items", "Drop");
     }

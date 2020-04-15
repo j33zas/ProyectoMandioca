@@ -18,15 +18,15 @@ public class HalfLife : Interactable
         light = GetComponentInChildren<Light>();
     }
 
-    public override void Execute(WalkingEntity entity)
+    public override void OnExecute(WalkingEntity entity)
     {
         execute = true;
     }
-    public override void Exit()
+    public override void OnExit()
     {
         execute = false;
     }
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(this, "centro de carga", "contiene en total " + mycant + " Cargas", "Cargar");
 

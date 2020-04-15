@@ -141,13 +141,11 @@ public class Main : MonoBehaviour
 
     public void PlayerDeath()
     {
-        if (FindObjectOfType<SceneMainBase>())
-        {
-            FindObjectOfType<SceneMainBase>().OnPlayerDeath();
-        }
+        //if (FindObjectOfType<SceneMainBase>())
+        //{
+        //    FindObjectOfType<SceneMainBase>().OnPlayerDeath();
+        //}
     }
-
-
 
     public void Play() { foreach (var e in allentities) e.Resume();  }
     public void Pause() { foreach (var e in allentities) e.Pause(); }
@@ -170,6 +168,9 @@ public class Main : MonoBehaviour
     public void Vibrate() => rumble.OneShootRumble();
     public void Vibrate(float _strengh = 1, float _time_to_rumble = 0.2f) => rumble.OneShootRumble(_strengh, _time_to_rumble);
 
+
+
+    #region REMPLAZAR TODO ESTO POR UN GETSPAWNER() Y QUIEN LO NECESITE LO HAGA DESDE SU CODIGO
     Spawner spawner = new Spawner();
 
     public ItemWorld SpawnItem(ItemWorld item, Transform pos) => spawner.SpawnItem(item, pos);
@@ -181,5 +182,6 @@ public class Main : MonoBehaviour
 
 
     public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn,pos);
+    #endregion
 
 }

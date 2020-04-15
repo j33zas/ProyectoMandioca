@@ -9,7 +9,7 @@ public class InteractMessage : Interactable
 
     public string message = "simple message";
 
-    public override void Execute(WalkingEntity collector)
+    public override void OnExecute(WalkingEntity collector)
     {
         //no hago nada con el collector
         //UI_Messages.instancia.ShowMessage(message, 2f);
@@ -17,12 +17,12 @@ public class InteractMessage : Interactable
         Debug.Log("Estoy interactuando");
     }
 
-    public override void Exit()
+    public override void OnExit()
     {
         if (feedback.Length > 0) foreach (var i in feedback) i.Hide();
     }
 
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(pointToMessage.position, "Interactuable", "Esto es un interactuable", "interactuar");
         if (feedback.Length > 0) foreach (var i in feedback) i.Show();

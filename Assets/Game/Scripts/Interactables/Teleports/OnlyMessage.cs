@@ -14,17 +14,17 @@ public class OnlyMessage : Interactable
         //lookat.SetSource(0, Camera.main.gameObject.GetComponent<ConstraintSource>());
     }
 
-    public override void Execute(WalkingEntity entity)
+    public override void OnExecute(WalkingEntity entity)
     {
         
     }
 
-    public override void Exit()
+    public override void OnExit()
     {
         
     }
 
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(pointToMessage.position, tiitle, message, "", true);
     }

@@ -10,7 +10,6 @@ public class CombatDirector : MonoBehaviour
     List<Transform> positionsToAttack = new List<Transform>();
     [SerializeField, Range(1, 8)] int maxEnemies = 1;
 
-
     Dictionary<EntityBase, List<Transform>> otherTargetPos = new Dictionary<EntityBase, List<Transform>>();
     Dictionary<EntityBase, List<ICombatDirector>> listAttackTarget = new Dictionary<EntityBase, List<ICombatDirector>>();
 

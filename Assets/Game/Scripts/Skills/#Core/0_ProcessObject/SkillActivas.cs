@@ -9,10 +9,14 @@ public abstract class SkillActivas : SkillBase
     bool begincooldown;
     public override void BeginSkill()
     {
-        begincooldown = false;
+        begincooldown = true;
         ui_skill.SetImages(skillinfo.img_avaliable, skillinfo.img_actived);
         ui_skill.Cooldown_ConfigureTime(cooldown);
         base.BeginSkill();
+    }
+    public override void EndSkill()
+    {
+        base.EndSkill();
     }
 
     public void Execute()

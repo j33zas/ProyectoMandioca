@@ -25,17 +25,17 @@ public class OpenUIBases : Interactable
     }
 
 
-    public override void Execute(WalkingEntity entity)
+    public override void OnExecute(WalkingEntity entity)
     {
         ui_to_open.Open();
     }
 
-    public override void Exit()
+    public override void OnExit()
     {
         ui_to_open.Close();
     }
 
-    public override void ShowInfo(WalkingEntity entity)
+    public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(transform.position, title, info, "", true);
     }

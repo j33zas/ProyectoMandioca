@@ -119,7 +119,6 @@ public class DummyEnemy : EnemyBase
        
     }
 
-
     //No sabia muy bien donde ponerlo, asi que lo pongo aca. Esto lo llama el freeze_range active skill
 
     public override void OnFreeze()
@@ -140,9 +139,6 @@ public class DummyEnemy : EnemyBase
         {
             _rb.AddForce(dir * explosionForce, ForceMode.Impulse);
         }
-
-
-        Debug.Log("Attack result: " + dmg);
         lifesystem.Hit(dmg);
         greenblood.Play();
 

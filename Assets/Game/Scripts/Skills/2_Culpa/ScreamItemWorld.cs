@@ -7,7 +7,7 @@ public class ScreamItemWorld : ItemWorld
     [HideInInspector]
     public ScreamPool myPool;
 
-    public override void Execute(WalkingEntity collector)
+    public override void OnExecute(WalkingEntity collector)
     {
         collector.OnReceiveItem(this);
         to_collect.Invoke();
