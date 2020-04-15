@@ -13,7 +13,7 @@ public class SkillActive_FreezeRange : SkillActivas
 
     private CharacterHead _hero;
 
-    protected override void OnExecute()
+    protected override void OnOneShotExecute()
     {
         List<EnemyBase> enemies = Extensions.FindInRadius<EnemyBase>(_hero.transform, range);
 
@@ -31,4 +31,7 @@ public class SkillActive_FreezeRange : SkillActivas
     }
     protected override void OnEndSkill() { }
     protected override void OnUpdateSkill() { }
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 }

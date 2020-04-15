@@ -18,20 +18,14 @@ public class SkillActive_RainArrows : SkillActivas
 
     private CharacterHead _hero;
     private bool isActive = false;
-    protected override void OnExecute()
+    protected override void OnOneShotExecute()
     {
         dmgPerTick =   dmgTotal / (duration / ticksAmount);
-        
         SetPositionOfRainEffect();
         SetRainFeedBackParticlesPosition();
-        
         arrowRain_ps.Play();
-
         isActive = true;
-
-
         FindAndDamage();
-
     }
 
     protected override void OnBeginSkill()
@@ -90,4 +84,7 @@ public class SkillActive_RainArrows : SkillActivas
             en.TakeDamage(Mathf.RoundToInt(dmgPerTick), Vector3.up, Damagetype.normal, _hero);
         }
     }
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SkillActive_Empty : SkillActivas
 {
-    protected override void OnExecute() { }
+    protected override void OnOneShotExecute() { }
     protected override void OnBeginSkill() { }
     protected override void OnEndSkill() { }
     protected override void OnUpdateSkill() { }
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 }

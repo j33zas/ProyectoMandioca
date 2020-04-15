@@ -10,7 +10,7 @@ public class SkillActive_DamageInRoom : SkillActivas
 
     private CharacterHead _hero;
 
-    protected override void OnExecute()
+    protected override void OnOneShotExecute()
     {
         List<EnemyBase> enemies = Main.instance.GetEnemies();
 
@@ -28,8 +28,8 @@ public class SkillActive_DamageInRoom : SkillActivas
         _hero = Main.instance.GetChar();
     }
     protected override void OnEndSkill() { }
-
-    protected override void OnUpdateSkill()
-    {
-    }
+    protected override void OnUpdateSkill() { }
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 }

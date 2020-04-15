@@ -16,7 +16,7 @@ public class SkillActive_LightBounce : SkillActivas
 
     [SerializeField] private LineRenderer _lineRenderer;
 
-    protected override void OnExecute() { }
+    protected override void OnOneShotExecute() { }
 
     protected override void OnBeginSkill()
     {
@@ -71,5 +71,8 @@ public class SkillActive_LightBounce : SkillActivas
         _lineRenderer.SetPosition(0, targetPosition);
         _lineRenderer.SetPosition(1, endPosition);
     }
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 
 }

@@ -14,7 +14,7 @@ public class ActivaExample : SkillActivas
         
     }
 
-    protected override void OnExecute()
+    protected override void OnOneShotExecute()
     {
         
     }
@@ -23,4 +23,7 @@ public class ActivaExample : SkillActivas
     {
         
     }
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 }

@@ -11,7 +11,7 @@ public class SkillActive_SomeHeal : SkillActivas
     private CharacterHead _hero;
     private LifeSystem _lifeSystem;
 
-    protected override void OnExecute()
+    protected override void OnOneShotExecute()
     {
         _lifeSystem.Heal(healAmount);
         healFeedback.Play();
@@ -29,4 +29,8 @@ public class SkillActive_SomeHeal : SkillActivas
         if (healFeedback.isPlaying)
             healFeedback.transform.position = _hero.transform.position;
     }
+
+    protected override void OnStartUse() { }
+    protected override void OnStopUse() { }
+    protected override void OnUpdateUse() { }
 }
