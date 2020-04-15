@@ -4,10 +4,12 @@ using UnityEngine;
 
 public abstract class SkillActivas : SkillBase
 {
+    [Header("Cooldown Settings")]
     public float cooldown;
     float time_cooldown;
     bool begincooldown;
 
+    [Header("Use in Time Settings")]
     public bool one_time_use = true;
     public float useTime = 5f;
     float timer_use = 0;

@@ -5,6 +5,7 @@ using Tools.Extensions;
 
 public class SkillActive_RainArrows : SkillActivas
 {
+    [Header("Rain arrows settings")]
     [SerializeField] private float duration;
     [SerializeField] private float dmgTotal;
     [SerializeField] private int ticksAmount;

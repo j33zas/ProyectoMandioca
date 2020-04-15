@@ -41,6 +41,11 @@ public class SkillManager_Activas : MonoBehaviour
         ui.OnSubmit(event_data);
     }
 
+    public void RefreshUseTimeBar(SkillInfo id, float current_timer, float max_Value)
+    {
+
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
