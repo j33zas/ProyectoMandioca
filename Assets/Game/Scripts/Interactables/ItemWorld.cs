@@ -18,12 +18,14 @@ public class ItemWorld : Interactable
     public UnityEvent to_collect;
     public UnityEvent OnCreate;
 
-
+    public ItemInterceptor interceptor;
 
     private void Awake()
     {
         recolector_anim = GetComponent<Item_animRecolect>();
         if (recolector_anim != null) canrecolectoranim = true;
+
+        interceptor = GetComponent<ItemInterceptor>();
     }
     public void OnAppearInScene()
     {
@@ -49,8 +51,19 @@ public class ItemWorld : Interactable
     void Collect(WalkingEntity collector)
     {
         collector.OnReceiveItem(this);
-        to_collect.Invoke();
-        Destroy(this.gameObject);
+        if (interceptor != null)
+        {
+            if (interceptor.Collect())
+            {
+                to_collect.Invoke();
+                Destroy(this.gameObject);
+            }
+        }
+        else
+        {
+            to_collect.Invoke();
+            Destroy(this.gameObject);
+        }
     }
 
     public override void OnExit()

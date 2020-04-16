@@ -54,7 +54,7 @@ public class SkillManager_Activas : MonoBehaviour
 
     const int MAX = 100;
     readonly int[] percentedvalues = new int[] { 0, 25, 50, 75 };
-    bool[] slots = new bool[4];
+    public bool[] slots = new bool[4];
     public void ReceiveLife(int _life, int max)
     {
         //ahora sabemos que 100 es el maximo, agregarle que lo calcule con el maximo sacando porcentaje
@@ -103,60 +103,76 @@ public class SkillManager_Activas : MonoBehaviour
     }
 
     public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;
-    int indextest;
+    int current_index;
     public void ReplaceFor(SkillInfo _skillinfo, int index)
     {
 
-        myActiveSkills[indextest].EndSkill();
-        myActiveSkills[indextest] = fastreference[_skillinfo];
+        myActiveSkills[current_index].EndSkill();
+        myActiveSkills[current_index] = fastreference[_skillinfo];
 
 
 
         frontend.Reconfigurate(myActiveSkills);
-        myActiveSkills[indextest].BeginSkill();
+        myActiveSkills[current_index].BeginSkill();
 
-        indextest = indextest.NextIndex(myActiveSkills.Length);
+        current_index = current_index.NextIndex(myActiveSkills.Length);
 
         //spawnear el viejo
     }
-    public void ReplaceFor(SkillInfo _skillinfo, int index, Item item)
+    public bool ReplaceFor(SkillInfo _skillinfo, int index, Item item)
     {
-
-        foreach (var i in myActiveSkills)
-        {
-            if (_skillinfo == i.skillinfo)
-            {
-                var _item = fastreference_item[_skillinfo];
-                Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
-
-                return;
-            }
-        }
-
-
-        myActiveSkills[indextest].EndSkill();
-
-        if (fastreference_item.ContainsKey(myActiveSkills[indextest].skillinfo))
-        {
-            var _item = fastreference_item[myActiveSkills[indextest].skillinfo];
-            Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
-            //fastreference_item.Remove(myActiveSkills[indextest].skillinfo);
-        }
-
-        myActiveSkills[indextest] = fastreference[_skillinfo];
+        //si ya la tengo repetida ni la agarro
+        foreach (var i in myActiveSkills) if (_skillinfo == i.skillinfo) return false; else continue;
+        //ahora si no la tengo repetida
 
         if (!fastreference_item.ContainsKey(_skillinfo))
         {
             fastreference_item.Add(_skillinfo, item);
         }
 
+
+        //esto es una negrada... pero hasta que no se confirme si se va a hacer lo de magno
+        //lo que hace es que si usa el sistema de magno no se buguee al entrar
+        if (slots[0] == false)
+        {
+            for (int i = 0; i < slots.Length; i++) slots[i] = true;
+        }
+
+        int cleanindex = FindNextCleanIndex(current_index);
+
+        //endskill del anterior
+        myActiveSkills[cleanindex].EndSkill();
+
+        //si mi diccionario biblioteca de items contiene el info del anterior
+        //spawneo el item
+        //si entro aca es porque quiere decir que alguna vez un item que puede ser dropeado entró aca, por lo tanto no va a estar vacio
+        if (fastreference_item.ContainsKey(myActiveSkills[cleanindex].skillinfo))
+        {
+            //obtengo el item del anterior
+            var _item = fastreference_item[myActiveSkills[cleanindex].skillinfo];
+            //spawneo el item anterior
+            Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
+        }
+
+        //asigno a este index el nuevo skill
+        myActiveSkills[cleanindex] = fastreference[_skillinfo];
+
         frontend.Reconfigurate(myActiveSkills);
-        myActiveSkills[indextest].BeginSkill();
+        myActiveSkills[cleanindex].BeginSkill();
 
-        indextest = indextest.NextIndex(myActiveSkills.Length);
+        current_index = cleanindex;
 
+        return true;
         //spawnear el viejo
     }
+    int FindNextCleanIndex(int current)
+    {
+        int next_clean_index = current;
+        next_clean_index = next_clean_index.NextIndex(myActiveSkills.Length);
+        while (!slots[next_clean_index]) next_clean_index = next_clean_index.NextIndex(myActiveSkills.Length);
+        return next_clean_index;
+    }
+
     void FillDiccionary()
     {
         fastreference = new Dictionary<SkillInfo, SkillActivas>();
