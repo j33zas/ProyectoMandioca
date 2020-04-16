@@ -11,10 +11,6 @@ public abstract class WalkingEntity : EntityBase
 
     protected bool petrified;
 
-    private void Awake()
-    {
-        
-    }
 
     private bool executeAStar;
     protected override void OnUpdate() { if (executeAStar) {/*Execute AStar*/}  OnUpdateEntity(); }

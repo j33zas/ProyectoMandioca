@@ -24,7 +24,7 @@ public class Main : MonoBehaviour
     public LevelSystem levelsystem;
     public EventManager eventManager;
     [SerializeField] CharacterHead character;
-    [SerializeField] PlayObject[] allentities;
+    [SerializeField] List<PlayObject> allentities;
     public UI_Menu ui_menu;
 
     public GameUI_controller gameUiController;
@@ -35,7 +35,14 @@ public class Main : MonoBehaviour
     public SkillManager_Pasivas skillmanager_pasivas;
     public SkillManager_Activas skillmanager_activas;
 
-
+    public void SubscriteToEntities(PlayObject po)
+    {
+            allentities.Add(po);
+    }
+    public void UnsubscribeToEntities(PlayObject po)
+    {
+            allentities.Remove(po);
+    }
 
     private void Awake()
     {
@@ -87,7 +94,7 @@ public class Main : MonoBehaviour
             toload.ToArray()
             );
     }
-    void AddToMainCollection(IEnumerable<PlayObject> col) { allentities = col.ToArray(); OnLoadEnded(); }
+    void AddToMainCollection(IEnumerable<PlayObject> col) { allentities = col.ToList(); OnLoadEnded(); }
 
     void OnLoadEnded()
     {
@@ -107,7 +114,7 @@ public class Main : MonoBehaviour
         }
     }
 
-    
+
 
     public List<T> GetListOf<T>() where T : PlayObject
     {
@@ -147,7 +154,7 @@ public class Main : MonoBehaviour
         //}
     }
 
-    public void Play() { foreach (var e in allentities) e.Resume();  }
+    public void Play() { foreach (var e in allentities) e.Resume(); }
     public void Pause() { foreach (var e in allentities) e.Pause(); }
 
 
@@ -181,7 +188,7 @@ public class Main : MonoBehaviour
     public List<GameObject> SpawnListItems(GameObject item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
 
 
-    public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn,pos);
+    public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn, pos);
     #endregion
 
 }

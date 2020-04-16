@@ -26,6 +26,23 @@ public class SkillManager_Activas : MonoBehaviour
 
     bool percenslot;
 
+    public void Initialize()
+    {
+        myActiveSkills = new SkillActivas[4];
+        for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
+
+        allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
+        FillDiccionary();
+
+
+        frontend.Refresh(myActiveSkills, OnUISelected);
+
+        for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
+
+        ReceiveLife((int)Main.instance.GetChar().GetCharacterLifeSystem().Life, 100);
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///// INPUT
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -41,16 +58,6 @@ public class SkillManager_Activas : MonoBehaviour
         ui.OnSubmit(event_data);
     }
 
-    
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            percenslot = !percenslot;
-            ReceiveLife((int)Main.instance.GetChar().GetCharacterLifeSystem().Life,100);
-        }
-    }
 
     const int MAX = 100;
     readonly int[] percentedvalues = new int[] { 0, 25, 50, 75 };
@@ -60,6 +67,7 @@ public class SkillManager_Activas : MonoBehaviour
         //ahora sabemos que 100 es el maximo, agregarle que lo calcule con el maximo sacando porcentaje
 
         var aux_value = MAX - _life;
+        if (aux_value == 0) aux_value = 1;
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -77,20 +85,7 @@ public class SkillManager_Activas : MonoBehaviour
         frontend.RefreshButtons(slots);
     }
 
-    public void Initialize()
-    {
-        myActiveSkills = new SkillActivas[4];
-        for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
-
-        allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
-        FillDiccionary();
-
-
-        frontend.Refresh(myActiveSkills, OnUISelected);
-
-        for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
-        Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
-    }
+   
 
     void EnemyDeath(params object[] param)
     {

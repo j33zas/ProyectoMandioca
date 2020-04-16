@@ -11,7 +11,7 @@ public class LifeSystem : MonoBehaviour
 
     public EventTwoInt OnChangeValue;
 
-    private void Start()  
+    private void Awake()  
     {
         lifesystemExample = new CharacterLifeSystem();
         lifesystemExample.Config(100, EVENT_OnLoseLife, EVENT_OnGainLife, EVENT_OnDeath, uilife, life);
