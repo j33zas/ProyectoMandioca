@@ -41,10 +41,7 @@ public class SkillManager_Activas : MonoBehaviour
         ui.OnSubmit(event_data);
     }
 
-    public void RefreshUseTimeBar(SkillInfo id, float current_timer, float max_Value)
-    {
-
-    }
+    
 
     private void Update()
     {
@@ -198,5 +195,32 @@ public class SkillManager_Activas : MonoBehaviour
     //    //}
     //    //frontend.Build(allskills,OnUISelected);
     //    //foreach (var s in currents.Values) s.BeginSkill();
+    //}
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////// REQUEST TIME BARS
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Dictionary<SkillInfo, int> fastindex = new Dictionary<SkillInfo, int>();
+    //Queue<SkillInfo> skill_use_refresh = new Queue<SkillInfo>();
+    //public void StartRequestBar(SkillInfo _idInfo)
+    //{
+    //}
+    //public void StopRequestBar(SkillInfo _idInfo)
+    //{
+    //    skill_use_refresh
+    //}
+    //public void RefreshUseTimeBar(SkillInfo _idInfo, float current_timer, float max_Value)
+    //{
+    //    //aca hago refresh de ui... asi tengo control de la ejecucion
+    //}
+    //public class RequestTimeBar
+    //{
+    //    SkillInfo info;
+    //    float current_timer; public float Current { get => current_timer; }
+    //    float max_value; public float Max { get => max_value; }
+    //    public RequestTimeBar(SkillInfo _info) { info = _info; }
+    //    public void RefreshData(float current, float max) { current_timer = current; max_value = max; }
     //}
 }

@@ -40,7 +40,7 @@ public abstract class SkillActivas : SkillBase
             }
             else
             {
-                timer_use = useTime;
+                timer_use = 0;
                 OnStartUse();
                 beginUse = true;
             }
@@ -56,18 +56,16 @@ public abstract class SkillActivas : SkillBase
         base.absUpdate();
         if (beginUse)
         {
-            if (timer_use > 0)
+            if (timer_use < useTime)
             {
-                timer_use = timer_use - 1 * Time.deltaTime;
+                timer_use = timer_use + 1 * Time.deltaTime;
                 OnUpdateUse();
-                //refresh request
-                //aca le paso el current y el maximo
             }
             else
             {
-
                 timer_use = 0;
                 beginUse = false;
+                OnStopUse();
             }
         }
         if (begincooldown)
