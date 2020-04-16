@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 
 namespace DevelopTools
@@ -21,9 +22,16 @@ namespace DevelopTools
         /// </summary>
         private Queue<T> objects = new Queue<T>();
 
+        [SerializeField] private int prewarmAmount;
+
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void Start()
+        {
+            PreWarm();
         }
 
         /// <summary>
@@ -44,6 +52,17 @@ namespace DevelopTools
         }
 
         /// <summary>
+        /// Crea una cantidad de objetos antes de arrancar
+        /// </summary>
+        public void PreWarm()
+        {
+            for (int i = 0; i < prewarmAmount; i++)
+            {
+                AddObject(1);
+            }
+        }
+
+        /// <summary>
         /// Devuelvo el objeto al pool
         /// </summary>
         /// <param name="objectToReturn"></param>
@@ -58,7 +77,7 @@ namespace DevelopTools
         /// <param name="amount"></param>
         protected void AddObject(int amount)
         {
-            var newObject = GameObject.Instantiate(prefab);
+            var newObject = GameObject.Instantiate(prefab,transform);
             newObject.gameObject.SetActive(false);
             objects.Enqueue(newObject);
         }

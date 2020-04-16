@@ -7,6 +7,8 @@ public class SkillActive_LightBounce : SkillActivas
     [SerializeField] private int damage;
     [SerializeField] private Damagetype dmgType;
     [SerializeField] private float range;
+    [SerializeField] private GameObject lightBeam;
+    [SerializeField] private ParticleSystem sparks_ps;
 
     public float laserWidth = 0.1f;
     public float laserMaxLength = 5f;
@@ -16,7 +18,10 @@ public class SkillActive_LightBounce : SkillActivas
 
     [SerializeField] private LineRenderer _lineRenderer;
 
-    protected override void OnOneShotExecute() { }
+    protected override void OnOneShotExecute()
+    {
+        Debug.Log("OnOneSHot");
+    }
 
     protected override void OnBeginSkill()
     {
@@ -27,16 +32,7 @@ public class SkillActive_LightBounce : SkillActivas
 
     protected override void OnUpdateSkill()
     {
-        if (blocker.onBlock)
-        {
-            ShootLaserFromTargetPosition(_hero.transform.position + Vector3.up * 1, _hero.GetCharMove().GetRotatorDirection(), range);
-            _lineRenderer.enabled = true;
-        }
-        else
-        {
-            _lineRenderer.enabled = false;
-        }
-
+        
     }
 
     void ShootLaserFromTargetPosition(Vector3 targetPosition, Vector3 direction, float length)
@@ -44,26 +40,26 @@ public class SkillActive_LightBounce : SkillActivas
         Ray ray = new Ray(targetPosition, direction);
         RaycastHit raycastHit;
         Vector3 endPosition = targetPosition + (length * direction);
-
-
         
 
         if (Physics.Raycast(ray, out raycastHit, length))
         {
             var enemy = raycastHit.collider.gameObject.GetComponent<EnemyBase>();
 
-
             if (enemy != null)
             {
-                // raycastHit.collider.gameObject.GetComponent<EnemyBase>().
-
                 Vector3 dir = enemy.transform.position - _hero.transform.position;
                 dir.Normalize();
 
+                sparks_ps.transform.position = raycastHit.point;
+                sparks_ps.Play();
+                Main.instance.Vibrate();
+                
                 enemy.TakeDamage(damage, dir, dmgType, _hero);
             }
             else
             {
+                sparks_ps.Stop();
                 endPosition = raycastHit.point;
             }
         }
@@ -71,8 +67,34 @@ public class SkillActive_LightBounce : SkillActivas
         _lineRenderer.SetPosition(0, targetPosition);
         _lineRenderer.SetPosition(1, endPosition);
     }
-    protected override void OnStartUse() { }
-    protected override void OnStopUse() { }
-    protected override void OnUpdateUse() { }
+
+    protected override void OnStartUse()
+    {
+        lightBeam.SetActive(true);
+    }
+
+    protected override void OnStopUse()
+    {
+        _lineRenderer.enabled = false;
+        sparks_ps.Stop();
+        lightBeam.SetActive(false);
+    }
+
+    protected override void OnUpdateUse()
+    {
+        lightBeam.transform.position = _hero.transform.position;
+        Debug.Log(blocker.onBlock);
+        if (blocker.onBlock)
+        {
+            ShootLaserFromTargetPosition(_hero.transform.position + Vector3.up * 1, _hero.GetCharMove().GetRotatorDirection(), range);
+            
+            _lineRenderer.enabled = true;    
+        }
+        else
+        {
+            _lineRenderer.enabled = false;
+        }
+        
+    }
 
 }
