@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Tools.Extensions;
 using System;
+using System.Linq;
 
 public class InteractSensor : MonoBehaviour
 {
     public bool isclose;
 
-    Interactable[] interactables;
+    List<Interactable> interactables;
     Interactable current;
     Interactable most_close;
 
+    public List<Interactable> filtered = new List<Interactable>();
+
     [Header("Walking Entity")]
     [SerializeField] WalkingEntity collector;
-
-    
 
     private void Awake()
     {
@@ -58,9 +59,26 @@ public class InteractSensor : MonoBehaviour
         Update_CooldownNextRecollection();
 
         //buscamos los interactuables
-        interactables = FindObjectsOfType<Interactable>();//hay que optimizar esto, es muy pesado un findobject en un Update
-        if (interactables.Length == 0) return;
-        if (interactables.Length == 1) current = interactables[0];
+        interactables = FindObjectsOfType<Interactable>().ToList();//hay que optimizar esto, es muy pesado un findobject en un Update
+
+        for (int i = 0; i < interactables.Count; i++)
+        {
+            if (interactables[i].autoexecute && Vector3.Distance(interactables[i].transform.position, transform.position) < interactables[i].distancetoInteract)
+            {
+                interactables[i].Execute(collector);
+            }
+            else
+            {
+                filtered.Add(interactables[i]);
+            }
+        }
+
+        Debug.Log("filtered = " + filtered.Count);
+        interactables = new List<Interactable>(filtered);
+        filtered.Clear();
+
+        if (interactables.Count == 0) { Debug.Log("No hay mas nada"); return; }
+        if (interactables.Count == 1) current = interactables[0];
         else current = interactables.ReturnMostClose(transform.position);//esto tambien se puede optimizar mas a delante con un return most close que busque por grupos
 
         //si no hay un most_close previo le asigno uno
@@ -91,6 +109,16 @@ public class InteractSensor : MonoBehaviour
                 most_close.Enter(collector);
                 can_show_info = false;
             }
+
+            if (most_close.autoexecute)
+            {
+                most_close.Execute(collector);
+                can_show_info = true;
+                WorldItemInfo.instance.Hide();
+                return;
+            }
+
+            Debug.Log("no llega hasta aca");
 
             if (!cooldown_to_next_recollection)
             {

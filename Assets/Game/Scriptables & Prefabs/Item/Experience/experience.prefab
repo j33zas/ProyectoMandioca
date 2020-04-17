@@ -74,6 +74,7 @@ MonoBehaviour:
   OnCreate:
     m_PersistentCalls:
       m_Calls: []
+  interceptor: {fileID: 0}
 --- !u!114 &7941249752761002219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  distance_to_collect: 0.2
+  distance_to_collect: 0.1
 --- !u!1 &8697729265398221662
 GameObject:
   m_ObjectHideFlags: 0
