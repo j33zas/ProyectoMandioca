@@ -1,0 +1,97 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DungeonGenerator;
+using DungeonGenerator.Components;
+using System.Linq;
+
+public class Dungeon : SceneMainBase
+{
+    public NewRoomGenerator newManagerRooms;
+
+    protected override void OnAwake()
+    {
+      //  CompleteCameraController.instancia.ChangeToDungeon();
+    }
+
+    protected override void OnStart()
+    {
+        newManagerRooms.Generate(OnEndDungeonGeneration);
+       // CompleteCameraController.instancia.ChangeToDungeon();
+    }
+
+    public void NextDungeon() 
+    { 
+        //MessageScreen.instancia.ShowAMessage(MessageScreen.Scene.dungeon, MessageScreen.MessaggeType.changedungeon); 
+    }
+
+    public void OnEndDungeonGeneration(List<NewRoom> rooms)
+    {
+        //var spawn = rooms[0].GetComponentInChildren<SpawnPoint>();
+        //if (spawn != null)
+        //{
+        //    Vector3 v = spawn.transform.position;
+        //    spawn_point = spawn.transform;
+        //    CharBrain.instancia.transform.position = new Vector3(v.x, 0, v.z);
+        //}
+        //else
+        //{
+        //    spawn_point = rooms[0].transform;
+        //    CharBrain.instancia.transform.position = new Vector3(rooms[0].transform.position.x, 0, rooms[0].transform.position.z);
+        //}
+
+        //rooms[0].myRoomtrigger.IsInside(CharBrain.instancia.gameObject);
+        //RoomTriggerManager.instancia.Initialize(rooms);
+
+        //CompleteCameraController.instancia.InstantAjust();
+    }
+
+    
+
+    protected override void OnFadeBackEnded()
+    {
+       // FindObjectsOfType<MapComponent>().ToList().ForEach(x => x.Activate());
+        
+    }
+
+    protected override void OnFadeGoEnded()
+    {
+      //  FindObjectsOfType<MapComponent>().ToList().ForEach(x => x.Deactivate());
+      //  CompleteCameraController.instancia.ChangeToNormal();
+    }
+
+    protected override void OnUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            newManagerRooms.Generate( OnEndDungeonGeneration);
+        }
+
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    CharBrain.instancia.transform.position = new Vector3(newManagerRooms.listrooms[newManagerRooms.rooms.Count - 1].transform.position.x, 0, newManagerRooms.rooms[newManagerRooms.rooms.Count - 1].transform.position.z);
+        //    newManagerRooms.listrooms[newManagerRooms.rooms.Count - 1].myRoomtrigger.IsInside(CharBrain.instancia.gameObject);
+        //}
+        //if (Input.GetKeyDown(KeyCode.H))
+        //{
+        //    CharBrain.instancia.transform.position = new Vector3(newManagerRooms.rooms[0].transform.position.x, 0, newManagerRooms.rooms[0].transform.position.z);
+        //    newManagerRooms.listrooms[0].myRoomtrigger.IsInside(CharBrain.instancia.gameObject);
+        //}
+    }
+
+    protected override void TeleportBug()
+    {
+       // CharBrain.instancia.transform.position = new Vector3(newManagerRooms.listrooms[0].transform.position.x, 0, newManagerRooms.listrooms[0].transform.position.z);
+       // newManagerRooms.listrooms[0].myRoomtrigger.IsInside(CharBrain.instancia.gameObject);
+       // CompleteCameraController.instancia.InstantAjust();
+    }
+
+    public void PlayerIsDead() { }
+    public void PlayerIsAlive() { }
+    protected override void OnPause() { }
+
+    public override void OnPlayerDeath()
+    {
+        newManagerRooms.listrooms.ForEach(x => x.PlayerIsDeath());
+    }
+}
