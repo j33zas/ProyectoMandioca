@@ -9,8 +9,14 @@ public class ScreamItemWorld : ItemWorld
 
     public override void OnExecute(WalkingEntity collector)
     {
-        collector.OnReceiveItem(this);
+        CollectOnEndAnimation(collector, OnEndAnimation);
+    }
+
+    void OnEndAnimation(WalkingEntity collector)
+    {
         to_collect.Invoke();
         myPool.ReturnScream(this);
+        collector.OnReceiveItem(this);
+        to_collect.Invoke();
     }
 }

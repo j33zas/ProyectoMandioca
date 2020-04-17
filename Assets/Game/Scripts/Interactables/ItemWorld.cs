@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Tools.EventClasses;
-
+using System;
 //implementar items
 //implementar collector
 
@@ -19,6 +19,8 @@ public class ItemWorld : Interactable
     public UnityEvent OnCreate;
 
     public ItemInterceptor interceptor;
+
+    protected bool destroy_on_collect = true;
 
     private void Awake()
     {
@@ -45,7 +47,12 @@ public class ItemWorld : Interactable
         {
             Collect(collector);
         }
+    }
 
+    Action<WalkingEntity> callbackCollect;
+    protected virtual void CollectOnEndAnimation(WalkingEntity walkingEnt, Action<WalkingEntity> callback)
+    {
+        recolector_anim.BeginRecollect(walkingEnt, callback);
     }
 
     void Collect(WalkingEntity collector)
@@ -56,13 +63,13 @@ public class ItemWorld : Interactable
             if (interceptor.Collect())
             {
                 to_collect.Invoke();
-                Destroy(this.gameObject);
+                if(destroy_on_collect) Destroy(this.gameObject);
             }
         }
         else
         {
             to_collect.Invoke();
-            Destroy(this.gameObject);
+            if(destroy_on_collect) Destroy(this.gameObject);
         }
     }
 

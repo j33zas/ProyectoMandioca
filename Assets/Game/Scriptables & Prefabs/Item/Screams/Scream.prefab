@@ -103,6 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8697729264707728270}
   - component: {fileID: 2450964416905894773}
+  - component: {fileID: 8672771584896155123}
   m_Layer: 0
   m_Name: Scream
   m_TagString: Untagged
@@ -140,20 +141,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208df22998e810c4a85ae519a4ed5b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distancetoInteract: 1
+  distancetoInteract: 3
   autoexecute: 1
   pointToMessage: {fileID: 8697729265398221661}
   feedback:
   - {fileID: 8697729266127985054}
   - {fileID: 8697729265575932405}
   item: {fileID: 11400000, guid: e6785125c98123d459105d197bd69f75, type: 2}
+  canrecolectoranim: 0
   to_collect:
     m_PersistentCalls:
       m_Calls: []
   OnCreate:
     m_PersistentCalls:
       m_Calls: []
+  interceptor: {fileID: 0}
   myPool: {fileID: 0}
+--- !u!114 &8672771584896155123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8697729264707728258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a54fcd6c50695546a08c87605768dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  distance_to_collect: 0.1
 --- !u!1 &8697729265398221662
 GameObject:
   m_ObjectHideFlags: 0
