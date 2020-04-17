@@ -55,26 +55,26 @@ namespace Tools.StateMachine
             {
                 Vector3 myForward = (enemy.CurrentTarget().transform.position - root.position).normalized;
                 root.forward = new Vector3(myForward.x, 0, myForward.z);
-            }
 
-            if (IsAttack())
-                sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
-            else
-            {
-                if (enemy.IsInPos())
-                {
-                    currentDis = distanceMin;
-                }
+                if (IsAttack())
+                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
                 else
                 {
-                    currentDis = distanceMax;
-                }
+                    if (enemy.IsInPos())
+                    {
+                        currentDis = distanceMin;
+                    }
+                    else
+                    {
+                        currentDis = distanceMax;
+                    }
 
-                if (Vector3.Distance(enemy.CurrentTarget().transform.position, root.position) >= currentDis)
-                {
-                    if (currentDis == distanceMin)
-                        combatDirector.GetNewNearPos(enemy);
-                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+                    if (Vector3.Distance(enemy.CurrentTarget().transform.position, root.position) >= currentDis)
+                    {
+                        if (currentDis == distanceMin)
+                            combatDirector.GetNewNearPos(enemy);
+                        sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+                    }
                 }
             }
         }

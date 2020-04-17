@@ -55,11 +55,34 @@ public class TrueDummyEnemy : EnemyBase
 
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
+
+        //Esto está mal, pero cuando se defina lo de las rooms se saca.
+        Initialize();
     }
+
+    public override void Initialize()
+    {
+        IAInitialize(Main.instance.GetCombatDirector());
+    }
+
+    public override void PlayerEnterRoom()
+    {
+        Initialize();
+    }
+
+    public override void PlayerLeaveRoom()
+    {
+        sm.SendInput(DummyEnemyInputs.DISABLE);
+    }
+
     public override void IAInitialize(CombatDirector _director)
     {
         director = _director;
-        SetStates();
+        if (sm == null)
+            SetStates();
+        else
+            sm.SendInput(DummyEnemyInputs.IDLE);
+
         canupdate = true;
     }
 
@@ -98,6 +121,17 @@ public class TrueDummyEnemy : EnemyBase
     {
         if (canupdate)
         {
+
+            if(!combat && entityTarget == null)
+            {
+                if (Vector3.Distance(Main.instance.GetChar().transform.position, transform.position) <= combatDistance)
+                {
+                    director.AddAwake(this);
+                    combat = true;
+                }
+            }
+
+
             feedbackStun.Refresh();
             feedbackHitShield.Refresh();
             if (sm != null)
@@ -116,11 +150,6 @@ public class TrueDummyEnemy : EnemyBase
 
     }
 
-
-
-    /////////////////////////////////////////////////////////////////
-    //////  En desuso
-    /////////////////////////////////////////////////////////////////
     public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
     {
         if (Invinsible)
@@ -307,9 +336,14 @@ public class TrueDummyEnemy : EnemyBase
 
     float GetCurrentSpeed() { return currentSpeed; }
 
-    void DisableObject() { }
+    void DisableObject()
+    {
+        canupdate = false;
+        currentSpeed = speedMovement;
+        combat = false;
+    }
 
-    void EnableObject() { }
+    void EnableObject() { Initialize(); }
 
     #endregion
 

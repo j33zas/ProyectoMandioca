@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class EnemyBase : NPCBase, ICombatDirector
+public abstract class EnemyBase : NPCBase, ICombatDirector, IRoomElement
 {
     public bool target;
     public bool attacking;
@@ -26,14 +26,29 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
         _targetFeedback.SetActive(false);
     }
 
+    public abstract void Initialize();
+
+    public abstract void PlayerEnterRoom();
+
+    public abstract void PlayerLeaveRoom();
+
+    [SerializeField] protected float combatDistance;
+    protected bool combat;
+
     public void Mortal()
     {
         Invinsible = false;
     }
 
+    #region Combat Director Functions
+    protected bool withPos;
+
+
+    protected EntityBase entityTarget;
+
     public Transform _target;
 
-    [SerializeField, Range(0.5f, 15)] float distancePos= 1.5f;
+    [SerializeField, Range(0.5f, 15)] float distancePos = 1.5f;
 
     public Transform CurrentTargetPos()
     {
@@ -50,11 +65,6 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
     {
         return transform.position;
     }
-
-    protected bool withPos;
-
-
-    protected EntityBase entityTarget;
 
     public void SetTarget(EntityBase entity)
     {
@@ -76,13 +86,14 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
         withPos = isPos;
     }
 
-    protected bool IsAttack() { return attacking; }
-
     public abstract void ToAttack();
 
     public abstract void IAInitialize(CombatDirector _director);
 
     public abstract float ChangeSpeed(float newSpeed);
+    #endregion
+
+    protected bool IsAttack() { return attacking; }
 
     public virtual void GetFocusedOnParry()
     {

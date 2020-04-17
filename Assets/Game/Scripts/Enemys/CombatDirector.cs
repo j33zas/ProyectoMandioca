@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatDirector : MonoBehaviour
+public class CombatDirector : MonoBehaviour, IRoomElement
 {
     List<ICombatDirector> toAttack = new List<ICombatDirector>();
     List<ICombatDirector> inAttack = new List<ICombatDirector>();
     List<ICombatDirector> waitToAttack = new List<ICombatDirector>();
+
+    List<ICombatDirector> awakeList = new List<ICombatDirector>();
     List<Transform> positionsToAttack = new List<Transform>();
     [SerializeField, Range(1, 8)] int maxEnemies = 1;
 
@@ -16,10 +18,11 @@ public class CombatDirector : MonoBehaviour
     EntityBase head;
 
     bool run;
+    bool initialize;
     float timer;
     float timeToAttack;
-    [SerializeField] float timerMin=1;
-    [SerializeField] float timerMax=5;
+    [SerializeField] float timerMin = 1;
+    [SerializeField] float timerMax = 5;
 
     private void Start()
     {
@@ -32,18 +35,56 @@ public class CombatDirector : MonoBehaviour
 
         InitializeTarget(head.transform);
 
-        var enemies = new List<EnemyBase>();
+        initialize = true;
 
-        enemies = Main.instance.GetEnemies();
-
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < awakeList.Count; i++)
         {
-            if (enemies[i].gameObject.activeSelf)
-            {
-                enemies[i].IAInitialize(this);
-                AddOrRemoveToList(enemies[i]);
-                enemies[i].SetTarget(head);
-            }
+            AddOrRemoveToList(awakeList[i]);
+        }
+
+        awakeList = new List<ICombatDirector>();
+    }
+
+    public void PlayerLeaveRoom()
+    {
+        initialize = false;
+
+        for (int i = 0; i < toAttack.Count; i++)
+        {
+            RemoveToAttack(toAttack[i], toAttack[i].CurrentTarget());
+        }
+        for (int i = 0; i < waitToAttack.Count; i++)
+        {
+            RemoveToAttack(waitToAttack[i], waitToAttack[i].CurrentTarget());
+        }
+        for (int i = 0; i < inAttack.Count; i++)
+        {
+            RemoveToAttack(inAttack[i], inAttack[i].CurrentTarget());
+        }
+
+        toAttack = new List<ICombatDirector>();
+        inAttack = new List<ICombatDirector>();
+        waitToAttack = new List<ICombatDirector>();
+
+        awakeList = new List<ICombatDirector>();
+
+        otherTargetPos = new Dictionary<EntityBase, List<Transform>>();
+        listAttackTarget = new Dictionary<EntityBase, List<ICombatDirector>>();
+    }
+
+    public void PlayerEnterRoom()
+    {
+        //Cuando esté bien definido lo de las rooms, Acá se puede poner el initialize con algunos cambios.
+    }
+
+    public void AddAwake(ICombatDirector enemy)
+    {
+        if (!initialize)
+            awakeList.Add(enemy);
+        else
+        {
+            AddOrRemoveToList(enemy);
+            enemy.SetTarget(head);
         }
     }
 

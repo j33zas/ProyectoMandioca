@@ -29,9 +29,9 @@ public class MessageHere : Interact_Receptor
             GameObject go = Instantiate(model);
             go.transform.position = getPosRandom(10, this.transform);
 
-            if (go.GetComponent<DummyEnemy>()) {
+            if (go.GetComponent<TrueDummyEnemy>()) {
 
-                var enem = go.GetComponent<DummyEnemy>();
+                var enem = go.GetComponent<TrueDummyEnemy>();
             }
         }
     }
