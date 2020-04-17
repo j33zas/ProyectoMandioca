@@ -5,7 +5,6 @@ using System;
 using UnityEngine.Events;
 using DevelopTools;
 using Tools.EventClasses;
-
 public class CharacterHead : CharacterControllable
 {
     Action<float> MovementHorizontal;
@@ -34,13 +33,13 @@ public class CharacterHead : CharacterControllable
     CharacterMovement move;
 
     [Header("Parry & Block Options")]
+    bool canBlockCalculate;
     [SerializeField] float _timerOfParry;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
     [SerializeField, Range(-1, 1)] float blockAngle;
 
-    [Header("Life Options")]
-    [SerializeField] LifeSystem lifesystem;
+    
 
     [Header("Feedbacks")]
     public GameObject feedbackParry;
@@ -78,12 +77,20 @@ public class CharacterHead : CharacterControllable
     [Header("Interactable")]
     public InteractSensor sensor;
 
-    bool canBlockCalculate;
-
+    [Header("Life Options")]
+    [SerializeField] int life = 100;
+    [SerializeField] CharLifeSystem lifesystem;
+    public CharLifeSystem Life => lifesystem;
     
 
     private void Awake()
     {
+        lifesystem = new CharLifeSystem(life, life)
+            .ADD_EVENT_OnGainLife(OnGainLife)
+            .ADD_EVENT_OnLoseLife(OnLoseLife)
+            .ADD_EVENT_Death(OnDeath)
+            .ADD_EVENT_OnChangeValue(OnChangeLife);
+
         charanim = new CharacterAnimator(anim_base);
         customCam = FindObjectOfType<CustomCamera>();
 
@@ -123,14 +130,7 @@ public class CharacterHead : CharacterControllable
         Attack += charAttack.Attack;
     }
 
-    /// <summary>
-    /// No se si esto va a quedar asi, me parece feo
-    /// </summary>
-    /// <returns></returns>
-    public CharacterLifeSystem GetCharacterLifeSystem()
-    {
-        return lifesystem.lifesystemExample;
-    }
+    
 
     protected override void OnUpdateEntity()
     {
@@ -146,6 +146,13 @@ public class CharacterHead : CharacterControllable
     {
 
     }
+
+    #region Life
+    void OnLoseLife() { }
+    void OnGainLife() => customCam.BeginShakeCamera();
+    void OnDeath() { }
+    void OnChangeLife(int current, int max) { Main.instance.skillmanager_activas.ReceiveLife(current, max); }
+    #endregion
 
     #region Attack
     /////////////////////////////////////////////////////////////////
@@ -426,11 +433,11 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Interact
-    public void EVENT_OnInteractDown()
+    public void UNITY_EVENT_OnInteractDown()
     {
         sensor.OnInteractDown();
     }
-    public void EVENT_OnInteractUp()
+    public void UNITY_EVENT_OnInteractUp()
     {
         sensor.OnInteractUp();
     }
@@ -440,9 +447,6 @@ public class CharacterHead : CharacterControllable
     public override void OnReceiveItem(ItemWorld itemworld)
     {
         base.OnReceiveItem(itemworld);
-
-
-
     }
     #endregion
 
@@ -482,4 +486,5 @@ public class CharacterHead : CharacterControllable
     protected override void OnFixedUpdate() { }
 
     #endregion
+
 }

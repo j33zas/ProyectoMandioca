@@ -35,6 +35,9 @@ public class Main : MonoBehaviour
     public SkillManager_Pasivas skillmanager_pasivas;
     public SkillManager_Activas skillmanager_activas;
 
+    private SensorForEnemysInRoom mySensorRoom;
+    BaseRoom _currentRoom;
+
     public void SubscriteToEntities(PlayObject po)
     {
             allentities.Add(po);
@@ -52,8 +55,7 @@ public class Main : MonoBehaviour
         rumble = new Rumble();
     }
 
-    private SensorForEnemysInRoom mySensorRoom;
-    BaseRoom _currentRoom;
+    
 
     void Start()
     {

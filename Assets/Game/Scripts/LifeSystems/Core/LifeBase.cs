@@ -7,6 +7,7 @@ public class LifeBase : StatBase
 {
     FrontendStatBase uilife;
 
+    public LifeBase(int maxHealth, int initial_Life = -1) : base(maxHealth, initial_Life) { }
     public LifeBase(int maxHealth, FrontendStatBase _uilife, int initial_Life = -1) : base(maxHealth, initial_Life)
     {
         uilife = _uilife;

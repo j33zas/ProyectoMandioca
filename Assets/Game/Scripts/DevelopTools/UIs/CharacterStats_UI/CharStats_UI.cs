@@ -11,7 +11,7 @@ public class CharStats_UI : MonoBehaviour
     private float maxHP;
 
     private CharacterHead _hero;
-    private CharacterLifeSystem heroLifeSystem;
+    private CharLifeSystem heroLife;
     private List<string> _currenSkillsName = new List<string>();
 
     [SerializeField] private Image currentLife_Bar;
@@ -25,20 +25,16 @@ public class CharStats_UI : MonoBehaviour
 
     [SerializeField] private GameObject skillImage_template_pf;
 
-
     private void Start()
     {
         _hero = Main.instance.GetChar();
-
-        heroLifeSystem = _hero.GetCharacterLifeSystem();
-        
-        
-        maxHP = heroLifeSystem.GetMax();
+        heroLife = _hero.Life;
+        maxHP = heroLife.GetMax();
     }
 
     private void Update()
     {
-        UpdateLife_UI(heroLifeSystem.Life);
+        UpdateLife_UI(heroLife.GetLife());
     }
 
     public void UpdateLife_UI(float newValue)

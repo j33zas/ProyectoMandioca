@@ -59,6 +59,11 @@ public class CharacterInput : MonoBehaviour
         if (Input.GetButtonUp("Interact")) OnInteractEnd.Invoke();
         ChangeWeapon.Invoke(Input.GetAxis("XBOX360_DPadHorizontal"));
 
+        if (Input.GetKeyDown(KeyCode.Alpha1)) EV_DPAD_UP();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) EV_DPAD_LEFT();
+        if (Input.GetKeyDown(KeyCode.Alpha3)) EV_DPAD_DOWN();
+        if (Input.GetKeyDown(KeyCode.Alpha4)) EV_DPAD_RIGHT();
+
         if (Input.GetButtonDown("Back")) Back.Invoke();
 
         RefreshHelper();

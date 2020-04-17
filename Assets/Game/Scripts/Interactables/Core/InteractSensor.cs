@@ -73,7 +73,6 @@ public class InteractSensor : MonoBehaviour
             }
         }
 
-        Debug.Log("filtered = " + filtered.Count);
         interactables = new List<Interactable>(filtered);
         filtered.Clear();
 

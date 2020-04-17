@@ -40,7 +40,7 @@ public class SkillManager_Activas : MonoBehaviour
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
         Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
 
-        ReceiveLife((int)Main.instance.GetChar().GetCharacterLifeSystem().Life, 100);
+        ReceiveLife((int)Main.instance.GetChar().Life.GetLife(), 100);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

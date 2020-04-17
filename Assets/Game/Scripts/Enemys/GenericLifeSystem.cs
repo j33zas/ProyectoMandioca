@@ -5,7 +5,7 @@ using System;
 
 public class GenericLifeSystem : MonoBehaviour
 {
-    CharacterLifeSystem lifeSystemEnemy;
+    LifeSystemBase lifeSystemEnemy;
 
     public FrontendStatBase uilife;
 
@@ -21,7 +21,7 @@ public class GenericLifeSystem : MonoBehaviour
     private void Start()
     {
         uilife = GetComponentInChildren<LifeBar>(); 
-        lifeSystemEnemy = new CharacterLifeSystem();
+        lifeSystemEnemy = new LifeSystemBase();
         lifeSystemEnemy.Config(life, EVENT_OnLoseLife, EVENT_OnGainLife, EVENT_OnDeath, uilife, life);
     }
 

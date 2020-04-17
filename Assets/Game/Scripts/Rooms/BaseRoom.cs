@@ -6,18 +6,12 @@ public class BaseRoom : MonoBehaviour
 {
     public SensorForEnemysInRoom _sensor;
     List<EnemyBase> myEnemies = new List<EnemyBase>();
-    // Start is called before the first frame update
+
     void Start()
     {
         _sensor = FindObjectOfType<SensorForEnemysInRoom>();
         _sensor.SubscribeAction(EnterTheRoom);
         _sensor.SubscribeExitAction(ExitRoom);
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 
@@ -37,16 +31,6 @@ public class BaseRoom : MonoBehaviour
                     myEnemies.Add(enemys);
                 }
             }
-            //myEnemies = _sensor.MyEnemys;
-
-            //int index = Random.Range(0, myEnemies.Count);
-            //myEnemies[index].IsTarget();
-            //for (int i = 0; i < myEnemies.Count; i++)
-            //{
-            //    myEnemies[i].On();
-            //    if (i != index)
-            //        myEnemies[i].IsNormal();
-            //}
         }
     }
     public void ExitRoom(GameObject player)
