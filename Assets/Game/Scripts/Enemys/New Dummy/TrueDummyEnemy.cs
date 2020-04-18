@@ -81,7 +81,9 @@ public class TrueDummyEnemy : EnemyBase
         if (sm == null)
             SetStates();
         else
+        {
             sm.SendInput(DummyEnemyInputs.IDLE);
+        }
 
         canupdate = true;
     }
