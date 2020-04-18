@@ -8,3 +8,5 @@ public enum CommonStates { IDLE, ATTACK, ENABLE, DISABLE, DIE, CHASING, GO_TO_PO
 // UI stuff
 
 public enum UI_templates {skillSelection, charStats};
+//IDs de las diferentes imagens de popUp
+public enum Icon {parry};

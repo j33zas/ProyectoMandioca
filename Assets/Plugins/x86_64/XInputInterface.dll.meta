@@ -6,7 +6,7 @@ PluginImporter:
   iconMap: {}
   executionOrder: {}
   defineConstraints: []
-  isPreloaded: 0
+  isPreloaded: 1
   isOverridable: 0
   isExplicitlyReferenced: 0
   validateReferences: 1
@@ -26,6 +26,7 @@ PluginImporter:
         Exclude OSXUniversal: 0
         Exclude Win: 1
         Exclude Win64: 0
+        Exclude iOS: 0
   - first:
       '': Editor
     second:
@@ -115,8 +116,10 @@ PluginImporter:
   - first:
       iPhone: iOS
     second:
-      enabled: 0
+      enabled: 1
       settings:
+        AddToEmbeddedBinaries: false
+        CPU: AnyCPU
         CompileFlags: 
         FrameworkDependencies: 
   userData: 
