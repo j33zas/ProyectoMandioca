@@ -11,7 +11,7 @@ public class SkillBase_Obligacion : SkillBase
     protected override void OnBeginSkill()
     {
         mySensor = Main.instance.GetRoom()._sensor;
-        mySensor.SubscribeExitAction(ExitTheRoom);
+        mySensor.AddCallback_OnTriggerExit(ExitTheRoom);
         myEnemies = Main.instance.GetRoom().myenemies();
         Debug.Log(Main.instance.GetRoom());
         if (!Main.instance.GetRoom().VIPInRoom())
@@ -34,7 +34,7 @@ public class SkillBase_Obligacion : SkillBase
 
     protected override void OnEndSkill()
     {
-        mySensor.UnSubscribeExitAction(ExitTheRoom);
+        //mySensor.RemoveEventListener_OnTriggerExit(ExitTheRoom);
         //Main.instance.GetRoom().ExitRoom();
     }
 

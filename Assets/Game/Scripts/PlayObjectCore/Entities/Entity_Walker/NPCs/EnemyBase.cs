@@ -27,8 +27,6 @@ public abstract class EnemyBase : NPCBase, ICombatDirector, IRoomElement
         _targetFeedback.SetActive(false);
     }
 
-    public abstract void Initialize();
-
     public abstract void PlayerEnterRoom();
 
     public abstract void PlayerLeaveRoom();

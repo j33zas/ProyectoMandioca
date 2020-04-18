@@ -45,6 +45,15 @@ public class CanvasPopUpInWorld_Manager : MonoBehaviour
         return newPopUp;
     }
     
+    public WorldCanvasPopUp MakePopUpWithPrefab(Transform worldObjectPos, WorldCanvasPopUp prefab)
+    {
+        //Instancia el prefab que recibe y lo hace hijo del canvas
+        WorldCanvasPopUp newPopUp = Instantiate(prefab, canvasRect.transform);
+        
+        newPopUp.SetCanvasPopUp(worldObjectPos, canvasRect);
+        return newPopUp;
+    }
+
     public WorldCanvasPopUp MakePopUpAnimated(Transform worldObjectPos, WorldCanvasPopUp icon)
     {
         //Instancia el prefab de la imagen y lo hace hijo del canvas
@@ -55,5 +64,4 @@ public class CanvasPopUpInWorld_Manager : MonoBehaviour
     }
     
 }
-//IDs de las diferentes imagens de popUp
-public enum Icon {parry};
+

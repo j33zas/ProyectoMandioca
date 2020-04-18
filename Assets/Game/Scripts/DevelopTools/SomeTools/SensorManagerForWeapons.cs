@@ -11,7 +11,7 @@ public class SensorManagerForWeapons : MonoBehaviour
     [SerializeField] Sensor sensorType;
     Sensor current;
 
-    public void SetCallback(Action<GameObject> callback) => sensorType.SubscribeAction(callback);
+    public void SetCallback(Action<GameObject> callback) => sensorType.AddCallback_OnTriggerEnter(callback);
 
     void InternalEquip(Sensor newsensor)
     {

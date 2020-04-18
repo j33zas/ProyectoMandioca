@@ -7,24 +7,9 @@ public class DoorTrigger : MonoBehaviour
 {
     public event Action<GameObject> callBack;
 
-    public void AddEventListener(Action<GameObject> _callback)
-    {
-        callBack += _callback;
-        Debug.Log("llega callback");
-    }
+    public Sensor sensor;
 
-    public void Initialize()
-    {
-        //var sensor = gameObject
-        //         .AddComponent<Sensor>()
-        //         .Initialize()
-        //         .Configure(Main.instance.playerlayermask)
-        //         .SubscribeAction(OnTriggerEnterSensor);
-    }
-
-    void OnTriggerEnterSensor(GameObject go)
-    {
-
-        callBack(go);
-    }
+    public void AddEventListener(Action<GameObject> _callback) => callBack += _callback;
+    public void Initialize() => sensor.AddCallback_OnTriggerEnter(OnTriggerEnterSensor);
+    void OnTriggerEnterSensor(GameObject go) => callBack(go);
 }

@@ -130,22 +130,16 @@ public class NewRoomGenerator : MonoBehaviour
             }
         }
 
-
         var room = NewRoom.SpawnAndGet(firstRoom);
         room.transform.SetParent(this.transform);
         room.transform.position = new Vector3(5, 0, 5);
-
         roomBase = room;
-
         currentCantRooms++;
-
         AddRangesFromRoom(room);
-
         listrooms.Add(room);
         room.CreateNewRoom(null);
 
         OnEnd(listrooms);
-
     }
 
 
@@ -156,7 +150,6 @@ public class NewRoomGenerator : MonoBehaviour
             NewRoomGenerator.instancia.dimensionSectors.AddDimensionRange(r.dimensionSectorRange);
         }
     }
-
 
     /// COMPROBACIONES
     public bool AvaliablePlaces() => currentCantRooms < MaxRooms;
@@ -170,14 +163,8 @@ public class NewRoomGenerator : MonoBehaviour
             .OrderByDescending(x => x.weight)
             .ToList();
 
-
-
         return new Stack<RoomSamples>(col);
     }
 
-    public Stack<GameObject> GetForcedRooms()
-    {
-        return new Stack<GameObject>(forcerooms);
-
-    }
+    public Stack<GameObject> GetForcedRooms() => new Stack<GameObject>(forcerooms);
 }

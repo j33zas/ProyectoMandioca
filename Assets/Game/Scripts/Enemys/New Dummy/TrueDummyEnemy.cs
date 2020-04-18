@@ -60,7 +60,7 @@ public class TrueDummyEnemy : EnemyBase
         Initialize();
     }
 
-    public override void Initialize()
+    protected override void OnInitialize()
     {
         IAInitialize(Main.instance.GetCombatDirector());
     }
@@ -346,6 +346,8 @@ public class TrueDummyEnemy : EnemyBase
     }
 
     void EnableObject() { Initialize(); }
+
+   
 
     #endregion
 

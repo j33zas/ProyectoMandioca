@@ -10,9 +10,10 @@ public class BaseRoom : MonoBehaviour
 
     void Start()
     {
+
         _sensor = GetComponentInChildren<SensorForEnemysInRoom>();
-        _sensor.SubscribeAction(EnterTheRoom);
-        _sensor.SubscribeExitAction(ExitRoom);
+        _sensor.AddCallback_OnTriggerEnter(EnterTheRoom);
+        _sensor.AddCallback_OnTriggerExit(ExitRoom);
         Main.instance.SetRoom(this);
         myEnemies = new List<EnemyBase>();
         var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
@@ -25,6 +26,7 @@ public class BaseRoom : MonoBehaviour
             }
         }
         _sensor.myContent.SetActive(false);
+
     }
 
     void EnterTheRoom(GameObject player)

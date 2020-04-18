@@ -40,7 +40,7 @@ public class Minion : Companion
     StatesAttack attackState;
     StatesFollow followState;
 
-    protected override void OnResume()
+    protected override void OnInitialize()
     {
         _rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
@@ -62,8 +62,13 @@ public class Minion : Companion
         sm.Addstate(attackState);
 
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
-        
+
         sm.ChangeState<StatesFollow>();
+    }
+
+    protected override void OnResume()
+    {
+        
 
     }
 
@@ -147,5 +152,5 @@ public class Minion : Companion
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
 
-
+    
 }

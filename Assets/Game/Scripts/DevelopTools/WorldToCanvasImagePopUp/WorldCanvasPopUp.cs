@@ -17,6 +17,7 @@ public class WorldCanvasPopUp : MonoBehaviour
         _pos = GetComponent<RectTransform>();
     }
     
+    //para imagenes... seguramente lo terminemos cambiando
     public void SetCanvasPopUp(Transform wordlObj, Sprite img, RectTransform canvas)
     {
         _worldObj = wordlObj;
@@ -25,6 +26,7 @@ public class WorldCanvasPopUp : MonoBehaviour
         
     }
     
+    //Usar este
     public void SetCanvasPopUp(Transform wordlObj, RectTransform canvas)
     {
         _worldObj = wordlObj;

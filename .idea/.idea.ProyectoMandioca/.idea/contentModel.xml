@@ -5,7 +5,6 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="asd.cs" t="Include" />
         <e p="Game" t="Include">
           <e p="Art" t="Include">
             <e p="Fonts" t="Include">
@@ -20,6 +19,9 @@
                 </e>
                 <e p="ChargeHeavyAttack" t="Include">
                   <e p="HeavyAttack.shader" t="Include" />
+                </e>
+                <e p="LevelUp" t="Include">
+                  <e p="LevelUpGround.shader" t="Include" />
                 </e>
                 <e p="LowPoly" t="Include">
                   <e p="Low.shader" t="Include" />
@@ -782,11 +784,10 @@
               <e p="CharacterAnimator.cs" t="Include" />
               <e p="CharacterAttack.cs" t="Include" />
               <e p="CharacterBlock.cs" t="Include" />
-              <e p="CharacterCollector.cs" t="Include" />
               <e p="CharacterHead.cs" t="Include" />
               <e p="CharacterInput.cs" t="Include" />
-              <e p="CharacterLifeSystem.cs" t="Include" />
               <e p="CharacterMovement.cs" t="Include" />
+              <e p="CharLifeSystem.cs" t="Include" />
             </e>
             <e p="CombatSystem" t="Include">
               <e p="CombatComponent.cs" t="Include" />
@@ -802,10 +803,9 @@
             </e>
             <e p="CustomCamera.cs" t="Include" />
             <e p="DevelopTools" t="Include">
-              <e p="devtool example" t="Include">
-                <e p="CreateSlider.cs" t="Include" />
-                <e p="CustomSliderComponentUI.cs" t="Include" />
-                <e p="ScriptRandom.cs" t="Include" />
+              <e p="Debuggin_UI" t="Include">
+                <e p="Debug_UI_Tools.cs" t="Include" />
+                <e p="Debuggin_Template_Slider.cs" t="Include" />
               </e>
               <e p="EventManager.cs" t="Include" />
               <e p="LeanTween" t="Include">
@@ -911,13 +911,11 @@
             </e>
             <e p="Enemys" t="Include">
               <e p="CombatDirector.cs" t="Include" />
-              <e p="DummyEnemy.cs" t="Include" />
               <e p="EnemyLifeSystem.cs" t="Include" />
-              <e p="Follow.cs" t="Include" />
               <e p="GenericLifeSystem.cs" t="Include" />
+              <e p="ICombatDirector.cs" t="Include" />
               <e p="MinionLifeSystem.cs" t="Include" />
               <e p="New Dummy" t="Include">
-                <e p="ConfigureState.cs" t="Include" />
                 <e p="DummyAttackState.cs" t="Include" />
                 <e p="DummyDieState.cs" t="Include" />
                 <e p="DummyDisableState.cs" t="Include" />
@@ -926,15 +924,9 @@
                 <e p="DummyIdleState.cs" t="Include" />
                 <e p="DummyStunState.cs" t="Include" />
                 <e p="DummyTDState.cs" t="Include" />
-                <e p="EState.cs" t="Include" />
-                <e p="EventStateMachine.cs" t="Include" />
                 <e p="FreezeState.cs" t="Include" />
-                <e p="ICombatDirector.cs" t="Include" />
-                <e p="StatesFunctions.cs" t="Include" />
-                <e p="TransitionState.cs" t="Include" />
                 <e p="TrueDummyEnemy.cs" t="Include" />
               </e>
-              <e p="Test_Attack.cs" t="Include" />
             </e>
             <e p="Enums.cs" t="Include" />
             <e p="GameEvents.cs" t="Include" />
@@ -1007,7 +999,7 @@
                 <e p="FrontendStatBase.cs" t="Include" />
                 <e p="LifeBar.cs" t="Include" />
               </e>
-              <e p="LifeSystem.cs" t="Include" />
+              <e p="LifeSystemBase.cs" t="Include" />
               <e p="LoseLife" t="Include">
                 <e p="ScreenFeedback.cs" t="Include" />
               </e>
@@ -1017,6 +1009,7 @@
             </e>
             <e p="PlayObjectCore" t="Include">
               <e p="Core" t="Include">
+                <e p="Initializator.cs" t="Include" />
                 <e p="ManagerPlayObjects.cs" t="Include" />
                 <e p="PlayObject" t="Include">
                   <e p="PlayObject.cs" t="Include" />
@@ -1047,7 +1040,6 @@
                   <e p="NPCs" t="Include">
                     <e p="Companion.cs" t="Include" />
                     <e p="EnemyBase.cs" t="Include" />
-                    <e p="FriendlyNPC.cs" t="Include" />
                   </e>
                 </e>
               </e>
@@ -1161,6 +1153,13 @@
               <e p="SpawnData.cs" t="Include" />
               <e p="Spawner.cs" t="Include" />
             </e>
+            <e p="StateMachine" t="Include">
+              <e p="ConfigureState.cs" t="Include" />
+              <e p="EState.cs" t="Include" />
+              <e p="EventStateMachine.cs" t="Include" />
+              <e p="StatesFunctions.cs" t="Include" />
+              <e p="TransitionState.cs" t="Include" />
+            </e>
             <e p="States" t="Include">
               <e p="States.cs" t="Include" />
               <e p="StatesAttack.cs" t="Include" />
@@ -1168,6 +1167,140 @@
               <e p="StatesMachine.cs" t="Include" />
               <e p="StatesPetrified.cs" t="Include" />
               <e p="StatesWander.cs" t="Include" />
+            </e>
+            <e p="zIgnorar_esto se va a borrar" t="Include">
+              <e p="2019DunGeneration" t="Include">
+                <e p="2_Dungeon" t="Include">
+                  <e p="Dungeon.cs" t="Include" />
+                  <e p="DungeonGeneration" t="Include">
+                    <e p="Components" t="Include">
+                      <e p="IDungeonElement.cs" t="Include" />
+                      <e p="Room.cs" t="Include" />
+                      <e p="RoomsContainerNotDestroyable.cs" t="Include" />
+                      <e p="Wing.cs" t="Include" />
+                    </e>
+                    <e p="Core" t="Include">
+                      <e p="Constantes.cs" t="Include" />
+                    </e>
+                    <e p="ManagerRooms.cs" t="Include" />
+                    <e p="RoomsAndNodes.cs" t="Include" />
+                  </e>
+                  <e p="SpawnPoint.cs" t="Include" />
+                </e>
+                <e p="ClampCollapse.cs" t="Include" />
+                <e p="Core" t="Include">
+                  <e p="Cells" t="Include">
+                    <e p="CellCore.cs" t="Include" />
+                    <e p="CellTypes" t="Include">
+                      <e p="Cell2Pos.cs" t="Include" />
+                      <e p="Cell4Pos.cs" t="Include" />
+                      <e p="CellFloor.cs" t="Include" />
+                      <e p="CellObject.cs" t="Include" />
+                      <e p="CellWall.cs" t="Include" />
+                    </e>
+                    <e p="Doors" t="Include">
+                      <e p="CellDoor.cs" t="Include" />
+                      <e p="DoorDir.cs" t="Include" />
+                      <e p="DoorManager.cs" t="Include" />
+                    </e>
+                    <e p="RangeCorner" t="Include">
+                      <e p="CellCorner.cs" t="Include" />
+                      <e p="RangeCornerManager.cs" t="Include" />
+                      <e p="RangeCorners.cs" t="Include" />
+                    </e>
+                  </e>
+                  <e p="DimensionSectorManager.cs" t="Include" />
+                  <e p="Rooms" t="Include">
+                    <e p="DoorTrigger.cs" t="Include" />
+                    <e p="IDungElemCallback.cs" t="Include" />
+                    <e p="ManualRoom.cs" t="Include" />
+                    <e p="NewRoom.cs" t="Include" />
+                    <e p="NewRoomGenerator.cs" t="Include" />
+                    <e p="RoomBase.cs" t="Include" />
+                    <e p="RoomTriggerManager.cs" t="Include" />
+                    <e p="RoomTriggers.cs" t="Include" />
+                  </e>
+                </e>
+                <e p="IRoomElementable.cs" t="Include" />
+                <e p="SoundSystem.cs" t="Include" />
+              </e>
+              <e p="AI" t="Include">
+                <e p="AnimControllerBase.cs" t="Include" />
+                <e p="AnimControllerHandler.cs" t="Include" />
+                <e p="AnimExpresions.cs" t="Include" />
+                <e p="AStar.cs" t="Include" />
+                <e p="Behaviours" t="Include">
+                  <e p="AlertLevel.cs" t="Include" />
+                  <e p="DistanceTo.cs" t="Include" />
+                  <e p="Investigator.cs" t="Include" />
+                  <e p="LineOfSight.cs" t="Include" />
+                  <e p="LineOfSightOfType.cs" t="Include" />
+                  <e p="LookEnemy.cs" t="Include" />
+                  <e p="RangeAttack.cs" t="Include" />
+                </e>
+                <e p="ChangeNode.cs" t="Include" />
+                <e p="Enem.cs" t="Include" />
+                <e p="Enem_AnimController.cs" t="Include" />
+                <e p="Entity.cs" t="Include" />
+                <e p="FSM" t="Include">
+                  <e p="Constants.cs" t="Include" />
+                  <e p="DebugText.cs" t="Include" />
+                  <e p="EventFSM.cs" t="Include" />
+                  <e p="IUpdateble.cs" t="Include" />
+                  <e p="Layers.cs" t="Include" />
+                  <e p="State.cs" t="Include" />
+                  <e p="StateConfigurer.cs" t="Include" />
+                  <e p="Transition.cs" t="Include" />
+                  <e p="UpdateManager.cs" t="Include" />
+                </e>
+                <e p="GenericAnim.cs" t="Include" />
+                <e p="NewEnemy.cs" t="Include" />
+                <e p="NodeFinder.cs" t="Include" />
+                <e p="Nodes" t="Include">
+                  <e p="FindNodesAndAdd.cs" t="Include" />
+                  <e p="ManagerNodes.cs" t="Include" />
+                  <e p="Node.cs" t="Include" />
+                </e>
+                <e p="PlaceChangerHandler.cs" t="Include" />
+                <e p="RigidbodyPathFinder.cs" t="Include" />
+                <e p="States" t="Include">
+                  <e p="AnimsScripts" t="Include">
+                    <e p="ANIM_SCRIPT_Alert.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Anticipation.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_AnticipationRun.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Asustado.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Attack.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Base.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_BeginChange.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_EndChange.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Hit.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_OnDeath.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_OnSight.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Presentation.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_SaltoJurasico.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Search.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Sumergirse.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_TakeObject.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_TirarObjeto.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Tropeza.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_Vulnerable.cs" t="Include" />
+                  </e>
+                  <e p="IAtackable.cs" t="Include" />
+                  <e p="IOptimizableNPC.cs" t="Include" />
+                  <e p="IPatrolOrdereable.cs" t="Include" />
+                  <e p="ISoundListener.cs" t="Include" />
+                  <e p="ISurpriseable.cs" t="Include" />
+                </e>
+              </e>
+              <e p="IDamageable.cs" t="Include" />
+              <e p="Inspectables" t="Include">
+                <e p="Inspectable.cs" t="Include" />
+                <e p="RigInspectable.cs" t="Include" />
+              </e>
+              <e p="PanelElectrico" t="Include">
+                <e p="PanelElectrico.cs" t="Include" />
+                <e p="PanelInspectable.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
