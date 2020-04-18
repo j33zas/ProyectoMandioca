@@ -15,11 +15,17 @@ public class LevelSystem : MonoBehaviour
     public Item experience;
 
     Func<bool> I_have_an_active_request;
-    public void Initialize()
+
+    void Initialize()
     {
-        I_have_an_active_request = Main.instance.skillmanager_pasivas.I_Have_An_Active_Request;
+        I_have_an_active_request = Main.instance.GetPasivesManager().I_Have_An_Active_Request;
 
         Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
+    }
+
+    private void Start()
+    {
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_INITIALIZE, Initialize);
     }
 
     void EnemyDeath(params object[] param)
@@ -37,7 +43,7 @@ public class LevelSystem : MonoBehaviour
             currentExpValue = 0;
             if (levels[currentIndex].can_get_skill_point)
             {
-                Main.instance.skillmanager_pasivas.CreateRequest_NewSkill();
+                Main.instance.GetPasivesManager().CreateRequest_NewSkill();
             }
             Main.instance.gameUiController.UI_SendLevelUpNotification();
             currentIndex++;

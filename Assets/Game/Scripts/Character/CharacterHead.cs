@@ -151,7 +151,7 @@ public class CharacterHead : CharacterControllable
     void OnLoseLife() { }
     void OnGainLife() => customCam.BeginShakeCamera();
     void OnDeath() { }
-    void OnChangeLife(int current, int max) { Main.instance.skillmanager_activas.ReceiveLife(current, max); }
+    void OnChangeLife(int current, int max) { Main.instance.GetActivesManager().ReceiveLife(current, max); }
     #endregion
 
     #region Attack

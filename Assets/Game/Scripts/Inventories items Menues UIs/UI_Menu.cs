@@ -11,7 +11,7 @@ public class UI_Menu : UI_Base
     public override void Open()
     {
         base.Open();
-        btn_newSkill.interactable = Main.instance.skillmanager_pasivas.I_Have_An_Active_Request();
+        btn_newSkill.interactable = Main.instance.GetPasivesManager().I_Have_An_Active_Request();
     }
 
     public void BTN_Spend_SkillPoint()

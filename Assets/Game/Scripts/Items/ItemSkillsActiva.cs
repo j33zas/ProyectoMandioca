@@ -13,6 +13,6 @@ public class ItemSkillsActiva : ItemInterceptor
 
     protected override bool OnCollect()
     {
-        return Main.instance.skillmanager_activas.ReplaceFor(info, 0, myitemworld);
+        return Main.instance.GetActivesManager().ReplaceFor(info, 0, myitemworld);
     }
 }

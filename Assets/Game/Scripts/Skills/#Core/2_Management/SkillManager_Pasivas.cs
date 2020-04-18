@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class SkillManager_Pasivas : MonoBehaviour
 {
+    [Header("UI")]
+    public GameObject model_skill_selector;
+    GameObject selector;
+
     [Header("Data_base")]
     [SerializeField] List<SkillBase> my_current_active_skills;
     public Dictionary<SkillInfo, SkillBase> database_basebyinfo = new Dictionary<SkillInfo, SkillBase>();
@@ -29,11 +33,26 @@ public class SkillManager_Pasivas : MonoBehaviour
     ////// ON LOAD BEGIN
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///
-    public void Initialize()
+
+    private void Start()
+    {
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_INITIALIZE, Initialize);
+    }
+
+    void Initialize()
     {
         my_current_active_skills = GetComponentsInChildren<SkillBase>().ToList();
         RefillFastDiccionaries();
+        selector = Instantiate(model_skill_selector, Main.instance.gameUiController.MyCanvas.transform);
+        selector.GetComponent<UI_BeginSkillSelector>().Initialize(SkillSelected);
         // Build_menu_for_testing();
+    }
+
+    void SkillSelected(SkillType _skillType)
+    {
+        SelectASkillType(_skillType);
+        Main.instance.LoadLevelPlayObjects();
+        selector.gameObject.SetActive(false);
     }
     void RefillFastDiccionaries()//no es necesario, pero lo tenemos para acceder mas rapido
     {

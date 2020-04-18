@@ -8,6 +8,6 @@ public class ExpCollector : MonoBehaviour
 
     public void Collect()
     {
-        Main.instance.levelsystem.AddExperiencie(cant_exp_to_collect);
+        Main.instance.GetLevelSystem().AddExperiencie(cant_exp_to_collect);
     }
 }
