@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class ManualRoom : RoomBase
 {
-
-
     public override void OnInitialize()
     {
-        var trigger = GetComponent<RoomTrigger>();
+        var trigger = GetComponent<RoomTriggers>();
         trigger.Initialize();
         RoomTriggerManager.instancia.dungeonElements.AddListToList(trigger.GetDungeonElements());
-        RoomTriggerManager.instancia.DungeonGenerationFinallized();
+        RoomTriggerManager.instancia.SetAll_DungeonGenerationFinallized();
 
         foreach (var e in elements) e.SetmanualRoom(this);
     }

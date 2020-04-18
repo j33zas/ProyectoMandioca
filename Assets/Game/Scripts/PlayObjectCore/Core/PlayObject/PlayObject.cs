@@ -7,6 +7,7 @@ using System;
 public abstract class PlayObject : MonoBehaviour
 {
     protected bool canupdate;
+    public void Initialize() { OnInitialize(); }
     public void On() { canupdate = true; OnTurnOn(); }
     public void Off() { canupdate = false; OnTurnOff(); }
     public void Pause() { canupdate = false; OnPause(); }
@@ -17,6 +18,7 @@ public abstract class PlayObject : MonoBehaviour
     /////////////////////////////////////////////////////////////
     /// ABSTRACTS QUE SE IMPLEMENTAN EN LOS CHILDS
     /////////////////////////////////////////////////////////////
+    protected abstract void OnInitialize();
     protected abstract void OnTurnOn();
     protected abstract void OnTurnOff();
     protected abstract void OnUpdate();

@@ -10,8 +10,8 @@ public class BaseRoom : MonoBehaviour
     void Start()
     {
         _sensor = FindObjectOfType<SensorForEnemysInRoom>();
-        _sensor.SubscribeAction(EnterTheRoom);
-        _sensor.SubscribeExitAction(ExitRoom);
+        _sensor.AddCallback_OnTriggerEnter(EnterTheRoom);
+        _sensor.AddCallback_OnTriggerExit(ExitRoom);
         
     }
 

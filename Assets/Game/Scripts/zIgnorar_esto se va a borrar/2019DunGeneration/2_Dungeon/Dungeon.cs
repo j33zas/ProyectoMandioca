@@ -27,21 +27,27 @@ public class Dungeon : SceneMainBase
 
     public void OnEndDungeonGeneration(List<NewRoom> rooms)
     {
-        //var spawn = rooms[0].GetComponentInChildren<SpawnPoint>();
-        //if (spawn != null)
-        //{
-        //    Vector3 v = spawn.transform.position;
-        //    spawn_point = spawn.transform;
-        //    CharBrain.instancia.transform.position = new Vector3(v.x, 0, v.z);
-        //}
-        //else
-        //{
-        //    spawn_point = rooms[0].transform;
-        //    CharBrain.instancia.transform.position = new Vector3(rooms[0].transform.position.x, 0, rooms[0].transform.position.z);
-        //}
 
-        //rooms[0].myRoomtrigger.IsInside(CharBrain.instancia.gameObject);
-        //RoomTriggerManager.instancia.Initialize(rooms);
+        //tiene que haber un spawnpoint dentro de la room cero
+        //si no lo hay setea como spawn el centro de la primer room
+        var spawn = rooms[0].GetComponentInChildren<SpawnPoint>();
+        if (spawn != null)
+        {
+            Vector3 v = spawn.transform.position;
+            spawn_point = spawn.transform;
+            Main.instance.GetChar().gameObject.transform.position = new Vector3(v.x, 0, v.z);
+        }
+        else
+        {
+            spawn_point = rooms[0].transform;
+            Main.instance.GetChar().gameObject.transform.position = new Vector3(rooms[0].transform.position.x, 0, rooms[0].transform.position.z);
+        }
+
+        //acá forzamos a la primer room a decirle... chee, tenes al char adentro, ejecuta los IRoomElement
+        rooms[0].myRoomtrigger.IsInside(Main.instance.GetChar().gameObject);
+        
+        
+        RoomTriggerManager.instancia.Initialize(rooms);
 
         //CompleteCameraController.instancia.InstantAjust();
     }

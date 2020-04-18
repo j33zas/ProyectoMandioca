@@ -36,9 +36,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Emission: 1.19
+    - _Emission: 1.37
     - _EmissionIntensity: 3.98
-    - _Intensity: 0
+    - _Intensity: -0.4
     - _Intensity1: 0.46
     - _Mask: 0
     - _MaskDivide: 1.07

@@ -43,9 +43,9 @@ public class RoomTriggerManager : MonoBehaviour
 
     private void Awake() { instancia = this; }
 
-    public RoomTrigger current;
+    public RoomTriggers current;
 
-    [SerializeField] List<RoomTrigger> roomtriggers = new List<RoomTrigger>();
+    [SerializeField] List<RoomTriggers> roomtriggers = new List<RoomTriggers>();
     public List<IDungeonElement> dungeonElements = new List<IDungeonElement>();
 
     public void Initialize(List<NewRoom> rooms)
@@ -62,13 +62,10 @@ public class RoomTriggerManager : MonoBehaviour
             roomtriggers.Add(r.myRoomtrigger);
         }
 
-        DungeonGenerationFinallized();
+        SetAll_DungeonGenerationFinallized();
     }
 
-    public void DungeonGenerationFinallized()
-    {
-        dungeonElements.ForEach(x => x.OnDungeonGenerationFinallized());
-    }
+    public void SetAll_DungeonGenerationFinallized() => dungeonElements.ForEach(x => x.OnDungeonGenerationFinallized());
 
     public void Update()
     {
@@ -81,7 +78,7 @@ public class RoomTriggerManager : MonoBehaviour
         }
     }
 
-    public void PlayerEnterIn(RoomTrigger roomselected, GameObject go)
+    public void PlayerEnterIn(RoomTriggers roomselected, GameObject go)
     {
         if (current != null) current.GetDungeonElements().ForEach(x => x.OnPlayerExitInThisRoom());
 
