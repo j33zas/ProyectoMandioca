@@ -10,6 +10,8 @@ public class Main : MonoBehaviour
 {
     public static Main instance;
 
+    public LayerMask playerlayermask;
+
     [Header("Main Options")]
     public GenericBar bar;
     List<Action<IEnumerable<PlayObject>>> toload = new List<Action<IEnumerable<PlayObject>>>();
