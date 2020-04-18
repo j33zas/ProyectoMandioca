@@ -7,7 +7,11 @@ public class DoorTrigger : MonoBehaviour
 {
     public event Action<GameObject> callBack;
 
-    public void AddEventListener(Action<GameObject> _callback) { callBack += _callback; }
+    public void AddEventListener(Action<GameObject> _callback)
+    {
+        callBack += _callback;
+        Debug.Log("llega callback");
+    }
 
     public void Initialize()
     {
