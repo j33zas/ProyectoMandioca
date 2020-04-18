@@ -5,21 +5,21 @@ using UnityEngine.Events;
 
 public class SensorForEnemysInRoom : Sensor
 {
-    public List<EnemyBase> MyEnemys = new List<EnemyBase>();
+    //public List<EnemyBase> MyEnemys = new List<EnemyBase>();
     public GameObject myContent;
     private void Start()
     {
-        StartCoroutine(Timer());
+       // StartCoroutine(Timer());
     }
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (other.gameObject.GetComponent<EnemyBase>())
-        {
-            EnemyBase enemy = other.gameObject.GetComponent<EnemyBase>();
-            if (!MyEnemys.Contains(enemy))
-                MyEnemys.Add(enemy);
-        }
+        //if (other.gameObject.GetComponent<EnemyBase>())
+        //{
+        //    EnemyBase enemy = other.gameObject.GetComponent<EnemyBase>();
+        //    if (!MyEnemys.Contains(enemy))
+        //        MyEnemys.Add(enemy);
+        //}
     }
 
     IEnumerator Timer()

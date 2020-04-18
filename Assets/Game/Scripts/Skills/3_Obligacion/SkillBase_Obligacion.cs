@@ -13,14 +13,18 @@ public class SkillBase_Obligacion : SkillBase
         mySensor = Main.instance.GetRoom()._sensor;
         mySensor.SubscribeExitAction(ExitTheRoom);
         myEnemies = Main.instance.GetRoom().myenemies();
+        Debug.Log(Main.instance.GetRoom());
         if (!Main.instance.GetRoom().VIPInRoom())
         {
             int index = Random.Range(0, myEnemies.Count);
             myEnemies[index].IsTarget();
-            myEnemies[index] = enemyVIP;
+            enemyVIP= myEnemies[index];
+            Debug.Log(myEnemies[index]);
             for (int i = 0; i < myEnemies.Count; i++)
             {
-                myEnemies[i].On();
+                Debug.Log(myEnemies[i]);
+                myEnemies[i].Resume();
+                myEnemies[i].IAInitialize(Main.instance.GetCombatDirector());
                 if (i != index)
                     myEnemies[i].IsNormal();
             }

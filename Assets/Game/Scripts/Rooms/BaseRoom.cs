@@ -5,14 +5,26 @@ using UnityEngine;
 public class BaseRoom : MonoBehaviour
 {
     public SensorForEnemysInRoom _sensor;
-    List<EnemyBase> myEnemies = new List<EnemyBase>();
+    public List<EnemyBase> myEnemies = new List<EnemyBase>();
+
 
     void Start()
     {
-        _sensor = FindObjectOfType<SensorForEnemysInRoom>();
+        _sensor = GetComponentInChildren<SensorForEnemysInRoom>();
         _sensor.SubscribeAction(EnterTheRoom);
         _sensor.SubscribeExitAction(ExitRoom);
-        
+        Main.instance.SetRoom(this);
+        myEnemies = new List<EnemyBase>();
+        var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
+        foreach (var item in enemysInChilderen)
+        {
+            var enemys = item.GetComponent<EnemyBase>();
+            if (enemys)
+            {
+                myEnemies.Add(enemys);
+            }
+        }
+        _sensor.myContent.SetActive(false);
     }
 
     void EnterTheRoom(GameObject player)
@@ -21,16 +33,16 @@ public class BaseRoom : MonoBehaviour
         {
             _sensor.myContent.SetActive(true);
             Main.instance.SetRoom(this);
-            myEnemies = new List<EnemyBase>();
-            var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
-            foreach(var item in enemysInChilderen)
-            {
-                var enemys = item.GetComponent<EnemyBase>();
-                if (enemys)
-                {
-                    myEnemies.Add(enemys);
-                }
-            }
+            //myEnemies = new List<EnemyBase>();
+            //var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
+            //foreach(var item in enemysInChilderen)
+            //{
+            //    var enemys = item.GetComponent<EnemyBase>();
+            //    if (enemys)
+            //    {
+            //        myEnemies.Add(enemys);
+            //    }
+            //}
         }
     }
     public void ExitRoom(GameObject player)
