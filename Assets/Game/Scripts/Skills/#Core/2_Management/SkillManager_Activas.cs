@@ -26,7 +26,12 @@ public class SkillManager_Activas : MonoBehaviour
 
     bool percenslot;
 
-    public void Initialize()
+    private void Start()
+    {
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_INITIALIZE, Initialize);
+    }
+
+    void Initialize()
     {
         myActiveSkills = new SkillActivas[4];
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;

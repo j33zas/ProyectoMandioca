@@ -11,11 +11,11 @@ public class DoorTrigger : MonoBehaviour
 
     public void Initialize()
     {
-        var sensor = gameObject
-                 .AddComponent<Sensor>()
-                 .Initialize()
-                 .Configure(Main.instance.playerlayermask)
-                 .SubscribeAction(OnTriggerEnterSensor);
+        //var sensor = gameObject
+        //         .AddComponent<Sensor>()
+        //         .Initialize()
+        //         .Configure(Main.instance.playerlayermask)
+        //         .SubscribeAction(OnTriggerEnterSensor);
     }
 
     void OnTriggerEnterSensor(GameObject go)

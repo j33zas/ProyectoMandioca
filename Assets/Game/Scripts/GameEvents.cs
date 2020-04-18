@@ -6,4 +6,5 @@ public class GameEvents
 {
     public const string ENEMY_DEAD = "EnemyDead";
     public const string GAME_END_LOAD = "GameEndLoad";
+    public const string GAME_INITIALIZE = "GameInitialize";
 }

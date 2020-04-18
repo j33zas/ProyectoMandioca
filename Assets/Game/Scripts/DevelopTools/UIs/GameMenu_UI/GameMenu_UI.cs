@@ -34,7 +34,7 @@ public class GameMenu_UI : UI_Base
 
         bool first = false;
         
-        var infos = Main.instance.skillmanager_pasivas.current_list_of_skills.Select(x => x.skillinfo);
+        var infos = Main.instance.GetPasivesManager().current_list_of_skills.Select(x => x.skillinfo);
 
         foreach (var info in infos)
         {
@@ -53,7 +53,7 @@ public class GameMenu_UI : UI_Base
             }
         }
 
-        skill_manager = Main.instance.skillmanager_pasivas;
+        skill_manager = Main.instance.GetPasivesManager();
 
         if (skill_manager.I_Have_An_Active_Request())
         {

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class GameUI_controller : MonoBehaviour
 {
-    public static GameUI_controller instance;
     [SerializeField] Canvas myCanvas; public Canvas MyCanvas { get => myCanvas; }
 
     [SerializeField] private GameObject skillSelection_template_pf;
@@ -31,13 +30,15 @@ public class GameUI_controller : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
-
         RegistrarUIPrefabs();
     }
 
-    public void Initialize()
+    private void Start()
+    {
+        Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_INITIALIZE, Initialize);
+    }
+
+    void Initialize()
     {
         _charStats_Ui = Instantiate<GameObject>(UiTemplateRegistry[UI_templates.charStats], leftCanvas).GetComponent<CharStats_UI>();
         gameMenu_UI.Configure(_charStats_Ui.ToggleLvlUpSignOFF);

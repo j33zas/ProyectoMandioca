@@ -16,24 +16,18 @@ public class Main : MonoBehaviour
     ThreadRequestObject<PlayObject> req;
     public bool use_selector = true;
     bool gameisbegin;
-    bool inmenu;
     Rumble rumble;
 
 
     [Header("Inspector References")]
-    public LevelSystem levelsystem;
     public EventManager eventManager;
     [SerializeField] CharacterHead character;
     [SerializeField] List<PlayObject> allentities;
-    public UI_Menu ui_menu;
+    [SerializeField] SkillManager_Pasivas pasives;
+    [SerializeField] SkillManager_Activas actives;
+    [SerializeField] LevelSystem levelSystem;
 
     public GameUI_controller gameUiController;
-
-    [Header("Skills")]
-    public GameObject model_skill_selector;
-    GameObject selector;
-    public SkillManager_Pasivas skillmanager_pasivas;
-    public SkillManager_Activas skillmanager_activas;
 
     private SensorForEnemysInRoom mySensorRoom;
     BaseRoom _currentRoom;
@@ -59,20 +53,20 @@ public class Main : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(InitCorroutine());
+    }
+
+    System.Collections.IEnumerator InitCorroutine()
+    {
+        yield return new WaitForSeconds(0.00000001f);
         if (use_selector)
         {
-            skillmanager_pasivas.Initialize();
-            skillmanager_activas.Initialize();
-            levelsystem.Initialize();
-            gameUiController.Initialize();
-            selector = GameObject.Instantiate(model_skill_selector, gameUiController.MyCanvas.transform);
-            selector.GetComponent<UI_BeginSkillSelector>().Initialize(SkillSelected);
+            eventManager.TriggerEvent(GameEvents.GAME_INITIALIZE);
         }
         else
         {
             LoadLevelPlayObjects();
         }
-
     }
 
     private void Update()
@@ -80,14 +74,7 @@ public class Main : MonoBehaviour
         rumble.OnUpdate();
     }
 
-    void SkillSelected(SkillType _skillType)
-    {
-        skillmanager_pasivas.SelectASkillType(_skillType);
-        LoadLevelPlayObjects();
-        selector.gameObject.SetActive(false);
-    }
-
-    void LoadLevelPlayObjects()
+    public void LoadLevelPlayObjects()
     {
         toload.Add(AddToMainCollection);
         req = new ThreadRequestObject<PlayObject>(
@@ -106,16 +93,6 @@ public class Main : MonoBehaviour
     }
 
     public void EVENT_OpenMenu() { if (gameisbegin) gameUiController.BTN_Back_OpenMenu(); }
-
-    public void CloseMenu()
-    {
-        if (gameisbegin)
-        {
-            Play();
-            ui_menu.Close();
-        }
-    }
-
 
 
     public List<T> GetListOf<T>() where T : PlayObject
@@ -165,6 +142,12 @@ public class Main : MonoBehaviour
     /////////////////////////////////////////////////////////////////////
     public CharacterHead GetChar() => character;
     public List<EnemyBase> GetEnemies() => GetListOfComponent<EnemyBase>();
+
+    public SkillManager_Pasivas GetPasivesManager() => pasives;
+
+    public SkillManager_Activas GetActivesManager() => actives;
+
+    public LevelSystem GetLevelSystem() => levelSystem;
 
     public List<Minion> GetMinions() => GetListOf<Minion>();
 
