@@ -81,7 +81,11 @@ public class CharacterHead : CharacterControllable
     [SerializeField] int life = 100;
     [SerializeField] CharLifeSystem lifesystem;
     public CharLifeSystem Life => lifesystem;
-    
+
+    protected override void OnInitialize()
+    {
+        
+    }
 
     private void Awake()
     {
@@ -484,6 +488,8 @@ public class CharacterHead : CharacterControllable
     protected override void OnTurnOn() { }
     protected override void OnTurnOff() { }
     protected override void OnFixedUpdate() { }
+
+    
 
     #endregion
 

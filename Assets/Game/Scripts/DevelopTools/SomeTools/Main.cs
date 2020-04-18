@@ -90,7 +90,7 @@ public class Main : MonoBehaviour
     void OnLoadEnded()
     {
         gameisbegin = true;
-        Play();
+        InitializePlayObjects();
         eventManager.TriggerEvent(GameEvents.GAME_END_LOAD);
     }
 
@@ -135,6 +135,7 @@ public class Main : MonoBehaviour
         //}
     }
 
+    public void InitializePlayObjects() { foreach (var e in allentities) e.Initialize(); }
     public void Play() { foreach (var e in allentities) e.Resume(); }
     public void Pause() { foreach (var e in allentities) e.Pause(); }
 

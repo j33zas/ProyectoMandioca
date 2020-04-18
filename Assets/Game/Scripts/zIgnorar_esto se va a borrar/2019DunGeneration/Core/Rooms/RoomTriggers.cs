@@ -6,7 +6,7 @@ using System.Linq;
 using DungeonGenerator.Components;
 
 [System.Serializable]
-public class RoomTrigger : MonoBehaviour
+public class RoomTriggers : MonoBehaviour
 {
     List<DoorTrigger> triggers;
     public List<IDungeonElement> myDungeonElements = new List<IDungeonElement>();

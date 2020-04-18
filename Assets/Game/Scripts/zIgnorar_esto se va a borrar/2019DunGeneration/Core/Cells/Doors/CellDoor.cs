@@ -17,16 +17,13 @@ public class CellDoor : Cell2Pos
     public List<GameObject> Open;
     public List<GameObject> Close;
 
-
     public List<GameObject> AuxiliarSet;
 
     public bool Occuppied
     {
         get
         {
-
             return occuppied;
-
         }
         set
         {
@@ -95,14 +92,12 @@ public class CellDoor : Cell2Pos
 
     public void TurnOn()
     {
-        //myrender.material.SetColor("_Color", Color.green);
         Open.ForEach(x => x.SetActive(true));
         Close.ForEach(x => x.SetActive(false));
     }
 
     public void TurnOff()
     {
-        // myrender.material.SetColor("_Color", Color.red);
         Open.ForEach(x => x.SetActive(false));
         Close.ForEach(x => x.SetActive(true));
     }

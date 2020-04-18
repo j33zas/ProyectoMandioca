@@ -13,7 +13,7 @@ public class NewRoom : RoomBase
     public CellCore cellcore;
 
     [Header("(RoomTrigger) Grupo de Triggers")]
-    [NonSerialized] public RoomTrigger myRoomtrigger;
+    [NonSerialized] public RoomTriggers myRoomtrigger;
 
     List<NewRoom> vecinos = new List<NewRoom>();
     NewRoom myParent;
@@ -29,7 +29,7 @@ public class NewRoom : RoomBase
     public override void OnInitialize()
     {
         rangeCornerManager = GetComponentInChildren<RangeCornerManager>();
-        myRoomtrigger = GetComponentInChildren<RoomTrigger>();
+        myRoomtrigger = GetComponentInChildren<RoomTriggers>();
         doormanager = GetComponentInChildren<DoorManager>();
         //esto tiene que estar antes de "doormanager.FreeAllDoors();" porque tiene que buscar los trigger antes de que el doormanager me los apague
 
@@ -360,7 +360,6 @@ public class NewRoom : RoomBase
     public bool ComprobarLugarDeSpawn(CellDoor cellDoor, NewRoom room, ref int index)
     {
        
-
         //obtengo la direccion hacia donde tengo que ir
         //obtengo todas las puertas del vecino
         //agarro una al azar
