@@ -10851,7 +10851,7 @@ Transform:
   m_Children:
   - {fileID: 1954684488}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &397355561
 GameObject:
@@ -11541,7 +11541,6 @@ GameObject:
   m_Component:
   - component: {fileID: 646024540}
   - component: {fileID: 646024541}
-  - component: {fileID: 646024542}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -11588,21 +11587,6 @@ MonoBehaviour:
   actives: {fileID: 850630994}
   levelSystem: {fileID: 634133231}
   gameUiController: {fileID: 1563332255}
---- !u!114 &646024542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646024539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63f86752788527749be3922bbec333b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxEnemies: 5
-  timerMin: 0.3
-  timerMax: 2
 --- !u!33 &654491913
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16314,12 +16298,12 @@ PrefabInstance:
     - target: {fileID: 2172963281269924719, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
       propertyPath: samples.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2172963281269924719, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
       propertyPath: MaxRooms
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2172963281269924719, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
@@ -16385,6 +16369,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9019026102530772930, guid: 042d5cca86454ac41b8ab48b475d4856,
         type: 3}
+    - target: {fileID: 2172963281269924719, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
+        type: 3}
+      propertyPath: samples.Array.data[3].model
+      value: 
+      objectReference: {fileID: 9019026102530772930, guid: 5e99752ea3ce2f445a16b451ffe63db1,
+        type: 3}
     - target: {fileID: 5319321067737908840, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16423,7 +16413,7 @@ PrefabInstance:
     - target: {fileID: 5319321067737908840, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5319321067737908840, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
@@ -16445,7 +16435,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dungeon
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5162911865018806529, guid: dbe3e8b09406b134bbcf2ed6d3e612d1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dbe3e8b09406b134bbcf2ed6d3e612d1, type: 3}
 --- !u!1 &1563332253
 GameObject:

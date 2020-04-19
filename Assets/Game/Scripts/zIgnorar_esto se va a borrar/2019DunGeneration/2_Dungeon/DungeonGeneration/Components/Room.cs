@@ -19,7 +19,7 @@ namespace DungeonGenerator.Components
         public TextMesh infoRoom;
 
         [Header("(RoomTrigger) Grupo de Triggers")]
-        public RoomTriggers myRoomtrigger;
+        public LocalRoomTriggers myRoomtrigger;
 
         int indexDir;
         int saveDir;
@@ -27,7 +27,7 @@ namespace DungeonGenerator.Components
 
         private void Awake()
         {
-            myRoomtrigger = GetComponentInChildren<RoomTriggers>();
+            myRoomtrigger = GetComponentInChildren<LocalRoomTriggers>();
         }
 
         public void CrearRoom(int _Xpos, int _Zpos, Room _parent)

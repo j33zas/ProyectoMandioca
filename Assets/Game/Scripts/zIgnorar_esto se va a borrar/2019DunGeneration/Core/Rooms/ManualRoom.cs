@@ -8,10 +8,10 @@ public class ManualRoom : RoomBase
 {
     public override void OnInitialize()
     {
-        var trigger = GetComponent<RoomTriggers>();
+        var trigger = GetComponent<LocalRoomTriggers>();
         trigger.Initialize();
-        RoomTriggerManager.instancia.dungeonElements.AddListToList(trigger.GetDungeonElements());
-        RoomTriggerManager.instancia.SetAll_DungeonGenerationFinallized();
+        ManagerRoomTrigger.instancia.dungeonElements.AddListToList(trigger.GetDungeonElements());
+        ManagerRoomTrigger.instancia.SetAll_DungeonGenerationFinallized();
 
         foreach (var e in elements) e.SetmanualRoom(this);
     }

@@ -13,7 +13,7 @@ public class NewRoom : RoomBase
     public CellCore cellcore;
 
     [Header("(RoomTrigger) Grupo de Triggers")]
-    [NonSerialized] public RoomTriggers myRoomtrigger;
+    [NonSerialized] public LocalRoomTriggers myRoomtrigger;
 
     List<NewRoom> vecinos = new List<NewRoom>();
     NewRoom myParent;
@@ -29,7 +29,7 @@ public class NewRoom : RoomBase
     public override void OnInitialize()
     {
         rangeCornerManager = GetComponentInChildren<RangeCornerManager>();
-        myRoomtrigger = GetComponentInChildren<RoomTriggers>();
+        myRoomtrigger = GetComponentInChildren<LocalRoomTriggers>();
         doormanager = GetComponentInChildren<DoorManager>();
         //esto tiene que estar antes de "doormanager.FreeAllDoors();" porque tiene que buscar los trigger antes de que el doormanager me los apague
 

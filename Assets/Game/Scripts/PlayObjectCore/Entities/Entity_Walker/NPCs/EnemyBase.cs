@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class EnemyBase : NPCBase, ICombatDirector, IRoomElement
+public abstract class EnemyBase : NPCBase, ICombatDirector
 {
     public bool target;
     public bool attacking;
@@ -26,10 +26,6 @@ public abstract class EnemyBase : NPCBase, ICombatDirector, IRoomElement
         target = false;
         _targetFeedback.SetActive(false);
     }
-
-    public abstract void PlayerEnterRoom();
-
-    public abstract void PlayerLeaveRoom();
 
     [SerializeField] protected float combatDistance;
     protected bool combat;

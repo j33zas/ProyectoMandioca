@@ -43,31 +43,23 @@ public class TrueDummyEnemy : EnemyBase
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
 
-    void Start()
+    protected override void OnInitialize()
     {
         rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
         feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
         feedbackHitShield = new PopSignalFeedback(0.2f, obj_feedbackShield);
         feedbackAttack = new PopSignalFeedback(0.2f, obj_feedbackattack);
-
         anim.Add_Callback("DealDamage", DealDamage);
-
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
-
-        //Esto está mal, pero cuando se defina lo de las rooms se saca.
-        Initialize();
-    }
-
-    protected override void OnInitialize()
-    {
-        IAInitialize(Main.instance.GetCombatDirector());
+        
     }
 
     public override void PlayerEnterRoom()
     {
-        Initialize();
+        SetTarget(Main.instance.GetChar());
+        IAInitialize(Main.instance.GetCombatDirector());
     }
 
     public override void PlayerLeaveRoom()
@@ -116,8 +108,6 @@ public class TrueDummyEnemy : EnemyBase
             feedbackHitShield.Show();
         }
     }
-
-
 
     protected override void OnUpdateEntity()
     {

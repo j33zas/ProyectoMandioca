@@ -63,7 +63,6 @@ public class NewRoomGenerator : MonoBehaviour
 
         for (int i = 0; i < samples.Count; i++)
         {
-            Debug.Log("ex: " + i);
             samples[i].originalIndex = i;
         }
     }

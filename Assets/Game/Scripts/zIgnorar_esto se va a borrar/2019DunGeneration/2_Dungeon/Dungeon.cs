@@ -47,7 +47,7 @@ public class Dungeon : SceneMainBase
         rooms[0].myRoomtrigger.IsInside(Main.instance.GetChar().gameObject);
         
         
-        RoomTriggerManager.instancia.Initialize(rooms);
+        ManagerRoomTrigger.instancia.Initialize(rooms);
 
         //CompleteCameraController.instancia.InstantAjust();
     }

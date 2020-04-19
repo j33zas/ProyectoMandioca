@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public abstract class PlayObject : MonoBehaviour
+public abstract class PlayObject : MonoBehaviour, IRoomElement
 {
     protected bool canupdate;
     public void Initialize() { OnInitialize(); }
@@ -26,4 +26,6 @@ public abstract class PlayObject : MonoBehaviour
     protected abstract void OnPause();
     protected abstract void OnResume();
 
+    public virtual void PlayerLeaveRoom() { }
+    public virtual void PlayerEnterRoom() { }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using DungeonGenerator.Components;
 
 [System.Serializable]
-public class RoomTriggers : MonoBehaviour
+public class LocalRoomTriggers : MonoBehaviour
 {
     List<DoorTrigger> triggers;
     public List<IDungeonElement> myDungeonElements = new List<IDungeonElement>();
@@ -41,7 +41,7 @@ public class RoomTriggers : MonoBehaviour
         if (go.GetComponent<CharacterHead>())
         {
             NewRoomGenerator.instancia.SetCurrentRoom(this.GetComponent<NewRoom>());
-            RoomTriggerManager.instancia.PlayerEnterIn(this, go);
+            ManagerRoomTrigger.instancia.PlayerEnterIn(this, go);
         }
     }
 }

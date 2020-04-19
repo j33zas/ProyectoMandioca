@@ -37,15 +37,15 @@ using Tools.Extensions;
  */
 #endregion
 
-public class RoomTriggerManager : MonoBehaviour
+public class ManagerRoomTrigger : MonoBehaviour
 {
-    public static RoomTriggerManager instancia;
+    public static ManagerRoomTrigger instancia;
 
     private void Awake() { instancia = this; }
 
-    public RoomTriggers current;
+    public LocalRoomTriggers current;
 
-    [SerializeField] List<RoomTriggers> roomtriggers = new List<RoomTriggers>();
+    [SerializeField] List<LocalRoomTriggers> roomtriggers = new List<LocalRoomTriggers>();
     public List<IDungeonElement> dungeonElements = new List<IDungeonElement>();
 
     public void Initialize(List<NewRoom> rooms)
@@ -78,7 +78,7 @@ public class RoomTriggerManager : MonoBehaviour
         }
     }
 
-    public void PlayerEnterIn(RoomTriggers roomselected, GameObject go)
+    public void PlayerEnterIn(LocalRoomTriggers roomselected, GameObject go)
     {
         if (current != null) current.GetDungeonElements().ForEach(x => x.OnPlayerExitInThisRoom());
 
