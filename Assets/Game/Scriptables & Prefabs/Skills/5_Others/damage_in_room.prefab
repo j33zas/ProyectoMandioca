@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillinfo: {fileID: 11400000, guid: 7f9b4e91ac861004c8439a5470abcfc2, type: 2}
-  cooldown: 4
+  cooldown: 1
+  one_time_use: 1
+  useTime: 5
   damagePower: 20
   feedback: {fileID: 4660095466371284439}
   dmgType: 0

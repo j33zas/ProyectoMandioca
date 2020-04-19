@@ -8,25 +8,20 @@ public class SkillActive_DamageInRoom : SkillActivas
     [SerializeField] private ParticleSystem feedback;
     [SerializeField] private Damagetype dmgType;
 
-    private CharacterHead _hero;
-
     protected override void OnOneShotExecute()
     {
         List<EnemyBase> enemies = Main.instance.GetEnemies();
 
-        feedback.transform.position = _hero.transform.position;
+        feedback.transform.position = Main.instance.GetChar().transform.position;
         feedback.Play();
         
         foreach (EnemyBase enemy in enemies)
         {
-            enemy.TakeDamage(damagePower, Vector3.up, dmgType, _hero);
+            enemy.TakeDamage(damagePower, Vector3.up, dmgType, Main.instance.GetChar());
         }
     }
 
-    protected override void OnBeginSkill()
-    {
-        _hero = Main.instance.GetChar();
-    }
+    protected override void OnBeginSkill() { }
     protected override void OnEndSkill() { }
     protected override void OnUpdateSkill() { }
     protected override void OnStartUse() { }

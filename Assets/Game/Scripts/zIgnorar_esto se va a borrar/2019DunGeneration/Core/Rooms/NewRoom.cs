@@ -260,13 +260,14 @@ public class NewRoom : RoomBase
     }
     bool ForcedRoom(CellDoor door)
     {
-
-
         var room = new NewRoom();
 
-        GameObject trygo = NewRoomGenerator.instancia.forcerooms[NewRoomGenerator.instancia.currentCantRooms];
+        Debug.Log("tengo " + NewRoomGenerator.instancia.forcerooms.Count + " forced rooms");
+        Debug.Log("El current es: " + NewRoomGenerator.instancia.currentCantRooms);
 
-        if (NewRoomGenerator.instancia.currentCantRooms == NewRoomGenerator.instancia.MaxRooms - 1)
+        GameObject trygo = NewRoomGenerator.instancia.forcerooms[NewRoomGenerator.instancia.currentCantRooms-1];
+
+        if (NewRoomGenerator.instancia.currentCantRooms == NewRoomGenerator.instancia.MaxRooms)
         {
             room = SpawnAndGet(NewRoomGenerator.instancia.lastRoom);
         }

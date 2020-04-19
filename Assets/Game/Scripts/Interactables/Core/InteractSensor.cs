@@ -117,8 +117,6 @@ public class InteractSensor : MonoBehaviour
                 return;
             }
 
-            Debug.Log("no llega hasta aca");
-
             if (!cooldown_to_next_recollection)
             {
                 if (most_close.autoexecute || can_fast_recollecion)

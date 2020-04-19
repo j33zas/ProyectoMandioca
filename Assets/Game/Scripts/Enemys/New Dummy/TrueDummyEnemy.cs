@@ -167,8 +167,9 @@ public class TrueDummyEnemy : EnemyBase
 
         sm.SendInput(DummyEnemyInputs.TAKE_DAMAGE);
 
-        lifesystem.Hit(dmg);
         greenblood.Play();
+
+        lifesystem.Hit(dmg);
 
         return Attack_Result.sucessful;
     }
@@ -178,6 +179,7 @@ public class TrueDummyEnemy : EnemyBase
         if (sm.Current.Name != "Attack" && entityTarget != owner_entity)
         {
             attacking = false;
+            if (entityTarget == null) throw new System.Exception("entity target es null");//esto rompe cuando vengo desde el Damage in Room
             director.RemoveToAttack(this, entityTarget);
             SetTarget(owner_entity);
             director.AddToAttack(this, entityTarget);
