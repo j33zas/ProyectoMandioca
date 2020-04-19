@@ -87,7 +87,7 @@ public class CharacterHead : CharacterControllable
         
     }
 
-    private void Awake()
+    private void Start()
     {
         lifesystem = new CharLifeSystem(life, life)
             .ADD_EVENT_OnGainLife(OnGainLife)

@@ -16306,6 +16306,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2172963281269924719, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
+        type: 3}
+      propertyPath: MaxRooms
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5319321067737908840, guid: dbe3e8b09406b134bbcf2ed6d3e612d1,
         type: 3}
       propertyPath: m_LocalPosition.x

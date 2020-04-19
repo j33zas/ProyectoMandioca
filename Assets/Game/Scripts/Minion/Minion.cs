@@ -79,7 +79,9 @@ public class Minion : Companion
 
     protected override void OnUpdateEntity()
     {
-        feedbackStun.Refresh(); feedbackHitShield.Refresh(); sm.Update();
+        feedbackStun.Refresh(); 
+        feedbackHitShield.Refresh(); 
+        sm.Update();
     }
 
     public void ChangeToAttackState(Transform parriedEnemy)

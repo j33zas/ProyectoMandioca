@@ -91,6 +91,7 @@ public class Main : MonoBehaviour
     {
         gameisbegin = true;
         InitializePlayObjects();
+        Play();
         eventManager.TriggerEvent(GameEvents.GAME_END_LOAD);
     }
 
