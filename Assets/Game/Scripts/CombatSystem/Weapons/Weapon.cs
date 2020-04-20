@@ -29,25 +29,14 @@ public abstract class Weapon
         originalRange = range;
         _head = Main.instance.GetChar();
     }
-
     /// <summary>
-    /// SinParametro vuelve al rangoOriginal
-    /// </summary>
-    public float ModifyAttackrange()
-    {
-        range = originalRange;
-        
-        return range;
-    }
-    /// <summary>
-    /// Cambia a un rango X que se le mande
+    /// está por parametro opcional, si se envia parametro usa ese valor, si no se manada setea -1 y usa el rango original
     /// </summary>
     /// <param name="changedValue"></param>
-    public float ModifyAttackrange(float changedValue)
-    {
-        range = changedValue;
-
-        return range;
+    public float ModifyAttackrange(float changedValue = -1) 
+    { 
+        range = (changedValue == -1) ? range = originalRange : range = changedValue; 
+        return range; 
     }
 
     public float GetWpnRange()

@@ -34,10 +34,14 @@ public class CharacterHead : CharacterControllable
     [SerializeField, Range(-1, 1)] float blockAngle;
     [SerializeField] float parryRecall;
     [SerializeField] float takeDamageRecall;
+
     //Perdon por esto, pero lo necesito pra la skill del boomeran hasta tener la animacion y el estado "sin escudo"
     bool canBlock = true;
     public GameObject escudo;
     
+
+    [SerializeField] float timeScale;
+    [SerializeField] float slowDuration;
 
     [Header("Feedbacks")]
     public GameObject feedbackParry;
@@ -60,6 +64,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float timeToHeavyAttack;
     [SerializeField] float rangeOfPetrified;
     [SerializeField] float attackRecall;
+    [SerializeField] float onHitRecall;
     float dmg;
     CharacterAttack charAttack;
 
@@ -77,6 +82,9 @@ public class CharacterHead : CharacterControllable
     [SerializeField] int life = 100;
     [SerializeField] CharLifeSystem lifesystem;
     public CharLifeSystem Life => lifesystem;
+
+    Rigidbody rb;
+
 
     protected override void OnInitialize()
     {
@@ -119,6 +127,8 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
 
         SetStates();
+
+        rb = GetComponent<Rigidbody>();
     }
 
     #region SET STATES
@@ -169,8 +179,8 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(block)
             .SetTransition(PlayerInputs.IDLE, idle)
             .SetTransition(PlayerInputs.MOVE, move)
-            .SetTransition(PlayerInputs.ROLL, roll)
-            .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+           // .SetTransition(PlayerInputs.ROLL, roll)
+            //.SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
@@ -221,18 +231,11 @@ public class CharacterHead : CharacterControllable
         new CharDead(dead, stateMachine);
     }
 
-    float GetLeftHorizontal() { return moveX; }
-
-    float GetLeftVertical() { return moveY; }
-
-    float GetRightHorizontal() { return rotateX; }
-
-    float GetRightVertical() { return rotateY; }
-
-    EventStateMachine<PlayerInputs> GetSM()
-    {
-        return stateMachine;
-    }
+    float GetLeftHorizontal() => moveX;
+    float GetLeftVertical() => moveY;
+    float GetRightHorizontal() => rotateX;
+    float GetRightVertical() => rotateY;
+    EventStateMachine<PlayerInputs> GetSM() => stateMachine;
 
 
     #endregion
@@ -264,21 +267,10 @@ public class CharacterHead : CharacterControllable
 
     #region Attack
     /////////////////////////////////////////////////////////////////
-
     public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); Debug.Log("atroden"); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
-
-    //tengo la espada arriba
-    public void CheckAttackType()
-    {
-        charAttack.BeginCheckAttackType();
-    }
-
-    public void DealAttack()
-    {
-        charAttack.OnAttack();
-    }
-
+    public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
+    public void DealAttack() => charAttack.OnAttack();
     void ReleaseInNormal()
     {
         dmg = dmg_normal;
@@ -287,12 +279,10 @@ public class CharacterHead : CharacterControllable
     }
     void ReleaseInHeavy()
     {
-        
         dmg = dmg_heavy;
         charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
     }
-
     ///////////BigWeaponSkill
 
     /// <summary>
@@ -304,25 +294,14 @@ public class CharacterHead : CharacterControllable
     {
         if (newRangeValue < 0)
             return attackRange;
-
         charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
-
         return newRangeValue;
     }
     /// <summary>
     /// Si no manda parametros vuelve al rango original del arma
     /// </summary>
-    public void ChangeRangeAttack()
-    {
-        charAttack.currentWeapon.ModifyAttackrange();
-    }
-
-    public CharacterAttack GetCharacterAttack()
-    {
-        return charAttack;
-    }
-
-
+    public void ChangeRangeAttack() => charAttack.currentWeapon.ModifyAttackrange();
+    public CharacterAttack GetCharacterAttack() => charAttack;
     private void OnDrawGizmos()
     {
         if (charAttack == null)
@@ -475,6 +454,8 @@ public class CharacterHead : CharacterControllable
         if (charBlock.IsParry(rot.forward, attackDir))
         {
             PerfectParry();
+            Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
+            Debug.Log("Parried");
             return Attack_Result.parried;
         }
         else if (charBlock.IsBlock(rot.forward, attackDir))
@@ -486,6 +467,10 @@ public class CharacterHead : CharacterControllable
         {
             hitParticle.Play();
             lifesystem.Hit(dmg);
+            Vector3 dir = (transform.position - attackDir).normalized;
+            rb.AddForce(new Vector3(dir.x, 0, dir.z) * dmg * onHitRecall, ForceMode.Force);
+            customCam.BeginShakeCamera();
+            Main.instance.Vibrate();
             return Attack_Result.sucessful;
         }
     }

@@ -28,11 +28,13 @@ public class Main : MonoBehaviour
     [SerializeField] SkillManager_Pasivas pasives;
     [SerializeField] SkillManager_Activas actives;
     [SerializeField] LevelSystem levelSystem;
+    [SerializeField] TimeManager timeManager;
 
     public GameUI_controller gameUiController;
 
     private SensorForEnemysInRoom mySensorRoom;
     BaseRoom _currentRoom;
+    PopUpCrown _theCrown;
 
     public void SubscriteToEntities(PlayObject po)
     {
@@ -160,6 +162,8 @@ public class Main : MonoBehaviour
     public bool Ui_Is_Open() => gameUiController.openUI;
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
     public BaseRoom GetRoom() => _currentRoom;
+    public void SetCrown(PopUpCrown newCrown) => _theCrown = newCrown;
+    public PopUpCrown GetCrown() => _theCrown;
 
     public void Vibrate() => rumble.OneShootRumble();
     public void Vibrate(float _strengh = 1, float _time_to_rumble = 0.2f) => rumble.OneShootRumble(_strengh, _time_to_rumble);
@@ -176,8 +180,9 @@ public class Main : MonoBehaviour
     public List<ItemWorld> SpawnListItems(ItemWorld item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
     public List<GameObject> SpawnListItems(GameObject item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
 
-
     public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn, pos);
     #endregion
+
+    public TimeManager GetTimeManager() => timeManager;
 
 }

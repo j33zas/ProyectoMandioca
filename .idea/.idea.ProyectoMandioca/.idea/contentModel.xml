@@ -1065,6 +1065,9 @@
                 <e p="Environment.cs" t="Include" />
               </e>
             </e>
+            <e p="PopUp" t="Include">
+              <e p="PopUpCrown.cs" t="Include" />
+            </e>
             <e p="Rooms" t="Include">
               <e p="BaseRoom.cs" t="Include" />
               <e p="IRoomElement.cs" t="Include" />
@@ -1168,7 +1171,9 @@
               </e>
             </e>
             <e p="SpawnManager" t="Include">
+              <e p="ActiveSpawner.cs" t="Include" />
               <e p="DropItems.cs" t="Include" />
+              <e p="EnemySpawner.cs" t="Include" />
               <e p="SpawnData.cs" t="Include" />
               <e p="Spawner.cs" t="Include" />
             </e>
@@ -1324,6 +1329,7 @@
           </e>
         </e>
         <e p="MyEventSystem.cs" t="Include" />
+        <e p="TimeManager.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
