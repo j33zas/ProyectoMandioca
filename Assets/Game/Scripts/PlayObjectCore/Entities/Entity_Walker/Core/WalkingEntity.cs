@@ -26,5 +26,4 @@ public abstract class WalkingEntity : EntityBase
     public virtual void OnFire() { }
     public virtual void OnFreeze() { }
     public virtual void HalfLife() { }
-    public virtual void InstaKill() { }
 }

@@ -222,7 +222,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.3962264, g: 0.034705963, b: 0, a: 1}
+      maxColor: {r: 0.46431115, g: 0.5301389, b: 0.6981132, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4838,7 +4838,7 @@ Transform:
   m_GameObject: {fileID: 3823478406595855656}
   m_LocalRotation: {x: -0.7933534, y: -0.0000001485582, z: 0.60876137, w: 0.0000001139927}
   m_LocalPosition: {x: 2.9686344, y: 14.4, z: 12.4}
-  m_LocalScale: {x: 0.58602, y: 0.58602, z: 0.58602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3823478405971470692}
   - {fileID: 3188271111577686779}
@@ -5035,7 +5035,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0, b: 0.009791374, a: 1}
+      maxColor: {r: 0.42172483, g: 0.61835045, b: 0.764151, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9651,7 +9651,7 @@ Transform:
   m_GameObject: {fileID: 6769397233491192096}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.58602, y: 0.58602, z: 0.58602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3823478406595855661}
   m_RootOrder: 1
@@ -9846,7 +9846,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.7924528, g: 0.06677973, b: 0, a: 1}
+      maxColor: {r: 0.42172483, g: 0.61835045, b: 0.764151, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14390,7 +14390,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 51ca8d8dc04e6473799a31e2d86846e2, type: 2}
+  - {fileID: 2100000, guid: 5d1d6f8454bedfa499b4b14964f34346, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
