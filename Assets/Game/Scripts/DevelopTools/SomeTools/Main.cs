@@ -33,6 +33,7 @@ public class Main : MonoBehaviour
 
     private SensorForEnemysInRoom mySensorRoom;
     BaseRoom _currentRoom;
+    PopUpCrown _theCrown;
 
     public void SubscriteToEntities(PlayObject po)
     {
@@ -160,6 +161,8 @@ public class Main : MonoBehaviour
     public bool Ui_Is_Open() => gameUiController.openUI;
     public void SetRoom(BaseRoom newRoom) => _currentRoom = newRoom;
     public BaseRoom GetRoom() => _currentRoom;
+    public void SetCrown(PopUpCrown newCrown) => _theCrown = newCrown;
+    public PopUpCrown GetCrown() => _theCrown;
 
     public void Vibrate() => rumble.OneShootRumble();
     public void Vibrate(float _strengh = 1, float _time_to_rumble = 0.2f) => rumble.OneShootRumble(_strengh, _time_to_rumble);

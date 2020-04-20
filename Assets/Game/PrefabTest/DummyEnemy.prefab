@@ -1732,7 +1732,7 @@ MonoBehaviour:
   side_Type: 2
   target: 0
   attacking: 0
-  _targetFeedback: {fileID: 530351151401865635}
+  crownPosition: {fileID: 3532922549234164656}
   minionTarget: 0
   Invinsible: 0
   combatDistance: 20
