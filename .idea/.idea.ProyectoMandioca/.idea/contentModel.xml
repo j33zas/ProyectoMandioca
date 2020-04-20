@@ -12,6 +12,9 @@
                 <e p="Gelio Greek - ReadMe.txt" t="Include" />
               </e>
             </e>
+            <e p="MAterials" t="Include">
+              <e p="Color.shader" t="Include" />
+            </e>
             <e p="Shaders" t="Include">
               <e p="Materials&amp;Shaders" t="Include">
                 <e p="Block" t="Include">
@@ -24,6 +27,7 @@
                   <e p="LevelUpGround.shader" t="Include" />
                 </e>
                 <e p="LowPoly" t="Include">
+                  <e p="CharacterShader.shader" t="Include" />
                   <e p="Low.shader" t="Include" />
                   <e p="UVS" t="Include">
                     <e p="LowPoly.shader" t="Include" />
@@ -761,6 +765,7 @@
             <e p="Item Activas" t="Include">
               <e p="InfoActivas" t="Include">
                 <e p="Scripts" t="Include">
+                  <e p="SkillActive_BoomeranShield.cs" t="Include" />
                   <e p="SkillActive_DamageInRoom.cs" t="Include" />
                   <e p="SkillActive_Empty.cs" t="Include" />
                   <e p="SkillActive_FreezeRange.cs" t="Include" />
@@ -788,6 +793,19 @@
               <e p="CharacterInput.cs" t="Include" />
               <e p="CharacterMovement.cs" t="Include" />
               <e p="CharLifeSystem.cs" t="Include" />
+              <e p="States" t="Include">
+                <e p="CharacterStates.cs" t="Include" />
+                <e p="CharBeginBlock.cs" t="Include" />
+                <e p="CharBlock.cs" t="Include" />
+                <e p="CharChargeAttack.cs" t="Include" />
+                <e p="CharDead.cs" t="Include" />
+                <e p="CharIdle.cs" t="Include" />
+                <e p="CharMove.cs" t="Include" />
+                <e p="CharParry.cs" t="Include" />
+                <e p="CharReleaseAttack.cs" t="Include" />
+                <e p="CharRoll.cs" t="Include" />
+                <e p="CharTakeDmg.cs" t="Include" />
+              </e>
             </e>
             <e p="CombatSystem" t="Include">
               <e p="CombatComponent.cs" t="Include" />
@@ -1111,6 +1129,7 @@
               <e p="3_Obligacion" t="Include">
                 <e p="1_mitad de HP.txt" t="Include" />
                 <e p="2_Petrifica primer golpe.txt" t="Include" />
+                <e p="Skill_Active_RandomKill.cs" t="Include" />
                 <e p="Skill_FirstAttack.cs" t="Include" />
                 <e p="Skill_HalfLife.cs" t="Include" />
                 <e p="SkillBase_Obligacion.cs" t="Include" />
@@ -1213,12 +1232,12 @@
                   <e p="Rooms" t="Include">
                     <e p="DoorTrigger.cs" t="Include" />
                     <e p="IDungElemCallback.cs" t="Include" />
+                    <e p="LocalRoomTriggers.cs" t="Include" />
+                    <e p="ManagerRoomTrigger.cs" t="Include" />
                     <e p="ManualRoom.cs" t="Include" />
                     <e p="NewRoom.cs" t="Include" />
                     <e p="NewRoomGenerator.cs" t="Include" />
                     <e p="RoomBase.cs" t="Include" />
-                    <e p="RoomTriggerManager.cs" t="Include" />
-                    <e p="RoomTriggers.cs" t="Include" />
                   </e>
                 </e>
                 <e p="IRoomElementable.cs" t="Include" />

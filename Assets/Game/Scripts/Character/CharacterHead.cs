@@ -34,6 +34,9 @@ public class CharacterHead : CharacterControllable
     [SerializeField, Range(-1, 1)] float blockAngle;
     [SerializeField] float parryRecall;
     [SerializeField] float takeDamageRecall;
+    //Perdon por esto, pero lo necesito pra la skill del boomeran hasta tener la animacion y el estado "sin escudo"
+    bool canBlock = true;
+    public GameObject escudo;
     
 
     [Header("Feedbacks")]
@@ -338,8 +341,19 @@ public class CharacterHead : CharacterControllable
 
     #region Block & Parry
 
+    //Toggle con la posibilidad de bloquear o no
+    public void ToggleBlock()
+    {
+        canBlock = !canBlock;
+    }
+
     public void EVENT_OnBlocking()
     {
+        //Puesto para no poder bloquear cuando el personaje tira el escudo en el boomeranSkill
+        if (!canBlock)
+            return;
+        
+        
         stateMachine.SendInput(PlayerInputs.BEGIN_BLOCK);
     }
     public void EVENT_UpBlocking()

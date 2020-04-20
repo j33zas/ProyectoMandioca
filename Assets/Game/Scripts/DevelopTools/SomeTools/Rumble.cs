@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 
 public class Rumble : MonoBehaviour
 {
@@ -22,13 +22,13 @@ public class Rumble : MonoBehaviour
             if (timer < time_to_rumble)
             {
                 timer = timer + 1 * Time.deltaTime;
-                GamePad.SetVibration(PlayerIndex.One, strenght, strenght);
+                //GamePad.SetVibration(PlayerIndex.One, strenght, strenght);
             }
             else
             {
                 rumble = false;
                 timer = 0;
-                GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                //GamePad.SetVibration(PlayerIndex.One, 0, 0);
             }
         }
     }
