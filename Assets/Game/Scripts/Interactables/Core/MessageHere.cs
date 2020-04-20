@@ -32,6 +32,7 @@ public class MessageHere : Interact_Receptor
             if (go.GetComponent<TrueDummyEnemy>()) {
 
                 var enem = go.GetComponent<TrueDummyEnemy>();
+                enem.Initialize();
             }
         }
     }

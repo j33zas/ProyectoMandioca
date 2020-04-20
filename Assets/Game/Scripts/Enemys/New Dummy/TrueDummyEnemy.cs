@@ -53,7 +53,11 @@ public class TrueDummyEnemy : EnemyBase
         anim.Add_Callback("DealDamage", DealDamage);
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
-        
+
+        SetTarget(Main.instance.GetChar());
+        IAInitialize(Main.instance.GetCombatDirector());
+        sm.SendInput(DummyEnemyInputs.ATTACK);
+
     }
 
     public override void PlayerEnterRoom()
