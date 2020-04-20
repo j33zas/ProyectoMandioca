@@ -1762,7 +1762,7 @@ MonoBehaviour:
   avoidRadious: 3
   cdToAttack: 2
   recallTime: 0.5
-  forceRecall: 20
+  forceRecall: 200
 --- !u!114 &3901963547881250309
 MonoBehaviour:
   m_ObjectHideFlags: 0

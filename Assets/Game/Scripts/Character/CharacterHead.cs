@@ -34,7 +34,8 @@ public class CharacterHead : CharacterControllable
     [SerializeField, Range(-1, 1)] float blockAngle;
     [SerializeField] float parryRecall;
     [SerializeField] float takeDamageRecall;
-    
+    [SerializeField] float timeScale;
+    [SerializeField] float slowDuration;
 
     [Header("Feedbacks")]
     public GameObject feedbackParry;
@@ -57,6 +58,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float timeToHeavyAttack;
     [SerializeField] float rangeOfPetrified;
     [SerializeField] float attackRecall;
+    [SerializeField] float onHitRecall;
     float dmg;
     CharacterAttack charAttack;
 
@@ -74,6 +76,9 @@ public class CharacterHead : CharacterControllable
     [SerializeField] int life = 100;
     [SerializeField] CharLifeSystem lifesystem;
     public CharLifeSystem Life => lifesystem;
+
+    Rigidbody rb;
+
 
     protected override void OnInitialize()
     {
@@ -116,6 +121,8 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
 
         SetStates();
+
+        rb = GetComponent<Rigidbody>();
     }
 
     #region SET STATES
@@ -430,6 +437,8 @@ public class CharacterHead : CharacterControllable
         if (charBlock.IsParry(rot.forward, attackDir))
         {
             PerfectParry();
+            Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
+            Debug.Log("Parried");
             return Attack_Result.parried;
         }
         else if (charBlock.IsBlock(rot.forward, attackDir))
@@ -441,6 +450,10 @@ public class CharacterHead : CharacterControllable
         {
             hitParticle.Play();
             lifesystem.Hit(dmg);
+            Vector3 dir = (transform.position - attackDir).normalized;
+            rb.AddForce(new Vector3(dir.x, 0, dir.z) * dmg * onHitRecall, ForceMode.Force);
+            customCam.BeginShakeCamera();
+            Main.instance.Vibrate();
             return Attack_Result.sucessful;
         }
     }

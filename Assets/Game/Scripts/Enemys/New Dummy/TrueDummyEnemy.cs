@@ -97,8 +97,7 @@ public class TrueDummyEnemy : EnemyBase
 
     public void AttackEntity(EntityBase e)
     {
-
-        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.position, Damagetype.parriable) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
@@ -107,7 +106,7 @@ public class TrueDummyEnemy : EnemyBase
             if (OnParried != null)
                 OnParried();
         }
-        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.position, Damagetype.parriable) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }
