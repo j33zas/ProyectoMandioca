@@ -27,6 +27,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: d8ee8e3f104a5594b801ddb232bfc730, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _tex4coord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -34,6 +38,6 @@ Material:
     m_Floats:
     - _Intensity: 3.66
     - _Mask: 0.9
-    - _OpacityIntensity: 0.47058827
-    - __dirty: 1
+    - _OpacityIntensity: 0.46
+    - __dirty: 0
     m_Colors: []

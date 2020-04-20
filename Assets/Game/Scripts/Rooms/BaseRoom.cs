@@ -35,16 +35,17 @@ public class BaseRoom : MonoBehaviour
         {
             _sensor.myContent.SetActive(true);
             Main.instance.SetRoom(this);
-            //myEnemies = new List<EnemyBase>();
-            //var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
-            //foreach(var item in enemysInChilderen)
-            //{
-            //    var enemys = item.GetComponent<EnemyBase>();
-            //    if (enemys)
-            //    {
-            //        myEnemies.Add(enemys);
-            //    }
-            //}
+            myEnemies = new List<EnemyBase>();
+            var enemysInChilderen = GetComponentsInChildren<EnemyBase>();
+            foreach (var item in enemysInChilderen)
+            {
+                var enemys = item.GetComponent<EnemyBase>();
+                if (enemys)
+                {
+                    myEnemies.Add(enemys);
+                    enemys.Initialize();
+                }
+            }
         }
     }
     public void ExitRoom(GameObject player)

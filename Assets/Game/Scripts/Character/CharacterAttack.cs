@@ -44,8 +44,10 @@ public class CharacterAttack
 
     event Action<Vector3> callbackPosition;
 
+    ParticleSystem attackslash;
 
-    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float rangeOfPetrified, float damage)
+
+    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float rangeOfPetrified, float damage, ParticleSystem _attackslash)
     {
         myWeapons = new List<Weapon>();
         myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", 45));
@@ -67,6 +69,8 @@ public class CharacterAttack
         OnAttack += Attack;
         OnAttackBegin += AttackBegin;
         OnAttackEnd += AttackEnd;
+
+        attackslash = _attackslash;
     }
 
     public string ChangeName()
@@ -153,6 +157,7 @@ public class CharacterAttack
     void AttackEnd()
     {
         Check();
+   
     }
 
     //anim espada arriba
@@ -166,6 +171,8 @@ public class CharacterAttack
     void Attack()
     {
         EntityBase enemy = currentWeapon.Attack(forwardPos, currentDamage);
+
+        attackslash.Play();
 
         if (enemy != null)
         {

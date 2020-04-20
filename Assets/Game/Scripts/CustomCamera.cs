@@ -14,9 +14,20 @@ public class CustomCamera : MonoBehaviour
     public float shakeDuration;
     private bool activeShake;
 
+    public float zoomDuration;
+    const int FIELD_OF_VIEW_ORIGINAL = 60;
+    float fieldOfView_toZoom =60;
+
+    PingPongLerp pingpongZoom;
+
+    Camera mycam;
+
     private void Start()
     {
         shakeDurationCurrent = shakeDuration;
+        mycam = GetComponent<Camera>();
+        pingpongZoom = new PingPongLerp();
+        pingpongZoom.Configure(Zoom, false);
     }
     private void LateUpdate()
     {
@@ -24,8 +35,15 @@ public class CustomCamera : MonoBehaviour
         {
             Shake();
         }
-        
     }
+    public void DoFastZoom(float _speedanim, float _fieldOfViewToZoom = 50)
+    {
+        fieldOfView_toZoom = _fieldOfViewToZoom;
+        pingpongZoom.Play(_speedanim);
+    }
+
+    void Zoom(float valtozoom) => mycam.fieldOfView = Mathf.Lerp(FIELD_OF_VIEW_ORIGINAL, fieldOfView_toZoom, valtozoom);
+    private void Update() => pingpongZoom.Updatear();
 
     private void FixedUpdate()
     {

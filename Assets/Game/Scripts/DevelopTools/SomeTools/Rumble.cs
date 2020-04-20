@@ -15,6 +15,16 @@ public class Rumble : MonoBehaviour
         rumble = true;
         strenght = _strengh;
     }
+
+    private void OnApplicationQuit()
+    {
+        GamePad.SetVibration(PlayerIndex.One, 0, 0);
+    }
+
+    private void OnDisable()
+    {
+        GamePad.SetVibration(PlayerIndex.One, 0, 0);
+    }
     public void OnUpdate()
     {
         if (rumble)

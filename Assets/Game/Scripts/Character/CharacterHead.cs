@@ -30,6 +30,7 @@ public class CharacterHead : CharacterControllable
     [Header("Parry & Block Options")]
     [SerializeField] float _timerOfParry;
     [SerializeField] ParticleSystem parryParticle;
+    [SerializeField] ParticleSystem blockParticle;
     [SerializeField] ParticleSystem hitParticle;
     [SerializeField, Range(-1, 1)] float blockAngle;
     [SerializeField] float parryRecall;
@@ -61,6 +62,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float onHitRecall;
     float dmg;
     CharacterAttack charAttack;
+    [SerializeField] ParticleSystem slash;
 
     CustomCamera customCam;
 
@@ -112,7 +114,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += charBlock.OnUpdate;
 
         dmg = dmg_normal;
-        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg);
+        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg, slash);
         charAttack.FirstAttackReady(true);
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
@@ -267,6 +269,7 @@ public class CharacterHead : CharacterControllable
     public void DealAttack() => charAttack.OnAttack();
     void ReleaseInNormal()
     {
+        
         dmg = dmg_normal;
         charAttack.ChangeDamageBase((int)dmg);
         charanim.NormalAttack();
@@ -436,13 +439,15 @@ public class CharacterHead : CharacterControllable
 
         if (charBlock.IsParry(rot.forward, attackDir))
         {
+            Debug.LogWarning("PARRY perfect");
             PerfectParry();
             Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
-            Debug.Log("Parried");
+            customCam.DoFastZoom(10);
             return Attack_Result.parried;
         }
         else if (charBlock.IsBlock(rot.forward, attackDir))
         {
+            blockParticle.Play();
             charanim.BlockSomething();
             return Attack_Result.blocked;
         }

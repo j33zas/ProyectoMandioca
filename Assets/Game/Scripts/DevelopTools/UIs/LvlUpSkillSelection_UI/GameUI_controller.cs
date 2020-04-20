@@ -11,7 +11,7 @@ public class GameUI_controller : MonoBehaviour
 
     [SerializeField] private GameObject skillSelection_template_pf;
     [SerializeField] private GameObject charStats_template_pf;
-    [SerializeField] private WorldCanvasPopUp lvlUp_pf;//quiero sacarlo de aca. Habria que hacer un pool o biblioteca de feedbacks
+    
     [SerializeField] private GameMenu_UI gameMenu_UI;
 
     private CharStats_UI _charStats_Ui;
@@ -67,7 +67,7 @@ public class GameUI_controller : MonoBehaviour
         return newPopUp;
     }
     public void UI_Send_NameSkillType(string s) { }
-    public void UI_SendLevelUpNotification() => CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);
+    public void UI_SendLevelUpNotification() {/* CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);*/ }
     public void UI_SendActivePlusNotification(bool val) { if (val) _charStats_Ui.ToggleLvlUpSignON(); }
     public void UI_RefreshExpBar(int currentExp, int maxExp, int currentLevel) => _charStats_Ui.UpdateXP_UI(currentExp, maxExp, currentLevel);
     public void RefreshPassiveSkills_UI(List<SkillInfo> skillsNuevas) => _charStats_Ui.UpdatePasiveSkills(skillsNuevas);

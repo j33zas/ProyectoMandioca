@@ -10,6 +10,8 @@ public class LevelSystem : MonoBehaviour
     int currentIndex = 0;
     public int CURRENT_LEVEL { get { return currentIndex + 1; } }
     int currentExpValue;
+
+    [SerializeField] ParticleSystem levelUp;
     //int point_to_spend;
 
     public Item experience;
@@ -39,6 +41,7 @@ public class LevelSystem : MonoBehaviour
 
         if (currentExpValue >= levels[currentIndex].maxt_to_level_up)
         {
+            levelUp.Play();
             //point_to_spend++;
             currentExpValue = 0;
             if (levels[currentIndex].can_get_skill_point)
