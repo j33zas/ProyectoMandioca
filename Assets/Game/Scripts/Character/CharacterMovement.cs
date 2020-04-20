@@ -31,6 +31,12 @@ public class CharacterMovement
 
     Action OnBeginRoll;
     Action OnEndRoll;
+    public Action Dash;
+
+    public Action<float> MovementHorizontal;
+    public Action<float> MovementVertical;
+    public Action<float> RotateHorizontal;
+    public Action<float> RotateVertical;
 
     private float _teleportDistance;
 
@@ -39,6 +45,11 @@ public class CharacterMovement
         _rb = rb;
         rotTransform = rot;
         anim = a;
+        MovementHorizontal += LeftHorizontal;
+        MovementVertical += LeftVertical;
+        RotateHorizontal += RightHorizontal;
+        RotateVertical += RightVerical;
+        Dash += Roll;
     }
 
     #region BUILDER
@@ -78,7 +89,7 @@ public class CharacterMovement
 
     #region MOVEMENT
     //Joystick Izquierdo, Movimiento
-    public void LeftHorizontal(float axis)
+    void LeftHorizontal(float axis)
     {
         float velZ = _rb.velocity.z;
 
@@ -87,7 +98,7 @@ public class CharacterMovement
         movX = axis;
     }
 
-    public void LeftVerical(float axis)
+    void LeftVertical(float axis)
     {
         float velX = _rb.velocity.x;
 
@@ -121,13 +132,13 @@ public class CharacterMovement
 
     #region ROTATION
     //Joystick Derecho, Rotacion
-    public void RightHorizontal(float axis)
+    void RightHorizontal(float axis)
     {
         rotX = axis;
         Rotation(rotTransform.forward.z, axis);
     }
 
-    public void RightVerical(float axis)
+    void RightVerical(float axis)
     {
         rotY = axis;
         Rotation(axis, rotTransform.forward.x);
@@ -185,9 +196,6 @@ public class CharacterMovement
 
     public void Roll()
     {
-        if (dashCdOk)
-            return;
-
         OnBeginRoll();
 
         inDash = true;
@@ -237,11 +245,13 @@ public class CharacterMovement
         return inDash;
     }
 
+    public bool InCD()
+    {
+        return dashCdOk;
+    }
+
     public void Teleport()
     {
-        if (dashCdOk)
-            return;
-
         inDash = true;
         dashCdOk = true;
         if (movX != 0 || movY != 0)

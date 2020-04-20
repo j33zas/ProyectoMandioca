@@ -20,6 +20,10 @@ public class CharacterAttack
     Action NormalAttack;
     Action HeavyAttack;
 
+    public Action OnAttack;
+    public Action OnAttackBegin;
+    public Action OnAttackEnd;
+
     bool isAttackReleased;
     bool isAnimationFinished;
     ParticleSystem feedbackHeavy;
@@ -59,6 +63,10 @@ public class CharacterAttack
         HeavyAttack = _heavyAttack;
         feedbackHeavy = ps;
         _rangeOfPetrified = rangeOfPetrified;
+
+        OnAttack += Attack;
+        OnAttackBegin += AttackBegin;
+        OnAttackEnd += AttackEnd;
     }
 
     public string ChangeName()
@@ -107,11 +115,20 @@ public class CharacterAttack
         }
     }
 
-    public void OnattackBegin()
+    void AttackBegin()
     {
         inCheck = true;
         buttonPressedTime = 0f;
-        anim.OnAttackBegin();
+        anim.OnAttackBegin(true);
+    }
+
+    public void AttackFail()
+    {
+        inCheck = false;
+        buttonPressedTime = 0f;
+        anim.OnAttackBegin(false);
+        feedbackHeavy.Stop();
+        oneshot = false;
     }
 
     void Check()
@@ -129,40 +146,24 @@ public class CharacterAttack
         feedbackHeavy.Stop();
         oneshot = false;
         buttonPressedTime = 0f;
-        isAnimationFinished = false;
-        isAttackReleased = false;
+        anim.OnAttackBegin(false);
     }
 
     //input
-    public void OnAttackEnd()
+    void AttackEnd()
     {
-        if (isAnimationFinished)
-        {
-            Check();
-        }
-        else
-        {
-            isAttackReleased = true;
-        }
+        Check();
     }
 
     //anim espada arriba
     public void BeginCheckAttackType()
     {
         Main.instance.Vibrate();
-        if (isAttackReleased)
-        {
-            Check();
-        }
-        else
-        {
-            isAnimationFinished = true;
-        }
     }
 
     public void ChangeDamageBase(int dmg) => currentDamage = dmg;
 
-    public void Attack()
+    void Attack()
     {
         EntityBase enemy = currentWeapon.Attack(forwardPos, currentDamage);
 

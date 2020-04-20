@@ -5,7 +5,7 @@ using UnityEngine;
 public class EntityBlock
 {
     public bool onBlock;
-    public bool onParry;
+    protected bool onParry;
     protected float timeToParry;
     protected float timer;
     protected bool canupdate;

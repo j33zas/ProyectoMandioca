@@ -5,20 +5,15 @@ using System;
 using UnityEngine.Events;
 using DevelopTools;
 using Tools.EventClasses;
+using Tools.StateMachine;
 public class CharacterHead : CharacterControllable
 {
-    Action<float> MovementHorizontal;
-    Action<float> MovementVertical;
-    Action<float> RotateHorizontal;
-    Action<float> RotateVertical;
-    Action Dash;
+    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL };
+
     Action ChildrensUpdates;
     Func<bool> InDash;
 
     CharacterBlock charBlock;
-    Action OnBlock;
-    Action UpBlock;
-    Action Parry;
 
     [Header("Dash Options")]
     [SerializeField] float dashTiming;
@@ -33,12 +28,12 @@ public class CharacterHead : CharacterControllable
     CharacterMovement move;
 
     [Header("Parry & Block Options")]
-    bool canBlockCalculate;
     [SerializeField] float _timerOfParry;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem hitParticle;
     [SerializeField, Range(-1, 1)] float blockAngle;
-
+    [SerializeField] float parryRecall;
+    [SerializeField] float takeDamageRecall;
     
 
     [Header("Feedbacks")]
@@ -61,14 +56,12 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float attackAngle;
     [SerializeField] float timeToHeavyAttack;
     [SerializeField] float rangeOfPetrified;
-    float dmg = 5;
-    Action OnAttackBegin;
-    Action OnAttackEnd;
+    [SerializeField] float attackRecall;
+    float dmg;
     CharacterAttack charAttack;
 
     CustomCamera customCam;
 
-    public Action Attack;
     public Action ChangeWeaponPassives = delegate { };
 
     //Modelo del arma para feedback placeholder
@@ -104,24 +97,17 @@ public class CharacterHead : CharacterControllable
             .SetDashCD(dashCD)
             .SetRollDeceleration(dashDeceleration);
 
-        MovementHorizontal += move.LeftHorizontal;
-        MovementVertical += move.LeftVerical;
-        RotateHorizontal += move.RightHorizontal;
-        RotateVertical += move.RightVerical;
-        Dash += move.Roll;
         InDash += move.IsDash;
         ChildrensUpdates += move.OnUpdate;
+        move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, OnEndParry, charanim, feedbackBlock);
-        OnBlock += charBlock.OnBlockDown;
-        UpBlock += charBlock.OnBlockUp;
-        Parry += charBlock.Parry;
-        Parry += OnBeginParry;
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, OnEndParry, charanim, feedbackBlock, GetSM);
+        charBlock.OnParry += OnBeginParry;
+        charBlock.OnParry += charanim.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
 
+        dmg = dmg_normal;
         charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg);
-        OnAttackBegin += charAttack.OnattackBegin;
-        OnAttackEnd += charAttack.OnAttackEnd;
         charAttack.FirstAttackReady(true);
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
@@ -129,15 +115,130 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
 
-        move.SetCallbacks(OnBeginRoll, OnEndRoll);
-
-        Attack += charAttack.Attack;
+        SetStates();
     }
 
-    
+    #region SET STATES
+    EventStateMachine<PlayerInputs> stateMachine;
+
+    void SetStates()
+    {
+        var idle = new EState<PlayerInputs>("Idle");
+        var move = new EState<PlayerInputs>("Move");
+        var beginBlock = new EState<PlayerInputs>("Begin_Block");
+        var block = new EState<PlayerInputs>("Block");
+        var parry = new EState<PlayerInputs>("Parry");
+        var roll = new EState<PlayerInputs>("Roll");
+        var attackCharge = new EState<PlayerInputs>("Charge_Attack");
+        var attackRelease = new EState<PlayerInputs>("Release_Attack");
+        var takeDamage = new EState<PlayerInputs>("Take_Damage");
+        var dead = new EState<PlayerInputs>("Dead");
+
+        ConfigureState.Create(idle)
+            .SetTransition(PlayerInputs.MOVE, move)
+            .SetTransition(PlayerInputs.BEGIN_BLOCK, beginBlock)
+            .SetTransition(PlayerInputs.PARRY, parry)
+            .SetTransition(PlayerInputs.ROLL, roll)
+            .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+            .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(move)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.BEGIN_BLOCK, beginBlock)
+            .SetTransition(PlayerInputs.PARRY, parry)
+            .SetTransition(PlayerInputs.ROLL, roll)
+            .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+            .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(beginBlock)
+             .SetTransition(PlayerInputs.IDLE, idle)
+             .SetTransition(PlayerInputs.MOVE, move)
+             .SetTransition(PlayerInputs.BLOCK, block)
+             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
+             .SetTransition(PlayerInputs.DEAD, dead)
+             .Done();
+
+        ConfigureState.Create(block)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.MOVE, move)
+            .SetTransition(PlayerInputs.ROLL, roll)
+            .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+            .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(parry)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(roll)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.MOVE, move)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(attackCharge)
+            .SetTransition(PlayerInputs.RELEASE_ATTACK, attackRelease)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(attackRelease)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(takeDamage)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(dead)
+            .Done();
+
+        stateMachine = new EventStateMachine<PlayerInputs>(idle);
+
+        new CharIdle(idle, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
+        new CharMove(move, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
+        new CharBeginBlock(beginBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
+            SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
+        new CharBlock(block, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
+            SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
+        new CharParry(parry, stateMachine, parryRecall).SetMovement(this.move).SetBlock(charBlock);
+        new CharRoll(roll, stateMachine).SetMovement(this.move);
+        new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
+            SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetAttack(charAttack);
+        new CharReleaseAttack(attackRelease, stateMachine, attackRecall).SetMovement(this.move).SetAttack(charAttack);
+        new CharTakeDmg(takeDamage, stateMachine, takeDamageRecall);
+        new CharDead(dead, stateMachine);
+    }
+
+    float GetLeftHorizontal() { return moveX; }
+
+    float GetLeftVertical() { return moveY; }
+
+    float GetRightHorizontal() { return rotateX; }
+
+    float GetRightVertical() { return rotateY; }
+
+    EventStateMachine<PlayerInputs> GetSM()
+    {
+        return stateMachine;
+    }
+
+
+    #endregion
+
+
 
     protected override void OnUpdateEntity()
     {
+        stateMachine.Update();
         ChildrensUpdates();
         charAttack.Refresh();
     }
@@ -161,8 +262,8 @@ public class CharacterHead : CharacterControllable
     #region Attack
     /////////////////////////////////////////////////////////////////
 
-    public void EVENT_OnAttackBegin() { OnAttackBegin(); }
-    public void EVENT_OnAttackEnd() { OnAttackEnd(); }
+    public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); Debug.Log("atroden"); }
+    public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
 
     //tengo la espada arriba
     public void CheckAttackType()
@@ -172,8 +273,7 @@ public class CharacterHead : CharacterControllable
 
     public void DealAttack()
     {
-        Attack.Invoke();
-        //charAttack.Attack();
+        charAttack.OnAttack();
     }
 
     void ReleaseInNormal()
@@ -240,23 +340,19 @@ public class CharacterHead : CharacterControllable
 
     public void EVENT_OnBlocking()
     {
-        if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
-        {
-            Debug.Log("Entrar a animacion");
-            move.SetSpeed(speed / 2);
-            OnBlock();
-        }
+        stateMachine.SendInput(PlayerInputs.BEGIN_BLOCK);
     }
     public void EVENT_UpBlocking()
     {
-        if (canBlockCalculate)
-            canBlockCalculate = false;
-        else
+        if (stateMachine.Current.Name == "Block" || stateMachine.Current.Name == "Begin_Block")
         {
-            if (!charBlock.onParry && !InDash() && !charAttack.inAttack)
+            if(moveX == 0 && moveY == 0)
             {
-                move.SetSpeed(speed);
-                UpBlock();
+                stateMachine.SendInput(PlayerInputs.IDLE);
+            }
+            else
+            {
+                stateMachine.SendInput(PlayerInputs.MOVE);
             }
         }
     }
@@ -266,30 +362,18 @@ public class CharacterHead : CharacterControllable
     {
         return charBlock;
     }
-    public void OnRealBlock_ON()
-    {
-
-    }
-    public void OnRealBlock_OFF()
-    {
-
-    }
 
     public void EVENT_Parry()
     {
-        if (!charBlock.onBlock && !InDash() && !charAttack.inAttack)
-        {
-            charanim.Parry();
-            Parry();
-        }
+        stateMachine.SendInput(PlayerInputs.PARRY);
     }
     public void AddParry(Action listener)
     {
-        Parry += listener;
+        charBlock.OnParry += listener;
     }
     public void RemoveParry(Action listener)
     {
-        Parry -= listener;
+        charBlock.OnParry -= listener;
     }
     public void PerfectParry()
     {
@@ -304,42 +388,32 @@ public class CharacterHead : CharacterControllable
     #region Roll
     void OnBeginRoll()
     {
-        charBlock.flagIsStop = false;
-        charBlock.onBlock = false;
-        charanim.Block(false);
-        // canBlockCalculate = false;
+        
     }
+
     void OnEndRoll()
     {
-        charanim.Block(false);
-        charBlock.flagIsStop = false;
-        charBlock.onBlock = false;
-        if (Input.GetButton("Block"))
-            canBlockCalculate = true;
+        stateMachine.SendInput(PlayerInputs.IDLE);
     }
     public void RollDash()
     {
-        if (!InDash())
+        if (!move.InCD())
         {
-            if (charBlock.onBlock)
-            {
-                EVENT_UpBlocking();
-            }
-            Dash();
+            stateMachine.SendInput(PlayerInputs.ROLL);
         }
     }
 
-    public void AddListenerToDash(Action listener) => Dash += listener;
-    public void RemoveListenerToDash(Action listener) => Dash -= listener;
+    public void AddListenerToDash(Action listener) => move.Dash += listener;
+    public void RemoveListenerToDash(Action listener) => move.Dash -= listener;
     public void ChangeDashForTeleport()
     {
-        Dash -= move.Roll;
-        Dash += move.Teleport;
+        move.Dash -= move.Roll;
+        move.Dash += move.Teleport;
     }
     public void ChangeTeleportForDash()
     {
-        Dash -= move.Teleport;
-        Dash += move.Roll;
+        move.Dash -= move.Teleport;
+        move.Dash += move.Roll;
     }
     public CharacterMovement GetCharMove()
     {
@@ -353,28 +427,28 @@ public class CharacterHead : CharacterControllable
     #endregion
 
     #region Movimiento y Rotacion
+    float rotateX;
+    float rotateY;
+    float moveX;
+    float moveY;
+
     public void LeftHorizontal(float axis)
     {
-        if (!InDash())
-            MovementHorizontal(axis);
+        moveX = axis;
     }
 
     public void LeftVerical(float axis)
     {
-        if (!InDash())
-            MovementVertical(axis);
+        moveY = axis;
     }
 
-    //Joystick Derecho, Rotacion
     public void RightHorizontal(float axis)
     {
-        if (!InDash())
-            RotateHorizontal(axis);
+        rotateX = axis;
     }
     public void RightVerical(float axis)
     {
-        if (!InDash())
-            RotateVertical(axis);
+        rotateY = axis;
     }
     #endregion
 

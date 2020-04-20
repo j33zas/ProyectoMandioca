@@ -2,81 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Tools.StateMachine;
 
 public class CharacterBlock : EntityBlock
 {
     Action beginparry;
     Action endparry;
 
+    public Action OnBlock;
+    public Action UpBlock;
+    public Action OnParry;
+
     CharacterAnimator anim;
-    public bool flagIsStop;
     GameObject feedback;
 
-    Action realblock_on;
-    Action realblock_off;
+    Func<EventStateMachine<CharacterHead.PlayerInputs>> sm;
+
 
     public CharacterBlock(float timeParry,
                           float blockRange,
                           Action _EndParry,
                           CharacterAnimator _anim,
-                          GameObject feedbackBlock
-                          /*,Action _realblocOn,
-                          Action _realblocOff*/
-        ) : base(timeParry, blockRange)
+                          GameObject feedbackBlock,
+                          Func<EventStateMachine<CharacterHead.PlayerInputs>> _sm) : base(timeParry, blockRange)
     {
 
 
         endparry = _EndParry;
         anim = _anim;
         feedback = feedbackBlock;
+        OnBlock += OnBlockDown;
+        UpBlock += OnBlockUp;
+        sm = _sm;
+
+        OnParry += Parry;
     }
 
     public override void OnBlockDown() { anim.Block(true); }
-    public override void OnBlockUp() { anim.Block(false); OnBlockUpSuccessful();  }
+    public override void OnBlockUp() { anim.Block(false); }
 
     //por animacion
     public override void OnBlockSuccessful()
     {
-        Debug.Log("la animacion me dice que puedo bloquear");
-
-        if (Input.GetButton("Block"))
-        {
-            feedback.SetActive(true);
-            onBlock = true;
-        }
-        else
-        {
-            OnBlockUp();
-        }
-        //if (!flagIsStop)
-        //{
-            
-        //    feedback.SetActive(true);
-        //    onBlock = true;
-        //}
-
-        //flagIsStop = false;
-
+        sm().SendInput(CharacterHead.PlayerInputs.BLOCK);
     }
 
-
-    //se dispara por input
-    public override void OnBlockUpSuccessful()
+    public void SetOnBlock(bool b)
     {
-        feedback.SetActive(false);
-        onBlock = false;
-
-        //if (onBlock)
-        //{
-        //    Debug.Log("se dispara cuando suelto la tecla");
-        //    feedback.SetActive(false);
-        //    onBlock = false;
-        //}
-        //else
-        //{
-        //    Debug.Log("se soltó la tecla");
-        //    flagIsStop = true;
-        //}
+        feedback.SetActive(b);
+        onBlock = b;
     }
 
     public override void FinishParry()
