@@ -166,8 +166,8 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(block)
             .SetTransition(PlayerInputs.IDLE, idle)
             .SetTransition(PlayerInputs.MOVE, move)
-            .SetTransition(PlayerInputs.ROLL, roll)
-            .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+           // .SetTransition(PlayerInputs.ROLL, roll)
+            //.SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
@@ -218,18 +218,11 @@ public class CharacterHead : CharacterControllable
         new CharDead(dead, stateMachine);
     }
 
-    float GetLeftHorizontal() { return moveX; }
-
-    float GetLeftVertical() { return moveY; }
-
-    float GetRightHorizontal() { return rotateX; }
-
-    float GetRightVertical() { return rotateY; }
-
-    EventStateMachine<PlayerInputs> GetSM()
-    {
-        return stateMachine;
-    }
+    float GetLeftHorizontal() => moveX;
+    float GetLeftVertical() => moveY;
+    float GetRightHorizontal() => rotateX;
+    float GetRightVertical() => rotateY;
+    EventStateMachine<PlayerInputs> GetSM() => stateMachine;
 
 
     #endregion
@@ -261,21 +254,10 @@ public class CharacterHead : CharacterControllable
 
     #region Attack
     /////////////////////////////////////////////////////////////////
-
     public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); Debug.Log("atroden"); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
-
-    //tengo la espada arriba
-    public void CheckAttackType()
-    {
-        charAttack.BeginCheckAttackType();
-    }
-
-    public void DealAttack()
-    {
-        charAttack.OnAttack();
-    }
-
+    public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
+    public void DealAttack() => charAttack.OnAttack();
     void ReleaseInNormal()
     {
         dmg = dmg_normal;
@@ -284,12 +266,10 @@ public class CharacterHead : CharacterControllable
     }
     void ReleaseInHeavy()
     {
-        
         dmg = dmg_heavy;
         charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
     }
-
     ///////////BigWeaponSkill
 
     /// <summary>
@@ -301,25 +281,14 @@ public class CharacterHead : CharacterControllable
     {
         if (newRangeValue < 0)
             return attackRange;
-
         charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
-
         return newRangeValue;
     }
     /// <summary>
     /// Si no manda parametros vuelve al rango original del arma
     /// </summary>
-    public void ChangeRangeAttack()
-    {
-        charAttack.currentWeapon.ModifyAttackrange();
-    }
-
-    public CharacterAttack GetCharacterAttack()
-    {
-        return charAttack;
-    }
-
-
+    public void ChangeRangeAttack() => charAttack.currentWeapon.ModifyAttackrange();
+    public CharacterAttack GetCharacterAttack() => charAttack;
     private void OnDrawGizmos()
     {
         if (charAttack == null)
