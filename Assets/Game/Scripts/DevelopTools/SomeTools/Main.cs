@@ -28,6 +28,7 @@ public class Main : MonoBehaviour
     [SerializeField] SkillManager_Pasivas pasives;
     [SerializeField] SkillManager_Activas actives;
     [SerializeField] LevelSystem levelSystem;
+    [SerializeField] TimeManager timeManager;
 
     public GameUI_controller gameUiController;
 
@@ -179,8 +180,9 @@ public class Main : MonoBehaviour
     public List<ItemWorld> SpawnListItems(ItemWorld item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
     public List<GameObject> SpawnListItems(GameObject item, Transform pos, int quantity) => spawner.spawnListItems(item, pos, quantity);
 
-
     public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn, pos);
     #endregion
+
+    public TimeManager GetTimeManager() => timeManager;
 
 }
