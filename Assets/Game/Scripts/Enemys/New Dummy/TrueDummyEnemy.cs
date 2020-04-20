@@ -189,6 +189,11 @@ public class TrueDummyEnemy : EnemyBase
         if (!base.target)
             Invinsible = true;
     }
+    public override void InstaKill()
+    {
+        base.InstaKill();
+        TakeDamage(lifesystem.life, transform.position, Damagetype.normal);
+    }
     public override void OnPetrified()
     {
         feedbackStun.Show();
