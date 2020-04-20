@@ -269,7 +269,7 @@ public class CharacterHead : CharacterControllable
 
     #region Attack
     /////////////////////////////////////////////////////////////////
-    public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); Debug.Log("atroden"); }
+    public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
     public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
     public void DealAttack() => charAttack.OnAttack();
@@ -454,7 +454,7 @@ public class CharacterHead : CharacterControllable
         if (InDash())
             return Attack_Result.inmune;
 
-        if (charBlock.IsParry(rot.forward, attackDir))
+        if (charBlock.IsParry(rot.position, attackDir, rot.forward))
         {
             Debug.LogWarning("PARRY perfect");
             PerfectParry();
@@ -462,7 +462,7 @@ public class CharacterHead : CharacterControllable
             customCam.DoFastZoom(10);
             return Attack_Result.parried;
         }
-        else if (charBlock.IsBlock(rot.forward, attackDir))
+        else if (charBlock.IsBlock(rot.position, attackDir, rot.forward))
         {
             blockParticle.Play();
             charanim.BlockSomething();

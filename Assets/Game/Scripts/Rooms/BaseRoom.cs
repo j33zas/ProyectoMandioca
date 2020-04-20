@@ -10,7 +10,6 @@ public class BaseRoom : MonoBehaviour
 
     void Start()
     {
-
         _sensor = GetComponentInChildren<SensorForEnemysInRoom>();
         _sensor.AddCallback_OnTriggerEnter(EnterTheRoom);
         _sensor.AddCallback_OnTriggerExit(ExitRoom);
@@ -33,6 +32,8 @@ public class BaseRoom : MonoBehaviour
     {
         if (player.GetComponent<CharacterHead>())
         {
+            Debug.Log("player enter");
+
             _sensor.myContent.SetActive(true);
             Main.instance.SetRoom(this);
             myEnemies = new List<EnemyBase>();

@@ -24,11 +24,14 @@ public class EntityBlock
     public virtual void OnBlockSuccessful() => onBlock = true;
     public virtual void OnBlockUpSuccessful() => onBlock = false;
 
-    public virtual bool IsParry(Vector3 parryDir, Vector3 attackDir)
+    public virtual bool IsParry(Vector3 mypos, Vector3 attackPos, Vector3 myForward)
     {
         if (onParry)
         {
-            float blockRange = Vector3.Dot(parryDir.normalized, attackDir.normalized);
+            Vector3 attackDir = mypos - attackPos;
+            attackDir.Normalize();
+
+            float blockRange = Vector3.Dot(myForward, attackDir);
 
             if (blockRange <= blockAngle)
                 return true;
@@ -39,11 +42,14 @@ public class EntityBlock
             return false;
     }
 
-    public virtual bool IsBlock(Vector3 blockDir, Vector3 attackDir)
+    public virtual bool IsBlock(Vector3 mypos, Vector3 attackPos, Vector3 myForward)
     {
         if (onBlock)
         {
-            float blockRange = Vector3.Dot(blockDir.normalized, attackDir.normalized);
+            Vector3 attackDir = mypos - attackPos;
+            attackDir.Normalize();
+
+            float blockRange = Vector3.Dot(myForward, attackDir);
 
             if (blockRange <= blockAngle)
                 return true;

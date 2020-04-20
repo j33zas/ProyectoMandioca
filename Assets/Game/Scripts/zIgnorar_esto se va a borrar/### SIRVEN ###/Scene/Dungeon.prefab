@@ -56,7 +56,6 @@ GameObject:
   - component: {fileID: 2172963281269924712}
   - component: {fileID: 2172963281269924719}
   - component: {fileID: 2172963281269924713}
-  - component: {fileID: 5162911865018806529}
   - component: {fileID: 6126913327458941494}
   - component: {fileID: 4801188613857476912}
   m_Layer: 0
@@ -94,18 +93,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRooms: 10
   canforcerooms: 0
-  forcerooms: []
-  firstRoom: {fileID: 9019026102530772930, guid: 7f67c88be60db1d4dad27e8c5d5f5f44,
+  forcerooms:
+  - {fileID: 9019026102530772930, guid: a0fb00c91ac127848babbf7cffbb34a5, type: 3}
+  - {fileID: 9019026102530772930, guid: 41ca763c15ac9394dab688108eace3d7, type: 3}
+  - {fileID: 9019026102530772930, guid: 042d5cca86454ac41b8ab48b475d4856, type: 3}
+  firstRoom: {fileID: 9019026102530772930, guid: 7869659382f10114db468713329be28a,
     type: 3}
-  lastRoom: {fileID: 9019026102530772930, guid: 7f67c88be60db1d4dad27e8c5d5f5f44,
+  lastRoom: {fileID: 9019026102530772930, guid: 1d9fcff6fb35d3c46b3709dafd90972f,
     type: 3}
   samples:
-  - model: {fileID: 9019026102530772930, guid: 7f67c88be60db1d4dad27e8c5d5f5f44, type: 3}
+  - model: {fileID: 9019026102530772930, guid: a0fb00c91ac127848babbf7cffbb34a5, type: 3}
     one_per_dungeon: 0
     weight: 0
     originalIndex: 0
     IndexToAppear: 0
-  canBranch: 1
+  - model: {fileID: 9019026102530772930, guid: 41ca763c15ac9394dab688108eace3d7, type: 3}
+    one_per_dungeon: 0
+    weight: 0
+    originalIndex: 0
+    IndexToAppear: 0
+  - model: {fileID: 9019026102530772930, guid: 042d5cca86454ac41b8ab48b475d4856, type: 3}
+    one_per_dungeon: 0
+    weight: 0
+    originalIndex: 0
+    IndexToAppear: 0
+  - model: {fileID: 9019026102530772930, guid: 5e99752ea3ce2f445a16b451ffe63db1, type: 3}
+    one_per_dungeon: 0
+    weight: 0
+    originalIndex: 0
+    IndexToAppear: 0
+  canBranch: 0
   MaxRoomsBranch: 5
   currentCantRoomsBranch: 0
   currentroom: {fileID: 0}
@@ -130,20 +147,6 @@ MonoBehaviour:
   z_global_max: 0
   z_global_min: 0
   sector_range: []
---- !u!114 &5162911865018806529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2172963281269924718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1e8371ddfaeb140bbd0e1e814a16a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  current: {fileID: 0}
-  roomtriggers: []
 --- !u!114 &6126913327458941494
 MonoBehaviour:
   m_ObjectHideFlags: 0

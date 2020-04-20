@@ -45,6 +45,7 @@ public class TrueDummyEnemy : EnemyBase
 
     protected override void OnInitialize()
     {
+        Debug.Log("OnInitialize");
         rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
         feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
@@ -54,16 +55,13 @@ public class TrueDummyEnemy : EnemyBase
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
 
-
-        IAInitialize(Main.instance.GetCombatDirector());
-        sm.SendInput(DummyEnemyInputs.IDLE);
+        //IAInitialize(Main.instance.GetCombatDirector());
     }
 
     public override void PlayerEnterRoom()
     {
-        SetTarget(Main.instance.GetChar());
+        Debug.Log("Player enter the room");
         IAInitialize(Main.instance.GetCombatDirector());
-        sm.SendInput(DummyEnemyInputs.ATTACK);
     }
 
     public override void PlayerLeaveRoom()
@@ -97,7 +95,7 @@ public class TrueDummyEnemy : EnemyBase
 
     public void AttackEntity(EntityBase e)
     {
-        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.position, Damagetype.parriable) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
@@ -106,7 +104,7 @@ public class TrueDummyEnemy : EnemyBase
             if (OnParried != null)
                 OnParried();
         }
-        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.position, Damagetype.parriable) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }

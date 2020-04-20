@@ -41,6 +41,7 @@ public class LocalRoomTriggers : MonoBehaviour
         if (go.GetComponent<CharacterHead>())
         {
             NewRoomGenerator.instancia.SetCurrentRoom(this.GetComponent<NewRoom>());
+            Debug.Log(go);
             ManagerRoomTrigger.instancia.PlayerEnterIn(this, go);
         }
     }

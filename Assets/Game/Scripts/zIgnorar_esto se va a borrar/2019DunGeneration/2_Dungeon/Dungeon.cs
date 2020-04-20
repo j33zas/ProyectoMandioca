@@ -11,13 +11,18 @@ public class Dungeon : SceneMainBase
 
     protected override void OnAwake()
     {
-      //  CompleteCameraController.instancia.ChangeToDungeon();
+        
     }
 
     protected override void OnStart()
     {
+       // Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_END_LOAD, OnInitialize);
+    }
+
+    public void OnInitialize()
+    {
+        Debug.Log("create rooms");
         newManagerRooms.Generate(OnEndDungeonGeneration);
-       // CompleteCameraController.instancia.ChangeToDungeon();
     }
 
     public void NextDungeon() 

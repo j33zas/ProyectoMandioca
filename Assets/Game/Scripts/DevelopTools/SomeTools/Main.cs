@@ -36,6 +36,8 @@ public class Main : MonoBehaviour
     BaseRoom _currentRoom;
     PopUpCrown _theCrown;
 
+   public Dungeon duntest;
+
     public void SubscriteToEntities(PlayObject po)
     {
             allentities.Add(po);
@@ -51,6 +53,8 @@ public class Main : MonoBehaviour
         eventManager = new EventManager();
 
         rumble = new Rumble();
+
+
     }
 
     
@@ -94,7 +98,10 @@ public class Main : MonoBehaviour
         gameisbegin = true;
         InitializePlayObjects();
         Play();
+        Debug.Log("empieza el triggerEvent");
         eventManager.TriggerEvent(GameEvents.GAME_END_LOAD);
+        Debug.Log("termina el triggerEvent");
+        duntest.OnInitialize();
     }
 
     public void EVENT_OpenMenu() { if (gameisbegin) gameUiController.BTN_Back_OpenMenu(); }
