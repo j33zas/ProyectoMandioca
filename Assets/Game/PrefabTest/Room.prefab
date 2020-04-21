@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5b9eb1234224f4389945027f011cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layers:
+  layers_to_collide:
     serializedVersion: 2
     m_Bits: 256
   myc: {fileID: 5110435132618041679}

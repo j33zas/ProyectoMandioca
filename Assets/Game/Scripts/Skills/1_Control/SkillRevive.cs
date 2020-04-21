@@ -41,9 +41,8 @@ public class SkillRevive : SkillBase
     void SpawnMinionOnEnemyDeath(Vector3 pos, ReviveComponent enemy, GameObject prefab)
     {
         var myMinion = GameObject.Instantiate(prefab);
-        myMinion.GetComponent<Minion>().Resume();
         myMinion.transform.position = pos;
-
+        myMinion.GetComponent<Minion>().Initialize();
     }
 
 }

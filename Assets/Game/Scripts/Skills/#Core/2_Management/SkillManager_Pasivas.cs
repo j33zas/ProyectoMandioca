@@ -53,6 +53,11 @@ public class SkillManager_Pasivas : MonoBehaviour
         SelectASkillType(_skillType);
         Main.instance.LoadLevelPlayObjects();
         selector.gameObject.SetActive(false);
+
+        var first = pool_info_by_type[_skillType][0];
+
+        ReturnSkill(first);
+
     }
     void RefillFastDiccionaries()//no es necesario, pero lo tenemos para acceder mas rapido
     {
@@ -113,9 +118,9 @@ public class SkillManager_Pasivas : MonoBehaviour
         if (current_level.isFromRandom)
         {
             request = new LevelRequest(
-                GetRandomArray(CURRENT_TYPE, current_level.max_from_this_branch, current_level.max_from_generics), 
-                requestindex, 
-                current_level.max_from_this_branch, 
+                GetRandomArray(CURRENT_TYPE, current_level.max_from_this_branch, current_level.max_from_generics),
+                requestindex,
+                current_level.max_from_this_branch,
                 current_level.max_from_generics);
         }
         else
@@ -126,7 +131,7 @@ public class SkillManager_Pasivas : MonoBehaviour
         newSkillRequests.Enqueue(request);
         DebugRequest();
 
-       
+
         requestindex++;
     }
 
@@ -216,52 +221,58 @@ public class SkillManager_Pasivas : MonoBehaviour
     bool algoandamal;
     public void ReturnSkill(SkillInfo info)
     {
-        var request = newSkillRequests.Peek();
-
-        if (request != null)
+        if (newSkillRequests.Count > 0)
         {
-            if (!current_list_of_skills.Contains(database_basebyinfo[info]))
+            var request = newSkillRequests.Peek();
+
+            if (request != null)
             {
-               
-
-                foreach (var inf in request.Collection)
+                if (!current_list_of_skills.Contains(database_basebyinfo[info]))
                 {
-                    if (info == inf)
+
+
+                    foreach (var inf in request.Collection)
                     {
-                        
-
-                        if (inf.skilltype != SkillType.generics)
+                        if (info == inf)
                         {
-                            pool_info_by_type[inf.skilltype].Remove(inf);
-                        }
-                        else
-                        {
-                            list_of_generics.Remove(inf);
 
-                        }
 
-                        newSkillRequests.Dequeue();
+                            if (inf.skilltype != SkillType.generics)
+                            {
+                                pool_info_by_type[inf.skilltype].Remove(inf);
+                            }
+                            else
+                            {
+                                list_of_generics.Remove(inf);
+
+                            }
+
+                            newSkillRequests.Dequeue();
+                        }
                     }
-                }
 
-                current_list_of_skills.Add(database_basebyinfo[info]);
+                    current_list_of_skills.Add(database_basebyinfo[info]);
+                }
+                else
+                {
+                    throw new System.Exception("Ya lo tengo agergado");
+                }
             }
             else
             {
-                throw new System.Exception("Ya lo tengo agergado");
+                throw new System.Exception("No tengo mas requests");
+            }
+
+            if (newSkillRequests.Count > 0)
+            {
+                newSkillRequests.Peek().Refill(GetRandomArray(CURRENT_TYPE, request.Max_to_branch, request.Max_to_random));
+                DebugRequest();
             }
         }
         else
         {
-            throw new System.Exception("No tengo mas requests");
+            current_list_of_skills.Add(database_basebyinfo[info]);
         }
-
-        if (newSkillRequests.Count > 0)
-        {
-            newSkillRequests.Peek().Refill(GetRandomArray(CURRENT_TYPE, request.Max_to_branch, request.Max_to_random));
-            DebugRequest();
-        }
-        
 
         Refresh();
     }

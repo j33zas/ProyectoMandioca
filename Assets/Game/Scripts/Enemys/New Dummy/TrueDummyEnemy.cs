@@ -25,6 +25,9 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] CombatDirector director;
     [SerializeField] Transform rootTransform;
 
+    bool cooldown = false;
+    float timercooldown = 0;
+
     public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED };
 
     [SerializeField] AnimEvent anim;
@@ -55,7 +58,7 @@ public class TrueDummyEnemy : EnemyBase
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
 
-        //IAInitialize(Main.instance.GetCombatDirector());
+        IAInitialize(Main.instance.GetCombatDirector());
     }
 
     public override void PlayerEnterRoom()
@@ -131,7 +134,15 @@ public class TrueDummyEnemy : EnemyBase
             {
                 sm.Update();
             }
+
+            if (cooldown) {
+                if (timercooldown < recallTime)  timercooldown = timercooldown + 1 * Time.deltaTime;
+                else {  cooldown = false; timercooldown = 0; }
+            }
+
         }
+
+
     }
     protected override void OnPause()
     {
@@ -145,6 +156,10 @@ public class TrueDummyEnemy : EnemyBase
 
     public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
     {
+        SetTarget(entityTarget);
+
+        if (cooldown) return Attack_Result.inmune;
+
         if (Invinsible)
             return Attack_Result.inmune;
         if (dmgtype == Damagetype.explosion)
@@ -162,6 +177,8 @@ public class TrueDummyEnemy : EnemyBase
 
         lifesystem.Hit(dmg);
 
+        cooldown = true;
+
         return Attack_Result.sucessful;
     }
 
@@ -169,8 +186,13 @@ public class TrueDummyEnemy : EnemyBase
     {
         if (sm.Current.Name != "Attack" && entityTarget != owner_entity)
         {
+            if (!entityTarget)
+            {
+                SetTarget(owner_entity); 
+            }
+
             attacking = false;
-            if (entityTarget == null) throw new System.Exception("entity target es null");//esto rompe cuando vengo desde el Damage in Room
+            //if (entityTarget == null) throw new System.Exception("entity target es null");//esto rompe cuando vengo desde el Damage in Room
             director.RemoveToAttack(this, entityTarget);
             SetTarget(owner_entity);
             director.AddToAttack(this, entityTarget);
@@ -189,7 +211,7 @@ public class TrueDummyEnemy : EnemyBase
     public override void InstaKill()
     {
         base.InstaKill();
-        TakeDamage(lifesystem.life, transform.position, Damagetype.normal);
+        
     }
     public override void OnPetrified()
     {

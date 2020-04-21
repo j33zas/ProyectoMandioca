@@ -127,6 +127,8 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
+        charAnimEvent.Add_Callback("DirtDer", DirtRight);
+        charAnimEvent.Add_Callback("DirtIzq", DirtLeft);
 
         SetStates();
 
@@ -242,7 +244,14 @@ public class CharacterHead : CharacterControllable
 
     #endregion
 
+    void DirtRight()
+    {
 
+    }
+    void DirtLeft()
+    {
+
+    }
 
     protected override void OnUpdateEntity()
     {
@@ -451,6 +460,8 @@ public class CharacterHead : CharacterControllable
     #region Take Damage
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype dmgtype)
     {
+        Debug.Log("playerDamage");
+
         if (InDash())
             return Attack_Result.inmune;
 
