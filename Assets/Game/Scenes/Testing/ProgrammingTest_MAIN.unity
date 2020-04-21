@@ -31103,7 +31103,7 @@ PrefabInstance:
     - target: {fileID: 5384671929350119709, guid: 0159f7a6a8b8f481a978dc588edeca15,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -46.299988
+      value: -46.29998
       objectReference: {fileID: 0}
     - target: {fileID: 5384671929350119709, guid: 0159f7a6a8b8f481a978dc588edeca15,
         type: 3}
@@ -31404,8 +31404,8 @@ MonoBehaviour:
   anim_base: {fileID: 664825545}
   charAnimEvent: {fileID: 657530180}
   feedbackHeavy: {fileID: 255962468}
-  dmg_normal: 10
-  dmg_heavy: 25
+  dmg_normal: 20
+  dmg_heavy: 50
   attackRange: 3
   attackAngle: 180
   timeToHeavyAttack: 1
@@ -36195,7 +36195,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25800002, y: 0.6793113}
   m_AnchorMax: {x: 0.73238635, y: 1}
-  m_AnchoredPosition: {x: 0.40000916, y: -29.545198}
+  m_AnchoredPosition: {x: 0.40000916, y: -29.545197}
   m_SizeDelta: {x: 85.2, y: 59.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &965324285789338200
@@ -37433,7 +37433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.049000002, y: 0.080000006}
   m_AnchorMax: {x: 0.48700002, y: 0.58851004}
-  m_AnchoredPosition: {x: 31.700117, y: 21.100002}
+  m_AnchoredPosition: {x: 31.700129, y: 21.100002}
   m_SizeDelta: {x: 47.7, y: 26.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2011231270986682827
