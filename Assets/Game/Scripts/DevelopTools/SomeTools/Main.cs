@@ -98,10 +98,8 @@ public class Main : MonoBehaviour
         gameisbegin = true;
         InitializePlayObjects();
         Play();
-        Debug.Log("empieza el triggerEvent");
         eventManager.TriggerEvent(GameEvents.GAME_END_LOAD);
-        Debug.Log("termina el triggerEvent");
-        duntest.OnInitialize();
+        if(duntest) duntest.OnInitialize();
     }
 
     public void EVENT_OpenMenu() { if (gameisbegin) gameUiController.BTN_Back_OpenMenu(); }

@@ -4880,11 +4880,11 @@ MonoBehaviour:
   skillinfo: {fileID: 11400000, guid: 69982466b8a984348b82465ce64387ba, type: 2}
   cooldown: 1
   one_time_use: 0
-  useTime: 10
+  useTime: 7
   throwRange: 5
-  radius: 4
+  radius: 3
   spinDuration: 5
-  damage: 2
+  damage: 5
   throwSpeed: 10
   sparks: {fileID: 3614903957752033532}
   auxShield: {fileID: 3614903958625908098}

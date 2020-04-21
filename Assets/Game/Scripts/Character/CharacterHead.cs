@@ -127,6 +127,8 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
+        charAnimEvent.Add_Callback("DirtDer", DirtRight);
+        charAnimEvent.Add_Callback("DirtIzq", DirtLeft);
 
         SetStates();
 
@@ -242,7 +244,14 @@ public class CharacterHead : CharacterControllable
 
     #endregion
 
+    void DirtRight()
+    {
 
+    }
+    void DirtLeft()
+    {
+
+    }
 
     protected override void OnUpdateEntity()
     {

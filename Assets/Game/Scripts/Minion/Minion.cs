@@ -63,7 +63,7 @@ public class Minion : Companion
 
         sm.Addstate(new StatesPetrified(sm, _petrifiedTime));
 
-        sm.ChangeState<StatesFollow>();
+        sm.ChangeState<StatesAttack>();
     }
 
     protected override void OnResume()
@@ -79,8 +79,8 @@ public class Minion : Companion
 
     protected override void OnUpdateEntity()
     {
-        feedbackStun.Refresh(); 
-        feedbackHitShield.Refresh(); 
+        if(feedbackStun != null) feedbackStun.Refresh();
+        if (feedbackHitShield != null) feedbackHitShield.Refresh(); 
         sm.Update();
     }
 

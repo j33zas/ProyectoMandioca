@@ -5,8 +5,9 @@ using UnityEngine;
 public class BaseGuiltPassive : SkillBase
 {
     [SerializeField]
-    int maxScreamsToSpawn;
-
+    int maxScreamsToSpawn = 5;
+    [SerializeField] 
+    int minScreamsToSpawn = 3;
     CharacterHead head;
 
     [SerializeField]
@@ -66,7 +67,7 @@ public class BaseGuiltPassive : SkillBase
 
 
         List<Vector3> myAreaToSpawn = SetArea(pos);
-        int random = Random.Range(1, maxScreamsToSpawn + 1);
+        int random = Random.Range(minScreamsToSpawn, maxScreamsToSpawn + 1);
 
         for (int i = 0; i < random; i++)
         {

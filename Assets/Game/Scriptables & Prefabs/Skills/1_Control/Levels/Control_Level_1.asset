@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Control_Level_1
   m_EditorClassIdentifier: 
   skilltype: 0
-  Selection:
-  - {fileID: 11400000, guid: 775eaf44cb51abe45b11c32cacc2c435, type: 2}
-  isFromRandom: 0
+  Selection: []
+  isFromRandom: 1
   max_from_this_branch: 1
   max_from_generics: 2
