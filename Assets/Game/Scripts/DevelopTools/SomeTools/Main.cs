@@ -153,6 +153,7 @@ public class Main : MonoBehaviour
     /////////////////////////////////////////////////////////////////////
     public CharacterHead GetChar() => character;
     public List<EnemyBase> GetEnemies() => GetListOfComponent<EnemyBase>();
+    public List<EnemyBase> GetNoOptimizedListEnemies() => FindObjectsOfType<EnemyBase>().ToList();
 
     public SkillManager_Pasivas GetPasivesManager() => pasives;
 

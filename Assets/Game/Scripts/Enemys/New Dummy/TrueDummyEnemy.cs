@@ -156,6 +156,8 @@ public class TrueDummyEnemy : EnemyBase
 
     public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
     {
+        SetTarget(entityTarget);
+
         if (cooldown) return Attack_Result.inmune;
 
         if (Invinsible)
@@ -209,7 +211,7 @@ public class TrueDummyEnemy : EnemyBase
     public override void InstaKill()
     {
         base.InstaKill();
-        TakeDamage(lifesystem.life, transform.position, Damagetype.normal);
+        
     }
     public override void OnPetrified()
     {

@@ -6,6 +6,9 @@ public class Interact_Emisor : Interactable
 {
     public Interact_Receptor[] results;
 
+    public string nombre;
+    public string quehace;
+
     public override void OnExecute(WalkingEntity entity)
     {
         foreach (var r in results)
@@ -19,8 +22,8 @@ public class Interact_Emisor : Interactable
     public override void OnEnter(WalkingEntity entity)
     {
         WorldItemInfo.instance.Show(pointToMessage.position,
-                                    "Boton",
-                                    "",
+                                    nombre,
+                                    quehace,
                                     "pulsar");
     }
 

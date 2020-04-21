@@ -460,6 +460,8 @@ public class CharacterHead : CharacterControllable
     #region Take Damage
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype dmgtype)
     {
+        Debug.Log("playerDamage");
+
         if (InDash())
             return Attack_Result.inmune;
 
