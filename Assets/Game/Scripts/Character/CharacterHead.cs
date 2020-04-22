@@ -8,7 +8,7 @@ using Tools.EventClasses;
 using Tools.StateMachine;
 public class CharacterHead : CharacterControllable
 {
-    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL };
+    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, END_BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL };
 
     Action ChildrensUpdates;
     Func<bool> InDash;
@@ -115,7 +115,7 @@ public class CharacterHead : CharacterControllable
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
         charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, charanim, GetSM, inParryParticles);
-        charBlock.OnParry += charanim.Parry;
+        charBlock.OnParry += () => charanim.Parry(true);
         charBlock.EndBlock += EVENT_UpBlocking;
         ChildrensUpdates += charBlock.OnUpdate;
 
@@ -144,6 +144,7 @@ public class CharacterHead : CharacterControllable
         var move = new EState<PlayerInputs>("Move");
         var beginBlock = new EState<PlayerInputs>("Begin_Block");
         var block = new EState<PlayerInputs>("Block");
+        var endBlock = new EState<PlayerInputs>("End_Block");
         var parry = new EState<PlayerInputs>("Parry");
         var roll = new EState<PlayerInputs>("Roll");
         var attackCharge = new EState<PlayerInputs>("Charge_Attack");
@@ -172,21 +173,26 @@ public class CharacterHead : CharacterControllable
             .Done();
 
         ConfigureState.Create(beginBlock)
-             .SetTransition(PlayerInputs.IDLE, idle)
-             .SetTransition(PlayerInputs.MOVE, move)
              .SetTransition(PlayerInputs.BLOCK, block)
+             .SetTransition(PlayerInputs.END_BLOCK ,endBlock)
              .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
              .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
              .SetTransition(PlayerInputs.DEAD, dead)
              .Done();
 
         ConfigureState.Create(block)
-            .SetTransition(PlayerInputs.IDLE, idle)
-            .SetTransition(PlayerInputs.MOVE, move)
-           // .SetTransition(PlayerInputs.ROLL, roll)
+             .SetTransition(PlayerInputs.END_BLOCK, endBlock)
+            // .SetTransition(PlayerInputs.ROLL, roll)
             //.SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.PARRY, parry)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(endBlock)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.MOVE, move)
+            .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
 
@@ -227,6 +233,7 @@ public class CharacterHead : CharacterControllable
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
         new CharBlock(block, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
+        new CharEndBlock(endBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetBlock(charBlock);
         new CharParry(parry, stateMachine, parryRecall).SetMovement(this.move).SetBlock(charBlock);
         new CharRoll(roll, stateMachine).SetMovement(this.move);
         new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
@@ -350,17 +357,7 @@ public class CharacterHead : CharacterControllable
     }
     public void EVENT_UpBlocking()
     {
-        if (stateMachine.Current.Name == "Block" || stateMachine.Current.Name == "Begin_Block")
-        {
-            if(moveX == 0 && moveY == 0)
-            {
-                stateMachine.SendInput(PlayerInputs.IDLE);
-            }
-            else
-            {
-                stateMachine.SendInput(PlayerInputs.MOVE);
-            }
-        }
+        stateMachine.SendInput(PlayerInputs.END_BLOCK);
     }
     
     //lo uso para el skill del escudo que refleja luz

@@ -75,11 +75,13 @@ public class EntityBlock
             if (timer >= timeToParry)
             {
                 FinishParry();
-                onParry = false;
-                timer = 0;
             }
         }
     }
 
-    public virtual void FinishParry() { }
+    public virtual void FinishParry()
+    {
+        onParry = false;
+        timer = 0;
+    }
 }
