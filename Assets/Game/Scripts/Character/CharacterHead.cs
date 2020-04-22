@@ -127,8 +127,7 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
-        charAnimEvent.Add_Callback("DirtDer", DirtRight);
-        charAnimEvent.Add_Callback("DirtIzq", DirtLeft);
+        charAnimEvent.Add_Callback("Dash", move.RollForAnim);
 
         SetStates();
 
@@ -251,15 +250,6 @@ public class CharacterHead : CharacterControllable
 
 
     #endregion
-
-    void DirtRight()
-    {
-
-    }
-    void DirtLeft()
-    {
-
-    }
 
     protected override void OnUpdateEntity()
     {
@@ -389,11 +379,12 @@ public class CharacterHead : CharacterControllable
     #region Roll
     void OnBeginRoll()
     {
-        
+        //Activar trail o feedback x del roll
     }
 
     void OnEndRoll()
     {
+        //desactivar trail o feedback x del roll
         stateMachine.SendInput(PlayerInputs.IDLE);
     }
     public void RollDash()
