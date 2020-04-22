@@ -67,7 +67,7 @@ public class EntityBlock
         }
     }
 
-    public void OnUpdate()
+    public virtual void OnUpdate()
     {
         if (onParry)
         {

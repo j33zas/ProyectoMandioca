@@ -11,6 +11,7 @@ public class CharacterBlock : EntityBlock
     public Action OnParry;
 
     public Action BeginParry;
+    public Action EndBlock;
 
     CharacterAnimator anim;
 
@@ -18,9 +19,12 @@ public class CharacterBlock : EntityBlock
 
     Func<EventStateMachine<CharacterHead.PlayerInputs>> sm;
 
+    float timeBlock;
+    float timerToUpBlock;
 
     public CharacterBlock(float timeParry,
                           float blockRange,
+                          float _timeToBlock,
                           CharacterAnimator _anim,
                           Func<EventStateMachine<CharacterHead.PlayerInputs>> _sm,
                           ParticleSystem _parryParticles) : base(timeParry, blockRange)
@@ -33,9 +37,10 @@ public class CharacterBlock : EntityBlock
         OnParry += FinishParry;
         BeginParry += Parry;
         BeginParry += ParryFeedback;
+        timeBlock = _timeToBlock;
     }
 
-    public override void OnBlockDown() { anim.Block(true); }
+    public override void OnBlockDown() { if(!onBlock) anim.Block(true); }
     public override void OnBlockUp() { anim.Block(false); FinishParry(); }
 
     //por animacion
@@ -43,6 +48,22 @@ public class CharacterBlock : EntityBlock
     {
         sm().SendInput(CharacterHead.PlayerInputs.BLOCK);
         BeginParry();
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        if (onBlock)
+        {
+            timerToUpBlock += Time.deltaTime;
+
+            if (timerToUpBlock >= timeBlock)
+            {
+                EndBlock();
+                timerToUpBlock = 0;
+            }
+        }
     }
 
     void ParryFeedback()

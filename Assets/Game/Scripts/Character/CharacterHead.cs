@@ -29,6 +29,7 @@ public class CharacterHead : CharacterControllable
 
     [Header("Parry & Block Options")]
     [SerializeField] float _timerOfParry;
+    [SerializeField] float _timeOfBlock;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem blockParticle;
     [SerializeField] ParticleSystem hitParticle;
@@ -113,8 +114,9 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, charanim, GetSM, inParryParticles);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, charanim, GetSM, inParryParticles);
         charBlock.OnParry += charanim.Parry;
+        charBlock.EndBlock += EVENT_UpBlocking;
         ChildrensUpdates += charBlock.OnUpdate;
 
         dmg = dmg_normal;
@@ -152,7 +154,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(idle)
             .SetTransition(PlayerInputs.MOVE, move)
             .SetTransition(PlayerInputs.BEGIN_BLOCK, beginBlock)
-            .SetTransition(PlayerInputs.PARRY, parry)
+            //.SetTransition(PlayerInputs.PARRY, parry)
             .SetTransition(PlayerInputs.ROLL, roll)
             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
@@ -162,7 +164,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(move)
             .SetTransition(PlayerInputs.IDLE, idle)
             .SetTransition(PlayerInputs.BEGIN_BLOCK, beginBlock)
-            .SetTransition(PlayerInputs.PARRY, parry)
+            //.SetTransition(PlayerInputs.PARRY, parry)
             .SetTransition(PlayerInputs.ROLL, roll)
             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
@@ -382,6 +384,7 @@ public class CharacterHead : CharacterControllable
     public void PerfectParry()
     {
         parryParticle.Play();
+        stateMachine.SendInput(PlayerInputs.PARRY);
     }
 
     #endregion
@@ -467,7 +470,6 @@ public class CharacterHead : CharacterControllable
             PerfectParry();
             Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
             customCam.DoFastZoom(10);
-            stateMachine.SendInput(PlayerInputs.PARRY);
             return Attack_Result.parried;
         }
         else if (charBlock.IsBlock(rot.position, attackDir, rot.forward))

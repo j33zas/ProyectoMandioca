@@ -22,7 +22,6 @@ public class CharacterInput : MonoBehaviour
     [Header("Defense")]
     public UnityEvent OnBlock;
     public UnityEvent UpBlock;
-    public UnityEvent Parry;
 
     [Header("Attack")]
     public UnityEvent OnAttack;
@@ -50,7 +49,6 @@ public class CharacterInput : MonoBehaviour
 
         if (Input.GetButtonDown("Block")) OnBlock.Invoke();
         if (Input.GetButtonUp("Block")) UpBlock.Invoke();
-        if (Input.GetButtonDown("Parry")) Parry.Invoke();
         
         if (Input.GetButtonDown("Attack")) OnAttack.Invoke();
         if (Input.GetButtonUp("Attack")) OnAttackEnd.Invoke();
