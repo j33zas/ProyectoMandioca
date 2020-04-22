@@ -1161,7 +1161,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: BlockBegin
-  m_Speed: 2
+  m_Speed: 2.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4782297270046777175}
@@ -1510,7 +1510,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 8686358501040873353, guid: c5d231f3b9e9e294e84d412a31747e36,
+  m_Motion: {fileID: 1827226128182048838, guid: 344f46fc5165a1848b77dfd563d28009,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 

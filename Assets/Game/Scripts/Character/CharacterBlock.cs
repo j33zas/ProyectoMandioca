@@ -41,7 +41,7 @@ public class CharacterBlock : EntityBlock
     }
 
     public override void OnBlockDown() { if(!onBlock) anim.Block(true); }
-    public override void OnBlockUp() { anim.Block(false); FinishParry(); }
+    public override void OnBlockUp() { anim.Block(false); FinishParry(); timerToUpBlock = 0; }
 
     //por animacion
     public override void OnBlockSuccessful()
@@ -61,7 +61,6 @@ public class CharacterBlock : EntityBlock
             if (timerToUpBlock >= timeBlock)
             {
                 EndBlock();
-                timerToUpBlock = 0;
             }
         }
     }
