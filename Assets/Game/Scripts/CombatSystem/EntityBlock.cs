@@ -8,7 +8,6 @@ public class EntityBlock
     protected bool onParry;
     protected float timeToParry;
     protected float timer;
-    protected bool canupdate;
 
     //Mucho muy importante que sea de -1 a 1
     float blockAngle;
@@ -62,23 +61,21 @@ public class EntityBlock
 
     public virtual void Parry()
     {
-        if (!canupdate)
+        if (!onParry)
         {
             onParry = true;
-            canupdate = true;
         }
     }
 
     public void OnUpdate()
     {
-        if (canupdate)
+        if (onParry)
         {
             timer += Time.deltaTime;
             if (timer >= timeToParry)
             {
                 FinishParry();
                 onParry = false;
-                canupdate = false;
                 timer = 0;
             }
         }

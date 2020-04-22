@@ -47,6 +47,7 @@ public class CharacterHead : CharacterControllable
     [Header("Feedbacks")]
     [SerializeField] ParticleSystem feedbackCW;
     [SerializeField] ParticleSystem feedbackScream;
+    [SerializeField] ParticleSystem inParryParticles;
 
 
     [Header("Animations")]
@@ -112,7 +113,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, charanim, GetSM);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, charanim, GetSM, inParryParticles);
         charBlock.OnParry += charanim.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
 
@@ -183,6 +184,7 @@ public class CharacterHead : CharacterControllable
            // .SetTransition(PlayerInputs.ROLL, roll)
             //.SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(PlayerInputs.PARRY, parry)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
 
@@ -465,6 +467,7 @@ public class CharacterHead : CharacterControllable
             PerfectParry();
             Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
             customCam.DoFastZoom(10);
+            stateMachine.SendInput(PlayerInputs.PARRY);
             return Attack_Result.parried;
         }
         else if (charBlock.IsBlock(rot.position, attackDir, rot.forward))
