@@ -45,8 +45,6 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float slowDuration;
 
     [Header("Feedbacks")]
-    public GameObject feedbackParry;
-    public GameObject feedbackBlock;
     [SerializeField] ParticleSystem feedbackCW;
     [SerializeField] ParticleSystem feedbackScream;
 
@@ -114,8 +112,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, OnEndParry, charanim, feedbackBlock, GetSM);
-        charBlock.OnParry += OnBeginParry;
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, charanim, GetSM);
         charBlock.OnParry += charanim.Parry;
         ChildrensUpdates += charBlock.OnUpdate;
 
@@ -384,9 +381,6 @@ public class CharacterHead : CharacterControllable
     {
         parryParticle.Play();
     }
-
-    void OnBeginParry() => feedbackParry.SetActive(true);
-    void OnEndParry() => feedbackParry.SetActive(false);
 
     #endregion
 
