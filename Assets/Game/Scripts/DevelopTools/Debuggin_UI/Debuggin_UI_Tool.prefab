@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.81135577, g: 0.51882344, b: 0.8396226, a: 1}
+  m_Color: {r: 0.81135577, g: 0.51882344, b: 0.8396226, a: 0.14509805}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5384671929945630142}
   m_HandleRect: {fileID: 5384671929945630143}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -488,6 +488,8 @@ MonoBehaviour:
   container: {fileID: 5384671930106383892}
   contenedorDeTODO: {fileID: 5138939478673166890}
   slider_pf: {fileID: 4888703874922919949, guid: b9df11c9508cb4540b5c72efa75ccb41,
+    type: 3}
+  toggle_pf: {fileID: 8969296088997015940, guid: 0865c477b402cff4f9ae0bf39b22bdac,
     type: 3}
 --- !u!1 &5384671929945630140
 GameObject:
@@ -628,8 +630,8 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Top: 3
+    m_Bottom: 3
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0

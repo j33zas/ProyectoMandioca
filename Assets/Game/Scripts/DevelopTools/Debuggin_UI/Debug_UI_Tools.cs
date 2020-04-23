@@ -14,6 +14,11 @@ namespace DevelopTools.UI
                 instance = this;
         }
 
+        private void Start()
+        {
+            Toggle(false);
+        }
+
         //container donde van a ir todos los sliders
         [SerializeField] private Transform container;
         
@@ -22,6 +27,7 @@ namespace DevelopTools.UI
 
         //prefab del slider
         [SerializeField] private Debuggin_Template_Slider slider_pf;
+        [SerializeField] private Debuggin_Template_Toggle toggle_pf;
 
         //para tener una referencia a todos por cualquier cosa
         private List<GameObject> debug_UIs = new List<GameObject>();
@@ -44,6 +50,14 @@ namespace DevelopTools.UI
             newSlider.Configurate(title,actual, max, min, callback);
 
             debug_UIs.Add(newSlider.gameObject);
+        }
+
+
+        public void CreateToogle(string title, bool actual, Func<bool, string> callback)
+        {
+            Debuggin_Template_Toggle newToggle = Instantiate(toggle_pf, container);
+            newToggle.Configurate(title, actual, callback);
+            debug_UIs.Add(newToggle.gameObject);
         }
 
         /// <summary>
