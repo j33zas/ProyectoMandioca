@@ -19,8 +19,8 @@ namespace Tools.StateMachine
         {
             charMove.RotateHorizontal(RightHorizontal());
             charMove.RotateVertical(RightVertical());
-            charMove.MovementHorizontal(LeftHorizontal());
-            charMove.MovementVertical(LeftVertical());
+            //charMove.MovementHorizontal(LeftHorizontal());
+            //charMove.MovementVertical(LeftVertical());
         }
 
         protected override void FixedUpdate()
@@ -35,8 +35,7 @@ namespace Tools.StateMachine
 
         protected override void Exit(CharacterHead.PlayerInputs input)
         {
-            charBlock.UpBlock();
-            charBlock.SetOnBlock(false);
+
         }
     }
 }

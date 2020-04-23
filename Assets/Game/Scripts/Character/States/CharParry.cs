@@ -43,6 +43,7 @@ namespace Tools.StateMachine
         protected override void Exit(CharacterHead.PlayerInputs input)
         {
             timer = 0;
+            charBlock.UpBlock();
         }
     }
 }

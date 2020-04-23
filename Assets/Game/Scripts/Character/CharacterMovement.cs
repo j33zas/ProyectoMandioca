@@ -194,7 +194,7 @@ public class CharacterMovement
         }
     }
 
-    public void Roll()
+    public void RollForAnim()
     {
         OnBeginRoll();
 
@@ -207,10 +207,12 @@ public class CharacterMovement
 
 
         dashSpeed = dashMaxSpeed;
+    }
 
+    public void Roll()
+    {
         float dotX = Vector3.Dot(rotTransform.forward, dashDir);
         float dotY = Vector3.Dot(rotTransform.right, dashDir);
-        anim.Roll();
         //anim.SetVerticalRoll(dotX);
         //anim.SetHorizontalRoll(dotY);
 
@@ -238,6 +240,7 @@ public class CharacterMovement
             }
         }
 
+        anim.Roll();
     }
 
     public bool IsDash()

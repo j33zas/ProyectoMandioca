@@ -8,7 +8,7 @@ using Tools.EventClasses;
 using Tools.StateMachine;
 public class CharacterHead : CharacterControllable
 {
-    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL };
+    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, END_BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL };
 
     Action ChildrensUpdates;
     Func<bool> InDash;
@@ -29,6 +29,7 @@ public class CharacterHead : CharacterControllable
 
     [Header("Parry & Block Options")]
     [SerializeField] float _timerOfParry;
+    [SerializeField] float _timeOfBlock;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem blockParticle;
     [SerializeField] ParticleSystem hitParticle;
@@ -45,10 +46,9 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float slowDuration;
 
     [Header("Feedbacks")]
-    public GameObject feedbackParry;
-    public GameObject feedbackBlock;
     [SerializeField] ParticleSystem feedbackCW;
     [SerializeField] ParticleSystem feedbackScream;
+    [SerializeField] ParticleSystem inParryParticles;
 
 
     [Header("Animations")]
@@ -114,9 +114,9 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, OnEndParry, charanim, feedbackBlock, GetSM);
-        charBlock.OnParry += OnBeginParry;
-        charBlock.OnParry += charanim.Parry;
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, charanim, GetSM, inParryParticles);
+        charBlock.OnParry += () => charanim.Parry(true);
+        charBlock.EndBlock += EVENT_UpBlocking;
         ChildrensUpdates += charBlock.OnUpdate;
 
         dmg = dmg_normal;
@@ -127,8 +127,7 @@ public class CharacterHead : CharacterControllable
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
-        charAnimEvent.Add_Callback("DirtDer", DirtRight);
-        charAnimEvent.Add_Callback("DirtIzq", DirtLeft);
+        charAnimEvent.Add_Callback("Dash", move.RollForAnim);
 
         SetStates();
 
@@ -144,6 +143,7 @@ public class CharacterHead : CharacterControllable
         var move = new EState<PlayerInputs>("Move");
         var beginBlock = new EState<PlayerInputs>("Begin_Block");
         var block = new EState<PlayerInputs>("Block");
+        var endBlock = new EState<PlayerInputs>("End_Block");
         var parry = new EState<PlayerInputs>("Parry");
         var roll = new EState<PlayerInputs>("Roll");
         var attackCharge = new EState<PlayerInputs>("Charge_Attack");
@@ -154,7 +154,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(idle)
             .SetTransition(PlayerInputs.MOVE, move)
             .SetTransition(PlayerInputs.BEGIN_BLOCK, beginBlock)
-            .SetTransition(PlayerInputs.PARRY, parry)
+            //.SetTransition(PlayerInputs.PARRY, parry)
             .SetTransition(PlayerInputs.ROLL, roll)
             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
@@ -164,7 +164,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(move)
             .SetTransition(PlayerInputs.IDLE, idle)
             .SetTransition(PlayerInputs.BEGIN_BLOCK, beginBlock)
-            .SetTransition(PlayerInputs.PARRY, parry)
+            //.SetTransition(PlayerInputs.PARRY, parry)
             .SetTransition(PlayerInputs.ROLL, roll)
             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
@@ -172,19 +172,25 @@ public class CharacterHead : CharacterControllable
             .Done();
 
         ConfigureState.Create(beginBlock)
-             .SetTransition(PlayerInputs.IDLE, idle)
-             .SetTransition(PlayerInputs.MOVE, move)
              .SetTransition(PlayerInputs.BLOCK, block)
+             .SetTransition(PlayerInputs.END_BLOCK ,endBlock)
              .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
              .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
              .SetTransition(PlayerInputs.DEAD, dead)
              .Done();
 
         ConfigureState.Create(block)
+             .SetTransition(PlayerInputs.END_BLOCK, endBlock)
+            // .SetTransition(PlayerInputs.ROLL, roll)
+            //.SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
+            .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(PlayerInputs.PARRY, parry)
+            .SetTransition(PlayerInputs.DEAD, dead)
+            .Done();
+
+        ConfigureState.Create(endBlock)
             .SetTransition(PlayerInputs.IDLE, idle)
             .SetTransition(PlayerInputs.MOVE, move)
-           // .SetTransition(PlayerInputs.ROLL, roll)
-            //.SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
@@ -226,6 +232,7 @@ public class CharacterHead : CharacterControllable
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
         new CharBlock(block, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
+        new CharEndBlock(endBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetBlock(charBlock);
         new CharParry(parry, stateMachine, parryRecall).SetMovement(this.move).SetBlock(charBlock);
         new CharRoll(roll, stateMachine).SetMovement(this.move);
         new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
@@ -243,15 +250,6 @@ public class CharacterHead : CharacterControllable
 
 
     #endregion
-
-    void DirtRight()
-    {
-
-    }
-    void DirtLeft()
-    {
-
-    }
 
     protected override void OnUpdateEntity()
     {
@@ -349,17 +347,7 @@ public class CharacterHead : CharacterControllable
     }
     public void EVENT_UpBlocking()
     {
-        if (stateMachine.Current.Name == "Block" || stateMachine.Current.Name == "Begin_Block")
-        {
-            if(moveX == 0 && moveY == 0)
-            {
-                stateMachine.SendInput(PlayerInputs.IDLE);
-            }
-            else
-            {
-                stateMachine.SendInput(PlayerInputs.MOVE);
-            }
-        }
+        stateMachine.SendInput(PlayerInputs.END_BLOCK);
     }
     
     //lo uso para el skill del escudo que refleja luz
@@ -383,21 +371,20 @@ public class CharacterHead : CharacterControllable
     public void PerfectParry()
     {
         parryParticle.Play();
+        stateMachine.SendInput(PlayerInputs.PARRY);
     }
-
-    void OnBeginParry() => feedbackParry.SetActive(true);
-    void OnEndParry() => feedbackParry.SetActive(false);
 
     #endregion
 
     #region Roll
     void OnBeginRoll()
     {
-        
+        //Activar trail o feedback x del roll
     }
 
     void OnEndRoll()
     {
+        //desactivar trail o feedback x del roll
         stateMachine.SendInput(PlayerInputs.IDLE);
     }
     public void RollDash()
