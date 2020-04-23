@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Tools.StateMachine
 {
 	public class EventStateMachine<T>
 	{
 		private EState<T> current;
-		public EventStateMachine(EState<T> initial)
+		Action<string> debug = delegate { };
+		public EventStateMachine(EState<T> initial, Action<string> _debug)
 		{
+			debug = _debug;
 			current = initial;
 			current.Enter(default(T));
 		}
@@ -17,6 +20,7 @@ namespace Tools.StateMachine
 			{
 				current.Exit(input);
 				current = newState;
+				debug(current.Name);
 				current.Enter(input);
 			}
 		}

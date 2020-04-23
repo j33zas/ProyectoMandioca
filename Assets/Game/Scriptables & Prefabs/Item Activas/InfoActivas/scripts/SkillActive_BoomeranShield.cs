@@ -39,7 +39,7 @@ public class SkillActive_BoomeranShield : SkillActivas
 
     protected override void OnEndSkill()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     protected override void OnUpdateSkill()

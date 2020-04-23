@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DevelopTools.UI;
 using Tools;
+using System.Linq;
 
 public class DevelopToolsCenter : MonoBehaviour
 {
+    public static DevelopToolsCenter instance; private void Awake() => instance = this;
+
     bool open = false;
     public UI_GraphicContainer ui_gc;
 
@@ -16,14 +19,17 @@ public class DevelopToolsCenter : MonoBehaviour
         get => numexample;
         set => numexample = value < 0 ? 0 : (value > max ? max: value);
     }
-
+    
+    private void Start()
+    {
+        ToogleDebug(false);
+        Refresh();
+        DevelopTools.UI.Debug_UI_Tools.instance.CreateToogle("Dummy Enemy State Machine Debug", false, ToogleDebug);
+    }
     public void UIBUTTON_WrenchDebug()
     {
         open = !open;
         Debug_UI_Tools.instance.Toggle(open);
-
-        
-
     }
 
     private void Update()
@@ -45,24 +51,14 @@ public class DevelopToolsCenter : MonoBehaviour
         ui_gc.OnValueChange(Numexample, max, true);
     }
 
-    private void Start()
-    {
-        Configurations();
-    }
+    
 
     void Configurations()
     {
-        Debug_UI_Tools.instance.CreateSlider("Example", 2, 0, 10, Example);
-        Debug_UI_Tools.instance.CreateToogle("example 2", true, Example);
+        
     }
+    bool enemydebug;
+    public bool EnemyDebuggingIsActive() { return enemydebug; }
+    string ToogleDebug(bool active) { enemydebug = active; FindObjectsOfType<TrueDummyEnemy>().ToList().ForEach(x => x.ToogleDebug(active)); return active ? "debug activado" : "debug desactivado"; }
 
-    string Example(float f)
-    {
-        return "s=" + f;
-    }
-
-    string Example(bool f)
-    {
-        return "b=" + f;
-    }
 }

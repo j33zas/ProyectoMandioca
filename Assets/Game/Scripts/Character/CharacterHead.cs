@@ -132,6 +132,8 @@ public class CharacterHead : CharacterControllable
         SetStates();
 
         rb = GetComponent<Rigidbody>();
+
+        StartDebug();
     }
 
     #region SET STATES
@@ -224,7 +226,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(dead)
             .Done();
 
-        stateMachine = new EventStateMachine<PlayerInputs>(idle);
+        stateMachine = new EventStateMachine<PlayerInputs>(idle, DebugState);
 
         new CharIdle(idle, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
         new CharMove(move, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
@@ -250,6 +252,8 @@ public class CharacterHead : CharacterControllable
 
 
     #endregion
+
+    
 
     protected override void OnUpdateEntity()
     {
@@ -565,8 +569,16 @@ public class CharacterHead : CharacterControllable
     protected override void OnTurnOff() { }
     protected override void OnFixedUpdate() { }
 
-    
 
+
+    #endregion
+
+
+    #region Debuggin
+    [SerializeField] UnityEngine.UI.Text txt_debug;
+    void DebugState(string state) { if (txt_debug != null) txt_debug.text = state; }
+    void StartDebug() { if (txt_debug != null) txt_debug.enabled = false; DevelopTools.UI.Debug_UI_Tools.instance.CreateToogle("Character State Machine Debug", false, ToogleDebug); }
+    string ToogleDebug(bool active) { if (txt_debug != null) txt_debug.enabled = active; return active ? "debug activado" : "debug desactivado"; }
     #endregion
 
 }

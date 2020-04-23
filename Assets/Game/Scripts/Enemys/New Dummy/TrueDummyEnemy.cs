@@ -57,6 +57,7 @@ public class TrueDummyEnemy : EnemyBase
         anim.Add_Callback("DealDamage", DealDamage);
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
+        StartDebug();
 
         IAInitialize(Main.instance.GetCombatDirector());
     }
@@ -323,7 +324,7 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
             .Done();
 
-        sm = new EventStateMachine<DummyEnemyInputs>(idle);
+        sm = new EventStateMachine<DummyEnemyInputs>(idle, DebugState);
 
         var head = Main.instance.GetChar();
 
@@ -367,8 +368,15 @@ public class TrueDummyEnemy : EnemyBase
 
     void EnableObject() { Initialize(); }
 
-   
 
+
+    #endregion
+
+    #region Debuggin
+    [SerializeField] UnityEngine.UI.Text txt_debug;
+    void DebugState(string state) { if (txt_debug != null) txt_debug.text = state; }//viene de la state machine
+    public void ToogleDebug(bool val) { if (txt_debug != null) txt_debug.enabled = val; }//apaga y prende debug desde afuera
+    void StartDebug() { if (txt_debug != null) txt_debug.enabled = DevelopToolsCenter.instance.EnemyDebuggingIsActive(); }// inicializacion
     #endregion
 
 }

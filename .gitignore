@@ -58,3 +58,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+*.meta
+Assets/Game/0_Scenes/corazoncitos/UI_LifeHearths (2).prefab.meta

@@ -112,7 +112,10 @@ public class CharacterMovement
 
         float velY = _rb.velocity.y;
 
-        _rb.velocity = new Vector3(axisX, velY, axisY);
+        Vector3 auxNormalized = new Vector3(axisX, velY, axisY);
+        auxNormalized.Normalize();
+
+        _rb.velocity = auxNormalized * speed;
 
 
         if (rotX >= 0.3 || rotX <= -0.3 || rotY >= 0.3 || rotY <= -0.3)
