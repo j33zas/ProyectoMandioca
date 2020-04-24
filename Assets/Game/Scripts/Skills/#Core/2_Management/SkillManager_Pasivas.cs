@@ -10,61 +10,51 @@ public class SkillManager_Pasivas : MonoBehaviour
     GameObject selector;
 
     [Header("Data_base")]
-    [SerializeField] List<SkillBase> my_current_active_skills;
-    public Dictionary<SkillInfo, SkillBase> database_basebyinfo = new Dictionary<SkillInfo, SkillBase>();
+    [SerializeField] List<SkillBase> my_editor_data_base;
+    public Dictionary<SkillInfo, SkillBase> dict_info_base = new Dictionary<SkillInfo, SkillBase>();
 
     [SerializeField] List<SkillLevelByBranch> alllevels;
     public Dictionary<SkillType, List<SkillLevelByBranch>> database_levelbytype = new Dictionary<SkillType, List<SkillLevelByBranch>>();
 
-    public List<SkillBase> current_list_of_skills = new List<SkillBase>();
+    public List<SkillBase> equiped = new List<SkillBase>();
     SkillType CURRENT_TYPE;
-    SkillBase current_skills;
 
-    [SerializeField] Queue<LevelRequest> newSkillRequests = new Queue<LevelRequest>();
+    [SerializeField] Queue<LevelRequest> level_requests = new Queue<LevelRequest>();
     [SerializeField] List<LevelRequest> debugRequest = new List<LevelRequest>();
-
 
     [Header("For random")]
     public List<SkillInfo> list_of_generics = new List<SkillInfo>();
     Dictionary<SkillType, List<SkillInfo>> pool_info_by_type = new Dictionary<SkillType, List<SkillInfo>>();
 
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////// ON LOAD BEGIN
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///
-
-    private void Start()
-    {
-        Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_INITIALIZE, Initialize);
-    }
+    private void Start() => Main.instance.eventManager.SubscribeToEvent(GameEvents.GAME_INITIALIZE, Initialize);
 
     void Initialize()
     {
-        my_current_active_skills = GetComponentsInChildren<SkillBase>().ToList();
+        my_editor_data_base = GetComponentsInChildren<SkillBase>().ToList();
         RefillFastDiccionaries();
         selector = Instantiate(model_skill_selector, Main.instance.gameUiController.MyCanvas.transform);
         selector.GetComponent<UI_BeginSkillSelector>().Initialize(SkillSelected);
         // Build_menu_for_testing();
     }
 
+    //Entro por selector
     void SkillSelected(SkillType _skillType)
     {
-        SelectASkillType(_skillType);
+        CURRENT_TYPE = _skillType;
+        var first = pool_info_by_type[_skillType][0];
+        EquipSkill(first);
         Main.instance.LoadLevelPlayObjects();
         selector.gameObject.SetActive(false);
-
-        var first = pool_info_by_type[_skillType][0];
-
-        ReturnSkill(first);
-
     }
     void RefillFastDiccionaries()//no es necesario, pero lo tenemos para acceder mas rapido
     {
         //relleno un dictionary con INFO > BASE
-        foreach (var s in my_current_active_skills)
-            if (!database_basebyinfo.ContainsKey(s.skillinfo))
-                database_basebyinfo.Add(s.skillinfo, s);
+        foreach (var s in my_editor_data_base)
+            if (!dict_info_base.ContainsKey(s.skillinfo))
+                dict_info_base.Add(s.skillinfo, s);
 
 
         //relleno un dictionary con TYPE > List<LEVEL>
@@ -80,7 +70,7 @@ public class SkillManager_Pasivas : MonoBehaviour
         }
 
         //relleno un dictionary con TYPE > List<INFO>
-        foreach (var s in my_current_active_skills)
+        foreach (var s in my_editor_data_base)
         {
             if (!pool_info_by_type.ContainsKey(s.skillinfo.skilltype))
             {
@@ -89,17 +79,12 @@ public class SkillManager_Pasivas : MonoBehaviour
                 pool_info_by_type.Add(s.skillinfo.skilltype, aux);
             }
             {
-                pool_info_by_type[s.skillinfo.skilltype].Add(s.skillinfo);
+                if(!pool_info_by_type[s.skillinfo.skilltype].Contains(s.skillinfo))
+                    pool_info_by_type[s.skillinfo.skilltype].Add(s.skillinfo);
             }
         }
     }
 
-    //esto viene del selector al principio del nivel
-    public void SelectASkillType(SkillType _skilltype)
-    {
-        CURRENT_TYPE = _skilltype;
-        Refresh();
-    }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////// ON GAME
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,17 +113,18 @@ public class SkillManager_Pasivas : MonoBehaviour
             request = new LevelRequest(current_level.Selection, requestindex, current_level.max_from_this_branch, current_level.max_from_generics);
         }
 
-        newSkillRequests.Enqueue(request);
-        DebugRequest();
+        level_requests.Enqueue(request);
 
+        DebugRequest();
 
         requestindex++;
     }
 
     void DebugRequest()
     {
+        debugRequest.Clear();
         debugRequest = new List<LevelRequest>();
-        foreach (var d in newSkillRequests)
+        foreach (var d in level_requests)
         {
             debugRequest.Add(d);
         }
@@ -157,7 +143,7 @@ public class SkillManager_Pasivas : MonoBehaviour
         int my_type_posible_iterator = GetPosiblesIterations(coll_my_type.Count, currentbranchcount);
 
         //obtengo uno de mi tipo
-        if (my_type_posible_iterator <= 0) throw new System.Exception("Che... me quedé con la biblioteca vacía");
+        if (my_type_posible_iterator < 0) throw new System.Exception("Che... me quedé con la biblioteca vacía");
         else
         {
             var auxcoll = new List<SkillInfo>(coll_my_type);
@@ -176,7 +162,10 @@ public class SkillManager_Pasivas : MonoBehaviour
             // un auxiliar List del Queue, solo para obtener un random...
             // hago esto xq no quiero modificar la queue, solo ver 2 randoms
             var auxgenerics = new List<SkillInfo>(list_of_generics);
-            for (int i = 0; i < genericCount; i++)
+
+            int my_type_posible_iterator_generics = GetPosiblesIterations(auxgenerics.Count, genericCount);
+
+            for (int i = 0; i < my_type_posible_iterator_generics; i++)
             {
                 var indextoremove = Random.Range(0, auxgenerics.Count);
                 tofill.Add(auxgenerics[indextoremove]);
@@ -191,99 +180,73 @@ public class SkillManager_Pasivas : MonoBehaviour
     //esto es para que no me pida mas iteraciones de la que mi collecion puede darme
     int GetPosiblesIterations(int count_of_my_collection, int max_estimated) => count_of_my_collection <= max_estimated ? count_of_my_collection : max_estimated;
 
-    //public void EVENT_GetRequest()
-    //{
-    //    if (newSkillRequests.Count > 0)
-    //    {
-    //        //solo lo observa, no ddesencolo la request xq si llego a cerrar la ui, la pierdo
-    //        var peekedrequest = newSkillRequests.Peek();
-    //        foreach (var i in peekedrequest)
-    //        {
-    //            Debug.Log("Obtengo: " + i.skill_name);
-    //        }
-    //        Main.instance.gameUiController.CreateNewSkillSelectionPopUp(peekedrequest.ToList(), ReturnSkill);
-    //    }
-    //}
-
-    //Devuelvo un request
-    //public List<SkillInfo> GetSkillRequest()
-    //{
-    //    // return newSkillRequests.Dequeue().ToList();
-    //}
     public List<SkillInfo> GetPeekedRequest()
     {
-        return newSkillRequests.Peek().Collection;
+        return level_requests.Peek().Collection;
     }
-    public bool I_Have_An_Active_Request() => newSkillRequests.Count() > 0;
+    public bool I_Have_An_Active_Request() => level_requests.Count() > 0;
 
     // Te la hice publica para poder agarrarla desde el menu.
 
-    bool algoandamal;
-    public void ReturnSkill(SkillInfo info)
+    public void EquipSkill(SkillInfo info)
     {
-        if (newSkillRequests.Count > 0)
+        //si hay request lo calculo
+        if (level_requests.Count > 0)
         {
-            var request = newSkillRequests.Peek();
+            var request = level_requests.Peek();
 
-            if (request != null)
+            if (!equiped.Contains(dict_info_base[info]))
             {
-                if (!current_list_of_skills.Contains(database_basebyinfo[info]))
+                foreach (var inf in request.Collection)
                 {
-
-
-                    foreach (var inf in request.Collection)
+                    if (info == inf)
                     {
-                        if (info == inf)
-                        {
-
-
-                            if (inf.skilltype != SkillType.generics)
-                            {
-                                pool_info_by_type[inf.skilltype].Remove(inf);
-                            }
-                            else
-                            {
-                                list_of_generics.Remove(inf);
-
-                            }
-
-                            newSkillRequests.Dequeue();
-                        }
+                        //lo remuevo de donde pertenezca
+                        if (inf.skilltype != SkillType.generics) pool_info_by_type[inf.skilltype].Remove(inf);
+                        else list_of_generics.Remove(inf);
+                        //lo desencolo
+                        level_requests.Dequeue();
                     }
-
-                    current_list_of_skills.Add(database_basebyinfo[info]);
                 }
-                else
-                {
-                    throw new System.Exception("Ya lo tengo agergado");
-                }
+                equiped.Add(dict_info_base[info]);
             }
             else
             {
-                throw new System.Exception("No tengo mas requests");
+                throw new System.Exception("Ya lo tengo agergado");
             }
 
-            if (newSkillRequests.Count > 0)
-            {
-                newSkillRequests.Peek().Refill(GetRandomArray(CURRENT_TYPE, request.Max_to_branch, request.Max_to_random));
-                DebugRequest();
-            }
+            
         }
-        else
+        else //si no hay request lo obligo a equipar
         {
-            current_list_of_skills.Add(database_basebyinfo[info]);
+            pool_info_by_type[CURRENT_TYPE].Remove(info);
+            equiped.Add(dict_info_base[info]);
         }
 
+        //al final de todo me fijo si quedaron requests
+        if (level_requests.Count > 0)
+        {
+            //la obtengo
+            var request = level_requests.Peek();
+            //la vuelvo a rellenar
+            request.Refill(GetRandomArray(CURRENT_TYPE, request.Max_to_branch, request.Max_to_random));
+        }
+
+        DebugRequest();
         Refresh();
     }
     public void Refresh()
     {
-        foreach (var s in current_list_of_skills)
+        foreach (var s in equiped)
         {
             s.BeginSkill();
         }
         Main.instance.gameUiController.UI_Send_NameSkillType(CURRENT_TYPE.ToString());
-        Main.instance.gameUiController.RefreshPassiveSkills_UI(current_list_of_skills.Select(x => x.skillinfo).ToList());
+        foreach (var deb in equiped)
+        {
+            Debug.Log("Selected: " + deb.skillinfo.skill_name);
+        }
+        Main.instance.gameUiController.RefreshPassiveSkills_UI(equiped.Select(x => x.skillinfo).ToList());
         Main.instance.gameUiController.UI_RefreshMenu();
         Main.instance.gameUiController.SetSelectedPath(CURRENT_TYPE.ToString());
     }
@@ -307,66 +270,6 @@ public class SkillManager_Pasivas : MonoBehaviour
         public void Refill(SkillInfo[] col)
         {
             collection = col.ToList();
-        }
-    }
-
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////// FOR TESTING MENU
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///
-    [Header("Testing Menu")]
-    public bool testing;
-    bool isOpen = false;
-    Dictionary<SkillType, SkillBase> currents = new Dictionary<SkillType, SkillBase>();
-    public List<SkillInfo> skillinfos;
-    [SerializeField] UI_SkillHandler frontend;
-    bool dataisloaded;
-    public void LoadFromDisk(Dictionary<SkillType, SkillBase> dic) { currents = dic; dataisloaded = true; }
-    public void Build_menu_for_testing()
-    {
-        if (!dataisloaded)
-        {
-            foreach (var skill in my_current_active_skills)
-            {
-                if (!currents.ContainsKey(skill.skillinfo.skilltype))
-                {
-                    currents.Add(skill.skillinfo.skilltype, skill);
-                }
-            }
-        }
-        frontend.Build(my_current_active_skills, OnUISelected);
-        foreach (var s in currents.Values) s.BeginSkill();
-    }
-    void OnUISelected(int i)
-    {
-
-        var select = my_current_active_skills[i];
-        var old = currents[select.skillinfo.skilltype];
-
-        old.EndSkill();
-        select.BeginSkill();
-        currents[select.skillinfo.skilltype] = select;
-
-        frontend.SetInfoSelected(select.skillinfo);
-    }
-    public void EVENT_OnbackButton()
-    {
-        if (testing)
-        {
-            if (!isOpen)
-            {
-                isOpen = true;
-                frontend.Open();
-                //lo abrimos
-            }
-            else
-            {
-                isOpen = false;
-                frontend.Close();
-                //lo cerramos
-            }
         }
     }
 }

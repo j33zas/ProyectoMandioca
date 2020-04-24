@@ -16,7 +16,7 @@ public class SkillRevive : SkillBase
 
         for (int i = 0; i < enemiesThatCanRevive.Count; i++)
         {
-            print(enemiesThatCanRevive[i]);
+            //print(enemiesThatCanRevive[i]);
         }
         
         foreach (var item in enemiesThatCanRevive)
