@@ -21,7 +21,6 @@ public class FireParry_skill : SkillBase
         {
             if (item != null)
             {
-                Debug.Log(item.name);
                 item.OnParried += item.OnFire;
             }
         }

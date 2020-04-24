@@ -34,7 +34,7 @@ public class GameMenu_UI : UI_Base
 
         bool first = false;
         
-        var infos = Main.instance.GetPasivesManager().current_list_of_skills.Select(x => x.skillinfo);
+        var infos = Main.instance.GetPasivesManager().equiped.Select(x => x.skillinfo);
 
         foreach (var info in infos)
         {
@@ -59,7 +59,7 @@ public class GameMenu_UI : UI_Base
         {
             Debug.LogWarning("TENGO UNA REQUEST ACTIVA");
            Instantiate(psSelection_template_pf, passiveSkillsSelection_container).
-                        Configure(skill_manager.GetPeekedRequest(), skill_manager.ReturnSkill, OnFinishLvlUpSkillSelection, out myselected);
+                        Configure(skill_manager.GetPeekedRequest(), skill_manager.EquipSkill, OnFinishLvlUpSkillSelection, out myselected);
         }
 
 

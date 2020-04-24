@@ -6,16 +6,11 @@ using Tools.Extensions;
 
 public class SkillManager_Activas : MonoBehaviour
 {
-    //[Header("Agreguese las skills por acá en editor")]
-    //[SerializeField] UI_SkillHandler frontend;
-    //[SerializeField] List<SkillBase> allskills;
-    //Dictionary<SkillType, SkillBase> currents = new Dictionary<SkillType, SkillBase>();
-
     public UI_SkillHandler_Activas frontend;
 
     [Header("All skills data base")]
-    [SerializeField] List<SkillActivas> allskillsDatabase;
-    Dictionary<SkillInfo, SkillActivas> fastreference;
+    [SerializeField] List<SkillActivas> my_editor_data_base;
+    Dictionary<SkillInfo, SkillActivas> fastreference_actives;
     Dictionary<SkillInfo, Item> fastreference_item = new Dictionary<SkillInfo, Item>();
 
     public SkillActivas[] myActiveSkills = new SkillActivas[4];
@@ -33,18 +28,31 @@ public class SkillManager_Activas : MonoBehaviour
 
     void Initialize()
     {
+        //obtengo la data base de mis childrens
+        my_editor_data_base = GetComponentsInChildren<SkillActivas>().ToList();
+
+        //las relleno con el item vacio
         myActiveSkills = new SkillActivas[4];
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i] = vacio;
 
-        allskillsDatabase = GetComponentsInChildren<SkillActivas>().ToList();
-        FillDiccionary();
+        //relleno el diccionario de acceso rapido
+        fastreference_actives = new Dictionary<SkillInfo, SkillActivas>();
+        foreach (var s in my_editor_data_base)
+            if (!fastreference_actives.ContainsKey(s.skillinfo))
+                fastreference_actives.Add(s.skillinfo, s);
 
-
+        //refresco la ui con mis skills vacios
         frontend.Refresh(myActiveSkills, OnUISelected);
 
+        //¿esto? no recuerdo porque esta acá...
         for (int i = 0; i < myActiveSkills.Length; i++) myActiveSkills[i].BeginSkill();
+
+        //otras cosas
+        //(spawn de enemigos) esto lo hago aca porque quiero tener el control de spawn acá... 
+        //para tener un roullete que no me tire siempre los mismos items que ya tengo equipado
         Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
 
+        //refresco el sistema de slots x vida
         ReceiveLife((int)Main.instance.GetChar().Life.GetLife(), 100);
     }
 
@@ -64,21 +72,17 @@ public class SkillManager_Activas : MonoBehaviour
     }
 
 
-    const int MAX = 100;
+    const int MAX_PERCENT = 100;
     readonly int[] percentedvalues = new int[] { 0, 25, 50, 75 };
     public bool[] slots = new bool[4];
     public void ReceiveLife(int _life, int max)
     {
-        //ahora sabemos que 100 es el maximo, agregarle que lo calcule con el maximo sacando porcentaje
-
-        var aux_value = MAX - _life;
+        var aux_value = MAX_PERCENT - _life;
         if (aux_value == 0) aux_value = 1;
-
         for (int i = 0; i < slots.Length; i++)
         {
             slots[i] = aux_value > percentedvalues[i];
         }
-
         if (!percenslot)
         {
             for (int i = 0; i < slots.Length; i++)
@@ -86,11 +90,8 @@ public class SkillManager_Activas : MonoBehaviour
                 slots[i] = true;
             }
         }
-
         frontend.RefreshButtons(slots);
     }
-
-   
 
     void EnemyDeath(params object[] param)
     {
@@ -102,15 +103,12 @@ public class SkillManager_Activas : MonoBehaviour
         myActiveSkills[selected].Execute();
     }
 
-    public SkillInfo Look(int index) => allskillsDatabase[index].skillinfo;
+    public SkillInfo Look(int index) => my_editor_data_base[index].skillinfo;
     int current_index;
     public void ReplaceFor(SkillInfo _skillinfo, int index)
     {
-
         myActiveSkills[current_index].EndSkill();
-        myActiveSkills[current_index] = fastreference[_skillinfo];
-
-
+        myActiveSkills[current_index] = fastreference_actives[_skillinfo];
 
         frontend.Reconfigurate(myActiveSkills);
         myActiveSkills[current_index].BeginSkill();
@@ -155,7 +153,7 @@ public class SkillManager_Activas : MonoBehaviour
         }
 
         //asigno a este index el nuevo skill
-        myActiveSkills[cleanindex] = fastreference[_skillinfo];
+        myActiveSkills[cleanindex] = fastreference_actives[_skillinfo];
 
         frontend.Reconfigurate(myActiveSkills);
         myActiveSkills[cleanindex].BeginSkill();
@@ -173,70 +171,5 @@ public class SkillManager_Activas : MonoBehaviour
         return next_clean_index;
     }
 
-    void FillDiccionary()
-    {
-        fastreference = new Dictionary<SkillInfo, SkillActivas>();
-        foreach (var s in allskillsDatabase)
-            if (!fastreference.ContainsKey(s.skillinfo))
-                fastreference.Add(s.skillinfo, s);
-    }
-
-    //void DropSkill(SkillInfo skill) { }
-    //void Refresh() { }
-    //void OnUISelected(int i)
-    //{
-    //    //Debug.Log("Recibi:" + i);
-    //    //var select = allskills[i];
-    //    //var old = currents[select.skillinfo.skilltype];
-    //    //old.EndSkill();
-    //    //select.BeginSkill();
-    //    //currents[select.skillinfo.skilltype] = select;
-    //    //frontend.SetInfoSelected(select.skillinfo);
-    //}
-    //void Start()
-    //{
-    //    //// ahora esto es un start.
-    //    //// pero tiene que venir de un OnSceneLoaded
-    //    //allskills = GetComponentsInChildren<SkillBase>().ToList();
-    //    //Build();
-    //}
-    //public void Build()
-    //{
-    //    //if (!dataisloaded) {
-    //    //    foreach (var skill in allskills) {
-    //    //        if (!currents.ContainsKey(skill.skillinfo.skilltype)) {
-    //    //            currents.Add(skill.skillinfo.skilltype, skill);
-    //    //        }
-    //    //    }
-    //    //}
-    //    //frontend.Build(allskills,OnUISelected);
-    //    //foreach (var s in currents.Values) s.BeginSkill();
-    //}
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////// REQUEST TIME BARS
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Dictionary<SkillInfo, int> fastindex = new Dictionary<SkillInfo, int>();
-    //Queue<SkillInfo> skill_use_refresh = new Queue<SkillInfo>();
-    //public void StartRequestBar(SkillInfo _idInfo)
-    //{
-    //}
-    //public void StopRequestBar(SkillInfo _idInfo)
-    //{
-    //    skill_use_refresh
-    //}
-    //public void RefreshUseTimeBar(SkillInfo _idInfo, float current_timer, float max_Value)
-    //{
-    //    //aca hago refresh de ui... asi tengo control de la ejecucion
-    //}
-    //public class RequestTimeBar
-    //{
-    //    SkillInfo info;
-    //    float current_timer; public float Current { get => current_timer; }
-    //    float max_value; public float Max { get => max_value; }
-    //    public RequestTimeBar(SkillInfo _info) { info = _info; }
-    //    public void RefreshData(float current, float max) { current_timer = current; max_value = max; }
-    //}
+    
 }
