@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c955e4f5622814e92d9b1f701dc31e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sensor: {fileID: 0}
+  _sensor: {fileID: 5110435132618041678}
   myEnemies: []
 --- !u!1 &5110435133104727299
 GameObject:
