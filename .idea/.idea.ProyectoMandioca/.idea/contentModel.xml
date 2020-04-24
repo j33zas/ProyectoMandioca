@@ -776,11 +776,6 @@
                 </e>
               </e>
             </e>
-            <e p="Skills" t="Include">
-              <e p="5_Others" t="Include">
-                <e p="ActiveSkills_Test.cs" t="Include" />
-              </e>
-            </e>
           </e>
           <e p="Scripts" t="Include">
             <e p="Character" t="Include">
@@ -799,6 +794,7 @@
                 <e p="CharBlock.cs" t="Include" />
                 <e p="CharChargeAttack.cs" t="Include" />
                 <e p="CharDead.cs" t="Include" />
+                <e p="CharEndBlock.cs" t="Include" />
                 <e p="CharIdle.cs" t="Include" />
                 <e p="CharMove.cs" t="Include" />
                 <e p="CharParry.cs" t="Include" />
@@ -824,6 +820,8 @@
               <e p="Debuggin_UI" t="Include">
                 <e p="Debug_UI_Tools.cs" t="Include" />
                 <e p="Debuggin_Template_Slider.cs" t="Include" />
+                <e p="Debuggin_Template_Toggle.cs" t="Include" />
+                <e p="DevelopToolsCenter.cs" t="Include" />
               </e>
               <e p="EventManager.cs" t="Include" />
               <e p="LeanTween" t="Include">
@@ -869,6 +867,10 @@
                     <e p="JsonSaveLoad.cs" t="Include" />
                     <e p="Scenes.cs" t="Include" />
                   </e>
+                </e>
+                <e p="corazoncitos" t="Include">
+                  <e p="GraphicContainer.cs" t="Include" />
+                  <e p="UI_GraphicContainer.cs" t="Include" />
                 </e>
                 <e p="DontDestroy.cs" t="Include" />
                 <e p="HideOnPlay.cs" t="Include" />
@@ -947,6 +949,7 @@
               </e>
             </e>
             <e p="Enums.cs" t="Include" />
+            <e p="FastChangeMesh.cs" t="Include" />
             <e p="GameEvents.cs" t="Include" />
             <e p="Interactables" t="Include">
               <e p="Core" t="Include">
@@ -1025,6 +1028,7 @@
             <e p="Minion" t="Include">
               <e p="Minion.cs" t="Include" />
             </e>
+            <e p="MyEventSystem.cs" t="Include" />
             <e p="PlayObjectCore" t="Include">
               <e p="Core" t="Include">
                 <e p="Initializator.cs" t="Include" />
@@ -1192,6 +1196,7 @@
               <e p="StatesPetrified.cs" t="Include" />
               <e p="StatesWander.cs" t="Include" />
             </e>
+            <e p="TimeManager.cs" t="Include" />
             <e p="zIgnorar_esto se va a borrar" t="Include">
               <e p="2019DunGeneration" t="Include">
                 <e p="2_Dungeon" t="Include">
@@ -1328,8 +1333,6 @@
             </e>
           </e>
         </e>
-        <e p="MyEventSystem.cs" t="Include" />
-        <e p="TimeManager.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
