@@ -6,55 +6,51 @@ using Tools.StateMachine;
 
 public class TrueDummyEnemy : EnemyBase
 {
-    [SerializeField] CombatComponent combatComponent;
-    [SerializeField] int damage;
-
-    [SerializeField] GameObject obj_feedbackStun;
-    [SerializeField] GameObject obj_feedbackShield;
-    [SerializeField] GameObject obj_feedbackattack;
-    PopSignalFeedback feedbackStun;
-    PopSignalFeedback feedbackHitShield;
-    PopSignalFeedback feedbackAttack;
-    [SerializeField] GameObject feedbackFireDot;
-
-    [SerializeField] ParticleSystem greenblood;
-
-    public bool special;
-
-    public float time_stun;
-    [SerializeField] CombatDirector director;
-    [SerializeField] Transform rootTransform;
-
-    bool cooldown = false;
-    float timercooldown = 0;
-
-    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED };
-
-    [SerializeField] AnimEvent anim;
-    EventStateMachine<DummyEnemyInputs> sm;
-    [SerializeField] Animator animator;
+    [Header("Move Options")]
     [SerializeField] float speedMovement;
     [SerializeField] float rotSpeed;
-    [SerializeField] float petrifiedTime;
+    [SerializeField] float avoidWeight;
+    [SerializeField] float avoidRadious;
+    [SerializeField] Transform rootTransform;
+    private float currentSpeed;
+
+    [Header("Combat Options")]
+    [SerializeField] CombatComponent combatComponent;
+    [SerializeField] CombatDirector director;
+    [SerializeField] int damage;
     [SerializeField] float distanceToAttack;
     [SerializeField] float normalDistance;
+    [SerializeField] float cdToAttack;
 
-    public bool isOnFire { get; private set; }
-
-    [SerializeField] float explosionForce = 200;
-    Rigidbody rb;
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
+    [SerializeField] float recallTime;
+    [SerializeField] float forceRecall;
+    [SerializeField] float explosionForce = 20;
+    [SerializeField] float petrifiedTime;
+    private bool cooldown = false;
+    private float timercooldown = 0;
+
+    [Header("Feedback")]
+    [SerializeField] GameObject feedbackFireDot;
+    [SerializeField] ParticleSystem greenblood;
+    [SerializeField] AnimEvent anim;
+    [SerializeField] Animator animator;
+    [SerializeField] UnityEngine.UI.Text txt_debug;
+
+    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED };
+    public bool isOnFire { get; private set; }
+
+    EventStateMachine<DummyEnemyInputs> sm;
+    Rigidbody rb;
 
     protected override void OnInitialize()
     {
         Debug.Log("OnInitialize");
         rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
-        feedbackStun = new PopSignalFeedback(time_stun, obj_feedbackStun, EndStun);
-        feedbackHitShield = new PopSignalFeedback(0.2f, obj_feedbackShield);
-        feedbackAttack = new PopSignalFeedback(0.2f, obj_feedbackattack);
         anim.Add_Callback("DealDamage", DealDamage);
+        anim.Add_Callback("Death", DeathAnim);
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
         StartDebug();
@@ -86,16 +82,7 @@ public class TrueDummyEnemy : EnemyBase
         canupdate = true;
     }
 
-    public void DealDamage()
-    {
-        combatComponent.ManualTriggerAttack();
-    }
-
-    public void EndStun()
-    {
-        combatComponent.Play();
-        petrified = false;
-    }
+    public void DealDamage() { combatComponent.ManualTriggerAttack(); }
 
     public void AttackEntity(EntityBase e)
     {
@@ -104,24 +91,17 @@ public class TrueDummyEnemy : EnemyBase
         if (takeDmg == Attack_Result.parried)
         {
             combatComponent.Stop();
-            feedbackStun.Show();
 
             //Tira evento si es parrieado. Seguro haya que cambiarlo
             if (OnParried != null)
                 OnParried();
         }
-        else if (takeDmg == Attack_Result.blocked)
-        {
-            feedbackHitShield.Show();
-        }
-
     }
 
     protected override void OnUpdateEntity()
     {
         if (canupdate)
         {
-
             if(!combat && entityTarget == null)
             {
                 if (Vector3.Distance(Main.instance.GetChar().transform.position, transform.position) <= combatDistance)
@@ -131,9 +111,6 @@ public class TrueDummyEnemy : EnemyBase
                 }
             }
 
-
-            feedbackStun.Refresh();
-            feedbackHitShield.Refresh();
             if (sm != null)
             {
                 sm.Update();
@@ -145,27 +122,17 @@ public class TrueDummyEnemy : EnemyBase
             }
 
         }
-
-
     }
-    protected override void OnPause()
-    {
 
-    }
-    protected override void OnResume()
-    {
-
-
-    }
+    protected override void OnPause() { }
+    protected override void OnResume() { }
 
     public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
     {
         SetTarget(entityTarget);
 
-        if (cooldown) return Attack_Result.inmune;
+        if (cooldown || Invinsible || sm.Current.Name == "Die") return Attack_Result.inmune;
 
-        if (Invinsible)
-            return Attack_Result.inmune;
         if (dmgtype == Damagetype.explosion)
         {
             rb.AddForce(dir * explosionForce, ForceMode.Impulse);
@@ -188,6 +155,8 @@ public class TrueDummyEnemy : EnemyBase
 
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype damagetype, EntityBase owner_entity)
     {
+        if (sm.Current.Name == "Die") return Attack_Result.inmune;
+
         if (sm.Current.Name != "Attack" && entityTarget != owner_entity)
         {
             if (!entityTarget)
@@ -212,14 +181,11 @@ public class TrueDummyEnemy : EnemyBase
         if (!base.target)
             Invinsible = true;
     }
-    public override void InstaKill()
-    {
-        base.InstaKill();
-        
-    }
+
+    public override void InstaKill() { base.InstaKill(); }
+
     public override void OnPetrified()
     {
-        feedbackStun.Show();
         base.OnPetrified();
         sm.SendInput(DummyEnemyInputs.PETRIFIED);
     }
@@ -233,7 +199,6 @@ public class TrueDummyEnemy : EnemyBase
 
         //Busco el estado follow para poder cambiarle la velocidad
         currentSpeed = newSpeed;
-
 
         return speedMovement;
     }
@@ -252,24 +217,25 @@ public class TrueDummyEnemy : EnemyBase
             isOnFire = false;
             feedbackFireDot.SetActive(false);
         });
-
     }
+
     public void Die()
     {
         director.RemoveToAttack(this, entityTarget);
+        sm.SendInput(DummyEnemyInputs.DIE);
+    }
+
+    void DeathAnim()
+    {
         Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified });
         gameObject.SetActive(false);
-        //sm.SendInput(DummyEnemyInputs.DIE);
     }
-    protected override void OnFixedUpdate() { }
 
+    protected override void OnFixedUpdate() { }
     protected override void OnTurnOff() { }
     protected override void OnTurnOn() { }
 
-    public override void ToAttack()
-    {
-        attacking = true;
-    }
+    public override void ToAttack() { attacking = true; }
 
     #region STATE MACHINE THINGS
 
@@ -306,6 +272,13 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
             .Done();
 
+        ConfigureState.Create(petrified)
+            .SetTransition(DummyEnemyInputs.IDLE, idle)
+            .SetTransition(DummyEnemyInputs.ATTACK, attack)
+            .SetTransition(DummyEnemyInputs.DIE, die)
+            .SetTransition(DummyEnemyInputs.DISABLE, disable)
+            .Done();
+
         ConfigureState.Create(takeDamage)
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
@@ -320,25 +293,18 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .Done();
 
-        ConfigureState.Create(petrified)
-            .SetTransition(DummyEnemyInputs.IDLE, idle)
-            .SetTransition(DummyEnemyInputs.ATTACK, attack)
-            .SetTransition(DummyEnemyInputs.DIE, die)
-            .SetTransition(DummyEnemyInputs.DISABLE, disable)
-            .Done();
-
         sm = new EventStateMachine<DummyEnemyInputs>(idle, DebugState);
 
         var head = Main.instance.GetChar();
 
         //Asignando las funciones de cada estado
-        new DummyIdleState(idle, sm, IsAttack, CurrentTargetPos, distanceToAttack, normalDistance,this).SetAnimator(animator).SetRoot(rootTransform)
+        new DummyIdleState(idle, sm, IsAttack, CurrentTargetPos, distanceToAttack, normalDistance, rotSpeed, this).SetAnimator(animator).SetRoot(rootTransform)
                                                                                                                      .SetDirector(director);
 
-        new DummyFollowState(goToPos, sm, avoidRadious, avoidWeight, GetCurrentSpeed, CurrentTargetPos, normalDistance, this).SetAnimator(animator).SetRigidbody(rb)
+        new DummyFollowState(goToPos, sm, avoidRadious, avoidWeight, rotSpeed, GetCurrentSpeed, CurrentTargetPos, normalDistance, this).SetAnimator(animator).SetRigidbody(rb)
                                                                                                           .SetRoot(rootTransform);
 
-        new DummyAttackState(attack, sm, cdToAttack, this).SetAnimator(animator).SetDirector(director);
+        new DummyAttackState(attack, sm, cdToAttack, rotSpeed, this).SetAnimator(animator).SetDirector(director).SetRoot(rootTransform);
 
         new DummyTDState(takeDamage, sm, recallTime).SetAnimator(animator);
 
@@ -347,18 +313,7 @@ public class TrueDummyEnemy : EnemyBase
         new DummyDieState(die, sm).SetAnimator(animator).SetDirector(director).SetRigidbody(rb);
 
         new DummyDisableState(disable, sm, EnableObject, DisableObject);
-
-        /////////////////////////////////////////////////
-        ///
-
     }
-
-    float currentSpeed;
-    [SerializeField] float avoidWeight;
-    [SerializeField] float avoidRadious;
-    [SerializeField] float cdToAttack;
-    [SerializeField] float recallTime;
-    [SerializeField] float forceRecall;
 
     float GetCurrentSpeed() { return currentSpeed; }
 
@@ -371,12 +326,9 @@ public class TrueDummyEnemy : EnemyBase
 
     void EnableObject() { Initialize(); }
 
-
-
     #endregion
 
     #region Debuggin
-    [SerializeField] UnityEngine.UI.Text txt_debug;
     void DebugState(string state) { if (txt_debug != null) txt_debug.text = state; }//viene de la state machine
     public void ToogleDebug(bool val) { if (txt_debug != null) txt_debug.enabled = val; }//apaga y prende debug desde afuera
     void StartDebug() { if (txt_debug != null) txt_debug.enabled = DevelopToolsCenter.instance.EnemyDebuggingIsActive(); }// inicializacion

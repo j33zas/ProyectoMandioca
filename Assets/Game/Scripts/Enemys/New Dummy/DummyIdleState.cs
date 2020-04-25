@@ -12,19 +12,19 @@ namespace Tools.StateMachine
         Func<Transform> MyPos;
         float distanceMin;
         float distanceMax;
+        float rotationSpeed;
         float currentDis;
         ICombatDirector enemy;
 
         public DummyIdleState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm,
-                              Func<bool> _isAttack, Func<Transform> _isTarget, float _disInCom, float _disNormal, ICombatDirector _enemy) : base(myState, _sm)
+                              Func<bool> _isAttack, Func<Transform> _isTarget, float _disInCom, float _disNormal, float _rotSpeed, ICombatDirector _enemy) : base(myState, _sm)
         {
             IsAttack += _isAttack;
             MyPos += _isTarget;
             distanceMax = _disNormal;
             distanceMin = _disInCom;
             enemy = _enemy;
-
-            myState.OnUpdate += Update;
+            rotationSpeed = _rotSpeed;
         }
 
         protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
@@ -54,7 +54,9 @@ namespace Tools.StateMachine
             if(enemy.CurrentTarget() != null)
             {
                 Vector3 myForward = (enemy.CurrentTarget().transform.position - root.position).normalized;
-                root.forward = new Vector3(myForward.x, 0, myForward.z);
+                Vector3 forwardRotation = new Vector3(myForward.x, 0, myForward.z);
+
+                root.forward = Vector3.Lerp(root.forward, forwardRotation, rotationSpeed * Time.deltaTime);
 
                 if (IsAttack())
                     sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);

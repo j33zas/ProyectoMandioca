@@ -1816,31 +1816,26 @@ MonoBehaviour:
   combatDistance: 20
   _target: {fileID: 0}
   distancePos: 2
-  combatComponent: {fileID: 3901963547881250309}
-  damage: 1
-  obj_feedbackStun: {fileID: 3901963546435207828}
-  obj_feedbackShield: {fileID: 3901963546914072052}
-  obj_feedbackattack: {fileID: 3901963548172970169}
-  feedbackFireDot: {fileID: 9151005248363886907}
-  greenblood: {fileID: 1846346356114705109}
-  special: 0
-  time_stun: 2
-  director: {fileID: 0}
-  rootTransform: {fileID: 3901963547267435579}
-  anim: {fileID: 3901963547267141660}
-  animator: {fileID: 3901963547276534677}
   speedMovement: 5
   rotSpeed: 10
-  petrifiedTime: 2
-  distanceToAttack: 3
-  normalDistance: 7
-  explosionForce: 100
-  lifesystem: {fileID: 3901963547881250315}
   avoidWeight: 0.5
   avoidRadious: 3
+  rootTransform: {fileID: 3901963547267435579}
+  combatComponent: {fileID: 3901963547881250309}
+  director: {fileID: 0}
+  damage: 1
+  distanceToAttack: 3
+  normalDistance: 7
   cdToAttack: 2
+  lifesystem: {fileID: 3901963547881250315}
   recallTime: 0.5
   forceRecall: 200
+  explosionForce: 100
+  petrifiedTime: 2
+  feedbackFireDot: {fileID: 9151005248363886907}
+  greenblood: {fileID: 1846346356114705109}
+  anim: {fileID: 3901963547267141660}
+  animator: {fileID: 3901963547276534677}
   txt_debug: {fileID: 1025451142}
 --- !u!114 &3901963547881250309
 MonoBehaviour:

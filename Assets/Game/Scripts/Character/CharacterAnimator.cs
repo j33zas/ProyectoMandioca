@@ -12,4 +12,5 @@ public class CharacterAnimator : BaseAnimator
     public void OnAttackBegin(bool b) => myAnim.SetBool("AttackBegin", b);
     public void NormalAttack() => myAnim.SetTrigger("NormalAttack");
     public void HeavyAttack() => myAnim.SetTrigger("HeavyAttack");
+    public void AttackAntiBug(){ myAnim.ResetTrigger("HeavyAttack"); myAnim.ResetTrigger("NormalAttack"); }
 }

@@ -8,13 +8,15 @@ namespace Tools.StateMachine
     {
         float cd;
         float timer;
+        float rotationSpeed;
         ICombatDirector enemy;
 
         public DummyAttackState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm,
-                                float _cd, ICombatDirector _enemy) : base(myState, _sm)
+                                float _cd, float _rotSpeed,ICombatDirector _enemy) : base(myState, _sm)
         {
             cd = _cd;
             enemy = _enemy;
+            rotationSpeed = _rotSpeed;
         }
 
         protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
@@ -52,6 +54,11 @@ namespace Tools.StateMachine
         protected override void Update()
         {
             base.Update();
+
+            Vector3 myForward = (enemy.CurrentTarget().transform.position - root.position).normalized;
+            Vector3 forwardRotation = new Vector3(myForward.x, 0, myForward.z);
+
+            root.forward = Vector3.Lerp(root.forward, forwardRotation, rotationSpeed * Time.deltaTime);
 
             timer += Time.deltaTime;
 

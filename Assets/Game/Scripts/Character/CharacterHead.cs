@@ -128,6 +128,7 @@ public class CharacterHead : CharacterControllable
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
+        charAnimEvent.Add_Callback("EndAttack", EndAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
         charAnimEvent.Add_Callback("Dash", move.RollForAnim);
@@ -229,6 +230,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(dead)
             .Done();
 
+
         stateMachine = new EventStateMachine<PlayerInputs>(idle, DebugState);
 
         new CharIdle(idle, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
@@ -299,6 +301,11 @@ public class CharacterHead : CharacterControllable
         charAttack.ChangeDamageBase((int)dmg);
         charanim.HeavyAttack();
     }
+    void EndAttack()
+    {
+        stateMachine.SendInput(PlayerInputs.IDLE);
+    }
+
     ///////////BigWeaponSkill
 
     /// <summary>
