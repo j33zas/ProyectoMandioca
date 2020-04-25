@@ -111,6 +111,8 @@ public class CharacterBlock : EntityBlock
         ui.OnValueChange(CurrentBlockCharges, maxBlockCharges, true);
     }
 
+    public bool CanUseCharge() => CurrentBlockCharges > maxBlockCharges-1;
+
     void ParryFeedback()
     {
         parryParticles.Play();
