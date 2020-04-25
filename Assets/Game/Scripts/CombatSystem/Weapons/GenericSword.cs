@@ -9,6 +9,8 @@ public class GenericSword : Weapon
         
     }
 
+    bool oneshotSucsesfull;
+
     public override EntityBase Attack(Transform pos, float damage)
     {
         EntityBase entity = null;
@@ -24,16 +26,28 @@ public class GenericSword : Weapon
                 if (entity == null)
                     entity = enemies[i].GetComponent<EntityBase>();
                 
-                var attackResult = enemies[i].GetComponent<EnemyBase>().TakeDamage((int) damage, pos.forward, Damagetype.parriable, _head);
+                var attackResult = enemies[i].GetComponent<EnemyBase>().TakeDamage((int) damage, Main.instance.GetChar().transform.position, Damagetype.parriable, _head);
 
                 AttackResult?.Invoke(attackResult);
- 
-                if (enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.position, Damagetype.parriable, _head) == Attack_Result.sucessful)
+
+                if (attackResult == Attack_Result.sucessful)
                 {
-                    //cont++;
+                    oneshotSucsesfull = true;
                 }
 
+                //if (enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, Main.instance.GetChar().transform.position, Damagetype.parriable, _head) == Attack_Result.sucessful)
+                //{
+                //    //cont++;
+                //}
+
             }
+        }
+
+        if (oneshotSucsesfull)
+        {
+            oneshotSucsesfull = false;
+            Main.instance.Vibrate();
+            Main.instance.CameraShake();
         }
 
         return entity;

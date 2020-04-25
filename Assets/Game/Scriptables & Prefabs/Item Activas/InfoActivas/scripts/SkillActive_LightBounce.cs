@@ -48,14 +48,11 @@ public class SkillActive_LightBounce : SkillActivas
 
             if (enemy != null)
             {
-                Vector3 dir = enemy.transform.position - _hero.transform.position;
-                dir.Normalize();
-
                 sparks_ps.transform.position = raycastHit.point;
                 sparks_ps.Play();
                 Main.instance.Vibrate();
                 
-                enemy.TakeDamage(damage, dir, dmgType, _hero);
+                enemy.TakeDamage(damage, _hero.transform.position, dmgType, _hero);
             }
             else
             {

@@ -133,6 +133,8 @@ public class TrueDummyEnemy : EnemyBase
 
         if (cooldown || Invinsible || sm.Current.Name == "Die") return Attack_Result.inmune;
 
+        Debug.Log("damagetype" + dmgtype.ToString()); ;
+
         Vector3 aux = this.transform.position - attack_pos;
         aux.Normalize();
 

@@ -103,12 +103,12 @@ public class Minion : Companion
     {
         Debug.Log("0: dmg en minion: " + damage);
 
-        if (e.TakeDamage(damage, transform.forward, Damagetype.parriable, this) == Attack_Result.parried)
+        if (e.TakeDamage(damage, transform.position, Damagetype.parriable, this) == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
         }
-        else if (e.TakeDamage(damage, transform.forward, Damagetype.parriable, this) == Attack_Result.blocked)
+        else if (e.TakeDamage(damage, transform.position, Damagetype.parriable, this) == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }

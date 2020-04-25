@@ -19,6 +19,7 @@ public class Main : MonoBehaviour
     public bool use_selector = true;
     bool gameisbegin;
     Rumble rumble;
+    CustomCamera myCamera;
 
 
     [Header("Inspector References")]
@@ -54,7 +55,7 @@ public class Main : MonoBehaviour
 
         rumble = new Rumble();
 
-
+        myCamera = Camera.main.GetComponent<CustomCamera>();
     }
 
     
@@ -171,6 +172,7 @@ public class Main : MonoBehaviour
     public void SetCrown(PopUpCrown newCrown) => _theCrown = newCrown;
     public PopUpCrown GetCrown() => _theCrown;
 
+    public void CameraShake() => myCamera.BeginShakeCamera();
     public void Vibrate() => rumble.OneShootRumble();
     public void Vibrate(float _strengh = 1, float _time_to_rumble = 0.2f) => rumble.OneShootRumble(_strengh, _time_to_rumble);
 
