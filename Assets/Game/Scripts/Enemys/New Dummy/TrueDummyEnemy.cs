@@ -99,7 +99,9 @@ public class TrueDummyEnemy : EnemyBase
 
     public void AttackEntity(EntityBase e)
     {
-        if (e.TakeDamage(damage, transform.position, Damagetype.parriable) == Attack_Result.parried)
+        Attack_Result takeDmg = e.TakeDamage(damage, transform.position, Damagetype.parriable);
+
+        if (takeDmg == Attack_Result.parried)
         {
             combatComponent.Stop();
             feedbackStun.Show();
@@ -108,10 +110,11 @@ public class TrueDummyEnemy : EnemyBase
             if (OnParried != null)
                 OnParried();
         }
-        else if (e.TakeDamage(damage, transform.position, Damagetype.parriable) == Attack_Result.blocked)
+        else if (takeDmg == Attack_Result.blocked)
         {
             feedbackHitShield.Show();
         }
+
     }
 
     protected override void OnUpdateEntity()
