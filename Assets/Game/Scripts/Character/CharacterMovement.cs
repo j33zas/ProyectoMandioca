@@ -203,10 +203,6 @@ public class CharacterMovement
 
         inDash = true;
         dashCdOk = true;
-        if (movX != 0 || movY != 0)
-            dashDir = new Vector3(movX, 0, movY).normalized;
-        else
-            dashDir = rotTransform.forward;
 
 
         dashSpeed = dashMaxSpeed;
@@ -214,6 +210,10 @@ public class CharacterMovement
 
     public void Roll()
     {
+        if (movX != 0 || movY != 0)
+            dashDir = new Vector3(movX, 0, movY).normalized;
+        else
+            dashDir = rotTransform.forward;
         float dotX = Vector3.Dot(rotTransform.forward, dashDir);
         float dotY = Vector3.Dot(rotTransform.right, dashDir);
         //anim.SetVerticalRoll(dotX);

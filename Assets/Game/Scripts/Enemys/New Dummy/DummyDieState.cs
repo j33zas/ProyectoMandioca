@@ -16,7 +16,12 @@ namespace Tools.StateMachine
         {
             base.Enter(input);
 
-            //Acá pondría la animación de muerte... ¡¡Si tan solo tuviera una!!
+            anim.SetBool("dead", true);
+            //rb.velocity = Vector3.zero;
+            //Debug.Log(rb.velocity);
+            //rb.useGravity = false;
+            //rb.GetComponent<BoxCollider>().isTrigger = true;
+            
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)

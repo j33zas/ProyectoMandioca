@@ -12,7 +12,7 @@ namespace Tools.StateMachine
 
         protected override void Enter(CharacterHead.PlayerInputs input)
         {
-            charAttack.OnAttackBegin();
+            charAttack.OnAttackBegin(); 
         }
 
         protected override void Update()

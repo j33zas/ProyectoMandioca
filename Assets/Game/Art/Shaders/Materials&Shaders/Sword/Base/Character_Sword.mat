@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _TextureSample0:
-        m_Texture: {fileID: 2800000, guid: 187b4a14ffca0f54899a85b99ffdc089, type: 3}
+        m_Texture: {fileID: 2800000, guid: df99e6c326e6a614ea303417d38816fa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TextureSample2:
@@ -34,7 +34,7 @@ Material:
     m_Floats:
     - _ASEOutlineWidth: 0.27
     - _Intensity: 3
-    - __dirty: 1
+    - __dirty: 0
     m_Colors:
     - _ASEOutlineColor: {r: 1, g: 0, b: 0, a: 0}
     - _Color3: {r: 0, g: 0, b: 1, a: 0}

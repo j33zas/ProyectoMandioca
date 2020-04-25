@@ -30,6 +30,9 @@ public class CharacterHead : CharacterControllable
     [Header("Parry & Block Options")]
     [SerializeField] float _timerOfParry;
     [SerializeField] float _timeOfBlock;
+    [SerializeField] int maxBlockCharges = 3;
+    [SerializeField] float timeToRecuperateCharges = 5;
+    [SerializeField] GameObject chargesUI;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem blockParticle;
     [SerializeField] ParticleSystem hitParticle;
@@ -40,10 +43,11 @@ public class CharacterHead : CharacterControllable
     //Perdon por esto, pero lo necesito pra la skill del boomeran hasta tener la animacion y el estado "sin escudo"
     bool canBlock = true;
     public GameObject escudo;
-    
 
+    [Header("SlowMotion")]
     [SerializeField] float timeScale;
     [SerializeField] float slowDuration;
+    [SerializeField] float speedAnim;
 
     [Header("Feedbacks")]
     [SerializeField] ParticleSystem feedbackCW;
@@ -88,6 +92,7 @@ public class CharacterHead : CharacterControllable
     Rigidbody rb;
 
 
+
     protected override void OnInitialize()
     {
         
@@ -114,7 +119,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, charanim, GetSM, inParryParticles);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, maxBlockCharges, timeToRecuperateCharges, chargesUI, charanim, GetSM, inParryParticles);
         charBlock.OnParry += () => charanim.Parry(true);
         charBlock.EndBlock += EVENT_UpBlocking;
         ChildrensUpdates += charBlock.OnUpdate;
@@ -125,6 +130,7 @@ public class CharacterHead : CharacterControllable
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
         charAnimEvent.Add_Callback("DealAttack", DealAttack);
+        charAnimEvent.Add_Callback("EndAttack", EndAttack);
         charAnimEvent.Add_Callback("RompeCoco", RompeCoco);
         charAnimEvent.Add_Callback("BeginBlock", charBlock.OnBlockSuccessful);
         charAnimEvent.Add_Callback("Dash", move.RollForAnim);
@@ -226,6 +232,7 @@ public class CharacterHead : CharacterControllable
         ConfigureState.Create(dead)
             .Done();
 
+
         stateMachine = new EventStateMachine<PlayerInputs>(idle, DebugState);
 
         new CharIdle(idle, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
@@ -257,6 +264,11 @@ public class CharacterHead : CharacterControllable
 
     protected override void OnUpdateEntity()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SlowMO();
+        }
+
         stateMachine.Update();
         ChildrensUpdates();
         charAttack.Refresh();
@@ -283,38 +295,42 @@ public class CharacterHead : CharacterControllable
     public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
     public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
-    public void DealAttack() => charAttack.OnAttack();
+    public void DealAttack() 
+    { 
+        charAttack.OnAttack();
+        if (isHeavyRelease)
+        {
+            isHeavyRelease = false;
+            SlowMO();
+        }
+    }
     void ReleaseInNormal()
     {
-        
-        dmg = dmg_normal;
-        charAttack.ChangeDamageBase((int)dmg);
+        isHeavyRelease = false;
+        ChangeDamageAttack((int)dmg_normal);
+        ChangeAngleAttack(attackAngle);
+        ChangeRangeAttack(attackRange);
         charanim.NormalAttack();
     }
+    bool isHeavyRelease;
     void ReleaseInHeavy()
     {
-        dmg = dmg_heavy;
-        charAttack.ChangeDamageBase((int)dmg);
+        isHeavyRelease = true;
+        ChangeDamageAttack((int)dmg_heavy);
+        ChangeAngleAttack(attackAngle*2);
+        ChangeRangeAttack(attackRange+1);
         charanim.HeavyAttack();
     }
+    void EndAttack()
+    {
+        stateMachine.SendInput(PlayerInputs.IDLE);
+    }
+
     ///////////BigWeaponSkill
 
-    /// <summary>
-    /// Si manda parametro, es para cmabiar el rango de ataque
-    /// </summary>
-    /// <param name="newRangeValue"></param>
-    /// <returns></returns>
-    public float ChangeRangeAttack(float newRangeValue)
-    {
-        if (newRangeValue < 0)
-            return attackRange;
-        charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
-        return newRangeValue;
-    }
-    /// <summary>
-    /// Si no manda parametros vuelve al rango original del arma
-    /// </summary>
-    public void ChangeRangeAttack() => charAttack.currentWeapon.ModifyAttackrange();
+    public void ChangeDamageAttack(int newDamageValue) => charAttack.ChangeDamageBase(newDamageValue);
+    public float ChangeRangeAttack(float newRangeValue = -1) => charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
+    public float ChangeAngleAttack(float newAngleValue = -1) => charAttack.currentWeapon.ModifyAttackAngle(newAngleValue);
     public CharacterAttack GetCharacterAttack() => charAttack;
     private void OnDrawGizmos()
     {
@@ -345,9 +361,11 @@ public class CharacterHead : CharacterControllable
         //Puesto para no poder bloquear cuando el personaje tira el escudo en el boomeranSkill
         if (!canBlock)
             return;
-        
-        
-        stateMachine.SendInput(PlayerInputs.BEGIN_BLOCK);
+
+        if (charBlock.CurrentBlockCharges > 0)
+        {
+            stateMachine.SendInput(PlayerInputs.BEGIN_BLOCK);
+        }
     }
     public void EVENT_UpBlocking()
     {
@@ -448,11 +466,15 @@ public class CharacterHead : CharacterControllable
     }
     #endregion
 
+    void SlowMO()
+    {
+        Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
+        customCam.DoFastZoom(speedAnim);
+    }
+
     #region Take Damage
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype dmgtype)
     {
-        Debug.Log("playerDamage ¿entra 2 veces?");
-
         if (InDash())
             return Attack_Result.inmune;
 
@@ -468,6 +490,8 @@ public class CharacterHead : CharacterControllable
         {
             blockParticle.Play();
             charanim.BlockSomething();
+            charBlock.SetBlockCharges(-1);
+            lifesystem.Hit(dmg / 2);
             return Attack_Result.blocked;
         }
         else

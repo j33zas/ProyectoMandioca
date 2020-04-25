@@ -18,7 +18,7 @@ public class ExampleWeaponTwo : Weapon
             Vector3 dir = enemies[i].transform.position - pos.position;
             float angle = Vector3.Angle(pos.forward, dir);
 
-            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < angleAttack)
+            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < base.angle)
             {
                 if (entity == null)
                     entity = enemies[i].GetComponent<EntityBase>();

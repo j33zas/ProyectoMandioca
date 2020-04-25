@@ -33,7 +33,7 @@ public class UI_SkillHandler_Activas : UI_Base
         }
     }
 
-    public void Reconfigurate(SkillActivas[] col)
+    public void ReAssignUIInfo(SkillActivas[] col)
     {
         for (int i = 0; i < col.Length; i++)
         {

@@ -17,7 +17,8 @@ public abstract class Weapon
         get;
         private set;
     }
-    protected float angleAttack;
+    protected float angle;
+    protected float originalAngle;
 
     protected CharacterHead _head;
 
@@ -28,18 +29,22 @@ public abstract class Weapon
         baseDamage = dmg;
         range = r;
         weaponName = n;
-        angleAttack = angle;
+        this.angle = angle;
+        originalAngle = angle;
         originalRange = range;
         _head = Main.instance.GetChar();
     }
-    /// <summary>
+
     /// está por parametro opcional, si se envia parametro usa ese valor, si no se manada setea -1 y usa el rango original
-    /// </summary>
-    /// <param name="changedValue"></param>
     public float ModifyAttackrange(float changedValue = -1) 
     {
         range = (changedValue == -1) ? range = originalRange : range = changedValue;
         return range; 
+    }
+    public float ModifyAttackAngle(float changedValue = -1)
+    {
+        angle = (changedValue == -1) ? angle = originalAngle : angle = changedValue;
+        return angle;
     }
 
     public float GetWpnRange()

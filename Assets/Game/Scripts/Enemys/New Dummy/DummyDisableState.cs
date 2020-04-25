@@ -21,7 +21,7 @@ namespace Tools.StateMachine
             base.Enter(input);
 
             //Desactivo el objeto con todo lo que tengo que hacer cuando salgo de la room
-            //Desactive();
+            Desactive();
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)
@@ -29,7 +29,7 @@ namespace Tools.StateMachine
             base.Exit(input);
 
             //Activo el objeto con lo que tenga que hacer cuando entro a la room
-            //Active();
+            Active();
         }
 
         protected override void FixedUpdate()

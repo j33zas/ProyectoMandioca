@@ -9,6 +9,7 @@ namespace Tools.StateMachine
     {
         float radiousToAvoidance;
         float avoidWeight;
+        float rotationSpeed;
         Func<float> GetSpeed;
         Func<Transform> GetMyPos;
 
@@ -17,7 +18,7 @@ namespace Tools.StateMachine
         float normalDistance;
 
         public DummyFollowState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm,
-                                float radAvoid, float voidW, Func<float> speed, Func<Transform> myPos, float distance, TrueDummyEnemy me) : base(myState, _sm)
+                                float radAvoid, float voidW, float _rotSpeed, Func<float> speed, Func<Transform> myPos, float distance, TrueDummyEnemy me) : base(myState, _sm)
         {
             radiousToAvoidance = radAvoid;
             avoidWeight = voidW;
@@ -25,12 +26,13 @@ namespace Tools.StateMachine
             GetMyPos += myPos;
             normalDistance = distance;
             noObs = me;
+            rotationSpeed = _rotSpeed;
         }
 
         protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
         {
             base.Enter(input);
-
+            anim.SetFloat("move", 0.3f);
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)
@@ -38,6 +40,7 @@ namespace Tools.StateMachine
             base.Exit(input);
 
             rb.velocity = Vector3.zero;
+            anim.SetFloat("move", 0);
             //setear animación
         }
 
@@ -45,17 +48,18 @@ namespace Tools.StateMachine
         {
             base.Update();
 
-            if(noObs.CurrentTarget() != null)
-            {
-                Vector3 dirForward = (noObs.CurrentTarget().transform.position - root.position).normalized;
-                root.forward = new Vector3(dirForward.x, 0, dirForward.z);
-            }
 
             if (GetMyPos() == null)
             {
-                ObstacleAvoidance(root.forward);
-                if (Vector3.Distance(noObs.CurrentTarget().transform.position, root.position) <= normalDistance)
-                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
+                if (noObs.CurrentTarget() != null)
+                {
+                    Vector3 dirForward = (noObs.CurrentTarget().transform.position - root.position).normalized;
+                    Vector3 fowardRotation = new Vector3(dirForward.x, 0, dirForward.z);
+
+                    ObstacleAvoidance(fowardRotation);
+                    if (Vector3.Distance(noObs.CurrentTarget().transform.position, root.position) <= normalDistance)
+                        sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
+                }
             }
             else
             {
@@ -112,7 +116,9 @@ namespace Tools.StateMachine
 
             rb.velocity = new Vector3(dir.x * GetSpeed(), rb.velocity.y, dir.z * GetSpeed());
 
-            //setear animación
+            Vector3 forwardRotation = new Vector3(dir.normalized.x, 0, dir.normalized.z);
+
+            root.forward = Vector3.Lerp(root.forward, forwardRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }

@@ -22,10 +22,10 @@ namespace Tools.StateMachine
 
         protected override void Update()
         {
-            timer += Time.deltaTime;
+            //timer += Time.deltaTime;
 
-            if (timer >= attackRecall)
-                sm.SendInput(CharacterHead.PlayerInputs.IDLE);
+            //if (timer >= attackRecall)
+            //    sm.SendInput(CharacterHead.PlayerInputs.IDLE);
         }
 
         protected override void FixedUpdate()

@@ -50,7 +50,7 @@ public class CharacterAttack
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float rangeOfPetrified, float damage, ParticleSystem _attackslash)
     {
         myWeapons = new List<Weapon>();
-        myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", 45));
+        myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", _angle));
         myWeapons.Add(new ExampleWeaponOne(damage, _range, "Other Weapon", 45));
         myWeapons.Add(new ExampleWeaponTwo(damage, _range, "Sarasa Weapon", 45));
         myWeapons.Add(new ExampleWeaponThree(damage, _range, "Ultimate Blessed Weapon", 45));
@@ -77,6 +77,9 @@ public class CharacterAttack
     {
         return currentWeapon.weaponName;
     }
+
+    public void BeginFeedbackSlash() => attackslash.Play();
+    public void EndFeedbackSlash() => attackslash.Stop();
 
     public void BuffOrNerfDamage(float f)
     {

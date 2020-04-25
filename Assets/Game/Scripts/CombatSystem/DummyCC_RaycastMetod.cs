@@ -35,7 +35,6 @@ public class DummyCC_RaycastMetod : CombatComponent
 
     public override void Stop()
     {
-        
         showray = false;
     }
 

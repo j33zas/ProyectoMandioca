@@ -20,12 +20,14 @@ namespace Tools.StateMachine
         {
             base.Enter(input);
 
+            anim.SetBool("takeDamage", true);
             //Acá ejecutaría mi animación de Take Damage... ¡¡Si tan solo tuviera una!!x2
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)
         {
             base.Exit(input);
+            anim.SetBool("takeDamage", false);
             timer = 0;
         }
 
