@@ -286,7 +286,6 @@ public class CharacterHead : CharacterControllable
     public void DealAttack() => charAttack.OnAttack();
     void ReleaseInNormal()
     {
-        
         dmg = dmg_normal;
         charAttack.ChangeDamageBase((int)dmg);
         charanim.NormalAttack();

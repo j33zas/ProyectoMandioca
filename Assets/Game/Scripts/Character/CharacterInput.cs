@@ -39,6 +39,11 @@ public class CharacterInput : MonoBehaviour
     public UnityEvent OnDpad_Right;
 
     private void Awake() => ConfigureJoystickHelper();
+
+    private void Start()
+    {
+        DevelopTools.UI.Debug_UI_Tools.instance.CreateToogle("Input de Rotacion", false, ChangeRotation);
+    }
     private void Update()
     {
         LeftHorizontal.Invoke(Input.GetAxis("Horizontal"));
@@ -83,10 +88,18 @@ public class CharacterInput : MonoBehaviour
         RightVertical.Invoke(Input.GetAxis("RightVertical"));
     }
 
-    public void ChangeRotationInput()
+    string ChangeRotation(bool value)
     {
-        if (input_type == InputType.Mouse) input_type = InputType.Joystick;
-        else if (input_type == InputType.Joystick) input_type = InputType.Mouse;
+        if (value)
+        {
+            input_type = InputType.Mouse;
+            return "Usa Mouse";
+        }
+        else
+        {
+            input_type = InputType.Joystick;
+            return "Usa Joystick";
+        }
     }
 
     #region JoystickHelper

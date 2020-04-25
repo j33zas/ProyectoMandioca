@@ -19,7 +19,7 @@ public class SkillManager_Activas : MonoBehaviour
 
     public Item[] items_to_spawn;
 
-    bool percenslot;
+    bool percenslot = true;
 
     private void Start()
     {
@@ -54,6 +54,15 @@ public class SkillManager_Activas : MonoBehaviour
 
         //refresco el sistema de slots x vida
         ReceiveLife((int)Main.instance.GetChar().Life.GetLife(), 100);
+
+        DevelopTools.UI.Debug_UI_Tools.instance.CreateToogle("Sistema de Slots por porcentaje de vida", true, UseMode_Slots);
+    }
+
+    string UseMode_Slots(bool b)
+    {
+        percenslot = b;
+        ReceiveLife((int)Main.instance.GetChar().Life.GetLife(), 100);
+        return "PercentMode: " + (b ? "activated" : "deactivated") ;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,11 +73,19 @@ public class SkillManager_Activas : MonoBehaviour
     public void EV_Down_DPad() => Press(2);
     public void EV_Right_DPad() => Press(3);
 
+    bool normaluse = true;
     public void Press(int index)
     {
-        var ui = myActiveSkills[index].GetUI();
-        var event_data = new UnityEngine.EventSystems.BaseEventData(Main.instance.GetMyEventSystem().GetMyEventSystem());
-        ui.OnSubmit(event_data);
+        if (normaluse)
+        {
+            var ui = myActiveSkills[index].GetUI();
+            var event_data = new UnityEngine.EventSystems.BaseEventData(Main.instance.GetMyEventSystem().GetMyEventSystem());
+            ui.OnSubmit(event_data);
+        }
+        else
+        {
+            //aca remplazo
+        }
     }
 
 
@@ -77,6 +94,7 @@ public class SkillManager_Activas : MonoBehaviour
     public bool[] slots = new bool[4];
     public void ReceiveLife(int _life, int max)
     {
+        Debug.Log("Life: " + _life + " Max: " + max);
         var aux_value = MAX_PERCENT - _life;
         if (aux_value == 0) aux_value = 1;
         for (int i = 0; i < slots.Length; i++)
@@ -90,6 +108,7 @@ public class SkillManager_Activas : MonoBehaviour
                 slots[i] = true;
             }
         }
+
         frontend.RefreshButtons(slots);
     }
 
@@ -117,6 +136,7 @@ public class SkillManager_Activas : MonoBehaviour
 
         //spawnear el viejo
     }
+    bool oneshot;
     public bool ReplaceFor(SkillInfo _skillinfo, int index, Item item)
     {
         //si ya la tengo repetida ni la agarro
@@ -128,15 +148,15 @@ public class SkillManager_Activas : MonoBehaviour
             fastreference_item.Add(_skillinfo, item);
         }
 
-
         //esto es una negrada... pero hasta que no se confirme si se va a hacer lo de magno
         //lo que hace es que si usa el sistema de magno no se buguee al entrar
         if (slots[0] == false)
         {
             for (int i = 0; i < slots.Length; i++) slots[i] = true;
         }
-
+        
         int cleanindex = FindNextCleanIndex(current_index);
+        if (!oneshot) { oneshot = true; cleanindex = 0; }
 
         //endskill del anterior
         myActiveSkills[cleanindex].EndSkill();
