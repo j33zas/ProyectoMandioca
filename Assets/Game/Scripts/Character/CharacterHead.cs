@@ -265,10 +265,6 @@ public class CharacterHead : CharacterControllable
 
     protected override void OnUpdateEntity()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            SlowMO();
-        }
 
         stateMachine.Update();
         ChildrensUpdates();

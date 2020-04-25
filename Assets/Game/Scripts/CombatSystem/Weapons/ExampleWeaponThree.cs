@@ -23,7 +23,7 @@ public class ExampleWeaponThree : Weapon
                 if (entity == null)
                     entity = enemies[i].GetComponent<EntityBase>();
 
-                enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.forward, Damagetype.parriable, _head);
+                enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, Main.instance.GetChar().transform.position, Damagetype.parriable, _head);
             }
         }
 
