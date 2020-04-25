@@ -14,7 +14,13 @@ public class ANIM_SCRIPT_Base : StateMachineBehaviour
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        
         callback_end.Invoke();
+        OnAnimationExit(animator);
+    }
+    protected virtual void OnAnimationExit(Animator anim)
+    {
+
     }
 
     #region en desuso

@@ -127,19 +127,22 @@ public class TrueDummyEnemy : EnemyBase
     protected override void OnPause() { }
     protected override void OnResume() { }
 
-    public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
+    public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype dmgtype)
     {
         SetTarget(entityTarget);
 
         if (cooldown || Invinsible || sm.Current.Name == "Die") return Attack_Result.inmune;
 
+        Vector3 aux = this.transform.position - attack_pos;
+        aux.Normalize();
+
         if (dmgtype == Damagetype.explosion)
         {
-            rb.AddForce(dir * explosionForce, ForceMode.Impulse);
+            rb.AddForce(aux * explosionForce, ForceMode.Impulse);
         }
         else
         {
-            rb.AddForce(dir * forceRecall, ForceMode.Impulse);
+            rb.AddForce(aux * forceRecall, ForceMode.Impulse);
         }
 
         sm.SendInput(DummyEnemyInputs.TAKE_DAMAGE);
@@ -153,12 +156,13 @@ public class TrueDummyEnemy : EnemyBase
         return Attack_Result.sucessful;
     }
 
-    public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype damagetype, EntityBase owner_entity)
+    public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype damagetype, EntityBase owner_entity)
     {
         if (sm.Current.Name == "Die") return Attack_Result.inmune;
 
         if (sm.Current.Name != "Attack" && entityTarget != owner_entity)
         {
+
             if (!entityTarget)
             {
                 SetTarget(owner_entity); 
@@ -171,7 +175,7 @@ public class TrueDummyEnemy : EnemyBase
             director.AddToAttack(this, entityTarget);
         }
 
-        return TakeDamage(dmg, attackDir, damagetype);
+        return TakeDamage(dmg, attack_pos, damagetype);
     }
 
     public override void HalfLife()

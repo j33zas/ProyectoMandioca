@@ -291,14 +291,16 @@ public class CharacterHead : CharacterControllable
     public void DealAttack() => charAttack.OnAttack();
     void ReleaseInNormal()
     {
-        dmg = dmg_normal;
-        charAttack.ChangeDamageBase((int)dmg);
+        ChangeDamageAttack((int)dmg_normal);
+        ChangeAngleAttack(attackAngle);
+        ChangeRangeAttack(attackRange);
         charanim.NormalAttack();
     }
     void ReleaseInHeavy()
     {
-        dmg = dmg_heavy;
-        charAttack.ChangeDamageBase((int)dmg);
+        ChangeDamageAttack((int)dmg_heavy);
+        ChangeAngleAttack(attackAngle*2);
+        ChangeRangeAttack(attackRange+1);
         charanim.HeavyAttack();
     }
     void EndAttack()
@@ -308,22 +310,9 @@ public class CharacterHead : CharacterControllable
 
     ///////////BigWeaponSkill
 
-    /// <summary>
-    /// Si manda parametro, es para cmabiar el rango de ataque
-    /// </summary>
-    /// <param name="newRangeValue"></param>
-    /// <returns></returns>
-    public float ChangeRangeAttack(float newRangeValue)
-    {
-        if (newRangeValue < 0)
-            return attackRange;
-        charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
-        return newRangeValue;
-    }
-    /// <summary>
-    /// Si no manda parametros vuelve al rango original del arma
-    /// </summary>
-    public void ChangeRangeAttack() => charAttack.currentWeapon.ModifyAttackrange();
+    public void ChangeDamageAttack(int newDamageValue) => charAttack.ChangeDamageBase(newDamageValue);
+    public float ChangeRangeAttack(float newRangeValue = -1) => charAttack.currentWeapon.ModifyAttackrange(newRangeValue);
+    public float ChangeAngleAttack(float newAngleValue = -1) => charAttack.currentWeapon.ModifyAttackAngle(newAngleValue);
     public CharacterAttack GetCharacterAttack() => charAttack;
     private void OnDrawGizmos()
     {

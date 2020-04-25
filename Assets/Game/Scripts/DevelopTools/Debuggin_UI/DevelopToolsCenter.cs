@@ -18,6 +18,7 @@ public class DevelopToolsCenter : MonoBehaviour
     }
     public void UIBUTTON_WrenchDebug()
     {
+        Debug.Log("se abreeeeee");
         open = !open;
         Debug_UI_Tools.instance.Toggle(open);
     }    

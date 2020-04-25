@@ -19,12 +19,12 @@ public class GenericSword : Weapon
             Vector3 dir = enemies[i].transform.position - pos.position;
             float angle = Vector3.Angle(pos.forward, dir);
 
-            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < angleAttack)
+            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < base.angle)
             {
                 if (entity == null)
                     entity = enemies[i].GetComponent<EntityBase>();
 
-                if (enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.forward, Damagetype.parriable, _head) == Attack_Result.sucessful)
+                if (enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.position, Damagetype.parriable, _head) == Attack_Result.sucessful)
                 {
                     //cont++;
                 }
