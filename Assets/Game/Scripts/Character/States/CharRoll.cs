@@ -4,14 +4,21 @@ using UnityEngine;
 
 namespace Tools.StateMachine
 {
+    
+
     public class CharRoll : CharacterStates
     {
-        public CharRoll(EState<CharacterHead.PlayerInputs> myState, EventStateMachine<CharacterHead.PlayerInputs> _sm) : base(myState, _sm)
+        ParticleSystem evadepart;
+
+        public CharRoll(EState<CharacterHead.PlayerInputs> myState, EventStateMachine<CharacterHead.PlayerInputs> _sm, ParticleSystem _evadepart) : base(myState, _sm)
         {
+            evadepart = _evadepart;
         }
 
         protected override void Enter(CharacterHead.PlayerInputs input)
         {
+            evadepart.Play();
+
             charMove.Dash();
         }
 
@@ -32,6 +39,8 @@ namespace Tools.StateMachine
 
         protected override void Exit(CharacterHead.PlayerInputs input)
         {
+            evadepart.Stop();
+
             base.Exit(input);
         }
     }

@@ -20,6 +20,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDeceleration;
     [SerializeField] float dashCD;
+    [SerializeField] ParticleSystem evadeParticle;
 
 
     [Header("Movement Options")]
@@ -243,7 +244,7 @@ public class CharacterHead : CharacterControllable
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
         new CharEndBlock(endBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetBlock(charBlock);
         new CharParry(parry, stateMachine, parryRecall).SetMovement(this.move).SetBlock(charBlock);
-        new CharRoll(roll, stateMachine).SetMovement(this.move);
+        new CharRoll(roll, stateMachine,evadeParticle).SetMovement(this.move);
         new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetAttack(charAttack);
         new CharReleaseAttack(attackRelease, stateMachine, attackRecall).SetMovement(this.move).SetAttack(charAttack);
