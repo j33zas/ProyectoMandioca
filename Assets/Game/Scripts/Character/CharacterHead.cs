@@ -43,10 +43,11 @@ public class CharacterHead : CharacterControllable
     //Perdon por esto, pero lo necesito pra la skill del boomeran hasta tener la animacion y el estado "sin escudo"
     bool canBlock = true;
     public GameObject escudo;
-    
 
+    [Header("SlowMotion")]
     [SerializeField] float timeScale;
     [SerializeField] float slowDuration;
+    [SerializeField] float speedAnim;
 
     [Header("Feedbacks")]
     [SerializeField] ParticleSystem feedbackCW;
@@ -89,6 +90,7 @@ public class CharacterHead : CharacterControllable
     public CharLifeSystem Life => lifesystem;
 
     Rigidbody rb;
+
 
 
     protected override void OnInitialize()
@@ -262,6 +264,11 @@ public class CharacterHead : CharacterControllable
 
     protected override void OnUpdateEntity()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SlowMO();
+        }
+
         stateMachine.Update();
         ChildrensUpdates();
         charAttack.Refresh();
@@ -288,16 +295,27 @@ public class CharacterHead : CharacterControllable
     public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
     public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
-    public void DealAttack() => charAttack.OnAttack();
+    public void DealAttack() 
+    { 
+        charAttack.OnAttack();
+        if (isHeavyRelease)
+        {
+            isHeavyRelease = false;
+            SlowMO();
+        }
+    }
     void ReleaseInNormal()
     {
+        isHeavyRelease = false;
         ChangeDamageAttack((int)dmg_normal);
         ChangeAngleAttack(attackAngle);
         ChangeRangeAttack(attackRange);
         charanim.NormalAttack();
     }
+    bool isHeavyRelease;
     void ReleaseInHeavy()
     {
+        isHeavyRelease = true;
         ChangeDamageAttack((int)dmg_heavy);
         ChangeAngleAttack(attackAngle*2);
         ChangeRangeAttack(attackRange+1);
@@ -447,6 +465,12 @@ public class CharacterHead : CharacterControllable
         rotateY = axis;
     }
     #endregion
+
+    void SlowMO()
+    {
+        Main.instance.GetTimeManager().DoSlowMotion(timeScale, slowDuration);
+        customCam.DoFastZoom(speedAnim);
+    }
 
     #region Take Damage
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype dmgtype)
