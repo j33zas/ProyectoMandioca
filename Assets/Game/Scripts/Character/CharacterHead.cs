@@ -30,6 +30,9 @@ public class CharacterHead : CharacterControllable
     [Header("Parry & Block Options")]
     [SerializeField] float _timerOfParry;
     [SerializeField] float _timeOfBlock;
+    [SerializeField] int maxBlockCharges = 3;
+    [SerializeField] float timeToRecuperateCharges = 5;
+    [SerializeField] GameObject chargesUI;
     [SerializeField] ParticleSystem parryParticle;
     [SerializeField] ParticleSystem blockParticle;
     [SerializeField] ParticleSystem hitParticle;
@@ -114,7 +117,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += move.OnUpdate;
         move.SetCallbacks(OnBeginRoll, OnEndRoll);
 
-        charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, charanim, GetSM, inParryParticles);
+        charBlock = new CharacterBlock(_timerOfParry, blockAngle, _timeOfBlock, maxBlockCharges, timeToRecuperateCharges, chargesUI, charanim, GetSM, inParryParticles);
         charBlock.OnParry += () => charanim.Parry(true);
         charBlock.EndBlock += EVENT_UpBlocking;
         ChildrensUpdates += charBlock.OnUpdate;
@@ -344,9 +347,11 @@ public class CharacterHead : CharacterControllable
         //Puesto para no poder bloquear cuando el personaje tira el escudo en el boomeranSkill
         if (!canBlock)
             return;
-        
-        
-        stateMachine.SendInput(PlayerInputs.BEGIN_BLOCK);
+
+        if (charBlock.CurrentBlockCharges > 0)
+        {
+            stateMachine.SendInput(PlayerInputs.BEGIN_BLOCK);
+        }
     }
     public void EVENT_UpBlocking()
     {
@@ -450,8 +455,6 @@ public class CharacterHead : CharacterControllable
     #region Take Damage
     public override Attack_Result TakeDamage(int dmg, Vector3 attackDir, Damagetype dmgtype)
     {
-        Debug.Log("playerDamage ¿entra 2 veces?");
-
         if (InDash())
             return Attack_Result.inmune;
 
@@ -467,6 +470,8 @@ public class CharacterHead : CharacterControllable
         {
             blockParticle.Play();
             charanim.BlockSomething();
+            charBlock.SetBlockCharges(-1);
+            lifesystem.Hit(dmg / 2);
             return Attack_Result.blocked;
         }
         else

@@ -22,9 +22,20 @@ public class CharacterBlock : EntityBlock
     float timeBlock;
     float timerToUpBlock;
 
+    public int CurrentBlockCharges { get; private set; }
+    int maxBlockCharges;
+
+    float timeToRecuperate;
+    float timerCharges;
+
+    UI_GraphicContainer ui;
+
     public CharacterBlock(float timeParry,
                           float blockRange,
                           float _timeToBlock,
+                          int maxCharges,
+                          float timeRecuperate,
+                          GameObject _ui,
                           CharacterAnimator _anim,
                           Func<EventStateMachine<CharacterHead.PlayerInputs>> _sm,
                           ParticleSystem _parryParticles) : base(timeParry, blockRange)
@@ -38,6 +49,12 @@ public class CharacterBlock : EntityBlock
         BeginParry += Parry;
         BeginParry += ParryFeedback;
         timeBlock = _timeToBlock;
+        maxBlockCharges = maxCharges;
+        CurrentBlockCharges = maxCharges;
+        timeToRecuperate = timeRecuperate;
+        var newUi = MonoBehaviour.Instantiate(_ui, Main.instance.gameUiController.MyCanvas.transform);
+        ui = newUi.GetComponentInChildren<UI_GraphicContainer>();
+        ui.OnValueChange(CurrentBlockCharges, maxBlockCharges);
     }
 
     public override void OnBlockDown() { if(!onBlock) anim.Block(true); }
@@ -54,15 +71,44 @@ public class CharacterBlock : EntityBlock
     {
         base.OnUpdate();
 
-        if (onBlock)
-        {
-            timerToUpBlock += Time.deltaTime;
+        //if (onBlock)
+        //{
+        //    timerToUpBlock += Time.deltaTime;
 
-            if (timerToUpBlock >= timeBlock)
+        //    if (timerToUpBlock >= timeBlock)
+        //    {
+        //        EndBlock();
+        //    }
+        //}
+
+        if (!onBlock && CurrentBlockCharges < maxBlockCharges)
+        {
+            timerCharges += Time.deltaTime;
+
+            if (timerCharges >= timeToRecuperate)
             {
-                EndBlock();
+                SetBlockCharges(1);
+                timerCharges = 0;
             }
         }
+    }
+
+    public void SetBlockCharges(int chargesAmmount)
+    {
+        CurrentBlockCharges += chargesAmmount;
+
+        if(CurrentBlockCharges <= 0)
+        {
+            CurrentBlockCharges = 0;
+            EndBlock();
+        }
+        else if (CurrentBlockCharges >= maxBlockCharges)
+        {
+            CurrentBlockCharges = maxBlockCharges;
+            timerCharges = 0;
+        }
+
+        ui.OnValueChange(CurrentBlockCharges, maxBlockCharges, true);
     }
 
     void ParryFeedback()
