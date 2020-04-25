@@ -1150,6 +1150,7 @@
                 <e p="BigWeapons" t="Include">
                   <e p="BigWeapon_Skill.cs" t="Include" />
                   <e p="BigWeapons_TEST.cs" t="Include" />
+                  <e p="GhostSword_animHelper.cs" t="Include" />
                 </e>
                 <e p="FireParry" t="Include">
                   <e p="FireParry_skill.cs" t="Include" />

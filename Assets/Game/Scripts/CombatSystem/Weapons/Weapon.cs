@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ public abstract class Weapon
 
     protected CharacterHead _head;
 
+    public Action<Attack_Result> AttackResult;
+
     public Weapon(float dmg, float r, string n, float angle)
     {
         baseDamage = dmg;
@@ -34,8 +37,8 @@ public abstract class Weapon
     /// </summary>
     /// <param name="changedValue"></param>
     public float ModifyAttackrange(float changedValue = -1) 
-    { 
-        range = (changedValue == -1) ? range = originalRange : range = changedValue; 
+    {
+        range = (changedValue == -1) ? range = originalRange : range = changedValue;
         return range; 
     }
 

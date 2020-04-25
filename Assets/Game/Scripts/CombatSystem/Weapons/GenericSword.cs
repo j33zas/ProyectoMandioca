@@ -24,10 +24,9 @@ public class GenericSword : Weapon
                 if (entity == null)
                     entity = enemies[i].GetComponent<EntityBase>();
 
-                if (enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, pos.forward, Damagetype.parriable, _head) == Attack_Result.sucessful)
-                {
-                    //cont++;
-                }
+                var attackResult = enemies[i].GetComponent<EnemyBase>().TakeDamage((int) damage, pos.forward, Damagetype.parriable, _head);
+
+                AttackResult?.Invoke(attackResult);
             }
         }
 
