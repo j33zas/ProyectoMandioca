@@ -7,7 +7,7 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
 {
     public bool target;
     public bool attacking;
-    public Transform crownPosition;
+    public GameObject targetFeedBack;
     public Action OnParried;
     public bool minionTarget;
     public bool Invinsible;
@@ -20,12 +20,12 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
     public virtual void IsTarget()
     {
         target = true;
-        Main.instance.GetCrown().GetMyVIP(crownPosition);
+        targetFeedBack.SetActive(true);
     }
     public virtual void IsNormal()
     {
         target = false;
-        Main.instance.GetCrown().RemoveVIP(crownPosition);
+        targetFeedBack.SetActive(false);
     }
 
     [SerializeField] protected float combatDistance;

@@ -135,9 +135,10 @@ public class TrueDummyEnemy : EnemyBase
 
         Vector3 aux = this.transform.position - attack_pos;
         aux.Normalize();
-
+        rb = GetComponent<Rigidbody>();
         if (dmgtype == Damagetype.explosion)
         {
+            Debug.Log(rb);
             rb.AddForce(aux * explosionForce, ForceMode.Impulse);
         }
         else
@@ -181,7 +182,7 @@ public class TrueDummyEnemy : EnemyBase
     public override void HalfLife()
     {
         base.HalfLife();
-        TakeDamage(lifesystem.life / 2, transform.position, Damagetype.normal);
+        TakeDamage(lifesystem.life / 2, Main.instance.GetChar().transform.position, Damagetype.normal);
         if (!base.target)
             Invinsible = true;
     }
@@ -225,6 +226,14 @@ public class TrueDummyEnemy : EnemyBase
 
     public void Die()
     {
+        if (target)
+        {
+           List<EnemyBase>myEnemys= Main.instance.GetNoOptimizedListEnemies();
+            for (int i = 0; i < myEnemys.Count; i++)
+            {
+                myEnemys[i].Invinsible = false;
+            }
+        }
         director.RemoveToAttack(this, entityTarget);
         sm.SendInput(DummyEnemyInputs.DIE);
     }

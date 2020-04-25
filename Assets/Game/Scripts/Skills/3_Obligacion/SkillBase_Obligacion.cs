@@ -7,28 +7,37 @@ public class SkillBase_Obligacion : SkillBase
     protected EnemyBase enemyVIP;
     protected List<EnemyBase> myEnemies = new List<EnemyBase>();
     protected SensorForEnemysInRoom mySensor;
+    [SerializeField]
+    protected float _range=10;
+    [SerializeField]
+    protected LayerMask _layerMask;
 
     protected override void OnBeginSkill()
     {
-        mySensor = Main.instance.GetRoom()._sensor;
-        mySensor.AddCallback_OnTriggerExit(ExitTheRoom);
-        myEnemies = Main.instance.GetRoom().myenemies();
-        Debug.Log(Main.instance.GetRoom());
-        if (!Main.instance.GetRoom().VIPInRoom())
+        if (Main.instance.GetRoom() != null)
         {
-            int index = Random.Range(0, myEnemies.Count);
-            myEnemies[index].IsTarget();
-            enemyVIP= myEnemies[index];
-            Debug.Log(myEnemies[index]);
-            for (int i = 0; i < myEnemies.Count; i++)
+            mySensor = Main.instance.GetRoom()._sensor;
+            mySensor.AddCallback_OnTriggerExit(ExitTheRoom);
+            myEnemies = Main.instance.GetRoom().myenemies();
+            if (!Main.instance.GetRoom().VIPInRoom())
             {
-                Debug.Log(myEnemies[i]);
-                myEnemies[i].Resume();
-                myEnemies[i].IAInitialize(Main.instance.GetCombatDirector());
-                if (i != index)
-                    myEnemies[i].IsNormal();
+                int index = Random.Range(0, myEnemies.Count);
+                myEnemies[index].IsTarget();
+                enemyVIP = myEnemies[index];
+                for (int i = 0; i < myEnemies.Count; i++)
+                {
+                    myEnemies[i].Resume();
+                    myEnemies[i].IAInitialize(Main.instance.GetCombatDirector());
+                    if (i != index)
+                        myEnemies[i].IsNormal();
+                }
             }
         }
+        else
+        {
+            NoRoom();
+        }
+       
        
     }
 
@@ -50,5 +59,33 @@ public class SkillBase_Obligacion : SkillBase
             //aca podrias poner el onEndSkill()
         }
 
+    }
+
+    protected void NoRoom()
+    {
+        var player = Main.instance.GetChar();
+        var overlap = Physics.OverlapSphere(player.transform.position, _range, _layerMask);
+        myEnemies = new List<EnemyBase>();
+        foreach (var item in overlap)
+        {
+            var myEnemy = item.GetComponent<EnemyBase>();
+            if (myEnemy)
+            {
+                    myEnemies.Add(myEnemy);
+            }
+        }
+        if (myEnemies.Count != 0)
+        {
+           int index = Random.Range(0, myEnemies.Count);
+           myEnemies[index].IsTarget();
+           for (int i = 0; i < myEnemies.Count; i++)
+           {
+               if (i != index)
+               {
+                  myEnemies[i].IsNormal();
+               }
+           }
+        }
+        
     }
 }

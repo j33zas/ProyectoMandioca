@@ -12,13 +12,14 @@ public class Skill_FirstAttack : SkillBase_Obligacion
     CharacterAttack charattack;
     private void Start()
     {
-        charattack = Main.instance.GetChar().GetCharacterAttack();
+        
     }
 
     protected override void OnBeginSkill()
     {
         //Main.instance.GetChar().Attack += ReceivePetrifyOnDeathMinion;
         base.OnBeginSkill();
+        charattack = Main.instance.GetChar().GetCharacterAttack();
         charattack.ActiveFirstAttack();
         charattack.AddCAllback_ReceiveEntity(RecieveEntity);
     }
