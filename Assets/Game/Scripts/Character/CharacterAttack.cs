@@ -78,6 +78,9 @@ public class CharacterAttack
         return currentWeapon.weaponName;
     }
 
+    public void BeginFeedbackSlash() => attackslash.Play();
+    public void EndFeedbackSlash() => attackslash.Stop();
+
     public void BuffOrNerfDamage(float f)
     {
         currentDamage += f;
