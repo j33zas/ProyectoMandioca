@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class SkillActivas : SkillBase
 {
@@ -14,6 +15,13 @@ public abstract class SkillActivas : SkillBase
     public float useTime = 5f;
     float timer_use = 0;
     bool beginUse;
+    Func<bool> predicate;
+    bool usePredicate;
+    public void SetPredicate(Func<bool> pred)
+    {
+        predicate = pred;
+        usePredicate = true;
+    }
 
     public override void BeginSkill()
     {
@@ -29,6 +37,9 @@ public abstract class SkillActivas : SkillBase
 
     public void Execute()
     {
+        if (usePredicate)
+            if (!predicate()) return;
+
         if (!begincooldown)
         {
             begincooldown = true;

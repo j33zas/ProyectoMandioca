@@ -109,6 +109,15 @@ public class SkillManager_Activas : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (!slots[i])
+            {
+                Clear(i);
+            }
+        }
+
+        frontend.ReAssignUIInfo(myActiveSkills);
         frontend.RefreshButtons(slots);
     }
 
@@ -124,15 +133,16 @@ public class SkillManager_Activas : MonoBehaviour
 
     public SkillInfo Look(int index) => my_editor_data_base[index].skillinfo;
     int current_index;
-    public void ReplaceFor(SkillInfo _skillinfo, int index)
+    public void Clear(int index)
     {
-        myActiveSkills[current_index].EndSkill();
-        myActiveSkills[current_index] = fastreference_actives[_skillinfo];
-
-        frontend.Reconfigurate(myActiveSkills);
-        myActiveSkills[current_index].BeginSkill();
-
-        current_index = current_index.NextIndex(myActiveSkills.Length);
+        if (fastreference_item.ContainsKey(myActiveSkills[index].skillinfo))
+        {
+            myActiveSkills[index].EndSkill();
+            var _item = fastreference_item[myActiveSkills[index].skillinfo];
+            Main.instance.SpawnItem(_item, Main.instance.GetChar().transform.position + Main.instance.GetChar().GetCharMove().GetRotatorDirection());
+            myActiveSkills[index] = vacio;
+            myActiveSkills[index].BeginSkill();
+        }
 
         //spawnear el viejo
     }
@@ -175,7 +185,7 @@ public class SkillManager_Activas : MonoBehaviour
         //asigno a este index el nuevo skill
         myActiveSkills[cleanindex] = fastreference_actives[_skillinfo];
 
-        frontend.Reconfigurate(myActiveSkills);
+        frontend.ReAssignUIInfo(myActiveSkills);
         myActiveSkills[cleanindex].BeginSkill();
 
         current_index = cleanindex;

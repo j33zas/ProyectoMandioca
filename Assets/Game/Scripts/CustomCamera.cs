@@ -36,7 +36,7 @@ public class CustomCamera : MonoBehaviour
             Shake();
         }
     }
-    public void DoFastZoom(float _speedanim, float _fieldOfViewToZoom = 50)
+    public void DoFastZoom(float _speedanim, float _fieldOfViewToZoom = 55)
     {
         fieldOfView_toZoom = _fieldOfViewToZoom;
         pingpongZoom.Play(_speedanim);
