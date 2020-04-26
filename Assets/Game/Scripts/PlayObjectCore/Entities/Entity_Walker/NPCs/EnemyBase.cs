@@ -11,6 +11,7 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
     public Action OnParried;
     public bool minionTarget;
     public bool Invinsible;
+    public bool death;
 
     public virtual void Awake()
     {

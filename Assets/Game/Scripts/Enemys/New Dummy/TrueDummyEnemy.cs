@@ -238,6 +238,7 @@ public class TrueDummyEnemy : EnemyBase
         }
         director.RemoveToAttack(this, entityTarget);
         sm.SendInput(DummyEnemyInputs.DIE);
+        death = true;
     }
 
     void DeathAnim()
