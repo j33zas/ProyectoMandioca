@@ -247,7 +247,7 @@ public class CharacterHead : CharacterControllable
         new CharRoll(roll, stateMachine,evadeParticle).SetMovement(this.move);
         new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetAttack(charAttack);
-        new CharReleaseAttack(attackRelease, stateMachine, attackRecall).SetMovement(this.move).SetAttack(charAttack);
+        new CharReleaseAttack(attackRelease, stateMachine, attackRecall, HeavyAttackRealease).SetMovement(this.move).SetAttack(charAttack).SetLeftAxis(GetLeftHorizontal, GetLeftVertical);
         new CharTakeDmg(takeDamage, stateMachine, takeDamageRecall);
         new CharDead(dead, stateMachine);
     }
@@ -317,6 +317,11 @@ public class CharacterHead : CharacterControllable
         ChangeAngleAttack(attackAngle*2);
         ChangeRangeAttack(attackRange+1);
         charanim.HeavyAttack();
+    }
+
+    public bool HeavyAttackRealease()
+    {
+        return isHeavyRelease;
     }
     void EndAttack()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Tools.StateMachine
 {
@@ -8,20 +9,30 @@ namespace Tools.StateMachine
     {
         float timer;
         float attackRecall;
-        public CharReleaseAttack(EState<CharacterHead.PlayerInputs> myState, EventStateMachine<CharacterHead.PlayerInputs> _sm, float recall) : base(myState, _sm)
+        Func<bool> IsHeavy;
+
+        public CharReleaseAttack(EState<CharacterHead.PlayerInputs> myState, EventStateMachine<CharacterHead.PlayerInputs> _sm, float recall, Func<bool> _isHeavy) : base(myState, _sm)
         {
             attackRecall = recall;
+            IsHeavy = _isHeavy;
         }
 
         protected override void Enter(CharacterHead.PlayerInputs input)
         {
-            charMove.MovementHorizontal(0);
-            charMove.MovementVertical(0);
-            charAttack.OnAttackEnd();
+            if (IsHeavy())
+            {
+                charMove.MovementHorizontal(0);
+                charMove.MovementVertical(0);
+            }
         }
 
         protected override void Update()
         {
+            if (!IsHeavy())
+            {
+                charMove.MovementHorizontal(LeftHorizontal());
+                charMove.MovementVertical(LeftVertical());
+            }
             //timer += Time.deltaTime;
 
             //if (timer >= attackRecall)

@@ -36,9 +36,9 @@ namespace Tools.StateMachine
         protected override void Exit(CharacterHead.PlayerInputs input)
         {
             if (input != CharacterHead.PlayerInputs.RELEASE_ATTACK)
-            {
                 charAttack.AttackFail();
-            }
+            else
+                charAttack.OnAttackEnd();
         }
     }
 }
