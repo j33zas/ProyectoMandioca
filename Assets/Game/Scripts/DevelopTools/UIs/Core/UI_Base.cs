@@ -40,7 +40,7 @@ public abstract class UI_Base : MonoBehaviour
         parent.SetActive(true);
         Refresh();
         isActive = true;
-        Main.instance.GetMyEventSystem().Set_First(firstToOpenMenu.gameObject);
+        if(firstToOpenMenu) Main.instance.GetMyEventSystem().Set_First(firstToOpenMenu.gameObject);
     }
     public virtual void Close()
     {

@@ -35,6 +35,8 @@ public class GenericSword : Weapon
                     oneshotSucsesfull = true;
                 }
 
+                Debug.Log("Attack result: " + attackResult.ToString());
+
                 //if (enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, Main.instance.GetChar().transform.position, Damagetype.parriable, _head) == Attack_Result.sucessful)
                 //{
                 //    //cont++;
