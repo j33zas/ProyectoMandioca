@@ -164,7 +164,7 @@ Shader "Particle/LevelUp"
 }
 /*ASEBEGIN
 Version=17200
-0;429;1086;260;1352.479;57.87232;1;True;False
+0;394;1086;295;1352.479;57.87232;1;True;False
 Node;AmplifyShaderEditor.TextureCoordinatesNode;7;-1798.118,-172.8512;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.WireNode;9;-1519.115,34.03375;Inherit;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.RangedFloatNode;10;-1299.552,98.26733;Inherit;False;Property;_Mask;Mask;2;0;Create;True;0;0;False;0;0;1.06;0;0;0;1;FLOAT;0
@@ -190,4 +190,4 @@ WireConnection;13;0;1;4
 WireConnection;0;2;2;0
 WireConnection;0;9;13;0
 ASEEND*/
-//CHKSM=0044919BD3DB7CF706BE24F27ACF3AF3CAFF6E8D
+//CHKSM=98FE5282C842147398FCB64D06E8D2D445F9DDB7
