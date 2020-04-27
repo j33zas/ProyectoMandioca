@@ -2,7 +2,13 @@
 public class CharacterAnimator : BaseAnimator
 {
     public CharacterAnimator(Animator _anim) : base(_anim) { }
-    public void Move(float _speed) => myAnim.SetFloat("Speed", _speed);
+    public void Move(float _speed, float dirX, float dirY)
+    {
+        myAnim.SetFloat("Speed", _speed);
+        myAnim.SetFloat("moveX", dirX);
+        myAnim.SetFloat("moveY", dirY);
+    }
+
     public void Roll() => myAnim.SetTrigger("Roll");
     public void SetVerticalRoll(float x) => myAnim.SetFloat("dirX", x);
     public void SetHorizontalRoll(float y) => myAnim.SetFloat("dirY", y);
