@@ -5,6 +5,7 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="AnimAtenea.cs" t="Include" />
         <e p="Game" t="Include">
           <e p="Art" t="Include">
             <e p="Fonts" t="Include">
@@ -820,6 +821,18 @@
                 <e p="ExampleWeaponTwo.cs" t="Include" />
                 <e p="GenericSword.cs" t="Include" />
                 <e p="Weapon.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Containers" t="Include">
+              <e p="ContainerBase.cs" t="Include" />
+              <e p="Destructible" t="Include">
+                <e p="Core" t="Include">
+                  <e p="DestructibleBase.cs" t="Include" />
+                  <e p="DestructibleData.cs" t="Include" />
+                  <e p="ParentContainer.cs" t="Include" />
+                </e>
+                <e p="Destructible_Normal.cs" t="Include" />
+                <e p="Destructible_OLD.cs" t="Include" />
               </e>
             </e>
             <e p="CustomCamera.cs" t="Include" />

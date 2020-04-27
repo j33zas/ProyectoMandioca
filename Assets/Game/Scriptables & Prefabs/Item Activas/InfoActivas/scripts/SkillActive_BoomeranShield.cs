@@ -23,6 +23,7 @@ public class SkillActive_BoomeranShield : SkillActivas
     private Vector3 startHeroLookDirection;
 
     [SerializeField] private ParticleSystem sparks;
+    [SerializeField] private ParticleSystem auraZone;
 
     [SerializeField] private GameObject auxShield;
 
@@ -54,6 +55,12 @@ public class SkillActive_BoomeranShield : SkillActivas
         auxShield.transform.position = _shield.transform.position;
         _shield.SetActive(false);
         sparks.Play();
+        auraZone.Play();
+        var auraMain = auraZone.main;
+        auraMain.startSize = radius * 2;
+        
+                
+
         
         spinPosition = auxShield.transform.position + (_hero.GetCharMove().GetRotatorDirection() * throwRange);
         startHeroPos = _shield.transform.position;
@@ -70,6 +77,7 @@ public class SkillActive_BoomeranShield : SkillActivas
         auxShield.SetActive(false);
         timeCount = 0;
         sparks.Stop();
+        auraZone.Stop();
     }
 
     protected override void OnUpdateUse()
@@ -79,6 +87,7 @@ public class SkillActive_BoomeranShield : SkillActivas
        
         //Feedback
         sparks.transform.position = auxShield.transform.position;
+        auraZone.transform.position = auxShield.transform.position + Vector3.down * .5f;
         
         //Hago el daño
         var enemiesClose = Extensions.FindInRadius<EnemyBase>(auxShield.transform.position, radius);
