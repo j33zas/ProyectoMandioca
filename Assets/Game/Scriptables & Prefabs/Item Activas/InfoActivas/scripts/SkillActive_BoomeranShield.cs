@@ -50,7 +50,7 @@ public class SkillActive_BoomeranShield : SkillActivas
 
     protected override void OnStartUse()
     {
-        _hero.ToggleBlock();
+        _hero.ToggleBlock(false);
         auxShield.SetActive(true);
         auxShield.transform.position = _shield.transform.position;
         _shield.SetActive(false);
@@ -72,7 +72,7 @@ public class SkillActive_BoomeranShield : SkillActivas
 
     protected override void OnStopUse()
     {
-        _hero.ToggleBlock();
+        _hero.ToggleBlock(true);
         _shield.SetActive(true);
         auxShield.SetActive(false);
         timeCount = 0;

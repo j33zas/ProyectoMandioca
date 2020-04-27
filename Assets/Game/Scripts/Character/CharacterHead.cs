@@ -353,9 +353,9 @@ public class CharacterHead : CharacterControllable
     #region Block & Parry
 
     //Toggle con la posibilidad de bloquear o no
-    public void ToggleBlock()
+    public void ToggleBlock(bool val)
     {
-        canBlock = !canBlock;
+        canBlock = val;
     }
 
     public void EVENT_OnBlocking()

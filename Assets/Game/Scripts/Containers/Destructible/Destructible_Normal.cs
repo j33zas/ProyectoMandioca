@@ -23,6 +23,8 @@ public class Destructible_Normal : DestructibleBase
 
     public bool destroy;
 
+    public ParticleSystem dest_part;
+
     Rigidbody onerig;
     Vector3 dest;
 
@@ -89,6 +91,7 @@ public class Destructible_Normal : DestructibleBase
     void Drop()
     {
         var dispercion = 0.5f;
+        dest_part.Play();
 
         for (int i = 0; i < objectsToDrop.Count; i++)
         {
