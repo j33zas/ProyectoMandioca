@@ -824,6 +824,9 @@
             </e>
             <e p="CustomCamera.cs" t="Include" />
             <e p="DevelopTools" t="Include">
+              <e p="Console" t="Include">
+                <e p="Console.cs" t="Include" />
+              </e>
               <e p="Debuggin_UI" t="Include">
                 <e p="Debug_UI_Tools.cs" t="Include" />
                 <e p="Debuggin_Template_Slider.cs" t="Include" />
@@ -957,6 +960,7 @@
             </e>
             <e p="Enums.cs" t="Include" />
             <e p="FastChangeMesh.cs" t="Include" />
+            <e p="FocusOnEnemy_Test.cs" t="Include" />
             <e p="GameEvents.cs" t="Include" />
             <e p="Interactables" t="Include">
               <e p="Core" t="Include">

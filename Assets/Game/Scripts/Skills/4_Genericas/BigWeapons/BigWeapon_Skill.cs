@@ -57,7 +57,7 @@ public class BigWeapon_Skill : SkillBase
     {
         atenaImage.transform.position = charHead.transform.position + Vector3.up * 3;
         atenaImage.GetComponent<ParticleSystem>().Play();
-        ghostSword.localPosition = charHead.transform.position + charHead.GetCharMove().GetLookDirection() * 2 + Vector3.up;
+        ghostSword.localPosition = charHead.transform.position + charHead.GetCharMove().GetLookDirection() * _characterAttack.currentWeapon.GetWpnRange() + Vector3.up;
         ghostSword.rotation = Quaternion.LookRotation(charHead.GetCharMove().GetLookDirection(), Vector3.up);
         ghostSword.gameObject.SetActive(true);
     }
