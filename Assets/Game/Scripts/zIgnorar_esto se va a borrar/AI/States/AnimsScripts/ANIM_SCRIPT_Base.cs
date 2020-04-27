@@ -6,7 +6,7 @@ using UnityEngine.Animations;
 
 public class ANIM_SCRIPT_Base : StateMachineBehaviour
 {
-    Action callback_end = delegate { };
+    protected Action callback_end = delegate { };
 
     public void ConfigureCallback(Action _callbackend)
     {

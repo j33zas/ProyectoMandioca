@@ -42,7 +42,7 @@ Material:
     - _Freq: 55.4
     - _InvertMask: 1.04
     - _Mask: -10.897016
-    - _MaskBot: -12.9
+    - _MaskBot: -5.2
     - _MaskTop: -1
     - _OpacityIntensity: 0.5
     - _Power: 0.1

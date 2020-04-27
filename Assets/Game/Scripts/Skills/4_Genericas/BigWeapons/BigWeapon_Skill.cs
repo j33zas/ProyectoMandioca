@@ -10,29 +10,30 @@ public class BigWeapon_Skill : SkillBase
     [SerializeField] private float duration;
     [Range(0,10)]
     [SerializeField] private float percentRangeModifier;
+    [SerializeField] private float RangeMultiplier;
+    [SerializeField] private float AngleMultiplier;
+
 
     [Header("Feedback settings")]
     [SerializeField] private Transform aura;
     [SerializeField] Transform ghostSword;
     [SerializeField] Transform atenaImage;
+    [SerializeField] AnimAtenea atenea;
     
     
     private float _count;
     private int cantDeGolpesExitosos;
     private CharacterAttack _characterAttack;
     private CharacterHead charHead;
-    private float originalrange;
     private bool isActive = false;
 
-    private float currentAttackRange;
+    private const float NO_OVERRIDE_VALUE = -1;
+
     protected override void OnBeginSkill()
     {
         charHead = Main.instance.GetChar();
         _characterAttack = Main.instance.GetChar().GetCharacterAttack();
-
         _characterAttack.currentWeapon.AttackResult += OnSuccesAttack;
-
-        originalrange = _characterAttack.currentWeapon.ModifyAttackrange();
 
     }
     private void OnSuccesAttack(Attack_Result result) // recibe el resultado del ataque y suma uno al contador. Si llega al ncesario, activa el skill
@@ -45,7 +46,9 @@ public class BigWeapon_Skill : SkillBase
         {
             cantDeGolpesExitosos = 0;
             isActive = true;
-            _characterAttack.currentWeapon.ModifyAttackrange(CalculateRangeAttackModifier(percentRangeModifier));
+            //_characterAttack.currentWeapon.ModifyAttackrange(CalculateRangeAttackModifier(percentRangeModifier));
+            _characterAttack.currentWeapon.BeginOverrideRange(NO_OVERRIDE_VALUE, RangeMultiplier);
+            _characterAttack.currentWeapon.BeginOverrideAngle(NO_OVERRIDE_VALUE, AngleMultiplier);
             aura.position = charHead.transform.position + Vector3.up * .25f;
             aura.gameObject.SetActive(true);
 
@@ -55,8 +58,11 @@ public class BigWeapon_Skill : SkillBase
 
     private void SetGhostSword()
     {
-        atenaImage.transform.position = charHead.transform.position + Vector3.up * 3;
-        atenaImage.GetComponent<ParticleSystem>().Play();
+        //atenaImage.transform.position = charHead.transform.position + Vector3.up * 3;
+        //atenaImage.GetComponent<ParticleSystem>().Play();
+        atenea.AteneaAttack();
+        atenea.transform.position = charHead.transform.position;
+        atenea.transform.rotation = Quaternion.LookRotation(charHead.GetCharMove().GetLookDirection(), Vector3.up);
         ghostSword.localPosition = charHead.transform.position + charHead.GetCharMove().GetLookDirection() * _characterAttack.currentWeapon.GetWpnRange() + Vector3.up;
         ghostSword.rotation = Quaternion.LookRotation(charHead.GetCharMove().GetLookDirection(), Vector3.up);
         ghostSword.gameObject.SetActive(true);
@@ -65,7 +71,8 @@ public class BigWeapon_Skill : SkillBase
     protected override void OnEndSkill()
     {
         _characterAttack.currentWeapon.AttackResult -= OnSuccesAttack;
-        _characterAttack.currentWeapon.ModifyAttackrange(originalrange);
+        _characterAttack.currentWeapon.EndOverrideAngle();
+        _characterAttack.currentWeapon.EndOverrideRange();
     }
 
     protected override void OnUpdateSkill()
@@ -85,16 +92,16 @@ public class BigWeapon_Skill : SkillBase
         }
         else
         {
+            _characterAttack.currentWeapon.EndOverrideAngle();
+            _characterAttack.currentWeapon.EndOverrideRange();
             aura.gameObject.SetActive(false);
-            _characterAttack.currentWeapon.ModifyAttackrange(originalrange);
-            
+            _characterAttack.currentWeapon.ModifyAttackrange(NO_OVERRIDE_VALUE);
         }
     }
     
-    public float CalculateRangeAttackModifier(float percent)
-    {
-        float newRangeValue = originalrange * percent;
-        return newRangeValue;
-
-    }
+    //public float CalculateRangeAttackModifier(float percent)
+    //{
+    //    float newRangeValue = _characterAttack.currentWeapon.GetWpnOriginalRange() * percent;
+    //    return newRangeValue;
+    //}
 }

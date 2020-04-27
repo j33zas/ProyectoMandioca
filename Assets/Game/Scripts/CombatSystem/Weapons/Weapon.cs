@@ -35,21 +35,66 @@ public abstract class Weapon
         _head = Main.instance.GetChar();
     }
 
+    #region Range Handler
     /// está por parametro opcional, si se envia parametro usa ese valor, si no se manada setea -1 y usa el rango original
-    public float ModifyAttackrange(float changedValue = -1) 
+    bool overriderange = false;
+    public float ModifyAttackrange(float changedValue = -1, float multiplier = 1f) 
     {
+        if (overriderange) return range;
         range = (changedValue == -1) ? range = originalRange : range = changedValue;
-        return range; 
+        range *= multiplier;
+        return range;
     }
-    public float ModifyAttackAngle(float changedValue = -1)
+    public float BeginOverrideRange(float changedValue = -1, float multiplier = 1f)
     {
+        overriderange = true;
+        range = (changedValue == -1) ? range = originalRange : range = changedValue;
+        range *= multiplier;
+        return range;
+    }
+    public void EndOverrideRange()
+    {
+        overriderange = false;
+        range = originalRange;
+    }
+    #endregion
+
+    #region Angle Handler
+    bool overrideAngle = false;
+    public float ModifyAttackAngle(float changedValue = -1, float multiplier = 1f)
+    {
+        if (overrideAngle) return angle;
         angle = (changedValue == -1) ? angle = originalAngle : angle = changedValue;
+        angle *= multiplier;
         return angle;
     }
+    public float BeginOverrideAngle(float changedValue = -1, float multiplier = 1f)
+    {
+        overrideAngle = true;
+        angle = (changedValue == -1) ? angle = originalAngle : angle = changedValue;
+        angle *= multiplier;
+        return angle;
+    }
+    public void EndOverrideAngle()
+    {
+        overrideAngle = false;
+        angle = originalAngle;
+    }
+    #endregion
+
+
+
+
+
+
 
     public float GetWpnRange()
     {
         return range;
+    }
+    public float GetWpnOriginalRange()
+    {
+        return originalRange;
     }
     public abstract EntityBase Attack(Transform pos, float damage);
 }

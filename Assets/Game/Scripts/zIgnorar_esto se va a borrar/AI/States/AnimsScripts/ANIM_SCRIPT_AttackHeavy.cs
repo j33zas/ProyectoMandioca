@@ -2,8 +2,10 @@
 
 public class ANIM_SCRIPT_AttackHeavy : ANIM_SCRIPT_Base 
 {
+    public bool isAtenea;
+
     protected override void OnAnimationExit(Animator anim)
     {
-        anim.SetBool("HeavyAttack", false);
+        if (!isAtenea) anim.SetBool("HeavyAttack", false);
     }
 }
