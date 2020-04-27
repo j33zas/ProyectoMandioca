@@ -117,18 +117,26 @@ public class CharacterMovement
 
         _rb.velocity = auxNormalized * speed;
 
+        var prom = Mathf.Abs(axisY) + Mathf.Abs(axisX);
 
         if (rotX >= 0.3 || rotX <= -0.3 || rotY >= 0.3 || rotY <= -0.3)
         {
             Rotation(rotY, rotX);
+
+            //float dotX = Vector3.Dot(rotTransform.forward, new Vector3(rotY, 0, rotX));
+            //float dotY = Vector3.Dot(rotTransform.right, new Vector3(rotY, 0, rotX));
+            anim.Move(prom, -axisX * rotTransform.right.x, axisY * rotTransform.forward.z);
+
+            //if (rotY >= 0)
+            //    anim.Move(prom, axisX, axisY);
+            //else
+            //    anim.Move(prom, axisX, -axisY);
         }
         else
         {
             Rotation(axisY, axisX);
+            anim.Move(prom, 0, 1);
         }
-
-        var prom = Mathf.Abs(axisY) + Mathf.Abs(axisX);
-        anim.Move(prom);
 
     }
     #endregion
