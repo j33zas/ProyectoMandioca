@@ -48,7 +48,7 @@ public class ThreadRequestObject<T> where T : MonoBehaviour
 
         for (int i = 0; i < gos.Length; i++)
         {
-            yield return new WaitForSeconds(0.01f);
+            //yield return new WaitForSeconds(0.01f);
             bar.SetValue((float)i);
 
             foreach (var child in gos[i].GetComponentsInChildren<T>())

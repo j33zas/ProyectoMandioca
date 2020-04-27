@@ -127,6 +127,14 @@ public class TrueDummyEnemy : EnemyBase
     protected override void OnPause() { }
     protected override void OnResume() { }
 
+    public override void OnFreeze()
+    {
+
+        Debug.LogError("ON FREEEZE");
+        Debug.Break();
+
+    }
+
     public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype dmgtype)
     {
         SetTarget(entityTarget);
