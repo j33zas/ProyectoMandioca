@@ -91,7 +91,9 @@ public class Destructible_Normal : DestructibleBase
     void Drop()
     {
         var dispercion = 0.5f;
+        dest_part.transform.position = this.transform.position;
         dest_part.Play();
+
 
         for (int i = 0; i < objectsToDrop.Count; i++)
         {
@@ -108,6 +110,7 @@ public class Destructible_Normal : DestructibleBase
 
         if (savedDestroyedVersion) savedDestroyedVersion.SetActive(true);
         if (savedDestroyedVersion) savedDestroyedVersion.transform.position = transform.position;
+        if (savedDestroyedVersion) savedDestroyedVersion.GetComponent<DestroyedVersion>().BeginDestroy();
 
         var childs = savedDestroyedVersion.GetComponentsInChildren<Rigidbody>();
 

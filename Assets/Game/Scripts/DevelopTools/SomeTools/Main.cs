@@ -48,6 +48,7 @@ public class Main : MonoBehaviour
             allentities.Remove(po);
     }
 
+
     private void Awake()
     {
         instance = this;
@@ -58,7 +59,17 @@ public class Main : MonoBehaviour
         myCamera = Camera.main.GetComponent<CustomCamera>();
     }
 
-    
+    public void AddEntity(EntityBase b)
+    {
+        if (!allentities.Contains(b))
+            allentities.Add(b);
+    }
+    public void RemoveEntity(EntityBase b)
+    {
+        if (!allentities.Contains(b))
+            allentities.Remove(b);
+    }
+
 
     void Start()
     {

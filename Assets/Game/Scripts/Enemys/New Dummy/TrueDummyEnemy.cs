@@ -55,6 +55,8 @@ public class TrueDummyEnemy : EnemyBase
         currentSpeed = speedMovement;
         StartDebug();
 
+        Main.instance.AddEntity(this);
+
         IAInitialize(Main.instance.GetCombatDirector());
     }
 
@@ -247,6 +249,7 @@ public class TrueDummyEnemy : EnemyBase
         director.RemoveToAttack(this, entityTarget);
         sm.SendInput(DummyEnemyInputs.DIE);
         death = true;
+        Main.instance.RemoveEntity(this);
     }
 
     void DeathAnim()
