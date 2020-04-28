@@ -137,7 +137,10 @@ public class Destructible_Normal : DestructibleBase
     {
         Drop();
         OthersFeedbacks();
-        if (destroy) Destroy(this.gameObject);
+        if (destroy) {
+            Main.instance.RemoveEntity(this);
+            Destroy(this.gameObject); 
+        }
     }
 
     //////////////////////////////////////////////

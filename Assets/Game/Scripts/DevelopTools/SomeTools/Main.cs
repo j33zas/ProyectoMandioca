@@ -66,7 +66,7 @@ public class Main : MonoBehaviour
     }
     public void RemoveEntity(EntityBase b)
     {
-        if (!allentities.Contains(b))
+        if (allentities.Contains(b))
             allentities.Remove(b);
     }
 
