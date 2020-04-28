@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 5000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -40,12 +40,14 @@ Material:
     - _Float0: 0.83
     - _Float1: 0.01
     - _Freq: 55.4
+    - _IntensityLight: 0
     - _InvertMask: 1.04
     - _Mask: -10.897016
     - _MaskBot: -5.2
     - _MaskTop: -1
     - _OpacityIntensity: 0.5
     - _Power: 0.1
+    - _PowerFresnel: 0
     - _Sat: 31.87
     - _Scale: 7.96
     - _TessValue: 32
