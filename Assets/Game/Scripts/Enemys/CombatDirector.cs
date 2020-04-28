@@ -138,7 +138,7 @@ public class CombatDirector : MonoBehaviour, IRoomElement
 
         positionsToAttack.Add(pos);
 
-        e.SetTargetPosDir(GetNearPos(e.CurrentPos()));
+        e.SetTargetPosDir(GetNearPos(e.CurrentPos(), e.GetDistance()));
     }
 
     void AssignPos()
@@ -155,14 +155,14 @@ public class CombatDirector : MonoBehaviour, IRoomElement
 
     void AssignPos(ICombatDirector e)
     {
-        Transform toFollow = GetNearPos(e.CurrentPos());
+        Transform toFollow = GetNearPos(e.CurrentPos(), e.GetDistance());
 
         e.SetTargetPosDir(toFollow);
 
         e.SetBool(true);
     }
 
-    Transform GetNearPos(Vector3 p)
+    Transform GetNearPos(Vector3 p, float distance)
     {
         Transform current = null;
 
@@ -174,7 +174,39 @@ public class CombatDirector : MonoBehaviour, IRoomElement
             }
             else
             {
+                current.localPosition *= distance;
+                positionsToAttack[i].localPosition *= distance;
                 if (Vector3.Distance(current.position, p) > Vector3.Distance(positionsToAttack[i].position, p))
+                {
+                    current.localPosition /= distance;
+                    current = positionsToAttack[i];
+                }
+                else
+                {
+                    current.localPosition /= distance;
+                }
+                positionsToAttack[i].localPosition /= distance;
+            }
+        }
+
+        positionsToAttack.Remove(current);
+
+        return current;
+    }
+
+    Transform GetNearPos(Vector3 p, float distance, ICombatDirector enemy)
+    {
+        Transform current = null;
+
+        for (int i = 0; i < positionsToAttack.Count; i++)
+        {
+            if (current == null)
+            {
+                current = positionsToAttack[i];
+            }
+            else
+            {
+                if (Vector3.Distance(current.position * distance, p) > Vector3.Distance(positionsToAttack[i].position * distance, p))
                     current = positionsToAttack[i];
             }
         }

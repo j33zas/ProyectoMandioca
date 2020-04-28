@@ -10,6 +10,8 @@ public interface ICombatDirector
 
     void SetTargetPosDir(Transform pos);
 
+    float GetDistance();
+
     void SetTarget(EntityBase entity);
 
     EntityBase CurrentTarget();

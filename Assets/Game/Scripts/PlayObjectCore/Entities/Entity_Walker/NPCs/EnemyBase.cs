@@ -78,6 +78,11 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
         return _target;
     }
 
+    public float GetDistance()
+    {
+        return distancePos;
+    }
+
     public void SetBool(bool isPos)
     {
         withPos = isPos;
