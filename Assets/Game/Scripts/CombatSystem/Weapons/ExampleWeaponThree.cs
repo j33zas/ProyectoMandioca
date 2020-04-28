@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ExampleWeaponThree : Weapon
 {
@@ -8,23 +9,57 @@ public class ExampleWeaponThree : Weapon
     {
     }
 
+    bool oneshotSucsesfull;
+
     public override EntityBase Attack(Transform pos, float damage)
     {
         EntityBase entity = null;
 
-        var enemies = Physics.OverlapSphere(pos.position, range);
-        for (int i = 0; i < enemies.Length; i++)
+        var entities = Physics.OverlapSphere(pos.position, range)
+            .Where(x => x.GetComponent<EntityBase>())
+            .Where(x => x.GetComponent<EntityBase>() != Main.instance.GetChar())
+            .ToList();
+
+
+        foreach (var v in entities)
         {
-            Vector3 dir = enemies[i].transform.position - pos.position;
+            Debug.Log("entity " + v.gameObject);
+        }
+
+        for (int i = 0; i < entities.Count; i++)
+        {
+            Debug.Log(entities[i].gameObject.name);
+
+            Vector3 dir = entities[i].transform.position - pos.position;
             float angle = Vector3.Angle(pos.forward, dir);
 
-            if (enemies[i].GetComponent<EnemyBase>() && dir.magnitude <= range && angle < base.angle)
-            {
-                if (entity == null)
-                    entity = enemies[i].GetComponent<EntityBase>();
+            var current = entities[i].GetComponent<EntityBase>();
 
-                enemies[i].GetComponent<EnemyBase>().TakeDamage((int)damage, Main.instance.GetChar().transform.position, Damagetype.parriable, _head);
+            if (dir.magnitude <= range && angle < base.angle)
+            {
+                var attackResult = current.TakeDamage(
+                        (int)damage,
+                        Main.instance.GetChar().transform.position,
+                        Damagetype.parriable,
+                        _head);
+
+                AttackResult?.Invoke(attackResult);
+
+                if (attackResult == Attack_Result.sucessful)
+                {
+                    oneshotSucsesfull = true;
+                }
+
+                Debug.Log("Attack result: " + attackResult.ToString());
+
             }
+        }
+
+        if (oneshotSucsesfull)
+        {
+            oneshotSucsesfull = false;
+            Main.instance.Vibrate();
+            Main.instance.CameraShake();
         }
 
         return entity;

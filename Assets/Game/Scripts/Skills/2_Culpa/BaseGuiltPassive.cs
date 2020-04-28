@@ -8,6 +8,9 @@ public class BaseGuiltPassive : SkillBase
     int maxScreamsToSpawn = 5;
     [SerializeField] 
     int minScreamsToSpawn = 3;
+    [SerializeField]
+    float radiousSkill = 10;
+
     CharacterHead head;
 
     [SerializeField]
@@ -31,11 +34,7 @@ public class BaseGuiltPassive : SkillBase
         head.GuiltUltimateSkill += PetrifyAllEnemies;
         head.AddScreamAction += UpdateHUD;
 
-        if (feedbackParticle.transform.parent!= head.transform)
-        {
-            feedbackParticle.transform.position = head.transform.position;
-            feedbackParticle.transform.SetParent(head.transform);
-        }
+        feedbackParticle.transform.position = head.transform.position;
 
         Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, SpawnScream);
 
@@ -108,15 +107,16 @@ public class BaseGuiltPassive : SkillBase
 
     void PetrifyAllEnemies()
     {
+        feedbackParticle.transform.position = head.transform.position;
         feedbackParticle.Play();
-        var listOfEntities = Main.instance.GetEnemies();
+        var listOfEntities = Physics.OverlapSphere(head.transform.position, radiousSkill);
 
         foreach (var item in listOfEntities)
         {
             EnemyBase myEnemy = item.GetComponent<EnemyBase>();
-            if (myEnemy.gameObject.activeSelf)
+            if (myEnemy)
             {
-                myEnemy.OnPetrified();
+                myEnemy.OnPetrified(); 
             }
         }
     }
