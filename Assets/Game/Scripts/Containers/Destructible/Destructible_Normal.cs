@@ -23,6 +23,8 @@ public class Destructible_Normal : DestructibleBase
 
     public bool destroy;
 
+    public ParticleSystem dest_part;
+
     Rigidbody onerig;
     Vector3 dest;
 
@@ -36,6 +38,8 @@ public class Destructible_Normal : DestructibleBase
         //luego esto lo metemos en yo que se... en el OnPlayerEnterInThisRoom()
         //asi luego optimizamos
         Calculate();
+
+        Main.instance.AddEntity(this);
     }
 
     void Calculate()
@@ -89,6 +93,9 @@ public class Destructible_Normal : DestructibleBase
     void Drop()
     {
         var dispercion = 0.5f;
+        dest_part.transform.position = this.transform.position;
+        dest_part.Play();
+
 
         for (int i = 0; i < objectsToDrop.Count; i++)
         {
@@ -105,6 +112,7 @@ public class Destructible_Normal : DestructibleBase
 
         if (savedDestroyedVersion) savedDestroyedVersion.SetActive(true);
         if (savedDestroyedVersion) savedDestroyedVersion.transform.position = transform.position;
+        if (savedDestroyedVersion) savedDestroyedVersion.GetComponent<DestroyedVersion>().BeginDestroy();
 
         var childs = savedDestroyedVersion.GetComponentsInChildren<Rigidbody>();
 
@@ -131,7 +139,10 @@ public class Destructible_Normal : DestructibleBase
     {
         Drop();
         OthersFeedbacks();
-        if (destroy) Destroy(this.gameObject);
+        if (destroy) {
+            Main.instance.RemoveEntity(this);
+            Destroy(this.gameObject); 
+        }
     }
 
     //////////////////////////////////////////////

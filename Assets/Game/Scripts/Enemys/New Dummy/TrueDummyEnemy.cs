@@ -21,6 +21,7 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] float distanceToAttack;
     [SerializeField] float normalDistance;
     [SerializeField] float cdToAttack;
+    [SerializeField] float parriedTime;
 
     [Header("Life Options")]
     [SerializeField] GenericLifeSystem lifesystem;
@@ -38,7 +39,7 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] Animator animator;
     [SerializeField] UnityEngine.UI.Text txt_debug;
 
-    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED };
+    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED, PARRIED };
     public bool isOnFire { get; private set; }
 
     EventStateMachine<DummyEnemyInputs> sm;
@@ -54,6 +55,8 @@ public class TrueDummyEnemy : EnemyBase
         lifesystem.AddEventOnDeath(Die);
         currentSpeed = speedMovement;
         StartDebug();
+
+        Main.instance.AddEntity(this);
 
         IAInitialize(Main.instance.GetCombatDirector());
     }
@@ -91,6 +94,7 @@ public class TrueDummyEnemy : EnemyBase
         if (takeDmg == Attack_Result.parried)
         {
             combatComponent.Stop();
+            sm.SendInput(DummyEnemyInputs.PARRIED);
 
             //Tira evento si es parrieado. Seguro haya que cambiarlo
             if (OnParried != null)
@@ -247,6 +251,7 @@ public class TrueDummyEnemy : EnemyBase
         director.RemoveToAttack(this, entityTarget);
         sm.SendInput(DummyEnemyInputs.DIE);
         death = true;
+        Main.instance.RemoveEntity(this);
     }
 
     void DeathAnim()
@@ -268,6 +273,7 @@ public class TrueDummyEnemy : EnemyBase
         var idle = new EState<DummyEnemyInputs>("Idle");
         var goToPos = new EState<DummyEnemyInputs>("Follow");
         var attack = new EState<DummyEnemyInputs>("Attack");
+        var parried = new EState<DummyEnemyInputs>("Parried");
         var takeDamage = new EState<DummyEnemyInputs>("Take_Damage");
         var die = new EState<DummyEnemyInputs>("Die");
         var disable = new EState<DummyEnemyInputs>("Disable");
@@ -294,6 +300,13 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.PARRIED, parried)
+            .Done();
+
+        ConfigureState.Create(parried)
+            .SetTransition(DummyEnemyInputs.IDLE, idle)
+            .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.DIE, die)
             .Done();
 
         ConfigureState.Create(petrified)
@@ -329,6 +342,8 @@ public class TrueDummyEnemy : EnemyBase
                                                                                                           .SetRoot(rootTransform);
 
         new DummyAttackState(attack, sm, cdToAttack, rotSpeed, this).SetAnimator(animator).SetDirector(director).SetRoot(rootTransform);
+
+        new DummyParried(parried, sm, parriedTime, this).SetAnimator(animator).SetDirector(director);
 
         new DummyTDState(takeDamage, sm, recallTime).SetAnimator(animator);
 

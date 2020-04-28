@@ -12,7 +12,7 @@ public class GenericSword : Weapon
 
     bool oneshotSucsesfull;
 
-    public override EntityBase Attack(Transform pos, float damage)
+    public override bool Attack(Transform pos, float damage)
     {
         EntityBase entity = null;
 
@@ -48,6 +48,7 @@ public class GenericSword : Weapon
 
                 if (attackResult == Attack_Result.sucessful)
                 {
+                    
                     oneshotSucsesfull = true;
                 }
 
@@ -59,10 +60,11 @@ public class GenericSword : Weapon
         if (oneshotSucsesfull)
         {
             oneshotSucsesfull = false;
-            Main.instance.Vibrate();
-            Main.instance.CameraShake();
+            return true;
         }
-
-        return entity;
+        else
+        {
+            return false;
+        }
     }
 }

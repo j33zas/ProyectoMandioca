@@ -96,5 +96,5 @@ public abstract class Weapon
     {
         return originalRange;
     }
-    public abstract EntityBase Attack(Transform pos, float damage);
+    public abstract bool Attack(Transform pos, float damage);
 }

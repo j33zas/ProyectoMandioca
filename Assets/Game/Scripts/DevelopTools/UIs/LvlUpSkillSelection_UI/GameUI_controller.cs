@@ -70,6 +70,7 @@ public class GameUI_controller : MonoBehaviour
     public void UI_SendLevelUpNotification() {/* CanvasPopUpInWorld_Manager.instance.MakePopUpAnimated(Main.instance.GetChar().transform, lvlUp_pf);*/ }
     public void UI_SendActivePlusNotification(bool val) { if (val) _charStats_Ui.ToggleLvlUpSignON(); }
     public void UI_RefreshExpBar(int currentExp, int maxExp, int currentLevel) => _charStats_Ui.UpdateXP_UI(currentExp, maxExp, currentLevel);
+    public void UI_MaxExpBar(int currentLevel) => _charStats_Ui.MaxLevel(currentLevel);
     public void RefreshPassiveSkills_UI(List<SkillInfo> skillsNuevas) => _charStats_Ui.UpdatePasiveSkills(skillsNuevas);
     public void SetSelectedPath(string pathName) => _charStats_Ui.SetPathChoosen(pathName);
     public void UI_RefreshMenu() => gameMenu_UI.Refresh();

@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class DummyCC_RaycastMetod : CombatComponent
 {
-    [Header("Raycast Method")]
+    [Header("Overlap")]
     [SerializeField] LayerMask _lm;
     [SerializeField] float distance;
+    [SerializeField] float angleAttack = 45;
+    [SerializeField] Transform rot;
    
     bool showray;
 
@@ -40,21 +42,25 @@ public class DummyCC_RaycastMetod : CombatComponent
 
     void Calculate()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, (Main.instance.GetChar().transform.position - transform.position), out hit, distance, _lm))
-        {
-            showray = true;
+        Debug.Log("entré al calculate");
+        EntityBase entity = null;
 
-            if (hit.collider.GetComponent<EntityBase>())
+        var enemies = Physics.OverlapSphere(rot.position, distance, _lm);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Debug.Log("entré al for");
+            Vector3 dir = enemies[i].transform.position - rot.position;
+            float angle = Vector3.Angle(rot.forward, dir);
+
+            if (enemies[i].GetComponent<EntityBase>() && dir.magnitude <= distance && angle < angleAttack)
             {
-                EntityBase character = hit.collider.GetComponent<EntityBase>();
-                callback.Invoke(character);
+                if (entity == null)
+                    entity = enemies[i].GetComponent<EntityBase>();
             }
         }
-        else
-        {
-            showray = false;
-        }
+
+        if(entity!=null)
+            callback.Invoke(entity);
     }
 
     

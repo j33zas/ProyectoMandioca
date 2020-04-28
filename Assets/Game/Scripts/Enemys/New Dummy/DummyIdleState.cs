@@ -64,18 +64,25 @@ namespace Tools.StateMachine
                 {
                     if (enemy.IsInPos())
                     {
-                        currentDis = distanceMin;
+                        Vector3 pos1 = new Vector3(root.position.x, 0, root.position.z);
+                        Vector3 pos2 = new Vector3(enemy.CurrentTarget().transform.position.x, 0, enemy.CurrentTarget().transform.position.z);
+                        Vector3 pos3 = new Vector3(enemy.CurrentTargetPos().position.x, 0, enemy.CurrentTargetPos().position.z);
+
+                        if (Vector3.Distance(pos1, pos2) >= distanceMin && Vector3.Distance(pos1, pos3) >= 1)
+                        {
+                            combatDirector.GetNewNearPos(enemy);
+                            sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+                        }
                     }
                     else
                     {
-                        currentDis = distanceMax;
-                    }
+                        Vector3 pos1 = new Vector3(root.position.x, 0, root.position.z);
+                        Vector3 pos2 = new Vector3(enemy.CurrentTarget().transform.position.x, 0, enemy.CurrentTarget().transform.position.z);
 
-                    if (Vector3.Distance(enemy.CurrentTarget().transform.position, root.position) >= currentDis)
-                    {
-                        if (currentDis == distanceMin)
-                            combatDirector.GetNewNearPos(enemy);
-                        sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+                        if (Vector3.Distance(pos1, pos2) >= distanceMax)
+                        {
+                            sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.GO_TO_POS);
+                        }
                     }
                 }
             }

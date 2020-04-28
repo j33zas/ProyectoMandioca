@@ -37,19 +37,22 @@ public class LevelSystem : MonoBehaviour
 
     public void AddExperiencie(int exp)
     {
-        currentExpValue += exp;
-
-        if (currentExpValue >= levels[currentIndex].maxt_to_level_up)
+        if (currentIndex < levels.Length)
         {
-            levelUp.Play();
-            //point_to_spend++;
-            currentExpValue = 0;
-            if (levels[currentIndex].can_get_skill_point)
+            currentExpValue += exp;
+
+            if (currentExpValue >= levels[currentIndex].maxt_to_level_up)
             {
-                Main.instance.GetPasivesManager().CreateRequest_NewSkill();
+                levelUp.Play();
+                //point_to_spend++;
+                currentExpValue = 0;
+                if (levels[currentIndex].can_get_skill_point)
+                {
+                    Main.instance.GetPasivesManager().CreateRequest_NewSkill();
+                }
+                Main.instance.gameUiController.UI_SendLevelUpNotification();
+                currentIndex++;
             }
-            Main.instance.gameUiController.UI_SendLevelUpNotification();
-            currentIndex++;
         }
 
         RefreshUI();
@@ -58,10 +61,16 @@ public class LevelSystem : MonoBehaviour
     public void RefreshUI()
     {
         Main.instance.gameUiController.UI_SendActivePlusNotification(I_have_an_active_request());
-        Main.instance.gameUiController.UI_RefreshExpBar(
-            currentExpValue, 
-            levels[currentIndex].maxt_to_level_up, 
-            CURRENT_LEVEL);
-
+        if (currentIndex < levels.Length)
+        {
+            Main.instance.gameUiController.UI_RefreshExpBar(
+                currentExpValue,
+                levels[currentIndex].maxt_to_level_up,
+                CURRENT_LEVEL);
+        }
+        else
+        {
+            Main.instance.gameUiController.UI_MaxExpBar(CURRENT_LEVEL);
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Tools.StateMachine
         float rotationSpeed;
         ICombatDirector enemy;
 
+
         public DummyAttackState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm,
                                 float _cd, float _rotSpeed,ICombatDirector _enemy) : base(myState, _sm)
         {
@@ -37,7 +38,6 @@ namespace Tools.StateMachine
                 anim.SetBool("Attack", false);
                 var myEnemy = (EnemyBase)enemy;
                 myEnemy.attacking = false;
-                combatDirector.AddToAttack(enemy, enemy.CurrentTarget());
             }
         }
 
@@ -65,6 +65,9 @@ namespace Tools.StateMachine
             if (timer >= cd)
             {
                 sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
+                //timer = 0;
+                //anim.SetBool("Attack", false);
+                combatDirector.AddToAttack(enemy, enemy.CurrentTarget());
             }
         }
     }

@@ -56,7 +56,7 @@ public class BigWeapon_Skill : SkillBase
         }
     }
 
-    private void SetGhostSword()
+    private void SetGhostSword(bool isHeavy)
     {
         //atenaImage.transform.position = charHead.transform.position + Vector3.up * 3;
         //atenaImage.GetComponent<ParticleSystem>().Play();

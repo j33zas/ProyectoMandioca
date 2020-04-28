@@ -5,7 +5,7 @@ using System;
 
 public abstract class EnemyBase : NPCBase, ICombatDirector
 {
-    public bool target;
+    
     public bool attacking;
     public GameObject targetFeedBack;
     public Action OnParried;
@@ -76,6 +76,11 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
     {
         _target.localPosition /= distancePos;
         return _target;
+    }
+
+    public float GetDistance()
+    {
+        return distancePos;
     }
 
     public void SetBool(bool isPos)

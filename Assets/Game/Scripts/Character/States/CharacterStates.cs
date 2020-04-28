@@ -14,13 +14,18 @@ namespace Tools.StateMachine
         protected CharacterAttack charAttack;
         protected CharacterBlock charBlock;
         protected CharacterMovement charMove;
+        protected CharacterAnimator charAnim;
 
         public CharacterStates(EState<CharacterHead.PlayerInputs> myState, EventStateMachine<CharacterHead.PlayerInputs> _sm) : base(myState, _sm)
         {
         }
 
         #region Builder
-
+        public CharacterStates SetAnimator(CharacterAnimator anim)
+        {
+            charAnim = anim;
+            return this;
+        }
         public CharacterStates SetLeftAxis(Func<float> h, Func<float> v)
         {
             LeftHorizontal += h;

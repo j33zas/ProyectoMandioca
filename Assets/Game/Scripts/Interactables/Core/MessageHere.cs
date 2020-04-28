@@ -10,11 +10,13 @@ public class MessageHere : Interact_Receptor
     public int cant;
     public GameObject model;
 
+    public int radio = 10;
+
     Vector3 getPosRandom(int radio, Transform t)
     {
-        Vector3 min = new Vector3(t.position.x - radio, t.position.y - radio, t.position.z - radio);
+        Vector3 min = new Vector3(t.position.x - radio, 0, t.position.z - radio);
         Vector3 max = new Vector3(t.position.x + radio, t.position.y + radio, t.position.z + radio);
-        return new Vector3(Random.Range(min.x, max.x), 0, Random.Range(min.z, max.z));
+        return new Vector3(Random.Range(min.x, max.x), Random.Range(min.y, max.y), Random.Range(min.z, max.z));
     }
 
     public override void Execute()
@@ -27,11 +29,11 @@ public class MessageHere : Interact_Receptor
         for (int i = 0; i < cant; i++)
         {
             GameObject go = Instantiate(model);
-            go.transform.position = getPosRandom(10, this.transform);
+            go.transform.position = getPosRandom(radio, this.transform);
 
-            if (go.GetComponent<TrueDummyEnemy>()) {
+            if (go.GetComponent<EntityBase>()) {
 
-                var enem = go.GetComponent<TrueDummyEnemy>();
+                var enem = go.GetComponent<EntityBase>();
                 enem.Initialize();
             }
         }

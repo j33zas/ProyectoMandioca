@@ -9416,6 +9416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2450964416905894773, guid: 751e4cf09a634d04b8caa7be136650f5, type: 3}
+  prewarmAmount: 0
 --- !u!1 &8498596452485345727
 GameObject:
   m_ObjectHideFlags: 0
@@ -9463,6 +9464,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillinfo: {fileID: 11400000, guid: a64b0cf1b584b794f9e63b93509e2c02, type: 2}
   maxScreamsToSpawn: 7
+  minScreamsToSpawn: 3
+  radiousSkill: 15
   feedbackParticle: {fileID: 6109407440364584973}
   screamPool: {fileID: 4421413429440777585}
   myBar: {fileID: 6080125045554954862, guid: bf2a48529a9f76f4d9cabd3119662e3d, type: 3}

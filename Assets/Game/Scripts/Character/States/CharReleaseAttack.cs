@@ -7,7 +7,6 @@ namespace Tools.StateMachine
 {
     public class CharReleaseAttack : CharacterStates
     {
-        float timer;
         float attackRecall;
         Func<bool> IsHeavy;
 
@@ -51,7 +50,7 @@ namespace Tools.StateMachine
 
         protected override void Exit(CharacterHead.PlayerInputs input)
         {
-            timer = 0;
+            
         }
     }
 }

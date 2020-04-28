@@ -8,7 +8,7 @@ using Tools.EventClasses;
 using Tools.StateMachine;
 public class CharacterHead : CharacterControllable
 {
-    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, END_BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL };
+    public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, END_BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL, SPIN, STUN };
 
     Action ChildrensUpdates;
     Func<bool> InDash;
@@ -22,6 +22,7 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float dashCD;
     [SerializeField] ParticleSystem evadeParticle;
 
+    
 
     [Header("Movement Options")]
     [SerializeField] float speed;
@@ -71,11 +72,18 @@ public class CharacterHead : CharacterControllable
     [SerializeField] float rangeOfPetrified;
     [SerializeField] float attackRecall;
     [SerializeField] float onHitRecall;
+    [SerializeField] Sensor sensorSpin;
     float dmg;
     CharacterAttack charAttack;
     [SerializeField] ParticleSystem slash;
 
     CustomCamera customCam;
+
+    [SerializeField] GameObject go_StunFeedback;
+    [SerializeField] GameObject go_SpinFeedback;
+    float spinDuration;
+    float spinSpeed;
+    float stunDuration;
 
     public Action ChangeWeaponPassives = delegate { };
 
@@ -92,11 +100,9 @@ public class CharacterHead : CharacterControllable
 
     Rigidbody rb;
 
-
-
     protected override void OnInitialize()
     {
-        
+
     }
 
     private void Start()
@@ -159,6 +165,8 @@ public class CharacterHead : CharacterControllable
         var attackRelease = new EState<PlayerInputs>("Release_Attack");
         var takeDamage = new EState<PlayerInputs>("Take_Damage");
         var dead = new EState<PlayerInputs>("Dead");
+        var spin = new EState<PlayerInputs>("Spin");
+        var stun = new EState<PlayerInputs>("Stun"); 
 
         ConfigureState.Create(idle)
             .SetTransition(PlayerInputs.MOVE, move)
@@ -168,6 +176,8 @@ public class CharacterHead : CharacterControllable
             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.DEAD, dead)
+            .SetTransition(PlayerInputs.SPIN, spin)
+            .SetTransition(PlayerInputs.STUN, stun)
             .Done();
 
         ConfigureState.Create(move)
@@ -178,11 +188,13 @@ public class CharacterHead : CharacterControllable
             .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
             .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(PlayerInputs.DEAD, dead)
+            .SetTransition(PlayerInputs.SPIN, spin)
+            .SetTransition(PlayerInputs.STUN, stun)
             .Done();
 
         ConfigureState.Create(beginBlock)
              .SetTransition(PlayerInputs.BLOCK, block)
-             .SetTransition(PlayerInputs.END_BLOCK ,endBlock)
+             .SetTransition(PlayerInputs.END_BLOCK, endBlock)
              .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
              .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
              .SetTransition(PlayerInputs.DEAD, dead)
@@ -222,6 +234,7 @@ public class CharacterHead : CharacterControllable
 
         ConfigureState.Create(attackRelease)
             .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.CHARGE_ATTACK, idle)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
 
@@ -230,25 +243,75 @@ public class CharacterHead : CharacterControllable
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
 
+        ConfigureState.Create(spin)
+            .SetTransition(PlayerInputs.STUN, stun)
+            .Done();
+
+        ConfigureState.Create(stun)
+            .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.MOVE, move)
+            .Done();
+
         ConfigureState.Create(dead)
             .Done();
 
-
         stateMachine = new EventStateMachine<PlayerInputs>(idle, DebugState);
 
-        new CharIdle(idle, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
-        new CharMove(move, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move);
-        new CharBeginBlock(beginBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
-            SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
-        new CharBlock(block, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
-            SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
-        new CharEndBlock(endBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetBlock(charBlock);
-        new CharParry(parry, stateMachine, parryRecall).SetMovement(this.move).SetBlock(charBlock);
-        new CharRoll(roll, stateMachine,evadeParticle).SetMovement(this.move);
-        new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
-            SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetAttack(charAttack);
-        new CharReleaseAttack(attackRelease, stateMachine, attackRecall, HeavyAttackRealease).SetMovement(this.move).SetAttack(charAttack).SetLeftAxis(GetLeftHorizontal, GetLeftVertical);
+        new CharIdle(idle, stateMachine)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            .SetRightAxis(GetRightHorizontal, GetRightVertical)
+            .SetMovement(this.move);
+       
+        new CharMove(move, stateMachine)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            .SetRightAxis(GetRightHorizontal, GetRightVertical)
+            .SetMovement(this.move);
+
+        new CharBeginBlock(beginBlock, stateMachine)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            .SetRightAxis(GetRightHorizontal, GetRightVertical)
+            .SetMovement(this.move).SetBlock(charBlock);
+
+        new CharBlock(block, stateMachine)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            .SetRightAxis(GetRightHorizontal, GetRightVertical)
+            .SetMovement(this.move)
+            .SetBlock(charBlock);
+
+        new CharEndBlock(endBlock, stateMachine)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            .SetBlock(charBlock);
+
+        new CharParry(parry, stateMachine, parryRecall)
+            .SetMovement(this.move).SetBlock(charBlock);
+
+        new CharRoll(roll, stateMachine, evadeParticle)
+            .SetMovement(this.move);
+
+        new CharChargeAttack(attackCharge, stateMachine)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            .SetRightAxis(GetRightHorizontal, GetRightVertical)
+            .SetMovement(this.move)
+            .SetAttack(charAttack);
+
+        new CharReleaseAttack(attackRelease, stateMachine, attackRecall, HeavyAttackRealease)
+            .SetMovement(this.move)
+            .SetAttack(charAttack)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical);
+
         new CharTakeDmg(takeDamage, stateMachine, takeDamageRecall);
+
+        new CharSpin(spin, stateMachine)
+            .Configurate(GetSpinDuration, GetSpinSpeed, go_SpinFeedback, sensorSpin)
+            .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
+            //.SetRightAxis(GetRightHorizontal, GetRightVertical)
+            .SetMovement(this.move)
+            .SetAnimator(charanim);
+
+        new CharStun(stun, stateMachine)
+            .Configurate(GetStunDuration, go_StunFeedback)
+            .SetAnimator(charanim);
+
         new CharDead(dead, stateMachine);
     }
 
@@ -256,12 +319,21 @@ public class CharacterHead : CharacterControllable
     float GetLeftVertical() => moveY;
     float GetRightHorizontal() => rotateX;
     float GetRightVertical() => rotateY;
+    float GetSpinDuration() => spinDuration;
+    float GetSpinSpeed() => spinSpeed;
+    float GetStunDuration() => stunDuration;
     EventStateMachine<PlayerInputs> GetSM() => stateMachine;
 
 
     #endregion
 
-    
+    public void StartSpin(float _spinDuration, float _spinSpeed, float _stunDuration)
+    {
+        spinDuration = _spinDuration;
+        spinSpeed = _spinSpeed;
+        stunDuration = _stunDuration;
+        stateMachine.SendInput(PlayerInputs.SPIN);
+    }
 
     protected override void OnUpdateEntity()
     {
@@ -273,7 +345,7 @@ public class CharacterHead : CharacterControllable
 
     protected override void OnPause()
     {
-        
+
     }
     protected override void OnResume()
     {
@@ -292,18 +364,26 @@ public class CharacterHead : CharacterControllable
     public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
     public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
-    public void DealAttack() 
-    { 
-        charAttack.OnAttack();
-        if (isHeavyRelease)
-        {
-            isHeavyRelease = false;
-            SlowMO();
-        }
+    public void DealAttack()
+    {
+        charAttack.ConfigureDealsSuscessful(DealSucessfullNormal, DealSucessfullHeavy);
+        charAttack.OnAttack(isHeavyRelease);
+    }
+    void DealSucessfullNormal()
+    {
+        Main.instance.GetTimeManager().DoHitStop();
+        Main.instance.Vibrate(0.7f,0.1f);
+        Main.instance.CameraShake();
+    }
+    void DealSucessfullHeavy()
+    {
+        SlowMO();
+        isHeavyRelease = false;
+        Main.instance.Vibrate(1f, 0.5f);
+        Main.instance.CameraShake();
     }
     void ReleaseInNormal()
     {
-        isHeavyRelease = false;
         ChangeDamageAttack((int)dmg_normal);
         ChangeAngleAttack(attackAngle);
         ChangeRangeAttack(attackRange);
@@ -314,8 +394,8 @@ public class CharacterHead : CharacterControllable
     {
         isHeavyRelease = true;
         ChangeDamageAttack((int)dmg_heavy);
-        ChangeAngleAttack(attackAngle*2);
-        ChangeRangeAttack(attackRange+1);
+        ChangeAngleAttack(attackAngle * 2);
+        ChangeRangeAttack(attackRange + 1);
         charanim.HeavyAttack();
     }
 
@@ -353,9 +433,9 @@ public class CharacterHead : CharacterControllable
     #region Block & Parry
 
     //Toggle con la posibilidad de bloquear o no
-    public void ToggleBlock()
+    public void ToggleBlock(bool val)
     {
-        canBlock = !canBlock;
+        canBlock = val;
     }
 
     public void EVENT_OnBlocking()
@@ -373,7 +453,7 @@ public class CharacterHead : CharacterControllable
     {
         stateMachine.SendInput(PlayerInputs.END_BLOCK);
     }
-    
+
     //lo uso para el skill del escudo que refleja luz
     public EntityBlock GetCharBlock()
     {

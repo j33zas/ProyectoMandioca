@@ -7,8 +7,8 @@ public class Sensor : MonoBehaviour
 {
     [SerializeField] LayerMask layers_to_collide;
     [SerializeField] Collider myc;
-    Action<GameObject> Ev_Colision;
-    Action<GameObject> Ev_Exit;
+    Action<GameObject> Ev_Colision = delegate { };
+    Action<GameObject> Ev_Exit = delegate { };
 
     public void On() { myc.enabled = true; }
     public void Off() { myc.enabled = false; }

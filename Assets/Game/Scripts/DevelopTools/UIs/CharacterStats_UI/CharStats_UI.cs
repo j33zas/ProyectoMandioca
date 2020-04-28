@@ -45,15 +45,17 @@ public class CharStats_UI : MonoBehaviour
     
     public void UpdateXP_UI(int current, int maxXP, int currentLvl)
     {
-
         float cur = current;
         float max = maxXP;
-        
         currentXp_Bar.fillAmount = cur / max;
-
         xp_txt.text = current + " / " + maxXP;
-        
         currentLvl_txt.text = "Lvl " + currentLvl;
+    }
+    public void MaxLevel(int currentLvl)
+    {
+        currentXp_Bar.fillAmount = 1f;
+        xp_txt.text = "MAX LEVEL";
+        currentLvl_txt.text = currentLvl.ToString();
     }
 
     public void ToggleLvlUpSignON()

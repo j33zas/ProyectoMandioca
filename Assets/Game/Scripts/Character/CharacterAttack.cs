@@ -20,7 +20,7 @@ public class CharacterAttack
     Action NormalAttack;
     Action HeavyAttack;
 
-    public Action OnAttack;
+    public Action<bool> OnAttack;
     public Action OnAttackBegin;
     public Action OnAttackEnd;
 
@@ -40,11 +40,14 @@ public class CharacterAttack
     public Weapon currentWeapon { get; private set; }
     int currentIndexWeapon;
 
-    Action<EnemyBase> callback_ReceiveEntity = delegate { };
+    Action callback_ReceiveEntity = delegate { };
 
     event Action<Vector3> callbackPosition;
 
     ParticleSystem attackslash;
+
+    Action DealSuccesfullNormal;
+    Action DealSuccesfullHeavy;
 
 
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float rangeOfPetrified, float damage, ParticleSystem _attackslash)
@@ -72,6 +75,8 @@ public class CharacterAttack
 
         attackslash = _attackslash;
     }
+
+
 
     public string ChangeName()
     {
@@ -171,25 +176,28 @@ public class CharacterAttack
 
     public void ChangeDamageBase(int dmg) => currentDamage = dmg;
 
-    void Attack()
+    public void ConfigureDealsSuscessful(Action inNormal, Action inHeavy)
     {
-        EntityBase enemy = currentWeapon.Attack(forwardPos, currentDamage);
-
+        DealSuccesfullNormal = inNormal;
+        DealSuccesfullHeavy = inHeavy;
+    }
+    void Attack(bool isHeavy)
+    {
+        var sucessful = currentWeapon.Attack(forwardPos, currentDamage);
         attackslash.Play();
 
-        if (enemy != null)
+        if (sucessful)
         {
-            if (enemy.GetComponent<EnemyBase>())
-            {
-                callback_ReceiveEntity((EnemyBase)enemy);
-            }
+            callback_ReceiveEntity();
+            if (isHeavy) DealSuccesfullHeavy();
+            else DealSuccesfullNormal();
         }
 
         FirstAttackReady(false);
     }
 
-    public void AddCAllback_ReceiveEntity(Action<EnemyBase> _cb) => callback_ReceiveEntity += _cb;
-    public void RemoveCAllback_ReceiveEntity(Action<EnemyBase> _cb)
+    public void AddCAllback_ReceiveEntity(Action _cb) => callback_ReceiveEntity += _cb;
+    public void RemoveCAllback_ReceiveEntity(Action _cb)
     {
         callback_ReceiveEntity -= _cb;
         callback_ReceiveEntity = delegate { };

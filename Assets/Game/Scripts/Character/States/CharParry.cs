@@ -19,6 +19,7 @@ namespace Tools.StateMachine
         {
             charMove.MovementHorizontal(0);
             charMove.MovementVertical(0);
+            charBlock.SetOnBlock(false);
             charBlock.OnParry();
         }
 

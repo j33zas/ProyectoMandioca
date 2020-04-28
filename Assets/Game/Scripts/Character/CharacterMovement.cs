@@ -17,6 +17,7 @@ public class CharacterMovement
     private Vector3 dashDir;
 
     bool inDash;
+    bool canRotate = true;
 
     float timerDash;
     float maxTimerDash;
@@ -117,18 +118,26 @@ public class CharacterMovement
 
         _rb.velocity = auxNormalized * speed;
 
+        var prom = Mathf.Abs(axisY) + Mathf.Abs(axisX);
 
         if (rotX >= 0.3 || rotX <= -0.3 || rotY >= 0.3 || rotY <= -0.3)
         {
             Rotation(rotY, rotX);
+
+            //float dotX = Vector3.Dot(rotTransform.forward, new Vector3(rotY, 0, rotX));
+            //float dotY = Vector3.Dot(rotTransform.right, new Vector3(rotY, 0, rotX));
+            anim.Move(prom, -axisX * rotTransform.right.x, axisY * rotTransform.forward.z);
+
+            //if (rotY >= 0)
+            //    anim.Move(prom, axisX, axisY);
+            //else
+            //    anim.Move(prom, axisX, -axisY);
         }
         else
         {
             Rotation(axisY, axisX);
+            anim.Move(prom, 0, 1);
         }
-
-        var prom = Mathf.Abs(axisY) + Mathf.Abs(axisX);
-        anim.Move(prom);
 
     }
     #endregion
@@ -140,6 +149,8 @@ public class CharacterMovement
         rotX = axis;
         Rotation(rotTransform.forward.z, axis);
     }
+    public void EnableRotation() => canRotate = true;
+    public void CancelRotation() => canRotate = false;
 
     void RightVerical(float axis)
     {
@@ -148,15 +159,20 @@ public class CharacterMovement
     }
     void Rotation(float axisX, float axisY)
     {
-        Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
+        if (canRotate)
+        {
+            Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
 
-        if (dir == Vector3.zero)
-            rotTransform.forward = new Vector3(axisY, 0, axisX);
-        else
-            dir = new Vector3(axisY, 0, axisX);
+            if (dir == Vector3.zero)
+                rotTransform.forward = new Vector3(axisY, 0, axisX);
+            else
+                dir = new Vector3(axisY, 0, axisX);
 
-        rotTransform.forward += dir;
+            rotTransform.forward += dir;
+        }
     }
+
+    public Transform GetTransformRotation() => rotTransform;
 
     #endregion
 

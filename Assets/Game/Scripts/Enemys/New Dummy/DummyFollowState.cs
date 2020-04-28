@@ -48,7 +48,6 @@ namespace Tools.StateMachine
         {
             base.Update();
 
-
             if (GetMyPos() == null)
             {
                 if (noObs.CurrentTarget() != null)
