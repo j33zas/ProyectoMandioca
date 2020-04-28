@@ -121,6 +121,9 @@ public class CharacterBlock : EntityBlock
     public void SetOnBlock(bool b)
     {
         onBlock = b;
+
+        if (!b)
+            FinishParry();
     }
 
     public override void FinishParry()
