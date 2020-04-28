@@ -38,6 +38,8 @@ public class Destructible_Normal : DestructibleBase
         //luego esto lo metemos en yo que se... en el OnPlayerEnterInThisRoom()
         //asi luego optimizamos
         Calculate();
+
+        Main.instance.AddEntity(this);
     }
 
     void Calculate()

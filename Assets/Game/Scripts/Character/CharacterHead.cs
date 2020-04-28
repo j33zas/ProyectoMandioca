@@ -92,11 +92,9 @@ public class CharacterHead : CharacterControllable
 
     Rigidbody rb;
 
-
-
     protected override void OnInitialize()
     {
-        
+
     }
 
     private void Start()
@@ -182,7 +180,7 @@ public class CharacterHead : CharacterControllable
 
         ConfigureState.Create(beginBlock)
              .SetTransition(PlayerInputs.BLOCK, block)
-             .SetTransition(PlayerInputs.END_BLOCK ,endBlock)
+             .SetTransition(PlayerInputs.END_BLOCK, endBlock)
              .SetTransition(PlayerInputs.CHARGE_ATTACK, attackCharge)
              .SetTransition(PlayerInputs.TAKE_DAMAGE, takeDamage)
              .SetTransition(PlayerInputs.DEAD, dead)
@@ -222,6 +220,7 @@ public class CharacterHead : CharacterControllable
 
         ConfigureState.Create(attackRelease)
             .SetTransition(PlayerInputs.IDLE, idle)
+            .SetTransition(PlayerInputs.CHARGE_ATTACK, idle)
             .SetTransition(PlayerInputs.DEAD, dead)
             .Done();
 
@@ -244,7 +243,7 @@ public class CharacterHead : CharacterControllable
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetBlock(charBlock);
         new CharEndBlock(endBlock, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).SetBlock(charBlock);
         new CharParry(parry, stateMachine, parryRecall).SetMovement(this.move).SetBlock(charBlock);
-        new CharRoll(roll, stateMachine,evadeParticle).SetMovement(this.move);
+        new CharRoll(roll, stateMachine, evadeParticle).SetMovement(this.move);
         new CharChargeAttack(attackCharge, stateMachine).SetLeftAxis(GetLeftHorizontal, GetLeftVertical).
             SetRightAxis(GetRightHorizontal, GetRightVertical).SetMovement(this.move).SetAttack(charAttack);
         new CharReleaseAttack(attackRelease, stateMachine, attackRecall, HeavyAttackRealease).SetMovement(this.move).SetAttack(charAttack).SetLeftAxis(GetLeftHorizontal, GetLeftVertical);
@@ -261,7 +260,7 @@ public class CharacterHead : CharacterControllable
 
     #endregion
 
-    
+
 
     protected override void OnUpdateEntity()
     {
@@ -273,7 +272,7 @@ public class CharacterHead : CharacterControllable
 
     protected override void OnPause()
     {
-        
+
     }
     protected override void OnResume()
     {
@@ -292,8 +291,8 @@ public class CharacterHead : CharacterControllable
     public void EVENT_OnAttackBegin() { stateMachine.SendInput(PlayerInputs.CHARGE_ATTACK); }
     public void EVENT_OnAttackEnd() { stateMachine.SendInput(PlayerInputs.RELEASE_ATTACK); }
     public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
-    public void DealAttack() 
-    { 
+    public void DealAttack()
+    {
         charAttack.OnAttack();
         if (isHeavyRelease)
         {
@@ -314,8 +313,8 @@ public class CharacterHead : CharacterControllable
     {
         isHeavyRelease = true;
         ChangeDamageAttack((int)dmg_heavy);
-        ChangeAngleAttack(attackAngle*2);
-        ChangeRangeAttack(attackRange+1);
+        ChangeAngleAttack(attackAngle * 2);
+        ChangeRangeAttack(attackRange + 1);
         charanim.HeavyAttack();
     }
 
@@ -373,7 +372,7 @@ public class CharacterHead : CharacterControllable
     {
         stateMachine.SendInput(PlayerInputs.END_BLOCK);
     }
-    
+
     //lo uso para el skill del escudo que refleja luz
     public EntityBlock GetCharBlock()
     {
