@@ -5,7 +5,7 @@ using System;
 
 public abstract class EnemyBase : NPCBase, ICombatDirector
 {
-    public bool target;
+    
     public bool attacking;
     public GameObject targetFeedBack;
     public Action OnParried;

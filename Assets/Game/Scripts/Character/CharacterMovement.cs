@@ -17,6 +17,7 @@ public class CharacterMovement
     private Vector3 dashDir;
 
     bool inDash;
+    bool canRotate = true;
 
     float timerDash;
     float maxTimerDash;
@@ -148,6 +149,8 @@ public class CharacterMovement
         rotX = axis;
         Rotation(rotTransform.forward.z, axis);
     }
+    public void EnableRotation() => canRotate = true;
+    public void CancelRotation() => canRotate = false;
 
     void RightVerical(float axis)
     {
@@ -156,15 +159,20 @@ public class CharacterMovement
     }
     void Rotation(float axisX, float axisY)
     {
-        Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
+        if (canRotate)
+        {
+            Vector3 dir = rotTransform.forward + new Vector3(axisY, 0, axisX);
 
-        if (dir == Vector3.zero)
-            rotTransform.forward = new Vector3(axisY, 0, axisX);
-        else
-            dir = new Vector3(axisY, 0, axisX);
+            if (dir == Vector3.zero)
+                rotTransform.forward = new Vector3(axisY, 0, axisX);
+            else
+                dir = new Vector3(axisY, 0, axisX);
 
-        rotTransform.forward += dir;
+            rotTransform.forward += dir;
+        }
     }
+
+    public Transform GetTransformRotation() => rotTransform;
 
     #endregion
 

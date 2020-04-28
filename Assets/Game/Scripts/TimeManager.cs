@@ -14,6 +14,11 @@ public class TimeManager : MonoBehaviour
         StartCoroutine(SlowMotion(_scale, _time));
     }
 
+    public void DoHitStop()
+    {
+        StartCoroutine(HitStop());
+    }
+
     IEnumerator SlowMotion (float scale, float time)
     {
         Debug.Log("SlowMo");
@@ -29,5 +34,22 @@ public class TimeManager : MonoBehaviour
         isInSlowMo = false;
         Time.timeScale = normTimeScale;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
+    }
+
+    IEnumerator HitStop()
+    {
+        Debug.Log("SlowMo");
+        if (isInSlowMo)
+            yield break;
+
+        isInSlowMo = true;
+        Time.timeScale = 0f;
+       // Time.fixedDeltaTime = Time.timeScale * 0.02f;
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        isInSlowMo = false;
+        Time.timeScale = normTimeScale;
+     //   Time.fixedDeltaTime = Time.timeScale * 0.02f;
     }
 }

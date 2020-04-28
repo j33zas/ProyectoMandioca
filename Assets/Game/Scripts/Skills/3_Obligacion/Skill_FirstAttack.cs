@@ -45,23 +45,20 @@ public class Skill_FirstAttack : SkillBase_Obligacion
         }
     }
 
-    public void RecieveEntity(EnemyBase _entity)
+    public void RecieveEntity()
     {
         if (charattack.IsFirstAttack())
         {
-            if (_entity.target)
+            foreach (var item in Main.instance.GetEnemies())
             {
-                foreach (var item in Main.instance.GetEnemies())
-                {
-                 EnemyBase myEnemy = item.GetComponent<EnemyBase>();
+                EnemyBase myEnemy = item.GetComponent<EnemyBase>();
 
-                 if (myEnemy)
-                 {
+                if (myEnemy)
+                {
                     myEnemy.OnPetrified();
-                 }
                 }
             }
-            
+
             charattack.DeactiveFirstAttack();
         }
         

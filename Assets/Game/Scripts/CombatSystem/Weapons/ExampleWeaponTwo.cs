@@ -11,7 +11,7 @@ public class ExampleWeaponTwo : Weapon
 
     bool oneshotSucsesfull;
 
-    public override EntityBase Attack(Transform pos, float damage)
+    public override bool Attack(Transform pos, float damage)
     {
         EntityBase entity = null;
 
@@ -62,7 +62,7 @@ public class ExampleWeaponTwo : Weapon
             Main.instance.CameraShake();
         }
 
-        return entity;
+        return true;
     }
 
 }

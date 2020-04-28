@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 public class CharacterAnimator : BaseAnimator
 {
     public CharacterAnimator(Animator _anim) : base(_anim) { }
@@ -19,4 +20,9 @@ public class CharacterAnimator : BaseAnimator
     public void NormalAttack() => myAnim.SetTrigger("NormalAttack");
     public void HeavyAttack() => myAnim.SetBool("HeavyAttack", true);
     public void AttackAntiBug(){ myAnim.ResetTrigger("HeavyAttack"); myAnim.ResetTrigger("NormalAttack"); }
+
+    public void BeginSpin(Action callbackEndAnimation) { myAnim.SetTrigger("BeginSpin"); myAnim.GetBehaviour<ANIM_SCRIPT_BeginSpin>().ConfigureCallback(callbackEndAnimation); }
+    public void EndSpin(Action callbackEndAnimation) { myAnim.SetTrigger("EndSpin"); myAnim.GetBehaviour<ANIM_SCRIPT_EndSpin>().ConfigureCallback(callbackEndAnimation); }
+    public void Stun(bool stunvalue) { myAnim.SetBool("Stun", stunvalue); }
+
 }
