@@ -36,15 +36,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Cutoff: -0.02
+    - _Cutoff: 0.5
     - _EmissionIntensity: 1.3
-    - _Float0: 0.04
+    - _Float0: 1
     - _Float1: 1
     - _Float4: 10.05
     - _GradiantMask: 23.78
     - _GradiantMaskFreezing: 25
     - _Mask: 0.79
-    - _MaskFreezing: 0.57
+    - _MaskFreezing: 4.45
     - _MaskMove: 1
     - _MaskMove1: 1
     - _MaskMoveStyle: 1
@@ -57,7 +57,7 @@ Material:
     - _StepValue: 0
     - _StepValue1: 0
     - _StepValueStyle: 0
-    - __dirty: 1
+    - __dirty: 0
     m_Colors:
     - _Center: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Color2: {r: 0.020825557, g: 0.6784314, b: 0, a: 0}
