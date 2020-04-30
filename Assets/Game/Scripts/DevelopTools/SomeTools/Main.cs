@@ -115,8 +115,6 @@ public class Main : MonoBehaviour
     }
 
     public void EVENT_OpenMenu() { if (gameisbegin) gameUiController.BTN_Back_OpenMenu(); }
-
-
     public List<T> GetListOf<T>() where T : PlayObject
     {
         List<T> aux = new List<T>();
