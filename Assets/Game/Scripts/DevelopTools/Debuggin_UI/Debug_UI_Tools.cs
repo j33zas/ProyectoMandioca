@@ -28,6 +28,7 @@ namespace DevelopTools.UI
         //prefab del slider
         [SerializeField] private Debuggin_Template_Slider slider_pf;
         [SerializeField] private Debuggin_Template_Toggle toggle_pf;
+        [SerializeField] private Debuggin_Template_Button button_pf;
 
         //para tener una referencia a todos por cualquier cosa
         private List<GameObject> debug_UIs = new List<GameObject>();
@@ -58,6 +59,13 @@ namespace DevelopTools.UI
             Debuggin_Template_Toggle newToggle = Instantiate(toggle_pf, container);
             newToggle.Configurate(title, actual, callback);
             debug_UIs.Add(newToggle.gameObject);
+        }
+
+        public void CreateButton(string title, Func<string> callback)
+        {
+            Debuggin_Template_Button newButton = Instantiate(button_pf, container);
+            newButton.Configurate(title, callback);
+            debug_UIs.Add(newButton.gameObject);
         }
 
         /// <summary>
