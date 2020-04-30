@@ -29,7 +29,9 @@
                   <e p="HeavyAttack.shader" t="Include" />
                 </e>
                 <e p="Freezing" t="Include">
+                  <e p="Color.shader" t="Include" />
                   <e p="Freezing.shader" t="Include" />
+                  <e p="Sin.shader" t="Include" />
                 </e>
                 <e p="LevelUp" t="Include">
                   <e p="LevelUpGround.shader" t="Include" />
@@ -782,6 +784,7 @@
                   <e p="SkillActive_LightBounce.cs" t="Include" />
                   <e p="SkillActive_RainArrows.cs" t="Include" />
                   <e p="SkillActive_SomeHeal.cs" t="Include" />
+                  <e p="SkillActive_SpinAndStun.cs" t="Include" />
                 </e>
               </e>
             </e>
@@ -809,6 +812,8 @@
                 <e p="CharParry.cs" t="Include" />
                 <e p="CharReleaseAttack.cs" t="Include" />
                 <e p="CharRoll.cs" t="Include" />
+                <e p="CharSpin.cs" t="Include" />
+                <e p="CharStun.cs" t="Include" />
                 <e p="CharTakeDmg.cs" t="Include" />
               </e>
             </e>
@@ -843,6 +848,7 @@
               </e>
               <e p="Debuggin_UI" t="Include">
                 <e p="Debug_UI_Tools.cs" t="Include" />
+                <e p="Debuggin_Template_Button.cs" t="Include" />
                 <e p="Debuggin_Template_Slider.cs" t="Include" />
                 <e p="Debuggin_Template_Toggle.cs" t="Include" />
                 <e p="DevelopToolsCenter.cs" t="Include" />
@@ -901,6 +907,7 @@
                 <e p="JoystickBasicInput.cs" t="Include" />
                 <e p="Main.cs" t="Include" />
                 <e p="MoveRaw.cs" t="Include" />
+                <e p="ObjectStateTest.cs" t="Include" />
                 <e p="Rumble.cs" t="Include" />
                 <e p="SceneMainBase.cs" t="Include" />
                 <e p="Sensor.cs" t="Include" />
@@ -966,6 +973,7 @@
                 <e p="DummyEnemyStates.cs" t="Include" />
                 <e p="DummyFollowState.cs" t="Include" />
                 <e p="DummyIdleState.cs" t="Include" />
+                <e p="DummyParried.cs" t="Include" />
                 <e p="DummyStunState.cs" t="Include" />
                 <e p="DummyTDState.cs" t="Include" />
                 <e p="FreezeState.cs" t="Include" />
@@ -1229,7 +1237,6 @@
                   <e p="Dungeon.cs" t="Include" />
                   <e p="DungeonGeneration" t="Include">
                     <e p="Components" t="Include">
-                      <e p="IDungeonElement.cs" t="Include" />
                       <e p="Room.cs" t="Include" />
                       <e p="RoomsContainerNotDestroyable.cs" t="Include" />
                       <e p="Wing.cs" t="Include" />
@@ -1264,16 +1271,24 @@
                       <e p="RangeCorners.cs" t="Include" />
                     </e>
                   </e>
-                  <e p="DimensionSectorManager.cs" t="Include" />
                   <e p="Rooms" t="Include">
-                    <e p="DoorTrigger.cs" t="Include" />
-                    <e p="IDungElemCallback.cs" t="Include" />
-                    <e p="LocalRoomTriggers.cs" t="Include" />
-                    <e p="ManagerRoomTrigger.cs" t="Include" />
-                    <e p="ManualRoom.cs" t="Include" />
-                    <e p="NewRoom.cs" t="Include" />
-                    <e p="NewRoomGenerator.cs" t="Include" />
-                    <e p="RoomBase.cs" t="Include" />
+                    <e p="Core" t="Include">
+                      <e p="DoorTrigger.cs" t="Include" />
+                      <e p="IZoneElemCallback.cs" t="Include" />
+                      <e p="LocalRoomTriggers.cs" t="Include" />
+                      <e p="ManagerRoomTrigger.cs" t="Include" />
+                      <e p="ZoneBase.cs" t="Include" />
+                      <e p="ZoneHandlerBase.cs" t="Include" />
+                    </e>
+                    <e p="ForGeneration" t="Include">
+                      <e p="DimensionSectorManager.cs" t="Include" />
+                      <e p="NewRoom.cs" t="Include" />
+                      <e p="NewRoomGenerator.cs" t="Include" />
+                    </e>
+                    <e p="ForManuals" t="Include">
+                      <e p="ManagerManualRoom.cs" t="Include" />
+                      <e p="ManualRoom.cs" t="Include" />
+                    </e>
                   </e>
                 </e>
                 <e p="IRoomElementable.cs" t="Include" />
@@ -1293,7 +1308,6 @@
                   <e p="LookEnemy.cs" t="Include" />
                   <e p="RangeAttack.cs" t="Include" />
                 </e>
-                <e p="ChangeNode.cs" t="Include" />
                 <e p="Enem.cs" t="Include" />
                 <e p="Enem_AnimController.cs" t="Include" />
                 <e p="Entity.cs" t="Include" />
@@ -1328,7 +1342,9 @@
                     <e p="ANIM_SCRIPT_AttackHeavy.cs" t="Include" />
                     <e p="ANIM_SCRIPT_Base.cs" t="Include" />
                     <e p="ANIM_SCRIPT_BeginChange.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_BeginSpin.cs" t="Include" />
                     <e p="ANIM_SCRIPT_EndChange.cs" t="Include" />
+                    <e p="ANIM_SCRIPT_EndSpin.cs" t="Include" />
                     <e p="ANIM_SCRIPT_Hit.cs" t="Include" />
                     <e p="ANIM_SCRIPT_OnDeath.cs" t="Include" />
                     <e p="ANIM_SCRIPT_OnSight.cs" t="Include" />
