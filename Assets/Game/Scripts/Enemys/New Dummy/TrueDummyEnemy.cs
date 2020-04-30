@@ -39,7 +39,7 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] Animator animator;
     [SerializeField] UnityEngine.UI.Text txt_debug;
 
-    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED, PARRIED };
+    
     public bool isOnFire { get; private set; }
 
     EventStateMachine<DummyEnemyInputs> sm;
@@ -267,7 +267,7 @@ public class TrueDummyEnemy : EnemyBase
     public override void ToAttack() { attacking = true; }
 
     #region STATE MACHINE THINGS
-
+    public enum DummyEnemyInputs { IDLE, ATTACK, GO_TO_POS, DIE, DISABLE, TAKE_DAMAGE, PETRIFIED, PARRIED, FREEZE };
     void SetStates()
     {
         var idle = new EState<DummyEnemyInputs>("Idle");
@@ -278,6 +278,7 @@ public class TrueDummyEnemy : EnemyBase
         var die = new EState<DummyEnemyInputs>("Die");
         var disable = new EState<DummyEnemyInputs>("Disable");
         var petrified = new EState<DummyEnemyInputs>("Petrified");
+        var freeze = new EState<DummyEnemyInputs>("Freeze");
 
         ConfigureState.Create(idle)
             .SetTransition(DummyEnemyInputs.GO_TO_POS, goToPos)
@@ -285,6 +286,7 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.ATTACK, attack)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.FREEZE, freeze)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
             .Done();
 
@@ -293,6 +295,7 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.TAKE_DAMAGE, takeDamage)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.FREEZE, freeze)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
             .Done();
 
@@ -300,12 +303,14 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.FREEZE, freeze)
             .SetTransition(DummyEnemyInputs.PARRIED, parried)
             .Done();
 
         ConfigureState.Create(parried)
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.FREEZE, freeze)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .Done();
 
@@ -320,6 +325,7 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.IDLE, idle)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
             .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.FREEZE, freeze)
             .SetTransition(DummyEnemyInputs.DIE, die)
             .Done();
 
@@ -348,6 +354,7 @@ public class TrueDummyEnemy : EnemyBase
         new DummyTDState(takeDamage, sm, recallTime).SetAnimator(animator);
 
         new DummyStunState(petrified, sm, petrifiedTime, attack).SetAnimator(animator);
+        new DummyStunState(freeze, sm, petrifiedTime, attack).SetAnimator(animator);
 
         new DummyDieState(die, sm).SetAnimator(animator).SetDirector(director).SetRigidbody(rb);
 

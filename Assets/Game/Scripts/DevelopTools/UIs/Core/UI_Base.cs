@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(UI_GoBack))]
+[RequireComponent(typeof(UI_AnimBase))]
 public abstract class UI_Base : MonoBehaviour
 {
     [Header("UI_Base")]
@@ -9,15 +9,13 @@ public abstract class UI_Base : MonoBehaviour
     [System.NonSerialized] public int idfinder;
     [System.NonSerialized] public bool isActive;
 
-    public void SetSpeed(float speed) { anim.speed = speed; }
-
-    UI_GoBack anim;
+    UI_AnimBase anim;
     [SerializeField] protected GameObject parent;
     void Awake()
     {
-        anim = GetComponent<UI_GoBack>();
-        if (anim == null) throw new System.Exception("No contiene un UI_GoBack");
-        else anim.AddEvents(OnEndOpenAnimation, EndCloseAnimation);
+        anim = GetComponent<UI_AnimBase>();
+        if (anim == null) throw new System.Exception("No contiene un UI_AnimBase");
+        else anim.AddCallbacks(OnEndOpenAnimation, EndCloseAnimation);
         OnAwake();
     }
     void Start() => OnStart();
@@ -29,9 +27,6 @@ public abstract class UI_Base : MonoBehaviour
     protected abstract void OnEndCloseAnimation();
     protected abstract void OnUpdate();
     public abstract void Refresh();
-    public void OnForSettings() { parent.SetActive(true); }
-    public void OFFForSettings() { parent.SetActive(false); }
-    public void PreOpen() { parent.SetActive(true); }
     public void ConfigurateFirst(GameObject go) => firstToOpenMenu = go;
 
     public virtual void Open()
