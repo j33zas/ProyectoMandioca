@@ -44,7 +44,7 @@ public abstract class Inspectable : MonoBehaviour
     /// FUNCTIONS
     //////////////////////////////////////////////////////////////
 
-    public void Initialize(RoomBase sadsadsa)
+    public void Initialize(ZoneBase sadsadsa)
     {
 
     }

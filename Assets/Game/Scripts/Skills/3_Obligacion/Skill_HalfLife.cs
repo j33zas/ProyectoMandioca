@@ -28,7 +28,7 @@ public class Skill_HalfLife : SkillBase_Obligacion
     protected override void OnEndSkill()
     {
         base.OnEndSkill();
-        var enemysInRoom = Main.instance.GetRoom().myenemies();
+        var enemysInRoom = Main.instance.GetRoom().GetMyEnemies();
         for (int i = 0; i < enemysInRoom.Count; i++)
         {
             enemysInRoom[i].Mortal();

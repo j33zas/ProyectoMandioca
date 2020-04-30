@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatDirector : MonoBehaviour, IRoomElement
+public class CombatDirector : MonoBehaviour, IZoneElement
 {
     List<ICombatDirector> toAttack = new List<ICombatDirector>();
     List<ICombatDirector> inAttack = new List<ICombatDirector>();
@@ -45,7 +45,7 @@ public class CombatDirector : MonoBehaviour, IRoomElement
         awakeList = new List<ICombatDirector>();
     }
 
-    public void PlayerLeaveRoom()
+    public void OnPlayerEnterInThisRoom(Transform who)
     {
         initialize = false;
 
@@ -72,7 +72,7 @@ public class CombatDirector : MonoBehaviour, IRoomElement
         listAttackTarget = new Dictionary<EntityBase, List<ICombatDirector>>();
     }
 
-    public void PlayerEnterRoom()
+    public void OnPlayerExitInThisRoom()
     {
         //Cuando esté bien definido lo de las rooms, Acá se puede poner el initialize con algunos cambios.
     }
@@ -515,4 +515,10 @@ public class CombatDirector : MonoBehaviour, IRoomElement
     }
 
     void CalculateTimer() => timeToAttack = Random.Range(timerMin, timerMax);
+
+    #region en desuso
+    public void OnDungeonGenerationFinallized() { }
+    public void OnUpdateInThisRoom() { }
+    public void OnPlayerDeath() { }
+    #endregion
 }

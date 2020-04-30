@@ -7,7 +7,6 @@ public class BaseRoom : MonoBehaviour
     public SensorForEnemysInRoom _sensor;
     public List<EnemyBase> myEnemies = new List<EnemyBase>();
 
-
     void Start()
     {
         _sensor = GetComponentInChildren<SensorForEnemysInRoom>();
@@ -57,22 +56,9 @@ public class BaseRoom : MonoBehaviour
         }
     }
 
-    void CheckEmptyRoom()
-    {
-        if (myEnemies.Count == 0)
-        {
-            Debug.Log("empty of enemys");
-        }
-    }
-    public void RemoveEnemyFromList(EnemyBase enemy)
-    {
-        myEnemies.Remove(enemy);
-    }
-
-    public List<EnemyBase> myenemies()
-    {
-        return myEnemies;
-    }
+    public bool RoomIsEmpty() => myEnemies.Count == 0;
+    public void RemoveEnemyFromList(EnemyBase enemy) => myEnemies.Remove(enemy);
+    public List<EnemyBase> GetMyEnemies() => myEnemies;
 
     public bool VIPInRoom()
     {
@@ -80,7 +66,6 @@ public class BaseRoom : MonoBehaviour
         {
             if (myEnemies[i].target)
                 return true;
-
         }
         return false;
     }

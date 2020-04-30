@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface IRoomElement 
+public interface IZoneElement
 {
-    void PlayerLeaveRoom();
-    void PlayerEnterRoom();
+    void OnDungeonGenerationFinallized();
+    void OnPlayerEnterInThisRoom(Transform who);
+    void OnPlayerExitInThisRoom();
+    void OnUpdateInThisRoom();
+    void OnPlayerDeath();
 }

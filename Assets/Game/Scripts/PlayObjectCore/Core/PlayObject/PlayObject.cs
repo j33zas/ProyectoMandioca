@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public abstract class PlayObject : MonoBehaviour, IRoomElement
+public abstract class PlayObject : MonoBehaviour, IZoneElement
 {
     protected bool canupdate;
     public void Initialize() { OnInitialize(); }
@@ -25,7 +25,9 @@ public abstract class PlayObject : MonoBehaviour, IRoomElement
     protected abstract void OnFixedUpdate();
     protected abstract void OnPause();
     protected abstract void OnResume();
-
-    public virtual void PlayerLeaveRoom() { }
-    public virtual void PlayerEnterRoom() { }
+    public virtual void OnPlayerExitInThisRoom() { }
+    public virtual void OnDungeonGenerationFinallized() { }
+    public virtual void OnPlayerEnterInThisRoom(Transform who) { }
+    public virtual void OnUpdateInThisRoom() { }
+    public virtual void OnPlayerDeath() { }
 }

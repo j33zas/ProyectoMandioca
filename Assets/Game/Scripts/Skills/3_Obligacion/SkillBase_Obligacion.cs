@@ -18,7 +18,7 @@ public class SkillBase_Obligacion : SkillBase
         {
             mySensor = Main.instance.GetRoom()._sensor;
             mySensor.AddCallback_OnTriggerExit(ExitTheRoom);
-            myEnemies = Main.instance.GetRoom().myenemies();
+            myEnemies = Main.instance.GetRoom().GetMyEnemies();
             if (!Main.instance.GetRoom().VIPInRoom())
             {
                 int index = Random.Range(0, myEnemies.Count);
