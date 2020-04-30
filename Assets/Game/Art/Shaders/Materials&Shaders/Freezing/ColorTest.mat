@@ -21,6 +21,6 @@ Material:
     m_TexEnvs: []
     m_Floats:
     - _Float0: 1
-    - __dirty: 1
+    - __dirty: 0
     m_Colors:
     - _Color0: {r: 0.48584896, g: 1, b: 0.50895184, a: 0}

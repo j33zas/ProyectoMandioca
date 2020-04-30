@@ -134,8 +134,8 @@ public class TrueDummyEnemy : EnemyBase
     public override void OnFreeze()
     {
 
-        Debug.LogError("ON FREEEZE");
-        Debug.Break();
+        //Debug.LogError("ON FREEEZE");
+        //Debug.Break();
 
     }
 
