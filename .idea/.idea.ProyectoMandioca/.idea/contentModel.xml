@@ -872,6 +872,7 @@
                 <e p="README.txt" t="Include" />
               </e>
               <e p="PoolObjects" t="Include">
+                <e p="IceShard_particleObjectPool.cs" t="Include" />
                 <e p="SingleObjectPool.cs" t="Include" />
                 <e p="SinglePool_EXAMPLE.cs" t="Include" />
               </e>
@@ -977,6 +978,7 @@
                 <e p="DummyFollowState.cs" t="Include" />
                 <e p="DummyIdleState.cs" t="Include" />
                 <e p="DummyParried.cs" t="Include" />
+                <e p="DummySlowedState.cs" t="Include" />
                 <e p="DummyStunState.cs" t="Include" />
                 <e p="DummyTDState.cs" t="Include" />
                 <e p="FreezeState.cs" t="Include" />
