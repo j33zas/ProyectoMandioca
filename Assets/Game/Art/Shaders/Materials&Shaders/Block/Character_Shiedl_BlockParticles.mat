@@ -33,5 +33,5 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _IntensityFlowMap: 0.69
-    - __dirty: 1
+    - __dirty: 0
     m_Colors: []

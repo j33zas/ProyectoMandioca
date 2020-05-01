@@ -1,6 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4534231927526785203
+--- !u!114 &-6539115275165083654
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  focusDistance:
+    overrideState: 1
+    value: 3.18
+  aperture:
+    overrideState: 1
+    value: 20.8
+  focalLength:
+    overrideState: 1
+    value: 96
+  kernelSize:
+    overrideState: 1
+    value: 2
+--- !u!114 &-6450138946370621625
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24,8 +52,8 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 2
   toneCurveToeStrength:
     overrideState: 0
     value: 0
@@ -53,37 +81,37 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: -21.8
+    value: -17
   tint:
     overrideState: 0
-    value: -11.4
+    value: 0
   colorFilter:
     overrideState: 1
-    value: {r: 0.65205944, g: 0.65205944, b: 0.65205944, a: 1}
+    value: {r: 0.110359564, g: 0.11463155, b: 0.1509434, a: 1}
   hueShift:
     overrideState: 0
-    value: -2
+    value: 0
   saturation:
-    overrideState: 1
-    value: -58.9
+    overrideState: 0
+    value: 0
   brightness:
     overrideState: 0
     value: 0
   postExposure:
+    overrideState: 1
+    value: 1.18
+  contrast:
     overrideState: 0
     value: 0
-  contrast:
-    overrideState: 1
-    value: 8.5
   mixerRedOutRedIn:
     overrideState: 0
-    value: 100
+    value: 119
   mixerRedOutGreenIn:
     overrideState: 0
-    value: 0
+    value: 34
   mixerRedOutBlueIn:
-    overrideState: 1
-    value: -23
+    overrideState: 0
+    value: 14
   mixerGreenOutRedIn:
     overrideState: 0
     value: 0
@@ -94,14 +122,14 @@ MonoBehaviour:
     overrideState: 0
     value: 0
   mixerBlueOutRedIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -68
   mixerBlueOutGreenIn:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: -37
   mixerBlueOutBlueIn:
-    overrideState: 0
-    value: 100
+    overrideState: 1
+    value: 200
   lift:
     overrideState: 0
     value: {x: 1, y: 1, z: 1, w: 0}
@@ -1311,6 +1339,53 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
+--- !u!114 &-414621341467743976
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
+  m_Name: Bloom
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 2.33
+  threshold:
+    overrideState: 1
+    value: 0.65
+  softKnee:
+    overrideState: 1
+    value: 0.664
+  clamp:
+    overrideState: 0
+    value: 65472
+  diffusion:
+    overrideState: 0
+    value: 7
+  anamorphicRatio:
+    overrideState: 0
+    value: 0
+  color:
+    overrideState: 0
+    value: {r: 0.0625, g: 0.0625, b: 0.0625, a: 1}
+  fastMode:
+    overrideState: 0
+    value: 0
+  dirtTexture:
+    overrideState: 0
+    value: {fileID: 0}
+    defaultState: 1
+  dirtIntensity:
+    overrideState: 0
+    value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,12 +1396,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: Dark Profile
+  m_Name: DarknessPost-processing Profile
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 7951836114460644716}
-  - {fileID: -4534231927526785203}
---- !u!114 &7951836114460644716
+  - {fileID: 2344120216412256206}
+  - {fileID: -6539115275165083654}
+  - {fileID: -414621341467743976}
+  - {fileID: -6450138946370621625}
+--- !u!114 &2344120216412256206
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1344,10 +1421,10 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 4
+    value: 1.95
   color:
     overrideState: 0
     value: {r: 0, g: 0, b: 0, a: 1}
@@ -1365,13 +1442,13 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 10
+    value: 1
   directLightingStrength:
     overrideState: 0
     value: 0
   radius:
-    overrideState: 0
-    value: 0.25
+    overrideState: 1
+    value: 0.61
   quality:
-    overrideState: 0
-    value: 2
+    overrideState: 1
+    value: 3
