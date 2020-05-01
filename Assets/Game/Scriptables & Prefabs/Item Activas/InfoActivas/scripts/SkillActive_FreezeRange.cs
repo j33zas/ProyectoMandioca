@@ -8,7 +8,6 @@ public class SkillActive_FreezeRange : SkillActivas
 {
     [SerializeField] private float range;
     [SerializeField] private int freezeDuration;
-    [SerializeField] private ParticleSystem freeze_ps_pf;
 
     [SerializeField] private ParticleSystem freezeNova;
     [SerializeField] private ParticleSystem freezeSmoke;
