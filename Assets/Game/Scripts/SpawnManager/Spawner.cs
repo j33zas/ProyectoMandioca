@@ -53,6 +53,16 @@ public class Spawner
         return aux;
     }
 
+    public List<GameObject> spawnListItems(Item obj, Vector3 pos, int quantity)
+    {
+        List<GameObject> aux = new List<GameObject>();
+        for (int i = 0; i < quantity; i++)
+        {
+            aux.Add(SpawnItem(obj, pos));
+        }
+        return aux;
+    }
+
     public GameObject SpawnItem(Item item, Transform position)
     {
         GameObject myItem = GameObject.Instantiate(item.model);

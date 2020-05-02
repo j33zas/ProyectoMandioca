@@ -23,6 +23,7 @@ namespace Tools.StateMachine
             base.Enter(input);
 
             anim.SetBool("Stun", true);
+            anim.SetBool("Attack", false);
         }
 
         protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)

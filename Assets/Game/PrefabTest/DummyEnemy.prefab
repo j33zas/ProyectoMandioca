@@ -1627,6 +1627,7 @@ MonoBehaviour:
   minionTarget: 0
   Invinsible: 0
   death: 0
+  expToDrop: 5
   combatDistance: 20
   _target: {fileID: 0}
   distancePos: 2
@@ -1646,7 +1647,7 @@ MonoBehaviour:
   damage: 2
   distanceToAttack: 1.5
   normalDistance: 7
-  cdToAttack: 2
+  cdToAttack: 1
   parriedTime: 2
   lifesystem: {fileID: 3901963547881250315}
   recallTime: 0.5

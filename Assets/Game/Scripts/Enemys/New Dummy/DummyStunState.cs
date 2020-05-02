@@ -53,8 +53,10 @@ namespace Tools.StateMachine
 
             if (timer >= timePetrify)
             {
-                if (lastState == attackState)
+                if (lastState.Name == attackState.Name)
                     sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
+                else if(lastState.Name=="Begin_Attack")
+                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.BEGIN_ATTACK);
                 else
                     sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
             }

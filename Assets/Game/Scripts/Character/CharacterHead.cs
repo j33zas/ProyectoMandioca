@@ -294,7 +294,7 @@ public class CharacterHead : CharacterControllable
             .SetMovement(this.move)
             .SetAttack(charAttack);
 
-        new CharReleaseAttack(attackRelease, stateMachine, attackRecall, HeavyAttackRealease)
+        new CharReleaseAttack(attackRelease, stateMachine, attackRecall, HeavyAttackRealease, ChangeHeavy)
             .SetMovement(this.move)
             .SetAttack(charAttack)
             .SetLeftAxis(GetLeftHorizontal, GetLeftVertical);
@@ -378,7 +378,7 @@ public class CharacterHead : CharacterControllable
     void DealSucessfullHeavy()
     {
         SlowMO();
-        isHeavyRelease = false;
+        ChangeHeavy(false);
         Main.instance.Vibrate(1f, 0.5f);
         Main.instance.CameraShake();
     }
@@ -392,17 +392,16 @@ public class CharacterHead : CharacterControllable
     bool isHeavyRelease;
     void ReleaseInHeavy()
     {
-        isHeavyRelease = true;
+        ChangeHeavy(true);
         ChangeDamageAttack((int)dmg_heavy);
         ChangeAngleAttack(attackAngle * 2);
         ChangeRangeAttack(attackRange + 1);
         charanim.HeavyAttack();
     }
+    void ChangeHeavy(bool y) { isHeavyRelease = y; }
 
-    public bool HeavyAttackRealease()
-    {
-        return isHeavyRelease;
-    }
+    bool HeavyAttackRealease() { return isHeavyRelease; }
+
     void EndAttack()
     {
         stateMachine.SendInput(PlayerInputs.IDLE);

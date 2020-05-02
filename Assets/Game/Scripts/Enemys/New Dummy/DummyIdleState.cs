@@ -59,7 +59,7 @@ namespace Tools.StateMachine
                 root.forward = Vector3.Lerp(root.forward, forwardRotation, rotationSpeed * Time.deltaTime);
 
                 if (IsAttack())
-                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
+                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.BEGIN_ATTACK);
                 else
                 {
                     if (enemy.IsInPos())

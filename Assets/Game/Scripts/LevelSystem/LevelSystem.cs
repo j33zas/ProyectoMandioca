@@ -33,7 +33,7 @@ public class LevelSystem : MonoBehaviour
     void EnemyDeath(params object[] param)
     {
 
-        Main.instance.SpawnItem(experience, (Vector3)param[0]);
+        Main.instance.SpawnListItems(experience, (Vector3)param[0], (int)param[2]);
     }
 
     public void AddExperiencie(int exp)

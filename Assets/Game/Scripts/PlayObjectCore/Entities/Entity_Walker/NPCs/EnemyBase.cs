@@ -12,6 +12,7 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
     public bool minionTarget;
     public bool Invinsible;
     public bool death;
+    [SerializeField] protected int expToDrop = 1;
 
     public virtual void Awake()
     {
