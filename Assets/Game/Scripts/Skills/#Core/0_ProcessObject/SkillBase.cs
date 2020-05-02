@@ -24,8 +24,9 @@ public abstract class SkillBase : MonoBehaviour
         if (ui_skill) ui_skill.OnUI_Unselect();
         OnEndSkill();
     }
-    private void Update() { absUpdate(); }
+    private void Update() { absUpdate(); cooldownUpdate(); }
     internal virtual void absUpdate() { if (canupdate) OnUpdateSkill(); }
+    internal virtual void cooldownUpdate() { }
     protected abstract void OnBeginSkill();
     protected abstract void OnEndSkill();
     protected abstract void OnUpdateSkill();

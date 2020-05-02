@@ -349,6 +349,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: d049a2832b19fd94cbf895e0bb77202b, type: 3}
+  - {fileID: 2100000, guid: dc0803dd6ebef1541adad7c4601cb49a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1634,10 +1635,16 @@ MonoBehaviour:
   avoidWeight: 0.5
   avoidRadious: 2
   rootTransform: {fileID: 3901963547267435579}
+  animEmisive:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   combatComponent: {fileID: 3901963547881250309}
   director: {fileID: 0}
-  damage: 3
-  distanceToAttack: 3
+  damage: 2
+  distanceToAttack: 1.5
   normalDistance: 7
   cdToAttack: 2
   parriedTime: 2

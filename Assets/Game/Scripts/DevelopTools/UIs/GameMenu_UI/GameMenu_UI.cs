@@ -10,6 +10,8 @@ public class GameMenu_UI : UI_Base
     [Header("GameMenu_UI")]
     private SkillManager_Pasivas skill_manager;
 
+    Image imgexample;
+
     [SerializeField] private RectTransform passiveSkills_container;
     [SerializeField] private RectTransform passiveSkillsSelection_container;
     [SerializeField] private PassiveSkill_template ps_template_pf;

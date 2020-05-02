@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class FeedbackInteract_Scaler : FeedbackInteractBase
 {
+    public bool ownTransform;
     public Transform toscale;
     Vector3 startscale = Vector3.zero;
     Vector3 finalscale = Vector3.zero;
     public Vector3 cant_to_scale = new Vector3(2,2,2);
     private void Start()
     {
+        if (ownTransform) toscale = this.transform;
         startscale = toscale.transform.localScale;
         finalscale = new Vector3(
             startscale.x + cant_to_scale.x, 

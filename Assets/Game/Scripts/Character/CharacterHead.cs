@@ -371,7 +371,7 @@ public class CharacterHead : CharacterControllable
     }
     void DealSucessfullNormal()
     {
-        Main.instance.GetTimeManager().DoHitStop();
+        //Main.instance.GetTimeManager().DoHitStop();
         Main.instance.Vibrate(0.7f,0.1f);
         Main.instance.CameraShake();
     }

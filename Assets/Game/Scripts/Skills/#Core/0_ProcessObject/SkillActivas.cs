@@ -5,6 +5,8 @@ using System;
 
 public abstract class SkillActivas : SkillBase
 {
+    Action<SkillInfo, float> CallbackCooldown = delegate { };
+
     [Header("Cooldown Settings")]
     public float cooldown;
     float time_cooldown;
@@ -17,7 +19,12 @@ public abstract class SkillActivas : SkillBase
     bool beginUse;
     Func<bool> predicate;
     bool usePredicate;
-    public void SetPredicate(Func<bool> pred)
+
+    public void SetCallbackCooldown(Action<SkillInfo, float> callback)
+    {
+        CallbackCooldown = callback;
+    }
+    protected void SetPredicate(Func<bool> pred)
     {
         predicate = pred;
         usePredicate = true;
@@ -79,12 +86,19 @@ public abstract class SkillActivas : SkillBase
                 OnStopUse();
             }
         }
+        
+    }
+
+    internal override void cooldownUpdate()
+    {
+        base.cooldownUpdate();
         if (begincooldown)
         {
             if (time_cooldown < cooldown)
             {
                 time_cooldown = time_cooldown + 1 * Time.deltaTime;
-                ui_skill.Cooldown_SetValueTime(time_cooldown);
+                CallbackCooldown(skillinfo, time_cooldown);
+                //ui_skill.Cooldown_SetValueTime(time_cooldown);
             }
             else
             {

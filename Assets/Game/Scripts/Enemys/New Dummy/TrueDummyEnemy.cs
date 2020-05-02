@@ -14,6 +14,8 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] Transform rootTransform;
     private float currentSpeed;
 
+    public AnimationCurve animEmisive;
+
     [Header("Combat Options")]
     [SerializeField] CombatComponent combatComponent;
     [SerializeField] CombatDirector director;

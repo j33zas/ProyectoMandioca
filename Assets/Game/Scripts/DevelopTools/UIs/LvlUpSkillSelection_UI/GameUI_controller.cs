@@ -14,6 +14,8 @@ public class GameUI_controller : MonoBehaviour
     
     [SerializeField] private GameMenu_UI gameMenu_UI;
 
+    [SerializeField] public RectTransform shieldPLaces;
+
     private CharStats_UI _charStats_Ui;
     Dictionary<UI_templates, GameObject> UiTemplateRegistry = new Dictionary<UI_templates, GameObject>();
 
