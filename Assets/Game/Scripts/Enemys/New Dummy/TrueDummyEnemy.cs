@@ -31,6 +31,10 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] float forceRecall;
     [SerializeField] float explosionForce = 20;
     [SerializeField] float petrifiedTime;
+
+    [Range(0,1)]
+    [SerializeField] float freezeSpeedSlowed;
+    [SerializeField] float freezeTime;
     private bool cooldown = false;
     private float timercooldown = 0;
 
@@ -40,9 +44,11 @@ public class TrueDummyEnemy : EnemyBase
     [SerializeField] AnimEvent anim;
     [SerializeField] Animator animator;
     [SerializeField] UnityEngine.UI.Text txt_debug;
+    [SerializeField] Material freeze_shader;
 
     
     public bool isOnFire { get; private set; }
+    
 
     EventStateMachine<DummyEnemyInputs> sm;
     Rigidbody rb;
@@ -135,10 +141,9 @@ public class TrueDummyEnemy : EnemyBase
 
     public override void OnFreeze()
     {
-
-        Debug.LogError("ON FREEEZE");
-        Debug.Break();
-
+        base.OnFreeze();
+        sm.SendInput(DummyEnemyInputs.FREEZE);
+        
     }
 
     public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype dmgtype)
@@ -322,6 +327,15 @@ public class TrueDummyEnemy : EnemyBase
             .SetTransition(DummyEnemyInputs.DIE, die)
             .SetTransition(DummyEnemyInputs.DISABLE, disable)
             .Done();
+        
+        ConfigureState.Create(freeze)
+            .SetTransition(DummyEnemyInputs.IDLE, idle)
+            .SetTransition(DummyEnemyInputs.TAKE_DAMAGE, takeDamage)
+            .SetTransition(DummyEnemyInputs.DIE, die)
+            .SetTransition(DummyEnemyInputs.PETRIFIED, petrified)
+            .SetTransition(DummyEnemyInputs.FREEZE, freeze)
+            .SetTransition(DummyEnemyInputs.DISABLE, disable)
+            .Done();
 
         ConfigureState.Create(takeDamage)
             .SetTransition(DummyEnemyInputs.IDLE, idle)
@@ -356,7 +370,9 @@ public class TrueDummyEnemy : EnemyBase
         new DummyTDState(takeDamage, sm, recallTime).SetAnimator(animator);
 
         new DummyStunState(petrified, sm, petrifiedTime, attack).SetAnimator(animator);
-        new DummyStunState(freeze, sm, petrifiedTime, attack).SetAnimator(animator);
+        
+        new DummySlowedState(freezeTime, freezeSpeedSlowed , freeze_shader, freeze, sm, avoidRadious, avoidWeight, rotSpeed, GetCurrentSpeed, CurrentTargetPos, normalDistance, this).SetAnimator(animator).SetRigidbody(rb)
+            .SetRoot(rootTransform);
 
         new DummyDieState(die, sm).SetAnimator(animator).SetDirector(director).SetRigidbody(rb);
 

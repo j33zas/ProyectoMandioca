@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tools.Extensions;
@@ -7,21 +8,48 @@ public class SkillActive_FreezeRange : SkillActivas
 {
     [SerializeField] private float range;
     [SerializeField] private int freezeDuration;
-    [SerializeField] private ParticleSystem freeze_ps_pf;
-    
+
+    [SerializeField] private ParticleSystem freezeNova;
+    [SerializeField] private ParticleSystem freezeSmoke;
+    [SerializeField] private Transform particleContainer;
+    [SerializeField] private IceShard_particleObjectPool shardPool;
+
+    private List<ParticleSystem> shards = new List<ParticleSystem>();
     List<ParticleSystem> ps = new List<ParticleSystem>();
 
     private CharacterHead _hero;
 
     protected override void OnOneShotExecute()
     {
+        particleContainer.position = _hero.transform.position;
+        var auraMain = freezeNova.main;
+        auraMain.duration = freezeDuration;
+        auraMain.startSize = range;
+        freezeSmoke.Play();
+        freezeNova.Play();
+        
         List<EnemyBase> enemies = Extensions.FindInRadius<EnemyBase>(_hero.transform, range);
 
+        
         foreach (EnemyBase enemy in enemies)
         {
-            var newPs = Instantiate(freeze_ps_pf, enemy.transform);
-            Destroy(newPs, freezeDuration); 
-            enemy.OnFreeze();
+            {
+                var shard = shardPool.Get();
+                shard.transform.position = enemy.transform.position;
+                shards.Add(shard);
+                
+                enemy.OnFreeze();
+            }
+        }
+        
+        Invoke("GuardarShardsParticles", 2);
+    }
+
+    void GuardarShardsParticles()
+    {
+        foreach (var shard in shards)
+        {
+            shardPool.ReturnToPool(shard);
         }
     }
 

@@ -1653,11 +1653,14 @@ MonoBehaviour:
   forceRecall: 200
   explosionForce: 100
   petrifiedTime: 2
+  freezeSpeedSlowed: 0.394
+  freezeTime: 3
   feedbackFireDot: {fileID: 9151005248363886907}
   greenblood: {fileID: 1846346356114705109}
   anim: {fileID: 3901963547267141660}
   animator: {fileID: 3901963547276534677}
   txt_debug: {fileID: 1025451142}
+  freeze_shader: {fileID: 2100000, guid: 97dfdd29a86ad6b49a07c51ad1d51ca0, type: 2}
 --- !u!114 &3901963547881250309
 MonoBehaviour:
   m_ObjectHideFlags: 0

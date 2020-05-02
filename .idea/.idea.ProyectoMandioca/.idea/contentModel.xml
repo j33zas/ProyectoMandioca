@@ -872,6 +872,7 @@
                 <e p="README.txt" t="Include" />
               </e>
               <e p="PoolObjects" t="Include">
+                <e p="IceShard_particleObjectPool.cs" t="Include" />
                 <e p="SingleObjectPool.cs" t="Include" />
                 <e p="SinglePool_EXAMPLE.cs" t="Include" />
               </e>
@@ -923,7 +924,11 @@
                   <e p="CharStats_UI.cs" t="Include" />
                 </e>
                 <e p="Core" t="Include">
-                  <e p="UI_AnimBase.cs" t="Include" />
+                  <e p="Anims" t="Include">
+                    <e p="UI_Anim_Animator.cs" t="Include" />
+                    <e p="UI_Anim_Code.cs" t="Include" />
+                    <e p="UI_AnimBase.cs" t="Include" />
+                  </e>
                   <e p="UI_Base.cs" t="Include" />
                   <e p="UI_SimpleTwo.cs" t="Include" />
                 </e>
@@ -942,7 +947,6 @@
                   <e p="LvlUp" t="Include">
                     <e p="LvlUp_animation_helper.cs" t="Include" />
                   </e>
-                  <e p="UI_GoBack.cs" t="Include" />
                 </e>
                 <e p="UI_Inventory" t="Include">
                   <e p="UI_CompMenuBase.cs" t="Include" />
@@ -974,6 +978,7 @@
                 <e p="DummyFollowState.cs" t="Include" />
                 <e p="DummyIdleState.cs" t="Include" />
                 <e p="DummyParried.cs" t="Include" />
+                <e p="DummySlowedState.cs" t="Include" />
                 <e p="DummyStunState.cs" t="Include" />
                 <e p="DummyTDState.cs" t="Include" />
                 <e p="FreezeState.cs" t="Include" />
