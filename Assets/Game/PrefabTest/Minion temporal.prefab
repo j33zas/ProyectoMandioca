@@ -1776,6 +1776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   side_Type: 2
+  target: 0
   combatComponent: {fileID: 1596232104377501900}
   damage: 10
   obj_feedbackStun: {fileID: 1596232105169705298}
@@ -1805,8 +1806,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lm:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1024
   distance: 5
+  angleAttack: 45
+  rot: {fileID: 1596232104377501888}
 --- !u!114 &1596232104377501889
 MonoBehaviour:
   m_ObjectHideFlags: 0

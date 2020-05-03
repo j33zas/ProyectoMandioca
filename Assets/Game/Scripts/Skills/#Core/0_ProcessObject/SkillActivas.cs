@@ -20,10 +20,8 @@ public abstract class SkillActivas : SkillBase
     Func<bool> predicate;
     bool usePredicate;
 
-    public void SetCallbackCooldown(Action<SkillInfo, float> callback)
-    {
-        CallbackCooldown = callback;
-    }
+    public void SetCallbackCooldown(Action<SkillInfo, float> callback) => CallbackCooldown = callback;
+    public void RemoveCallbackCooldown() => CallbackCooldown = delegate { };
     protected void SetPredicate(Func<bool> pred)
     {
         predicate = pred;
@@ -33,8 +31,17 @@ public abstract class SkillActivas : SkillBase
     public override void BeginSkill()
     {
         begincooldown = true;
-        ui_skill.SetImages(skillinfo.img_avaliable, skillinfo.img_actived);
-        ui_skill.Cooldown_ConfigureTime(cooldown);
+
+        if (!is3D)
+        {
+            ui_skill.SetImages(skillinfo.img_avaliable, skillinfo.img_actived);
+            ui_skill.Cooldown_ConfigureTime(cooldown);
+        }
+        else
+        {
+            CallbackCooldown(skillinfo, cooldown);
+        }
+        
         base.BeginSkill();
     }
     public override void EndSkill()

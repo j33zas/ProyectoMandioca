@@ -55,6 +55,8 @@ public class TrueDummyEnemy : EnemyBase
 
     protected override void OnInitialize()
     {
+        Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_SPAWN, new object[] { this });
+
         Debug.Log("OnInitialize");
         rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
@@ -67,6 +69,8 @@ public class TrueDummyEnemy : EnemyBase
         Main.instance.AddEntity(this);
 
         IAInitialize(Main.instance.GetCombatDirector());
+
+        
     }
 
     public override void OnPlayerExitInThisRoom()
@@ -264,6 +268,7 @@ public class TrueDummyEnemy : EnemyBase
 
     void DeathAnim()
     {
+        //vector3, boolean, int
         Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified, expToDrop });
         gameObject.SetActive(false);
     }

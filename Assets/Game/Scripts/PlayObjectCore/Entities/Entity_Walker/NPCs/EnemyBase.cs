@@ -19,6 +19,8 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
         side_Type = side_type.enemy;
     }
 
+    
+
     public virtual void IsTarget()
     {
         target = true;
@@ -100,10 +102,10 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
 
     public virtual void GetFocusedOnParry()
     {
-        foreach (var item in Main.instance.GetEnemies())
+        foreach (var e in Main.instance.GetEnemies())
         {
-            if (item != this)
-                item.minionTarget = false;
+            if (e != this)
+                e.minionTarget = false;
             else
                 minionTarget = true;
         }

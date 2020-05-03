@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tools;
+using Tools.Extensions;
 using UnityEngine;
 //using XInputDotNetPure;
 
@@ -37,16 +38,9 @@ public class Main : MonoBehaviour
     BaseRoom _currentRoom;
     PopUpCrown _theCrown;
 
-   public Dungeon duntest;
+    public Dungeon duntest;
 
-    public void SubscriteToEntities(PlayObject po)
-    {
-            allentities.Add(po);
-    }
-    public void UnsubscribeToEntities(PlayObject po)
-    {
-            allentities.Remove(po);
-    }
+    
 
 
     private void Awake()
@@ -59,16 +53,7 @@ public class Main : MonoBehaviour
         myCamera = Camera.main.GetComponent<CustomCamera>();
     }
 
-    public void AddEntity(EntityBase b)
-    {
-        if (!allentities.Contains(b))
-            allentities.Add(b);
-    }
-    public void RemoveEntity(EntityBase b)
-    {
-        if (allentities.Contains(b))
-            allentities.Remove(b);
-    }
+    
 
 
     void Start()
@@ -127,7 +112,8 @@ public class Main : MonoBehaviour
         }
         return aux;
     }
-
+    public void AddEntity(EntityBase b) { if (!allentities.Contains(b)) allentities.Add(b); }
+    public void RemoveEntity(EntityBase b) { if (allentities.Contains(b)) allentities.Remove(b); }
     public List<T> GetListOfComponent<T>() where T : PlayObject
     {
         List<T> aux = new List<T>();
@@ -142,6 +128,8 @@ public class Main : MonoBehaviour
         }
         return aux;
     }
+    public List<PlayObject> GetListOfComponentInRadius(Vector3 position, float radius) => position.FindInRadiusNoPhysics(radius, allentities);
+    public List<PlayObject> GetListOfComponentInRadiusByCondition(Vector3 position, float radius, Func<PlayObject, bool> pred) => position.FindInRadiusByConditionNoPhysics(radius, allentities, pred);
 
     public void OnPlayerDeath() { }
 
@@ -163,6 +151,7 @@ public class Main : MonoBehaviour
     /////////////////////////////////////////////////////////////////////
     public CharacterHead GetChar() => character;
     public List<EnemyBase> GetEnemies() => GetListOfComponent<EnemyBase>();
+    public List<EnemyBase> GetEnemiesByPointInRadius(Vector3 point, float radius) => GetListOfComponentInRadius(point,radius).Select(x => x.GetComponent<EnemyBase>()).ToList();
     public List<EnemyBase> GetNoOptimizedListEnemies() => FindObjectsOfType<EnemyBase>().ToList();
 
     public SkillManager_Pasivas GetPasivesManager() => pasives;
