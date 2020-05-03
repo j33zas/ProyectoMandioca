@@ -1,65 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Tools.StateMachine
+﻿namespace Tools.StateMachine
 {
+    using input = TrueDummyEnemy.DummyEnemyInputs;
     public class DummyStunState : DummyEnemyStates
     {
-        float currentAnimVel;
-
-        float timer;
-        float timePetrify;
-
-        EState<TrueDummyEnemy.DummyEnemyInputs> attackState;
-
-        public DummyStunState(EState<TrueDummyEnemy.DummyEnemyInputs> myState, EventStateMachine<TrueDummyEnemy.DummyEnemyInputs> _sm, float _petrify,
-                              EState<TrueDummyEnemy.DummyEnemyInputs> _attackState) : base(myState, _sm)
+        EState<input> attackState;
+        float currentAnimVel, timePetrify, timer;
+        bool startTimer;
+        public DummyStunState(EState<input> myState, EventStateMachine<input> _sm, float _petrify,
+                              EState<input> _attackState) : base(myState, _sm)
         {
             timePetrify = _petrify;
             attackState = _attackState;
         }
-
-        protected override void Enter(TrueDummyEnemy.DummyEnemyInputs input)
+        protected override void Enter(input input)
         {
             base.Enter(input);
             currentAnimVel = anim.speed;
             anim.speed = 0;
-            Debug.Log("me petrifican");
+            startTimer = true;
         }
-
-        protected override void Exit(TrueDummyEnemy.DummyEnemyInputs input)
-        {
-            base.Exit(input);
-            anim.speed = currentAnimVel;
-            timer = 0;
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
-        }
-
         protected override void Update()
         {
-            base.Update();
-
-            timer += Time.deltaTime;
-
-            if (timer >= timePetrify)
+            if (startTimer)
             {
-                if (lastState.Name == attackState.Name)
-                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.ATTACK);
-                else if(lastState.Name=="Begin_Attack")
-                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.BEGIN_ATTACK);
-                else
-                    sm.SendInput(TrueDummyEnemy.DummyEnemyInputs.IDLE);
+                timer *= UnityEngine.Time.deltaTime;
+                if (timer >= timePetrify)
+                    sm.SendInput(lastState.Name == attackState.Name ?
+                        input.ATTACK : (lastState.Name == "Begin_Attack" ?
+                        input.BEGIN_ATTACK : input.IDLE));
             }
+        }
+        protected override void Exit(input input)
+        {
+            base.Exit(input);
+            startTimer = false;
+            anim.speed = currentAnimVel;
         }
     }
 }

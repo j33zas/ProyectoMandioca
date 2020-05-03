@@ -34,14 +34,13 @@ public class Main : MonoBehaviour
 
     public GameUI_controller gameUiController;
 
-    private SensorForEnemysInRoom mySensorRoom;
     BaseRoom _currentRoom;
+
+    //estas dos cosas no deberian estar acá
+    private SensorForEnemysInRoom mySensorRoom;
     PopUpCrown _theCrown;
 
     public Dungeon duntest;
-
-    
-
 
     private void Awake()
     {
@@ -132,14 +131,6 @@ public class Main : MonoBehaviour
     public List<PlayObject> GetListOfComponentInRadiusByCondition(Vector3 position, float radius, Func<PlayObject, bool> pred) => position.FindInRadiusByConditionNoPhysics(radius, allentities, pred);
 
     public void OnPlayerDeath() { }
-
-    public void PlayerDeath()
-    {
-        //if (FindObjectOfType<SceneMainBase>())
-        //{
-        //    FindObjectOfType<SceneMainBase>().OnPlayerDeath();
-        //}
-    }
 
     public void InitializePlayObjects() { foreach (var e in allentities) e.Initialize(); }
     public void Play() { foreach (var e in allentities) e.Resume(); }
