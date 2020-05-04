@@ -176,11 +176,10 @@ public class TrueDummyEnemy : EnemyBase
 
         greenblood.Play();
 
-        lifesystem.Hit(dmg);
-
         cooldown = true;
 
-        return Attack_Result.sucessful;
+        bool death = lifesystem.Hit(dmg);
+        return death ? Attack_Result.death : Attack_Result.sucessful;
     }
 
     public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype damagetype, EntityBase owner_entity)

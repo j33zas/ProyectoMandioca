@@ -1,4 +1,4 @@
-﻿public enum Attack_Result { sucessful, blocked, parried, reflexed, inmune }
+﻿public enum Attack_Result { sucessful, blocked, parried, reflexed, inmune, death }
 public enum side_type { neutral, ally, enemy, other }
 [System.Serializable] public enum SkillType { control, culpa, obligacion, generics, others }
 public enum Damagetype { Fire, normal, parriable, explosion, inparry }

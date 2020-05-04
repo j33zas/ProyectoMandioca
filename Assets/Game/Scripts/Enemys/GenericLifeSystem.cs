@@ -49,9 +49,9 @@ public class GenericLifeSystem : MonoBehaviour
         }
     }
 
-    public void Hit(int _val)
+    public bool Hit(int _val)
     {
-        lifeSystemEnemy.Hit(_val);
+        return lifeSystemEnemy.Hit(_val);
     }
 
     

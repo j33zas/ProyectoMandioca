@@ -68,9 +68,9 @@ public class Minion : Companion
 
     public override Attack_Result TakeDamage(int dmg, Vector3 dir, Damagetype dmgtype)
     {
-        lifesystem.Hit(dmg);
         greenblood.Play();
-        return Attack_Result.sucessful;
+        bool death = lifesystem.Hit(dmg);
+        return death ? Attack_Result.death : Attack_Result.sucessful;
     }
 
     public float ChangeSpeed(float newSpeed)
