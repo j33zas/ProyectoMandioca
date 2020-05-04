@@ -7,44 +7,44 @@ using Tools.StateMachine;
 public class TrueDummyEnemy : EnemyBase
 {
     [Header("Move Options")]
-    [SerializeField] float speedMovement;
-    [SerializeField] float rotSpeed;
-    [SerializeField] float avoidWeight;
-    [SerializeField] float avoidRadious;
-    [SerializeField] Transform rootTransform;
+    [SerializeField] float speedMovement = 4;
+    [SerializeField] float rotSpeed = 2;
+    [SerializeField] float avoidWeight = 2;
+    [SerializeField] float avoidRadious = 2;
+    [SerializeField] Transform rootTransform = null;
     private float currentSpeed;
 
     public AnimationCurve animEmisive;
 
     [Header("Combat Options")]
-    [SerializeField] CombatComponent combatComponent;
-    [SerializeField] CombatDirector director;
-    [SerializeField] int damage;
-    [SerializeField] float distanceToAttack;
-    [SerializeField] float normalDistance;
-    [SerializeField] float cdToAttack;
-    [SerializeField] float parriedTime;
+    [SerializeField] CombatComponent combatComponent = null;
+    [SerializeField] int damage = 2;
+    [SerializeField] float distanceToAttack = 3;
+    [SerializeField] float normalDistance = 8;
+    [SerializeField] float cdToAttack = 1;
+    [SerializeField] float parriedTime = 2;
+    private CombatDirector director;
 
     [Header("Life Options")]
-    [SerializeField] GenericLifeSystem lifesystem;
-    [SerializeField] float recallTime;
-    [SerializeField] float forceRecall;
+    [SerializeField] GenericLifeSystem lifesystem = null;
+    [SerializeField] float recallTime = 1;
+    [SerializeField] float forceRecall = 4;
     [SerializeField] float explosionForce = 20;
-    [SerializeField] float petrifiedTime;
+    [SerializeField] float petrifiedTime = 2;
 
     [Range(0,1)]
-    [SerializeField] float freezeSpeedSlowed;
-    [SerializeField] float freezeTime;
+    [SerializeField] float freezeSpeedSlowed = 0.5f;
+    [SerializeField] float freezeTime = 4;
     private bool cooldown = false;
     private float timercooldown = 0;
 
     [Header("Feedback")]
-    [SerializeField] GameObject feedbackFireDot;
-    [SerializeField] ParticleSystem greenblood;
-    [SerializeField] AnimEvent anim;
-    [SerializeField] Animator animator;
-    [SerializeField] UnityEngine.UI.Text txt_debug;
-    [SerializeField] Material freeze_shader;
+    [SerializeField] GameObject feedbackFireDot = null;
+    [SerializeField] ParticleSystem greenblood = null;
+    [SerializeField] AnimEvent anim = null;
+    [SerializeField] Animator animator = null;
+    [SerializeField] UnityEngine.UI.Text txt_debug = null;
+    [SerializeField] Material freeze_shader = null;
 
     
     public bool isOnFire { get; private set; }

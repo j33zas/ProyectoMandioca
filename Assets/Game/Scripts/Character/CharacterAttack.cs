@@ -24,17 +24,13 @@ public class CharacterAttack
     public Action OnAttackBegin;
     public Action OnAttackEnd;
 
-    bool isAttackReleased;
-    bool isAnimationFinished;
     ParticleSystem feedbackHeavy;
     bool oneshot;
 
     public bool inAttack;
 
     //FirstAttackPassive
-    private bool pasiveFirstAttack;
     private bool firstAttack;
-    private float _rangeOfPetrified;
 
     List<Weapon> myWeapons;
     public Weapon currentWeapon { get; private set; }
@@ -42,7 +38,7 @@ public class CharacterAttack
 
     Action callback_ReceiveEntity = delegate { };
 
-    event Action<Vector3> callbackPosition;
+    event Action<Vector3> callbackPositio;
 
     ParticleSystem attackslash;
 
@@ -50,7 +46,7 @@ public class CharacterAttack
     Action DealSuccesfullHeavy;
 
 
-    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float rangeOfPetrified, float damage, ParticleSystem _attackslash)
+    public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float damage, ParticleSystem _attackslash)
     {
         myWeapons = new List<Weapon>();
         myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", _angle));
@@ -67,7 +63,6 @@ public class CharacterAttack
         NormalAttack = _normalAttack;
         HeavyAttack = _heavyAttack;
         feedbackHeavy = ps;
-        _rangeOfPetrified = rangeOfPetrified;
 
         OnAttack += Attack;
         OnAttackBegin += AttackBegin;

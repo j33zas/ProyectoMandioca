@@ -7,8 +7,8 @@ public class Manager3DActivas : MonoBehaviour
     public UI3D_Element center;
     public UI3D_Element[] sides;
 
-    [SerializeField] GameObject blockedModel;
-    [SerializeField] GameObject emptyModel;
+    [SerializeField] GameObject blockedModel = null;
+    [SerializeField] GameObject emptyModel = null;
 
     private void Awake()
     {

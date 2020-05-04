@@ -11,76 +11,72 @@ public class CharacterHead : CharacterControllable
     public enum PlayerInputs { IDLE, MOVE, BEGIN_BLOCK, BLOCK, END_BLOCK, PARRY, CHARGE_ATTACK, RELEASE_ATTACK, TAKE_DAMAGE, DEAD, ROLL, SPIN, STUN };
 
     Action ChildrensUpdates;
-    Func<bool> InDash;
-
-    CharacterBlock charBlock;
 
     [Header("Dash Options")]
-    [SerializeField] float dashTiming;
-    [SerializeField] float dashSpeed;
-    [SerializeField] float dashDeceleration;
-    [SerializeField] float dashCD;
-    [SerializeField] ParticleSystem evadeParticle;
-
-    
+    [SerializeField] float dashTiming = 2;
+    [SerializeField] float dashSpeed = 9;
+    [SerializeField] float dashDeceleration = 5;
+    [SerializeField] float dashCD = 2;
+    [SerializeField] ParticleSystem evadeParticle = null;
+    Func<bool> InDash;
 
     [Header("Movement Options")]
-    [SerializeField] float speed;
-    [SerializeField] Transform rot;
+    [SerializeField] float speed = 5;
+    [SerializeField] Transform rot = null;
     CharacterMovement move;
 
     [Header("Parry & Block Options")]
-    [SerializeField] float _timerOfParry;
-    [SerializeField] float _timeOfBlock;
+    [SerializeField] float _timerOfParry = 1;
+    [SerializeField] float _timeOfBlock = 3;
     [SerializeField] int maxBlockCharges = 3;
     [SerializeField] float timeToRecuperateCharges = 5;
-    [SerializeField] GameObject chargesUI;
-    [SerializeField] ParticleSystem parryParticle;
-    [SerializeField] ParticleSystem blockParticle;
-    [SerializeField] ParticleSystem hitParticle;
-    [SerializeField, Range(-1, 1)] float blockAngle;
-    [SerializeField] float parryRecall;
-    [SerializeField] float takeDamageRecall;
+    [SerializeField] GameObject chargesUI = null;
+    [SerializeField] ParticleSystem parryParticle = null;
+    [SerializeField] ParticleSystem blockParticle = null;
+    [SerializeField] ParticleSystem hitParticle = null;
+    [SerializeField, Range(-1, 1)] float blockAngle = 0;
+    [SerializeField] float parryRecall = 0;
+    [SerializeField] float takeDamageRecall = 0;
+    CharacterBlock charBlock;
 
     //Perdon por esto, pero lo necesito pra la skill del boomeran hasta tener la animacion y el estado "sin escudo"
     bool canBlock = true;
     public GameObject escudo;
 
     [Header("SlowMotion")]
-    [SerializeField] float timeScale;
-    [SerializeField] float slowDuration;
-    [SerializeField] float speedAnim;
+    [SerializeField] float timeScale = 1;
+    [SerializeField] float slowDuration = 2;
+    [SerializeField] float speedAnim = 1;
 
     [Header("Feedbacks")]
-    [SerializeField] ParticleSystem feedbackCW;
-    [SerializeField] ParticleSystem feedbackScream;
-    [SerializeField] ParticleSystem inParryParticles;
-
+    [SerializeField] ParticleSystem feedbackCW = null;
+    [SerializeField] ParticleSystem feedbackScream = null;
+    [SerializeField] ParticleSystem inParryParticles = null;
 
     [Header("Animations")]
-    [SerializeField] Animator anim_base;
-    [SerializeField] AnimEvent charAnimEvent;
+    [SerializeField] Animator anim_base = null;
+    [SerializeField] AnimEvent charAnimEvent = null;
     CharacterAnimator charanim;
 
     [Header("Attack Options")]
-    [SerializeField] ParticleSystem feedbackHeavy;
+    [SerializeField] ParticleSystem feedbackHeavy= null;
     [SerializeField] float dmg_normal = 5;
     [SerializeField] float dmg_heavy = 20;
-    [SerializeField] float attackRange;
-    [SerializeField] float attackAngle;
-    [SerializeField] float timeToHeavyAttack;
-    [SerializeField] float rangeOfPetrified;
-    [SerializeField] float attackRecall;
-    [SerializeField] float onHitRecall;
-    [SerializeField] Sensor sensorSpin;
+    [SerializeField] float attackRange = 3;
+    [SerializeField] float attackAngle = 90;
+    [SerializeField] float timeToHeavyAttack = 1.5f;
+    [SerializeField] float rangeOfPetrified = 5;
+    [SerializeField] float attackRecall = 1;
+    [SerializeField] float onHitRecall = 2;
+    [SerializeField] Sensor sensorSpin = null;
     float dmg;
     CharacterAttack charAttack;
-    [SerializeField] ParticleSystem slash;
+    [SerializeField] ParticleSystem slash = null;
 
     CustomCamera customCam;
 
-    [SerializeField] GameObject go_StunFeedback;
-    [SerializeField] GameObject go_SpinFeedback;
+    [SerializeField] GameObject go_StunFeedback = null;
+    [SerializeField] GameObject go_SpinFeedback = null;
     float spinDuration;
     float spinSpeed;
     float stunDuration;
@@ -95,7 +91,7 @@ public class CharacterHead : CharacterControllable
 
     [Header("Life Options")]
     [SerializeField] int life = 100;
-    [SerializeField] CharLifeSystem lifesystem;
+    [SerializeField] CharLifeSystem lifesystem = null;
     public CharLifeSystem Life => lifesystem;
 
     Rigidbody rb;
@@ -132,7 +128,7 @@ public class CharacterHead : CharacterControllable
         ChildrensUpdates += charBlock.OnUpdate;
 
         dmg = dmg_normal;
-        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, rangeOfPetrified, dmg, slash);
+        charAttack = new CharacterAttack(attackRange, attackAngle, timeToHeavyAttack, charanim, rot, ReleaseInNormal, ReleaseInHeavy, feedbackHeavy, dmg, slash);
         charAttack.FirstAttackReady(true);
 
         charAnimEvent.Add_Callback("CheckAttackType", CheckAttackType);
@@ -643,7 +639,7 @@ public class CharacterHead : CharacterControllable
     int screams;
     public Action GuiltUltimateSkill = delegate { };
     public Action<int> AddScreamAction = delegate { };
-    public int screamsToSkill;
+    public int screamsToSkill = 50;
 
     public void AddScreams(int s)
     {
@@ -680,7 +676,7 @@ public class CharacterHead : CharacterControllable
 
 
     #region Debuggin
-    [SerializeField] UnityEngine.UI.Text txt_debug;
+    [SerializeField] UnityEngine.UI.Text txt_debug = null;
     void DebugState(string state) { if (txt_debug != null) txt_debug.text = state; }
     void StartDebug() { if (txt_debug != null) txt_debug.enabled = false; DevelopTools.UI.Debug_UI_Tools.instance.CreateToogle("Character State Machine Debug", false, ToogleDebug); }
     string ToogleDebug(bool active) { if (txt_debug != null) txt_debug.enabled = active; return active ? "debug activado" : "debug desactivado"; }

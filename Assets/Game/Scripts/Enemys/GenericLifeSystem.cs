@@ -10,7 +10,7 @@ public class GenericLifeSystem : MonoBehaviour
 
     [SerializeField] protected WorldCanvasPopUp lifeBar;
     [SerializeField] protected RectTransform canvas;
-    public FrontendStatBase uilife;
+    FrontendStatBase uilife;
 
     public int life = 100;
 

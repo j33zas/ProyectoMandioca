@@ -13,8 +13,6 @@ public class ExampleWeaponOne : Weapon
 
     public override bool Attack(Transform pos, float damage)
     {
-        EntityBase entity = null;
-
         var entities = Physics.OverlapSphere(pos.position, range)
             .Where(x => x.GetComponent<EntityBase>())
             .Where(x => x.GetComponent<EntityBase>() != Main.instance.GetChar())
@@ -51,7 +49,6 @@ public class ExampleWeaponOne : Weapon
                 }
 
                 Debug.Log("Attack result: " + attackResult.ToString());
-
             }
         }
 

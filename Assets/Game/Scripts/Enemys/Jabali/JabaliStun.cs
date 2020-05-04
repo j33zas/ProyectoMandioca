@@ -1,18 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
-public class JabaliStun : MonoBehaviour
+namespace Tools.StateMachine
 {
-    // Start is called before the first frame update
-    void Start()
+    public class JabaliStun : JabaliStates
     {
-        
-    }
+        Action<JabaliEnemy.JabaliInputs> EnterStun;
+        Action<string> UpdateStun;
+        Action<JabaliEnemy.JabaliInputs> ExitStun;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public JabaliStun(EState<JabaliEnemy.JabaliInputs> myState, EventStateMachine<JabaliEnemy.JabaliInputs> _sm, Action<JabaliEnemy.JabaliInputs> _Enter,
+                          Action<string> _Update, Action<JabaliEnemy.JabaliInputs> _Exit) : base(myState, _sm)
+        {
+            EnterStun = _Enter;
+            UpdateStun = _Update;
+            ExitStun = _Exit;
+        }
+
+        protected override void Enter(JabaliEnemy.JabaliInputs input)
+        {
+            EnterStun(input);
+
+        }
+
+        protected override void Update()
+        {
+            UpdateStun(lastState.Name);
+        }
+
+        protected override void Exit(JabaliEnemy.JabaliInputs input)
+        {
+            ExitStun(input);
+        }
     }
 }
+
