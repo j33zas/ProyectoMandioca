@@ -20,7 +20,7 @@ public class JabaliEnemy : EnemyBase
 
     [Header("Combat Options")]
     [SerializeField] CombatComponent headAttack = null;
-    [SerializeField] CombatComponent pushAttack = null;
+    [SerializeField] JabaliPushComponent pushAttack = null;
     [SerializeField] float normalDistance = 9;
     [SerializeField] float timeParried = 2;
 
@@ -38,6 +38,7 @@ public class JabaliEnemy : EnemyBase
     [SerializeField] float timeToObtainCharge = 5;
     [SerializeField] float chargeSpeed = 12;
     private bool chargeOk = true;
+    private float cargeTimer;
     private CombatDirector director;
 
 
@@ -78,7 +79,7 @@ public class JabaliEnemy : EnemyBase
     {
         Debug.Log("OnInitialize");
         headAttack.Configure(HeadAttack);
-        pushAttack.Configure(PushRelease);
+        pushAttack.Configure(PushRelease, StunAfterCharge);
         anim.Add_Callback("DealDamage", DealDamage);
         anim.Add_Callback("Death", DeathAnim);
         lifesystem.AddEventOnDeath(Die);
@@ -133,6 +134,17 @@ public class JabaliEnemy : EnemyBase
             {
                 if (timercooldown < tdRecall) timercooldown = timercooldown + 1 * Time.deltaTime;
                 else { cooldown = false; timercooldown = 0; }
+            }
+
+            if (!chargeOk)
+            {
+                cargeTimer += Time.deltaTime;
+
+                if (cargeTimer >= timeToObtainCharge)
+                {
+                    chargeOk = true;
+                    cargeTimer = 0;
+                }
             }
         }
     }
@@ -259,6 +271,29 @@ public class JabaliEnemy : EnemyBase
         currentSpeed = newSpeed;
 
         return speedMovement;
+    }
+
+    void StunAfterCharge()
+    {
+        EnterStun = (input) => {
+            animator.SetBool("Stun", true);
+        };
+
+        UpdateStun = (name) => {
+            stunTimer += Time.deltaTime;
+
+            if (stunTimer >= stunChargeTime)
+            {
+                sm.SendInput(JabaliInputs.IDLE);
+            }
+        };
+
+        ExitStun = (input) => {
+            animator.SetBool("Stun", false);
+            stunTimer = 0;
+        };
+
+        sm.SendInput(JabaliInputs.PETRIFIED);
     }
 
     public override void OnPetrified()

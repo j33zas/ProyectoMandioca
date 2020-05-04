@@ -1645,7 +1645,7 @@ MonoBehaviour:
   damage: 2
   distanceToAttack: 1.5
   normalDistance: 7
-  cdToAttack: 1
+  cdToAttack: 0.5
   parriedTime: 2
   lifesystem: {fileID: 3901963547881250315}
   recallTime: 0.5
@@ -1675,7 +1675,7 @@ MonoBehaviour:
   _lm:
     serializedVersion: 2
     m_Bits: 256
-  distance: 3
+  distance: 4
   angleAttack: 45
   rot: {fileID: 3901963547267435579}
 --- !u!114 &3901963547881250315
