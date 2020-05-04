@@ -5,7 +5,7 @@ using System;
 
 public abstract class EnemyBase : NPCBase, ICombatDirector
 {
-    
+
     public bool attacking;
     public GameObject targetFeedBack;
     public Action OnParried;
@@ -107,5 +107,34 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
             else
                 minionTarget = true;
         }
+    }
+
+    protected void AddEffectTick(Action Effect)
+    {
+        EffectUpdate += Effect;
+    }
+
+    Dictionary<int, float> effectsTimer;
+    protected Action EffectUpdate = delegate {}; 
+
+    protected void AddEffectTick(Action Effect, float duration, Action EndEffect)
+    {
+        int myNumber = new System.Random(1).Next();
+        effectsTimer.Add(myNumber, 0);
+
+        Action MyUpdate = Effect;
+        Action MyEnd = EndEffect;
+        MyEnd += () => effectsTimer.Remove(myNumber);
+        MyEnd += () => EffectUpdate -= MyUpdate;
+
+        MyUpdate += () =>
+        {
+            effectsTimer[myNumber] += Time.deltaTime;
+
+            if (effectsTimer[myNumber] >= duration)
+                MyEnd();
+        };
+
+        AddEffectTick(MyUpdate);
     }
 }
