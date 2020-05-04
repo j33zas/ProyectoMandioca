@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tools.StateMachine
 {
@@ -16,8 +14,7 @@ namespace Tools.StateMachine
 
         protected override void Enter(JabaliEnemy.JabaliInputs input)
         {
-            //setear animacion de que fue parreado
-
+            anim.SetBool("Parried", true);
         }
 
         protected override void Update()
@@ -33,18 +30,8 @@ namespace Tools.StateMachine
             if (input != JabaliEnemy.JabaliInputs.PETRIFIED)
             {
                 timer = 0;
-                //setear animacion
+                anim.SetBool("Parried", false);
             }
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 namespace Tools.StateMachine
@@ -9,11 +7,13 @@ namespace Tools.StateMachine
     {
         float pushSpeed;
         Action DealDamage;
+        float maxSpeed;
 
         public JabaliPushAttack(EState<JabaliEnemy.JabaliInputs> myState, EventStateMachine<JabaliEnemy.JabaliInputs> _sm, float _speed,
                                 Action _DealDamage) : base(myState, _sm)
         {
-            pushSpeed = _speed;
+            maxSpeed = _speed;
+            pushSpeed = maxSpeed / 1.5f;
             DealDamage = _DealDamage;
         }
 
@@ -21,11 +21,19 @@ namespace Tools.StateMachine
         {
             base.Enter(input);
 
-            //setear animacion Push
+            anim.SetTrigger("ChargeOk");
         }
 
         protected override void Update()
         {
+            if (pushSpeed < maxSpeed)
+            {
+                pushSpeed += Time.deltaTime;
+
+                if (pushSpeed > maxSpeed)
+                    pushSpeed = maxSpeed;
+            }
+
             rb.velocity = root.forward * pushSpeed;
             DealDamage();
 
@@ -36,17 +44,6 @@ namespace Tools.StateMachine
         {
             base.Exit(input);
             StopMove();
-            //setear animacion deja el push
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
         }
     }
 }

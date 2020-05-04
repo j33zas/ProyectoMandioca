@@ -18,7 +18,7 @@ namespace Tools.StateMachine
         {
             if (input != JabaliEnemy.JabaliInputs.PETRIFIED)
             {
-                //setear booleano de la animación
+                anim.SetBool("ChargeAttack", true);
                 combatDirector.RemoveToAttack(enemy, enemy.CurrentTarget());
             }
         }
@@ -28,28 +28,16 @@ namespace Tools.StateMachine
             timer += Time.deltaTime;
 
             if (timer >= chargeTime)
-            {
                 sm.SendInput(JabaliEnemy.JabaliInputs.PUSH);
-            }
         }
 
         protected override void Exit(JabaliEnemy.JabaliInputs input)
         {
             if (input != JabaliEnemy.JabaliInputs.PETRIFIED)
             {
-                //setear animación para que no cause problemas
+                anim.SetBool("ChargeAttack", false);
                 timer = 0;
             }
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
         }
     }
 }

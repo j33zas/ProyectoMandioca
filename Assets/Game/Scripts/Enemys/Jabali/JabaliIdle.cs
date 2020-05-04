@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
-using DevelopTools;
 
 namespace Tools.StateMachine
 {
@@ -22,11 +19,6 @@ namespace Tools.StateMachine
             distanceToPush = _distanceToPush;
             distanceToNormalAttack = _distanceToNormal;
             maxDistance = _maxDistance;
-        }
-
-        protected override void Enter(JabaliEnemy.JabaliInputs input)
-        {
-
         }
 
         protected override void Update()
@@ -67,9 +59,7 @@ namespace Tools.StateMachine
                 else
                 {
                     if (Vector3.Distance(pos1, pos2) >= maxDistance)
-                    {
                         sm.SendInput(JabaliEnemy.JabaliInputs.PERSUIT);
-                    }
                 }
 
                 if (IsAttack())
@@ -80,21 +70,6 @@ namespace Tools.StateMachine
                         sm.SendInput(JabaliEnemy.JabaliInputs.HEAD_ANTICIP);
                 }
             }
-        }
-
-        protected override void Exit(JabaliEnemy.JabaliInputs input)
-        {
-            base.Exit(input);
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
         }
     }
 }

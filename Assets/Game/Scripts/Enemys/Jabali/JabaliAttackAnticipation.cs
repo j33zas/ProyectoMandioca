@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tools.StateMachine
 {
@@ -18,7 +16,7 @@ namespace Tools.StateMachine
         {
             if (input != JabaliEnemy.JabaliInputs.PETRIFIED)
             {
-                //setear booleano de la animación
+                anim.SetBool("HeadAttack", true);
                 combatDirector.RemoveToAttack(enemy, enemy.CurrentTarget());
             }
         }
@@ -33,26 +31,13 @@ namespace Tools.StateMachine
             timer += Time.deltaTime;
 
             if (timer >= anticipationTime)
-            {
                 sm.SendInput(JabaliEnemy.JabaliInputs.HEAD_ATTACK);
-
-            }
         }
 
         protected override void Exit(JabaliEnemy.JabaliInputs input)
         {
-            //setear animación para que no cause problemas
+            anim.SetBool("HeadAttack", false);
             timer = 0;
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
         }
     }
 }

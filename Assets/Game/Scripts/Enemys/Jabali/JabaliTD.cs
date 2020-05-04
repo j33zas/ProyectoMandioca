@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tools.StateMachine
 {
@@ -16,7 +14,7 @@ namespace Tools.StateMachine
 
         protected override void Enter(JabaliEnemy.JabaliInputs input)
         {
-            //setear animacion
+            anim.SetBool("TakeDamage", true);
         }
 
         protected override void Update()
@@ -29,17 +27,7 @@ namespace Tools.StateMachine
 
         protected override void Exit(JabaliEnemy.JabaliInputs input)
         {
-            //setear anim;
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
+            anim.SetBool("TakeDamage", false);
         }
     }
 }

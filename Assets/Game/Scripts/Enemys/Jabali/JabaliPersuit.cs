@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 namespace Tools.StateMachine
@@ -24,7 +22,7 @@ namespace Tools.StateMachine
         protected override void Enter(JabaliEnemy.JabaliInputs input)
         {
             base.Enter(input);
-            //setear anim
+            anim.SetFloat("Speed", 0.3f);
         }
 
         protected override void Update()
@@ -66,9 +64,7 @@ namespace Tools.StateMachine
                     float distanceZ = Mathf.Abs(enemy.CurrentTargetPos().transform.position.z - root.position.z);
 
                     if (distanceX < 0.7f && distanceZ < 0.7f)
-                    {
                         sm.SendInput(JabaliEnemy.JabaliInputs.IDLE);
-                    }
                 }
             }
         }
@@ -76,17 +72,8 @@ namespace Tools.StateMachine
         protected override void Exit(JabaliEnemy.JabaliInputs input)
         {
             base.Exit(input);
-            //setear anim
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
+            anim.SetFloat("Speed", 0);
+            StopMove();
         }
     }
 }

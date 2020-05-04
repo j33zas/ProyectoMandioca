@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tools.StateMachine
 {
@@ -16,10 +14,8 @@ namespace Tools.StateMachine
 
         protected override void Enter(JabaliEnemy.JabaliInputs input)
         {
-            if (input != JabaliEnemy.JabaliInputs.PETRIFIED) 
-            {
-                //setear trigger
-            }
+            if (input != JabaliEnemy.JabaliInputs.PETRIFIED)
+                anim.SetTrigger("HeadOk");
         }
 
         protected override void Update()
@@ -27,9 +23,7 @@ namespace Tools.StateMachine
             timer += Time.deltaTime;
 
             if (timer >= cdToAttack)
-            {
                 sm.SendInput(JabaliEnemy.JabaliInputs.IDLE);
-            }
         }
 
         protected override void Exit(JabaliEnemy.JabaliInputs input)
@@ -41,16 +35,6 @@ namespace Tools.StateMachine
                 myEnemy.attacking = false;
                 combatDirector.AddToAttack(enemy, enemy.CurrentTarget());
             }
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
         }
     }
 }

@@ -73,11 +73,12 @@ public class JabaliEnemy : EnemyBase
     Rigidbody rb;
     EventStateMachine<JabaliInputs> sm;
 
+    private void Start() { rb = GetComponent<Rigidbody>(); }
     protected override void OnInitialize()
     {
         Debug.Log("OnInitialize");
-        rb = GetComponent<Rigidbody>();
         headAttack.Configure(HeadAttack);
+        pushAttack.Configure(PushRelease);
         anim.Add_Callback("DealDamage", DealDamage);
         anim.Add_Callback("Death", DeathAnim);
         lifesystem.AddEventOnDeath(Die);
@@ -95,9 +96,7 @@ public class JabaliEnemy : EnemyBase
         if (sm == null)
             SetStates();
         else
-        {
             sm.SendInput(JabaliInputs.IDLE);
-        }
 
         canupdate = true;
     }
@@ -128,16 +127,13 @@ public class JabaliEnemy : EnemyBase
             }
 
             if (sm != null)
-            {
                 sm.Update();
-            }
 
             if (cooldown)
             {
                 if (timercooldown < tdRecall) timercooldown = timercooldown + 1 * Time.deltaTime;
                 else { cooldown = false; timercooldown = 0; }
             }
-
         }
     }
 
@@ -162,10 +158,12 @@ public class JabaliEnemy : EnemyBase
         }
     }
 
-    void PushAttack()
+    void PushRelease(EntityBase e)
     {
-        pushAttack.ManualTriggerAttack();
+        Attack_Result takeDmg = e.TakeDamage(normalDamage, transform.position, Damagetype.inparry);
     }
+
+    void PushAttack() { pushAttack.ManualTriggerAttack(); }
 
     public void DealDamage() { headAttack.ManualTriggerAttack(); }
 
@@ -180,20 +178,14 @@ public class JabaliEnemy : EnemyBase
 
         if (cooldown || Invinsible || sm.Current.Name == "Dead") return Attack_Result.inmune;
 
-        Debug.Log("damagetype" + dmgtype.ToString()); ;
+        Debug.Log("damagetype" + dmgtype.ToString());
 
-        Vector3 aux = this.transform.position - attack_pos;
-        aux.Normalize();
-        rb = GetComponent<Rigidbody>();
+        Vector3 aux = (this.transform.position - attack_pos).normalized;
+
         if (dmgtype == Damagetype.explosion)
-        {
-            Debug.Log(rb);
             rb.AddForce(aux * explosionForce, ForceMode.Impulse);
-        }
         else
-        {
             rb.AddForce(aux * forceRecall, ForceMode.Impulse);
-        }
 
         sm.SendInput(JabaliInputs.TAKE_DMG);
 
@@ -214,11 +206,8 @@ public class JabaliEnemy : EnemyBase
         {
             if (sm.Current.Name == "Idle" || sm.Current.Name == "Persuit")
             {
-
                 if (!entityTarget)
-                {
                     SetTarget(owner_entity);
-                }
 
                 attacking = false;
                 //if (entityTarget == null) throw new System.Exception("entity target es null");//esto rompe cuando vengo desde el Damage in Room
@@ -245,9 +234,7 @@ public class JabaliEnemy : EnemyBase
         {
             List<EnemyBase> myEnemys = Main.instance.GetNoOptimizedListEnemies();
             for (int i = 0; i < myEnemys.Count; i++)
-            {
                 myEnemys[i].Invinsible = false;
-            }
         }
         director.RemoveToAttack(this, entityTarget);
         sm.SendInput(JabaliInputs.DEAD);
@@ -266,12 +253,9 @@ public class JabaliEnemy : EnemyBase
     #region Effects Things
     public override float ChangeSpeed(float newSpeed)
     {
-        //Si le mando negativo me devuelve la original
-        //para guardarla en el componente WebSlowedComponent
         if (newSpeed < 0)
             return speedMovement;
 
-        //Busco el estado follow para poder cambiarle la velocidad
         currentSpeed = newSpeed;
 
         return speedMovement;
@@ -436,7 +420,6 @@ public class JabaliEnemy : EnemyBase
             .SetTransition(JabaliInputs.PUSH, push)
             .SetTransition(JabaliInputs.HEAD_ANTICIP, headAnt)
             .SetTransition(JabaliInputs.HEAD_ATTACK, headAttack)
-            .SetTransition(JabaliInputs.PETRIFIED, petrified)
             .SetTransition(JabaliInputs.DEAD, dead)
             .SetTransition(JabaliInputs.DISABLE, disable)
             .Done();

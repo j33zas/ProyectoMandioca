@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Tools.StateMachine
+﻿namespace Tools.StateMachine
 {
     public class JabaliDeath : JabaliStates
     {
@@ -12,27 +8,7 @@ namespace Tools.StateMachine
 
         protected override void Enter(JabaliEnemy.JabaliInputs input)
         {
-            //setear animacion
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-        }
-
-        protected override void Exit(JabaliEnemy.JabaliInputs input)
-        {
-            base.Exit(input);
-        }
-
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        protected override void LateUpdate()
-        {
-            base.LateUpdate();
+            anim.SetBool("Dead", true);
         }
     }
 }
