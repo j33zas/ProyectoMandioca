@@ -59,7 +59,7 @@ public class CharacterHead : CharacterControllable
     CharacterAnimator charanim;
 
     [Header("Attack Options")]
-    [SerializeField] ParticleSystem feedbackHeavy= null;
+    [SerializeField] ParticleSystem feedbackHeavy = null;
     [SerializeField] float dmg_normal = 5;
     [SerializeField] float dmg_heavy = 20;
     [SerializeField] float attackRange = 3;
@@ -162,7 +162,7 @@ public class CharacterHead : CharacterControllable
         var takeDamage = new EState<PlayerInputs>("Take_Damage");
         var dead = new EState<PlayerInputs>("Dead");
         var spin = new EState<PlayerInputs>("Spin");
-        var stun = new EState<PlayerInputs>("Stun"); 
+        var stun = new EState<PlayerInputs>("Stun");
 
         ConfigureState.Create(idle)
             .SetTransition(PlayerInputs.MOVE, move)
@@ -257,7 +257,7 @@ public class CharacterHead : CharacterControllable
             .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
             .SetRightAxis(GetRightHorizontal, GetRightVertical)
             .SetMovement(this.move);
-       
+
         new CharMove(move, stateMachine)
             .SetLeftAxis(GetLeftHorizontal, GetLeftVertical)
             .SetRightAxis(GetRightHorizontal, GetRightVertical)
@@ -362,22 +362,41 @@ public class CharacterHead : CharacterControllable
     public void CheckAttackType() => charAttack.BeginCheckAttackType();//tengo la espada arriba
     public void DealAttack()
     {
-        charAttack.ConfigureDealsSuscessful(DealSucessfullNormal, DealSucessfullHeavy);
+        charAttack.ConfigureDealsSuscessful(DealSucessfullNormal, DealSucessfullHeavy, KillInNormal, KillInHeavy, BreakObject);
         charAttack.OnAttack(isHeavyRelease);
     }
+
+    #region Resultados de los ataques
     void DealSucessfullNormal()
     {
         //Main.instance.GetTimeManager().DoHitStop();
-        Main.instance.Vibrate(0.7f,0.1f);
+        Main.instance.Vibrate(0.7f, 0.1f);
         Main.instance.CameraShake();
     }
     void DealSucessfullHeavy()
+    {
+        ChangeHeavy(false);
+        Main.instance.Vibrate(1f, 0.2f);
+        Main.instance.CameraShake();
+    }
+    void KillInNormal()
+    {
+        Main.instance.GetTimeManager().DoHitStop();
+        Main.instance.Vibrate(0.7f, 0.1f);
+        Main.instance.CameraShake();
+    }
+    void KillInHeavy()
     {
         SlowMO();
         ChangeHeavy(false);
         Main.instance.Vibrate(1f, 0.5f);
         Main.instance.CameraShake();
     }
+    void BreakObject()
+    {
+        Main.instance.CameraShake();
+    }
+    #endregion
     void ReleaseInNormal()
     {
         ChangeDamageAttack((int)dmg_normal);

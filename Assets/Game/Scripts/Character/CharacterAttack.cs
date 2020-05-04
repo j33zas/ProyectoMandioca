@@ -44,6 +44,9 @@ public class CharacterAttack
 
     Action DealSuccesfullNormal;
     Action DealSuccesfullHeavy;
+    Action KillSuccesfullNormal;
+    Action KillSuccesfullHeavy;
+    Action BreakObject;
 
 
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float damage, ParticleSystem _attackslash)
@@ -70,8 +73,6 @@ public class CharacterAttack
 
         attackslash = _attackslash;
     }
-
-    
 
     public string ChangeName()
     {
@@ -171,10 +172,13 @@ public class CharacterAttack
 
     public void ChangeDamageBase(int dmg) => currentDamage = dmg;
 
-    public void ConfigureDealsSuscessful(Action inNormal, Action inHeavy)
+    public void ConfigureDealsSuscessful(Action deal_inNormal, Action deal_inHeavy, Action _kill_inNormal, Action _kill_inHeavy, Action _break_Object)
     {
-        DealSuccesfullNormal = inNormal;
-        DealSuccesfullHeavy = inHeavy;
+        DealSuccesfullNormal = deal_inNormal;
+        DealSuccesfullHeavy = deal_inHeavy;
+        KillSuccesfullNormal = _kill_inNormal;
+        KillSuccesfullHeavy = _kill_inHeavy;
+        BreakObject = _break_Object;
     }
     void Attack(bool isHeavy)//esto es attack nada mas... todavia no se sabe si le pegué a algo
     {
@@ -186,7 +190,13 @@ public class CharacterAttack
     void CALLBACK_DealDamage(Attack_Result attack_result, Damagetype damage_type, EntityBase entityToDamage)
     {
         callback_ReceiveEntity();
-        
+        FirstAttackReady(false);//esto tambien es de obligacion... tampoco debería estar aca
+
+        if (entityToDamage.GetComponent<DestructibleBase>())
+        {
+            BreakObject.Invoke();
+            return;
+        }
 
         switch (attack_result)
         {
@@ -206,12 +216,13 @@ public class CharacterAttack
                 break;
             case Attack_Result.death:
 
-                // aca le tengo que mandar mecha con el feedback de vibrate y slowMO
+                if (damage_type == Damagetype.heavy) KillSuccesfullHeavy();
+                else KillSuccesfullNormal();
 
                 break;
         }
 
-        FirstAttackReady(false);
+        
     }
 
     //estos callbacks creo que estan solo funcionando para lo de obligacion...

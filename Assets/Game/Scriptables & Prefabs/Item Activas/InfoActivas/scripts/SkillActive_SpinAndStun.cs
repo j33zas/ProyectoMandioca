@@ -7,8 +7,11 @@ public class SkillActive_SpinAndStun : SkillActivas
     [SerializeField] float stunDuration = 3f;
     [SerializeField] int damage = 5;
     
-
-    protected override void OnOneShotExecute() { Main.instance.GetChar().StartSpin(spinDuration, spinSpeed, stunDuration); }
+    protected override void OnOneShotExecute() 
+    {
+        Debug.Log("SPIN");
+        Main.instance.GetChar().StartSpin(spinDuration, spinSpeed, stunDuration); 
+    }
     #region en desuso
     protected override void OnBeginSkill()
     {

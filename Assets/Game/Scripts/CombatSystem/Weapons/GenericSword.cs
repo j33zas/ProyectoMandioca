@@ -9,9 +9,7 @@ public class GenericSword : Weapon
     public GenericSword(float dmg, float r, string n, float angle) : base(dmg, r, n, angle) { }
     public GenericSword ConfigureCallback(Action<Attack_Result, Damagetype, EntityBase> _callback_attack_Entity) { AttackResult = _callback_attack_Entity; return this; }
 
-    bool oneshotSucsesfull;
-
-    public override bool Attack(Transform pos, float damage, Damagetype dmg_type)
+    public override void Attack(Transform pos, float damage, Damagetype dmg_type)
     {
         var entities = Physics.OverlapSphere(pos.position, range)
             .Where(x => x.GetComponent<EntityBase>())
@@ -37,22 +35,7 @@ public class GenericSword : Weapon
                         _head);
 
                 AttackResult?.Invoke(attackResult,dmg_type, current); 
-
-                if (attackResult == Attack_Result.sucessful)
-                {
-                    oneshotSucsesfull = true;
-                }
             }
-        }
-
-        if (oneshotSucsesfull)
-        {
-            oneshotSucsesfull = false;
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }
