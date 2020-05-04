@@ -264,7 +264,6 @@ public class TrueDummyEnemy : EnemyBase
             }
         }
         director.RemoveToAttack(this, entityTarget);
-        
         death = true;
         Main.instance.RemoveEntity(this);
     }
@@ -272,8 +271,8 @@ public class TrueDummyEnemy : EnemyBase
     void DeathAnim()
     {
         //vector3, boolean, int
-        Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified, expToDrop });
         gameObject.SetActive(false);
+        Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_DEAD, new object[] { transform.position, petrified, expToDrop });
     }
 
     protected override void OnFixedUpdate() { }

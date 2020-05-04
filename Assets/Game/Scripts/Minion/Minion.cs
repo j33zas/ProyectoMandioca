@@ -5,10 +5,10 @@ using System.Linq;
 
 public class Minion : Companion
 {
-    [SerializeField] CombatComponent combatComponent = null;
+    [SerializeField] CombatComponent combatComponent;
     [SerializeField] int damage = 5;
 
-    [SerializeField] ParticleSystem greenblood = null;
+    [SerializeField] ParticleSystem greenblood;
 
     public float time_stun;
 
