@@ -1448,7 +1448,7 @@ MonoBehaviour:
     value: 0
   radius:
     overrideState: 1
-    value: 0.52
+    value: 0.19
   quality:
     overrideState: 1
     value: 3
