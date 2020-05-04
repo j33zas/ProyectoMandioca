@@ -1,22 +1,12 @@
 fileFormatVersion: 2
-guid: df6d4ffeb11e331429e2a9fc2974e47e
+guid: c962e5323ec5f354ba8222822b89819c
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
-      74: 1827226128182048838
-    second: Take 001
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: 01 - Default
-    second: {fileID: 2100000, guid: fdb201392ccb1e649897f30a85bda71e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: JabaliMaterial
-    second: {fileID: 2100000, guid: e030e967b5575734aaa281dd38cbbd2f, type: 2}
+      74: 2459078804267041145
+    second: hit
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
