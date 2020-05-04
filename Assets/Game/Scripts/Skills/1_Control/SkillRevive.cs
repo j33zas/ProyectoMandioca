@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 public class SkillRevive : SkillBase
 {
-    [SerializeField] GameObject model_minion;
+    [SerializeField] GameObject model_minion = null;
     protected override void OnBeginSkill() => Main.instance.eventManager.SubscribeToEvent(GameEvents.ENEMY_DEAD, EnemyDeath);
     void EnemyDeath(params object[] param)
     {

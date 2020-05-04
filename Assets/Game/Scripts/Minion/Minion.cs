@@ -5,30 +5,26 @@ using System.Linq;
 
 public class Minion : Companion
 {
-    [SerializeField] CombatComponent combatComponent;
-    [SerializeField] int damage;
+    [SerializeField] CombatComponent combatComponent = null;
+    [SerializeField] int damage = 5;
 
-    [SerializeField] ParticleSystem greenblood;
+    [SerializeField] ParticleSystem greenblood = null;
 
     public float time_stun;
 
     public AnimEvent anim;
     StatesMachine sm;
     public Animator animator;
-    [SerializeField]
-    private float _speedMovement;
-    [SerializeField]
-    private float _rotSpeed;
-    [SerializeField]
-    private float _petrifiedTime;
-    [SerializeField]
-    private float _distance;
+    [SerializeField] private float _speedMovement = 5;
+    [SerializeField] private float _rotSpeed = 3;
+    [SerializeField] private float _petrifiedTime = 4;
+    [SerializeField] private float _distance = 3;
     //public Follow follow;
 
     public Rigidbody _rb;
 
     [Header("Life Options")]
-    [SerializeField] GenericLifeSystem lifesystem;
+    [SerializeField] GenericLifeSystem lifesystem = null;
 
     StatesAttack attackState;
     StatesFollow followState;

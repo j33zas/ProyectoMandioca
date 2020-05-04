@@ -2,8 +2,8 @@
 public class SkillActive_SpinAndStun : SkillActivas
 {
     [Header("Spin And Stun Settings")]
-    [SerializeField] float spinDuration;
-    [SerializeField] float spinSpeed;
+    [SerializeField] float spinDuration = 5;
+    [SerializeField] float spinSpeed = 12;
     [SerializeField] float stunDuration = 3f;
     [SerializeField] int damage = 5;
     

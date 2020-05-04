@@ -25,12 +25,12 @@ public class Main : MonoBehaviour
 
     [Header("Inspector References")]
     public EventManager eventManager;
-    [SerializeField] CharacterHead character;
-    [SerializeField] List<PlayObject> allentities;
-    [SerializeField] SkillManager_Pasivas pasives;
-    [SerializeField] SkillManager_Activas actives;
-    [SerializeField] LevelSystem levelSystem;
-    [SerializeField] TimeManager timeManager;
+    [SerializeField] CharacterHead character = null;
+    [SerializeField] List<PlayObject> allentities = new List<PlayObject>();
+    [SerializeField] SkillManager_Pasivas pasives = null;
+    [SerializeField] SkillManager_Activas actives = null;
+    [SerializeField] LevelSystem levelSystem = null;
+    [SerializeField] TimeManager timeManager = null;
 
     public GameUI_controller gameUiController;
 

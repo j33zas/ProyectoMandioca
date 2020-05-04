@@ -42,7 +42,7 @@ public class JabaliEnemy : EnemyBase
 
 
     [Header("Life Options")]
-    [SerializeField] GenericLifeSystem lifesystem;
+    [SerializeField] GenericLifeSystem lifesystem = null;
     [SerializeField] float tdRecall = 0.5f;
     [SerializeField] float forceRecall = 5;
     [SerializeField] float explosionForce = 20;

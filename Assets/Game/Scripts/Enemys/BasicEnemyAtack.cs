@@ -5,10 +5,10 @@ using UnityEngine;
 public class BasicEnemyAtack : CombatComponent
 {
     [Header("Overlap")]
-    [SerializeField] LayerMask _lm;
-    [SerializeField] float distance;
+    [SerializeField] LayerMask _lm = 0;
+    [SerializeField] float distance = 3;
     [SerializeField] float angleAttack = 45;
-    [SerializeField] Transform rot;
+    [SerializeField] Transform rot = null;
 
     bool showray;
 
