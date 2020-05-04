@@ -57,7 +57,7 @@ public class TrueDummyEnemy : EnemyBase
     {
         Main.instance.eventManager.TriggerEvent(GameEvents.ENEMY_SPAWN, new object[] { this });
 
-        Debug.Log("OnInitialize");
+        //Debug.Log("OnInitialize");
         rb = GetComponent<Rigidbody>();
         combatComponent.Configure(AttackEntity);
         anim.Add_Callback("DealDamage", DealDamage);
@@ -75,7 +75,7 @@ public class TrueDummyEnemy : EnemyBase
 
     public override void OnPlayerExitInThisRoom()
     {
-        Debug.Log("Player enter the room");
+        //Debug.Log("Player enter the room");
         IAInitialize(Main.instance.GetCombatDirector());
     }
 
@@ -157,7 +157,7 @@ public class TrueDummyEnemy : EnemyBase
 
         if (cooldown || Invinsible || sm.Current.Name == "Die") return Attack_Result.inmune;
 
-        Debug.Log("damagetype" + dmgtype.ToString()); ;
+       // Debug.Log("damagetype" + dmgtype.ToString()); ;
 
         Vector3 aux = this.transform.position - attack_pos;
         aux.Normalize();
@@ -185,6 +185,7 @@ public class TrueDummyEnemy : EnemyBase
 
     public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype damagetype, EntityBase owner_entity)
     {
+
         if (sm.Current.Name == "Die") return Attack_Result.inmune;
 
         if (sm.Current.Name != "Attack" && entityTarget != owner_entity)
@@ -252,6 +253,8 @@ public class TrueDummyEnemy : EnemyBase
 
     public void Die()
     {
+        sm.SendInput(DummyEnemyInputs.DIE);
+
         if (target)
         {
            List<EnemyBase>myEnemys= Main.instance.GetNoOptimizedListEnemies();
@@ -261,7 +264,7 @@ public class TrueDummyEnemy : EnemyBase
             }
         }
         director.RemoveToAttack(this, entityTarget);
-        sm.SendInput(DummyEnemyInputs.DIE);
+        
         death = true;
         Main.instance.RemoveEntity(this);
     }

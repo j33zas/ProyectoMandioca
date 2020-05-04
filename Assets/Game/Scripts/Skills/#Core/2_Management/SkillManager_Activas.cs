@@ -83,7 +83,7 @@ public class SkillManager_Activas : MonoBehaviour
     public void EV_Up_DPad() => Press(1);
     public void EV_Down_DPad() => Press(2);
     public void EV_Right_DPad() => Press(3);
-
+    public void EV_UseSkill() => TryToUseSelected();
     bool normaluse = true;
     public void Press(int index)
     {
@@ -91,7 +91,7 @@ public class SkillManager_Activas : MonoBehaviour
         {
             frontend3D.Select(index);
             current_index_centered = index;
-            TryToUseSelected(index);
+            
         }
         else
         {
@@ -104,7 +104,7 @@ public class SkillManager_Activas : MonoBehaviour
     public bool[] slots = new bool[4];
     public void ReceiveLife(int _life, int max)
     {
-        Debug.Log("Life: " + _life + " Max: " + max);
+       // Debug.Log("Life: " + _life + " Max: " + max);
         float percent = _life * 100 / max;
 
         var aux_value = MAX_PERCENT - percent;
@@ -122,7 +122,7 @@ public class SkillManager_Activas : MonoBehaviour
                 slots[i] = true;
             }
 
-            Debug.Log(todebug);
+           // Debug.Log(todebug);
         }
 
         for (int i = 0; i < slots.Length; i++)
@@ -146,6 +146,11 @@ public class SkillManager_Activas : MonoBehaviour
     {
         if (myActiveSkills[selected] != null)
             myActiveSkills[selected].Execute();
+    }
+    public void TryToUseSelected()
+    {
+        if (myActiveSkills[current_index_centered] != null)
+            myActiveSkills[current_index_centered].Execute();
     }
 
     public SkillInfo Look(int index) => my_editor_data_base[index].skillinfo;
@@ -218,6 +223,7 @@ public class SkillManager_Activas : MonoBehaviour
         frontend3D.ReAssignUIInfo(myActiveSkills);
         frontend3D.RefreshButtons(slots);
         myActiveSkills[cleanindex].SetCallbackCooldown(Callback_RefreshCooldown);
+        myActiveSkills[cleanindex].SetCallbackEndCooldown(Callback_EndCooldown);
         myActiveSkills[cleanindex].BeginSkill();
 
         current_index = cleanindex;
@@ -226,6 +232,25 @@ public class SkillManager_Activas : MonoBehaviour
         //spawnear el viejo
     }
 
+
+    void Callback_EndCooldown(SkillInfo _skill)
+    {
+        for (int i = 0; i < myActiveSkills.Length; i++)
+        {
+            if (myActiveSkills[i] != null)
+            {
+                if (myActiveSkills[i].skillinfo == _skill)
+                {
+                    frontend3D.CooldownEndReadyAuxiliar(i);
+
+                    if (current_index_centered == i)
+                    {
+                        frontend3D.CooldownEndReadyGeneral();
+                    }
+                }
+            }
+        }
+    }
     public void Callback_RefreshCooldown(SkillInfo _skill, float _time)
     {
         for (int i = 0; i < myActiveSkills.Length; i++)

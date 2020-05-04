@@ -42,13 +42,13 @@ public class DummyCC_RaycastMetod : CombatComponent
 
     void Calculate()
     {
-        Debug.Log("entré al calculate");
+        //Debug.Log("entré al calculate");
         EntityBase entity = null;
 
         var enemies = Physics.OverlapSphere(rot.position, distance, _lm);
         for (int i = 0; i < enemies.Length; i++)
         {
-            Debug.Log("entré al for");
+            //Debug.Log("entré al for");
             Vector3 dir = enemies[i].transform.position - rot.position;
             float angle = Vector3.Angle(rot.forward, dir);
 

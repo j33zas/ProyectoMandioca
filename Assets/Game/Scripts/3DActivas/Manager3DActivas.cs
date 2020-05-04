@@ -33,6 +33,9 @@ public class Manager3DActivas : MonoBehaviour
     public void RefreshCooldownAuxiliar(int _index, float _time) => sides[_index].SetCooldow(_time);
     public void RefreshCooldownGeneral(float _time) => center.SetCooldow(_time);
 
+    public void CooldownEndReadyAuxiliar(int _index) => sides[_index].SkillLoaded();
+    public void CooldownEndReadyGeneral() => center.SkillLoaded();
+
     public void ReAssignUIInfo(SkillActivas[] col)
     {
         for (int i = 0; i < col.Length; i++)
@@ -67,7 +70,7 @@ public class Manager3DActivas : MonoBehaviour
             }
             else
             {
-                Debug.Log("INDEX: " + i +" BLOQUEADO");
+                //Debug.Log("INDEX: " + i +" BLOQUEADO");
                 //esta bloqueado
                 sides[i].Vacate();
                 sides[i].SetBlocked();
