@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class GenericSword : Weapon
 {
-    public GenericSword(float dmg, float r, string n, float angle) : base(dmg, r, n, angle)
-    {
-        
-    }
+    public GenericSword(float dmg, float r, string n, float angle) : base(dmg, r, n, angle) { }
+    public GenericSword ConfigureCallback(Action<Attack_Result, Damagetype, EntityBase> _callback_attack_Entity) { AttackResult = _callback_attack_Entity; return this; }
 
     bool oneshotSucsesfull;
 
-    public override bool Attack(Transform pos, float damage)
+    public override bool Attack(Transform pos, float damage, Damagetype dmg_type)
     {
         var entities = Physics.OverlapSphere(pos.position, range)
             .Where(x => x.GetComponent<EntityBase>())
@@ -37,11 +36,10 @@ public class GenericSword : Weapon
                         Damagetype.parriable, 
                         _head);
 
-                AttackResult?.Invoke(attackResult);
+                AttackResult?.Invoke(attackResult,dmg_type, current); 
 
                 if (attackResult == Attack_Result.sucessful)
                 {
-                    
                     oneshotSucsesfull = true;
                 }
             }

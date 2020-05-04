@@ -41,7 +41,7 @@ public class ExampleWeaponThree : Weapon
                         Damagetype.parriable,
                         _head);
 
-                AttackResult?.Invoke(attackResult);
+                AttackResult?.Invoke(attackResult, current);
 
                 if (attackResult == Attack_Result.sucessful)
                 {

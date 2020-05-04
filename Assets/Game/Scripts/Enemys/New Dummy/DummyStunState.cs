@@ -18,6 +18,8 @@
             currentAnimVel = anim.speed;
             anim.speed = 0;
             startTimer = true;
+
+            
         }
         protected override void Update()
         {

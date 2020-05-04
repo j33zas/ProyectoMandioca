@@ -31,6 +31,7 @@ public class Main : MonoBehaviour
     [SerializeField] SkillManager_Activas actives = null;
     [SerializeField] LevelSystem levelSystem = null;
     [SerializeField] TimeManager timeManager = null;
+    [SerializeField] Spawner spawner = null;
 
     public GameUI_controller gameUiController;
 
@@ -51,9 +52,6 @@ public class Main : MonoBehaviour
 
         myCamera = Camera.main.GetComponent<CustomCamera>();
     }
-
-    
-
 
     void Start()
     {
@@ -164,11 +162,32 @@ public class Main : MonoBehaviour
     public void CameraShake() => myCamera.BeginShakeCamera();
     public void Vibrate() => rumble.OneShootRumble();
     public void Vibrate(float _strengh = 1, float _time_to_rumble = 0.2f) => rumble.OneShootRumble(_strengh, _time_to_rumble);
+    public TimeManager GetTimeManager() => timeManager;
 
 
 
     #region REMPLAZAR TODO ESTO POR UN GETSPAWNER() Y QUIEN LO NECESITE LO HAGA DESDE SU CODIGO
-    Spawner spawner = new Spawner();
+    // instrucciones para el que se encargue de esta tarea
+
+
+    //  1) esta linea queda acá
+    public Spawner GetSpawner() => spawner;
+
+
+   
+    /*
+     
+         ahora el spawner es un gameobject... ya esta tirado en la escena y referenciado
+
+         2 ) al spawner hay que agregarle un spawn de enemigos, experiencia y gritos
+         3 ) tooodas las funciones que estan aca abajo referidas al spawner hay que llevarselas dentro del spawner, tal vez borrarlas si no son necesarias.
+         4 ) replazar toodas las referencias que tengan doble llamada inecesaria
+         5 ) cuando llamo al spawner tengo que hacer x ej: main.instance.getSpawner().SpawnEnemy(EnemyType.Dummy, positionToSpawn)
+         
+         
+         */
+
+        ///todo esto que esta aca abajo tiene que volar
 
     public ItemWorld SpawnItem(ItemWorld item, Transform pos) => spawner.SpawnItem(item, pos);
     public GameObject SpawnItem(GameObject item, Transform pos) => spawner.SpawnItem(item, pos);
@@ -181,6 +200,6 @@ public class Main : MonoBehaviour
     public GameObject SpawnWheel(SpawnData spawn, Transform pos) => spawner.SpawnByWheel(spawn, pos);
     #endregion
 
-    public TimeManager GetTimeManager() => timeManager;
+   
 
 }

@@ -36,7 +36,7 @@ public class BigWeapon_Skill : SkillBase
         _characterAttack.currentWeapon.AttackResult += OnSuccesAttack;
 
     }
-    private void OnSuccesAttack(Attack_Result result) // recibe el resultado del ataque y suma uno al contador. Si llega al ncesario, activa el skill
+    private void OnSuccesAttack(Attack_Result result, EntityBase ent) // recibe el resultado del ataque y suma uno al contador. Si llega al ncesario, activa el skill
     {
         if (isActive) return;
         

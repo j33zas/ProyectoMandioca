@@ -49,7 +49,7 @@ public class CharacterAttack
     public CharacterAttack(float _range, float _angle, float _heavyAttackTime, CharacterAnimator _anim, Transform _forward, Action _normalAttack, Action _heavyAttack, ParticleSystem ps, float damage, ParticleSystem _attackslash)
     {
         myWeapons = new List<Weapon>();
-        myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", _angle));
+        myWeapons.Add(new GenericSword(damage, _range, "Generic Sword", _angle).ConfigureCallback(CALLBACK_DealDamage));
         myWeapons.Add(new ExampleWeaponOne(damage, _range, "Other Weapon", 45));
         myWeapons.Add(new ExampleWeaponTwo(damage, _range, "Sarasa Weapon", 45));
         myWeapons.Add(new ExampleWeaponThree(damage, _range, "Ultimate Blessed Weapon", 45));
@@ -71,7 +71,7 @@ public class CharacterAttack
         attackslash = _attackslash;
     }
 
-
+    
 
     public string ChangeName()
     {
@@ -176,21 +176,46 @@ public class CharacterAttack
         DealSuccesfullNormal = inNormal;
         DealSuccesfullHeavy = inHeavy;
     }
-    void Attack(bool isHeavy)
+    void Attack(bool isHeavy)//esto es attack nada mas... todavia no se sabe si le pegué a algo
     {
-        var sucessful = currentWeapon.Attack(forwardPos, currentDamage);
         attackslash.Play();
 
-        if (sucessful)
+        currentWeapon.Attack(forwardPos, currentDamage, isHeavy ? Damagetype.heavy : Damagetype.normal);
+    }
+
+    void CALLBACK_DealDamage(Attack_Result attack_result, Damagetype damage_type, EntityBase entityToDamage)
+    {
+        callback_ReceiveEntity();
+        
+
+        switch (attack_result)
         {
-            callback_ReceiveEntity();
-            if (isHeavy) DealSuccesfullHeavy();
-            else DealSuccesfullNormal();
+            case Attack_Result.sucessful:
+
+                if (damage_type == Damagetype.heavy) DealSuccesfullHeavy();
+                else DealSuccesfullNormal();
+
+                break;
+            case Attack_Result.blocked:
+                break;
+            case Attack_Result.parried:
+                break;
+            case Attack_Result.reflexed:
+                break;
+            case Attack_Result.inmune:
+                break;
+            case Attack_Result.death:
+
+                // aca le tengo que mandar mecha con el feedback de vibrate y slowMO
+
+                break;
         }
 
         FirstAttackReady(false);
     }
 
+    //estos callbacks creo que estan solo funcionando para lo de obligacion...
+    //hay que unificar las cosas
     public void AddCAllback_ReceiveEntity(Action _cb) => callback_ReceiveEntity += _cb;
     public void RemoveCAllback_ReceiveEntity(Action _cb)
     {
@@ -198,13 +223,10 @@ public class CharacterAttack
         callback_ReceiveEntity = delegate { };
     }
 
+    //toodo esto tampoco deberia estar aca
     public void ActiveFirstAttack() => firstAttack = true;
     public void DeactiveFirstAttack() => firstAttack = false;
     public bool IsFirstAttack() => firstAttack;
-
-    public void FirstAttackReady(bool ready)
-    {
-        firstAttack = ready;
-    }
+    public void FirstAttackReady(bool ready) => firstAttack = ready;
 }
 
