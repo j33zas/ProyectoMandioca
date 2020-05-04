@@ -22,7 +22,7 @@ public class GenericSword : Weapon
         
         foreach (var v in entities)
         {
-            Debug.Log("entity " + v.gameObject);
+            //Debug.Log("entity " + v.gameObject);
         }
 
         for (int i = 0; i < entities.Count; i++)
@@ -50,7 +50,7 @@ public class GenericSword : Weapon
                     oneshotSucsesfull = true;
                 }
 
-                Debug.Log("Attack result: " + attackResult.ToString());
+                //Debug.Log("Attack result: " + attackResult.ToString());
 
             }
         }

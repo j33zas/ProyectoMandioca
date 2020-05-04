@@ -244,7 +244,7 @@ public class SkillManager_Pasivas : MonoBehaviour
         Main.instance.gameUiController.UI_Send_NameSkillType(CURRENT_TYPE.ToString());
         foreach (var deb in equiped)
         {
-            Debug.Log("Selected: " + deb.skillinfo.skill_name);
+            //Debug.Log("Selected: " + deb.skillinfo.skill_name);
         }
         Main.instance.gameUiController.RefreshPassiveSkills_UI(equiped.Select(x => x.skillinfo).ToList());
         Main.instance.gameUiController.UI_RefreshMenu();

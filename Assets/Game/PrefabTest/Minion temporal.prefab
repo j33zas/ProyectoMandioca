@@ -1705,7 +1705,7 @@ GameObject:
   - component: {fileID: 1596232104377501902}
   - component: {fileID: 1596232104377501903}
   - component: {fileID: 2435591066857388880}
-  - component: {fileID: 1596232104377501900}
+  - component: {fileID: 1007096182951033182}
   - component: {fileID: 1596232104377501889}
   - component: {fileID: 6308790320464307750}
   - component: {fileID: 7869747779476955416}
@@ -1777,11 +1777,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   side_Type: 2
   target: 0
-  combatComponent: {fileID: 1596232104377501900}
+  combatComponent: {fileID: 1007096182951033182}
   damage: 10
-  obj_feedbackStun: {fileID: 1596232105169705298}
-  obj_feedbackShield: {fileID: 1596232103997272893}
-  obj_feedbackattack: {fileID: 1596232105222585968}
   greenblood: {fileID: 8609845361062392048}
   time_stun: 1
   anim: {fileID: 1596232103914325717}
@@ -1792,7 +1789,7 @@ MonoBehaviour:
   _distance: 2
   _rb: {fileID: 1596232104377501902}
   lifesystem: {fileID: 1596232104377501889}
---- !u!114 &1596232104377501900
+--- !u!114 &1007096182951033182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1801,13 +1798,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1596232104377501901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56bb003c47650d54fb1a887c073e0a42, type: 3}
+  m_Script: {fileID: 11500000, guid: 99b735a486cb0a34e87127f4f4152149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _lm:
     serializedVersion: 2
     m_Bits: 1024
-  distance: 5
+  distance: 3
   angleAttack: 45
   rot: {fileID: 1596232104377501888}
 --- !u!114 &1596232104377501889
@@ -1824,7 +1821,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeBar: {fileID: 4270395794385131123, guid: 3dd3f683a577a1549b2122ec3d47581f, type: 3}
   canvas: {fileID: 1596232103630063900}
-  uilife: {fileID: 0}
   life: 20
 --- !u!114 &6308790320464307750
 MonoBehaviour:
