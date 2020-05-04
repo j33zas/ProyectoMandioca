@@ -56,6 +56,7 @@ public abstract class EnemyBase : NPCBase, ICombatDirector
     public void SetTargetPosDir(Transform pos)
     {
         _target = pos;
+
         _target.localPosition *= distancePos;
     }
 

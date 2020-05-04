@@ -97,11 +97,10 @@ public class TrueDummyEnemy : EnemyBase
         canupdate = true;
     }
 
-    public void DealDamage() { combatComponent.ManualTriggerAttack(); }
+    public void DealDamage() { combatComponent.ManualTriggerAttack(); sm.SendInput(DummyEnemyInputs.ATTACK); }
 
     public void AttackEntity(EntityBase e)
     {
-        sm.SendInput(DummyEnemyInputs.ATTACK);
         Attack_Result takeDmg = e.TakeDamage(damage, transform.position, Damagetype.parriable);
 
         if (takeDmg == Attack_Result.parried)
@@ -119,6 +118,8 @@ public class TrueDummyEnemy : EnemyBase
     {
         if (canupdate)
         {
+            EffectUpdate();
+
             if(!combat && entityTarget == null)
             {
                 if (Vector3.Distance(Main.instance.GetChar().transform.position, transform.position) <= combatDistance)
@@ -144,11 +145,36 @@ public class TrueDummyEnemy : EnemyBase
     protected override void OnPause() { }
     protected override void OnResume() { }
 
+    private Material[] myMat;
     public override void OnFreeze()
     {
         base.OnFreeze();
-        sm.SendInput(DummyEnemyInputs.FREEZE);
-        
+
+        Debug.Log("entré al freeze");
+
+        currentSpeed *= freezeSpeedSlowed;
+        animator.speed *= freezeSpeedSlowed;
+
+        var smr = GetComponentInChildren<SkinnedMeshRenderer>();
+        if (smr != null)
+        {
+            myMat = smr.materials;
+
+            Material[] mats = smr.materials;
+            mats[0] = freeze_shader;
+            smr.materials = mats;
+        }
+
+        AddEffectTick(() => { }, freezeTime, () => {
+            currentSpeed /= freezeSpeedSlowed;
+            animator.speed /= freezeSpeedSlowed;
+            var smr2 = GetComponentInChildren<SkinnedMeshRenderer>();
+            if (smr2 != null)
+            {
+                Material[] mats = smr2.materials;
+                smr2.materials = myMat;
+            }
+        });
     }
 
     public override Attack_Result TakeDamage(int dmg, Vector3 attack_pos, Damagetype dmgtype)
